@@ -1,0 +1,293 @@
+
+.vpl-skin-pollux .vpl-player-controls-bottom,
+.vpl-skin-pollux .vpl-settings-holder,
+.vpl-skin-pollux .vpl-player-controls-top .vpl-contr-btn,
+.vpl-skin-pollux .vpl-share-data,
+.vpl-skin-pollux .vpl-info-data,
+.vpl-skin-pollux .vpl-embed-data,
+.vpl-skin-pollux .vpl-resume-data,
+.vpl-skin-pollux .vpl-context-menu,
+.vpl-skin-pollux .vpl-big-play,
+.vpl-skin-pollux .vpl-pwd-data-wrap{
+	background:#323a45;
+}
+
+
+/* icons */
+.vpl-skin-pollux .vpl-contr-btn{	
+	width:25px;
+	height:25px;
+	float: left;
+	position: relative;
+	cursor: pointer;
+}
+.vpl-skin-pollux .vpl-contr-btn svg{
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	color:#eee;
+	height: 16px;
+	fill:currentColor;
+	transition: color .1s ease-out;
+}
+@media (hover: hover) {
+	.vpl-skin-pollux .vpl-contr-btn svg:hover{
+		color:#fff !important;
+	}
+}
+
+.vpl-skin-pollux .vpl-player-controls-bottom{
+	position: absolute;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.vpl-skin-pollux .vpl-player-controls-bottom-left{
+	position: absolute;
+	height: 25px;
+	left: 20px;
+	bottom: 13px;
+}
+.vpl-skin-pollux .vpl-player-controls-bottom-middle{
+	position: absolute;
+	bottom: 13px;
+	height: 25px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+.vpl-skin-pollux .vpl-player-controls-bottom-right{
+	position: absolute;
+	height: 25px;
+	right: 0;
+	bottom: 13px;
+}
+.vpl-skin-pollux .vpl-player-controls-bottom-right .vpl-contr-btn{
+	margin-right: 15px;
+}
+
+.vpl-skin-pollux .vpl-media-time-current,
+.vpl-skin-pollux .vpl-media-time-separator,
+.vpl-skin-pollux .vpl-media-time-total{
+	position:relative;
+	top:0px;
+	left:0px;
+	height:100%;
+	line-height:25px !important;
+	text-align: center;
+	float:left;
+	margin:0!important;
+	padding: 0!important;
+	font-size:12px!important;
+	display: none;
+	user-select:none;
+}
+.vpl-skin-pollux .vpl-media-time-current{
+	color: #ccc;
+}
+.vpl-skin-pollux .vpl-media-time-separator,
+.vpl-skin-pollux .vpl-media-time-total{
+	color: #666;
+}
+
+.vpl-skin-pollux .vpl-playback-toggle{
+	height: 34px;
+	width: 34px;
+	bottom: 4px;
+}
+.vpl-skin-pollux .vpl-playback-toggle svg{
+	height: 17px;
+}
+.vpl-skin-pollux .vpl-rewind-toggle svg,
+.vpl-skin-pollux .vpl-skip-backward-toggle svg,
+.vpl-skin-pollux .vpl-skip-forward-toggle svg,
+.vpl-skin-pollux .vpl-previous-toggle svg,
+.vpl-skin-pollux .vpl-next-toggle svg{
+    height: 13px;
+}
+.vpl-skin-pollux .vpl-rewind-toggle,
+.vpl-skin-pollux .vpl-skip-backward-toggle,
+.vpl-skin-pollux .vpl-skip-forward-toggle,
+.vpl-skin-pollux .vpl-previous-toggle,
+.vpl-skin-pollux .vpl-playback-toggle,
+.vpl-skin-pollux .vpl-next-toggle{
+    margin-right: 10px;
+	border-radius: 100%;
+    background: #de5362;
+}
+.vpl-skin-pollux .vpl-player-controls-top{
+	position:absolute;
+	width:40px;
+	top:10px;
+	right:10px;
+}
+.vpl-skin-pollux .vpl-player-controls-top .vpl-contr-btn{
+	height: 40px;
+	width: 40px;
+	margin-bottom: 5px;
+	border-radius: 3px;
+	overflow: hidden;
+}
+.vpl-skin-pollux .vpl-player-controls-top .vpl-contr-btn svg{
+	height: 16px;
+}
+@media (hover: hover) {
+	.vpl-skin-pollux .vpl-player-controls-top .vpl-contr-btn:hover{
+		background: #de5362;
+	}
+}
+
+.vpl-skin-pollux .vpl-seekbar{
+	position:absolute;
+	width: 100%;
+	top:-15px;
+    height: 15px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.vpl-skin-pollux .vpl-progress-bg{
+	position:absolute;
+	width:100%;
+	bottom:0;
+	height:7px;
+	overflow: hidden;
+}
+.vpl-skin-pollux .vpl-progress-bg{
+	background: #6e7782;
+}
+.vpl-skin-pollux .vpl-load-level{
+	position:absolute;
+	top:0;
+	height:100%;
+}
+.vpl-skin-pollux .vpl-progress-level{
+	position:absolute;
+	top:0;
+	height:100%;
+	transition: width 0.2s linear;
+}
+.vpl-skin-pollux .vpl-progress-level{
+	background: #de5362;
+}
+.vpl-skin-pollux .vpl-progress-level-pointer{
+    position: relative;
+	top:0;
+    width: 4px;
+    height: 100%;
+	background:#fff;
+    float: right;
+ 	margin-right: -2px;
+}
+
+.vpl-skin-pollux .vpl-volume-wrapper{
+	position: relative;
+	float: left;
+}
+.vpl-skin-pollux .vpl-volume-seekbar{
+	position: relative;
+    top: 0;
+    margin-left: 25px;
+    width: 100px;
+    margin-right: 10px;
+    height: 25px;
+    cursor: pointer;
+    touch-action: none;
+}
+.vpl-skin-pollux .vpl-volume-bg{
+	position: absolute;
+    width: 80px;
+    height: 6px;
+    background: #6e7782;
+    left: 10px;
+    top: 10px;
+}
+.vpl-skin-pollux .vpl-volume-level{
+	position: absolute;
+    height: 100%;
+    background: #de5362;
+    left: 0;
+    top: 0;
+    transition: width 0.2s ease-out, height 0.2s ease-out;
+}
+.vpl-skin-pollux .vpl-volume-level-pointer{
+    position: relative;
+	top:0;
+    width: 2px;
+    height: 100%;
+	background:#fff;
+    float: right;
+ 	margin-right: -1px;
+}
+
+.vpl-skin-pollux .vpl-settings-holder{
+    margin-bottom: 30px;
+}
+.vpl-skin-pollux .vpl-menu-item{
+    font-size: 14px;
+    color: #eee;
+}
+.vpl-skin-pollux .vpl-settings-menu-item-value{
+	color: #888;
+}
+.vpl-skin-pollux .vpl-menu-header{
+	background-color: #fff;
+	color: #555;
+}
+.vpl-skin-pollux .vpl-menu-item{
+	color: #eee;
+}
+.vpl-skin-pollux .vpl-menu-active{
+	background: #fff;
+	color: #555;
+}
+@media (hover: hover) {
+	.vpl-skin-pollux .vpl-menu-item:hover{
+		background: #fff;
+		color: #555;
+	}
+}
+.vpl-skin-pollux .vpl-info-description{
+	color: #ddd;
+}
+
+.vpl-skin-pollux .vpl-share-item svg{
+    height: 30px;
+}
+
+.vpl-skin-pollux .vpl-big-play{
+	position:absolute;
+	width:76px;
+	height:76px; 
+	top:50%;
+	left:50%;
+	margin-left:-37px;
+	margin-top:-37px;
+	border-radius: 50%!important;
+	display:none;
+	text-align:center;
+	line-height: 76px;
+	cursor: pointer;
+}
+.vpl-skin-pollux .vpl-big-play svg{
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	color:#eee;
+	height: 26px;
+	fill:currentColor;
+}
+@media (hover: hover) {
+	.vpl-skin-pollux .vpl-big-play:hover svg{
+		color:#fff !important;
+	}
+}
+
+.vpl-skin-pollux .vpl-tooltip{
+	background: #de5362;
+	color:#fff!important;
+}
+
