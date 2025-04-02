@@ -3,7 +3,7 @@
     <div class="px-3 py-2 bg-light text-black">
       <div class="container-fluid">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="{{ url('/') }}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-black text-decoration-none" target="_blank"><img src="{{ env('APP_URL').'/'.($core['general_header_logo']) }}" alt="{{ $core['global_seo_title'] }}" class="adminlogo" /></a>   
+          <a href="{{ url('/') }}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-black text-decoration-none" target="_blank"><img src="{{ env('APP_URL').($core['general_header_logo']) }}" alt="{{ $core['global_seo_title'] }}" class="adminlogo" /></a>   
          @guest
          @else
 

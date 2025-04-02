@@ -9,7 +9,7 @@
            <div class="col-lg-8 col-xl-9 col-md-9 col-9 p-0 d-flex">
                <div class="logo">
                    <a href="{{ url('/') }}">
-                      <img class="hLTDark" src="{{ env('APP_URL').'/'.($core['general_header_logo']) }}" alt="{{ $core['global_seo_title'] }}" />
+                      <img class="hLTDark" src="{{ env('APP_URL').($core['general_header_logo']) }}" alt="{{ $core['global_seo_title'] }}" />
                    </a>
                </div>
                <nav class="mainmenu-nav d-none d-lg-block">
@@ -83,7 +83,7 @@
                 <div class="header-top">
                   <div class="logo">
                       <a href="index.html">
-                          <img src="{{ env('APP_URL').'/'.($core['general_header_logo']) }}" alt="{{ $core['global_seo_title'] }}" />
+                          <img src="{{ env('APP_URL').($core['general_header_logo']) }}" alt="{{ $core['global_seo_title'] }}" />
                       </a>
                   </div>
                   <div class="close-menu">

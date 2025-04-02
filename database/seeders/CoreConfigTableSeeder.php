@@ -256,6 +256,16 @@ class CoreConfigTableSeeder extends Seeder
              'group'=>'Email','subgroup'=>'Content','sort'=>0,
              'value'=>'support@'.env('APP_HOST'));
 
+        $data[]=array('path'=>'android_logo','label'=>'Logo','type'=>'image',
+             'group'=>'Footer','subgroup'=>'Footer Bar','sort'=>0,
+             'value'=>('img/android_icon.png'));
+        $data[]=array('path'=>'ios_logo','label'=>'Logo','type'=>'image',
+             'group'=>'Footer','subgroup'=>'Footer Bar','sort'=>0,
+             'value'=>('img/ios_icon.png'));
+        $data[]=array('path'=>'general_app_experience','label'=>'Copywrite Text','type'=>'input',
+             'group'=>'Footer','subgroup'=>'Footer Bar','sort'=>0,
+             'value'=>'For better experience,download the BESTCAST app now');
+
         foreach($data as $val){
             $newItem = CoreConfig::create([
                 'path'          => $val['path'],
