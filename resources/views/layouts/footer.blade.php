@@ -94,18 +94,18 @@
             <div class="row py-3">
                 <div class="col-12 d-flex flex-column flex-md-row align-items-center justify-content-between text-center text-md-start">
                     @if($core['general_app_experience'])
-                        <div class="col-md-6 col-12 mb-3 mb-md-0">
-                            <h5 class="experience-content">{!! $core['general_app_experience'] !!}</h5>
-                        </div>
+                    <div class="col-md-6 col-12 mb-3 mb-md-0">
+                        <h5 class="experience-content">{!! $core['general_app_experience'] !!}</h5>
+                    </div>
                     @endif
-                        <div class="d-flex justify-content-center justify-content-md-start">
+                    <div class="d-flex justify-content-center justify-content-md-start">
                         <div class="px-2 mb-2 mb-md-0">
-                            <a href="https://play.google.com/store/apps/details?id=com.bestcast.bestcaststudios" target="_blank">
+                            <a href="https://play.google.com/store/apps/details?id=com.bestcast.bestcaststudios">
                                 <img class="img-fluid logo-light" src="{{ Lib::publicUrl($core['android_logo']) }}" alt="Android Logo" style="max-height: 80px;">
                             </a>
                         </div>
                         <div class="px-2">
-                            <a href="https://apps.apple.com/in/app/bestcast-ott/id6502750053" target="_blank">
+                            <a href="https://apps.apple.com/in/app/bestcast-ott/id6502750053">
                                 <img class="img-fluid logo-light" src="{{ Lib::publicUrl($core['ios_logo']) }}" alt="iOS Logo" style="max-height: 80px;">
                             </a>
                         </div>
