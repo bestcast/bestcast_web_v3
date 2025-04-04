@@ -2,25 +2,6 @@
     <footer class="eduvibe-footer-one edu-footer footer-style-default">
       <div class="footer-top">
           <div class="container eduvibe-animated-shape">
-              <div class="row">
-                <div class="col-md-6 col-xs-6">
-                    <div class="inner text-center">
-                        @if($core['general_app_experience'])
-                        <p><h5 class="experience-content">{!! $core['general_app_experience'] !!}</h5></p>
-                        @endif
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-xs-3" id="logo_align_left">
-                    <a href="https://play.google.com/store/apps/details?id=com.bestcast.bestcaststudios" target="_blank">
-                        <img class="logo-light" src="{{ Lib::publicUrl($core['android_logo']) }}" alt="Logo">
-                    </a>
-                  </div>
-                  <div class="col-md-3 col-xs-3" id="logo_align_right">
-                    <a href="https://apps.apple.com/in/app/bestcast-ott/id6502750053">
-                        <img class="logo-light" src="{{ Lib::publicUrl($core['ios_logo']) }}" alt="Logo">
-                    </a>
-                </div>
-              </div>
               <div class="row g-5">
                   <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                       <div class="edu-footer-widget">
@@ -110,7 +91,27 @@
                       </div>
                   </div>
               </div>
-
+            <div class="row py-3">
+                <div class="col-12 d-flex flex-column flex-md-row align-items-center justify-content-between text-center text-md-start">
+                    @if($core['general_app_experience'])
+                        <div class="col-md-6 col-12 mb-3 mb-md-0">
+                            <h5 class="experience-content">{!! $core['general_app_experience'] !!}</h5>
+                        </div>
+                    @endif
+                        <div class="d-flex justify-content-center justify-content-md-start">
+                        <div class="px-2 mb-2 mb-md-0">
+                            <a href="https://play.google.com/store/apps/details?id=com.bestcast.bestcaststudios" target="_blank">
+                                <img class="img-fluid logo-light" src="{{ Lib::publicUrl($core['android_logo']) }}" alt="Android Logo" style="max-height: 80px;">
+                            </a>
+                        </div>
+                        <div class="px-2">
+                            <a href="https://apps.apple.com/in/app/bestcast-ott/id6502750053" target="_blank">
+                                <img class="img-fluid logo-light" src="{{ Lib::publicUrl($core['ios_logo']) }}" alt="iOS Logo" style="max-height: 80px;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
           </div>
       </div>
       <div class="copyright-area copyright-default">
