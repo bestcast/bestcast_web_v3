@@ -48,6 +48,7 @@ class User extends Authenticatable
         'plan_expiry',
         'tvcode',
         'tvcode_status',
+        'otp_message_type',
         'referal_code',
         'credits_used',
         'refferer',

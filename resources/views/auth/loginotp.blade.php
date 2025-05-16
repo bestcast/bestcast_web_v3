@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                             <input type="text" maxlength="1" class="otp-input" id="otp-c" disabled="disabled" />
                                             <input type="text" maxlength="1" class="otp-input" id="otp-d" disabled="disabled" />
                                         </div>
+                                        
                                         @guest 
                                             <input id="email" type="hidden" class="input-text formemail" name="email" placeholder="Email or mobile number" readonly autocomplete="off" value="" />
                                         @else
@@ -108,9 +109,11 @@ document.addEventListener("DOMContentLoaded", function() {
                             @guest 
                                 <form method="POST" action="{{ route('api.send.otp') }}" data-otp-url="{{ route('login.otp') }}?sent" class="login ajx-sendotp-form" autocomplete="off">
                                     <input id="email" type="hidden" class="input-text formemail" name="email" readonly autocomplete="off">
+                                    <input type="hidden" id="otp_message_type" name="otp_message_type" value={{session()->get('otp_message_type')}}>
                             @else
                                 <form method="POST" action="{{ route('api.send.otp') }}" data-otp-url="{{ route('otp.verification') }}?sent&{{ isset($_GET['phone'])?'phone':'' }}" class="login ajx-sendotp-form" autocomplete="off">
                                     <input id="email" type="hidden" class="input-text formemail" name="email" readonly autocomplete="off" value="{{ isset($_GET['phone'])?Auth::user()->phone:Auth::user()->email }}">
+                                    <input type="hidden" id="otp_message_type" name="otp_message_type" value={{session()->get('otp_message_type')}}>                                       
                             @endguest
 
                                 @csrf

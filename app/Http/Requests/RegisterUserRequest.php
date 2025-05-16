@@ -40,6 +40,7 @@ class RegisterUserRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|min:5|regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u',
             'phone' => 'digits_between:10,10|unique:users,phone',
             //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             //'password' => ['required',  Rules\Password::defaults()], //'confirmed',
