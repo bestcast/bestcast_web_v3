@@ -991,7 +991,7 @@ header .container,header .container-sm,footer .container,footer .container-sm{ma
 .bnCtr .blended{display: none;}
 .haveFilter{margin-top: 30px;}
 .header-quote.tight .notifyBx{display: none;}
-.edu-section-gap,.footer-style-default .footer-top{padding: 30px 0 !important;}
+/*.edu-section-gap,.footer-style-default .footer-top{padding: 30px 0 !important;}*/
 .account.twocolmn .left-sidebar > .in{padding-right: 0px;}
 .account.twocolmn .left-sidebar, .account.twocolmn .content-area, .account.twocolmn .hLTGrid .hLTColm,
 .account.twocolmn > .hLTGrid{display: block;}
@@ -1024,14 +1024,20 @@ header .container,header .container-sm,footer .container,footer .container-sm{ma
   height:65px;
   display: block;
 }
+
 }
 .ajxBanner{
 padding-top:70px;
 }
 
 
+.appSpace{
+  padding-bottom: 60px;
+}
 
-
+.img-width{
+  max-width: 92%;
+}
 
 
 
