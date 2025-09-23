@@ -194,7 +194,7 @@ class UsersMovies extends Database implements RoleHasRelationsContract
         if(empty($movieid))
             return 0;
 
-        $data = UsersMovies::where('movie_id',$movieid)->where('watched','>=',1200)->count(); //20mins
+        $data = UsersMovies::where('movie_id',$movieid)->where('watched','>=',3600)->count(); //1 hour
         return $data;  
     }
 

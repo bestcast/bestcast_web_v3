@@ -52,6 +52,8 @@ body{overflow-x: hidden;}
 .icon-arrow-double-left{background-image:url('../../img/icon/arrow/double-left.png');}
 .icon-arrow-double-right{background-image:url('../../img/icon/arrow/double-right.png');}
 .icon-search{background-image:url('../../img/icon/menu/search.png');}
+.icon-view{background-image:url('../../img/icon/menu/view.png');}
+
 
 .icon-dashboard.active, .icon-dashboard:hover{background-image:url('../../img/icon/menu/dashboard-back.png');}
 .icon-genre.active,.icon-genre:hover{background-image:url('../../img/icon/menu/genre-back.png');}
@@ -81,6 +83,7 @@ body{overflow-x: hidden;}
 .icon-arrow-double-left.active,.icon-arrow-double-left:hover{background-image:url('../../img/icon/arrow/double-left-back.png');}
 .icon-arrow-double-right.active,.icon-arrow-double-right:hover{background-image:url('../../img/icon/arrow/double-right-back.png');}
 .icon-search.active,.icon-search:hover{background-image:url('../../img/icon/menu/search-back.png');}
+.icon-view.active,.icon-view:hover{background-image:url('../../img/icon/menu/view-back.png');}
 
 
 /*--------------------------------------datetimepicker--------------------------------*/

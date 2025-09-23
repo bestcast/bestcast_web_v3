@@ -35,6 +35,8 @@ use App\Models\UsersMovies;
 use App\Models\UsersDevice;
 use Email;
 use Redirect;
+use App\Models\UserMovieWatchLog;
+use App\Models\UserMovieWatched;
 
 class BrowseController extends Controller
 {
@@ -161,7 +163,40 @@ class BrowseController extends Controller
             $meta=$post->meta->pluck('value','path');
             return view('errors.lost',['post'=>$post,'meta'=>$meta]);
         }
+	
+	$this->trackMovieWatch($user->id, $movie->id, 'web');
+
         return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken]);
+    }
+    public function trackMovieWatch($userId, $movieId, $platform = 'web')
+    {
+        $videoUrl = Movies::where('id', $movieId)->value('video_url');
+        $watchType = stripos($videoUrl, 'trailer') !== false ? 'trailer' : 'movie';
+        
+        // 1. Insert into logs (for analytics)
+        UserMovieWatchLog::create([
+            'user_id'   => $userId,
+            'movie_id'  => $movieId,
+            'watched_at'=> now(),
+            'platform'  => $platform,
+            'watch_type' => $watchType,
+        ]);
+
+        // 2. Update summary table
+        $record = UserMovieWatched::firstOrNew([
+            'user_id'  => $userId,
+            'movie_id' => $movieId,
+        ]);
+
+        if (!$record->exists) {
+            $record->first_watched_at = now();
+            $record->watch_count = 1;
+        } else {
+            $record->watch_count += 1;
+        }
+
+        $record->last_watched_at = now();
+        $record->save();
     }
     public function mylist()
     {

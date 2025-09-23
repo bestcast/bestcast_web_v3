@@ -144,5 +144,19 @@
         </li>
       @endif
     @endrole
+    @if (Route::has('admin.viewsreport.index'))
+        <li class="icon-view  {{ request()->is('admin/viewsreport') || request()->is('admin/viewsreport/*')  || request()->is('admin/trailerviews') ||  request()->is('admin/trailerviews/*') ? 'active' : '' }}">
+          <a href="{{ route('admin.viewsreport.index') }}" class="nav-link link-dark">          
+            Views Report
+              <span class="arrow icon-arrow-right">&nbsp;</span>
+            </a>
+            <ul class="subnavpills"  style="{{ request()->is('admin/viewsreport') || request()->is('admin/viewsreport/*')  || request()->is('admin/trailerviews') ||  request()->is('admin/trailerviews/*') ? 'display:block' : '' }}">
+              <li class="icon-arrow-double-right {{ request()->is('admin/viewsreport') ? 'active' : '' }}">
+                <a href="{{ route('admin.viewsreport.index') }}">Movie Views Report</a></li>
+              <li class="icon-arrow-double-right {{ request()->is('admin/trailerviews') ? 'active' : '' }}">
+                <a href="{{ route('admin.trailerviews.index') }}">Guest Trailer Views</a></li>
+            </ul>
+          </li>
+      @endif
   </ul>
 </div>

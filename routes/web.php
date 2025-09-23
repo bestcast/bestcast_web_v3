@@ -359,6 +359,11 @@ Route::group([
     Route::get('/admin/user/searchcastbyname', 'UserController@searchcastbyname')->name('admin.user.searchcastbyname');
     Route::get('/admin/user/searchcastbyname/{key}', 'UserController@searchcastbyname')->name('admin.user.searchcastbyname.key');
 
+    Route::get('/admin/viewsreport','ViewsReportController@index')->name('admin.viewsreport.index');
+    Route::get('/admin/viewsreport/data','ViewsReportController@getViewsData')->name('admin.viewsreport.data');
+
+    Route::get('/admin/trailerviews','TrailerViewsReportController@index')->name('admin.trailerviews.index');
+    Route::get('/admin/trailerviews/data','TrailerViewsReportController@getViewsData')->name('admin.trailerviews.data');
 
 
 });
