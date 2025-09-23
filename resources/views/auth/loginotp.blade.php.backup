@@ -1,0 +1,98 @@
+@extends('layouts.frontend')
+
+@section('header-script')
+<script src="{{ asset('js/auth/tokenexist.js') }}?v=1" defer></script>
+<script src="{{ asset('js/auth/login-otp.js') }}?v=1" defer></script>
+<script src="{{ asset('js/auth/send-otp.js') }}?v=1" defer></script>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    const otpInputs = document.querySelectorAll('.otp-input');
+    otpInputs.forEach(function(input, index) {
+        input.addEventListener('input', function() {
+            if (this.value.length === 1) {
+                if (index < otpInputs.length - 1) {
+                    document.getElementById("otp-a").disabled = true;
+                    document.getElementById("otp-b").disabled = true;
+                    document.getElementById("otp-c").disabled = true;
+                    document.getElementById("otp-d").disabled = true;
+                    otpInputs[index + 1].disabled = false;
+                    otpInputs[index + 1].focus();
+                } else {
+                    document.getElementById('otp').value=
+                            document.getElementById('otp-a').value+
+                            document.getElementById('otp-b').value+
+                            document.getElementById('otp-c').value+
+                            document.getElementById('otp-d').value;
+
+                    var otpForm = document.getElementById("loginotpbtn");
+                    otpForm.click();
+                }
+            }
+        });
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && index > 0 && this.value.length === 0) {
+                document.getElementById('otp').value='';
+                document.getElementById("otp-a").disabled = true;
+                document.getElementById("otp-b").disabled = true;
+                document.getElementById("otp-c").disabled = true;
+                document.getElementById("otp-d").disabled = true;
+                otpInputs[index - 1].disabled = false;
+                otpInputs[index - 1].focus();
+                otpInputs[index - 1].select();
+            }
+        });
+    });
+});
+</script>
+@endsection
+
+@section('content')
+
+        <div class="login-register-page-wrapper edu-section-gap bg-gradient-1">
+            <div class="container checkout-page-style">
+                <div class="row g-5">
+                        <div class="login-form-box">
+                            <h4>Enter the code we just sent</h4>
+                            <form method="POST" action="{{ route('api.login.otp') }}" id="ajx-login-form" class="login ajx-login-form" autocomplete="off">
+                                @csrf
+                                <div class="load-error-msg"></div>
+
+                                <div class="input-box mb--30">
+                                    <p>We sent a sign-in code<span class="formemail_text"></span>. The code will expire in 15 minutes.</p>
+                                    <div class="text-center">
+                                        <div class="otpboxes">
+                                            <input type="text" maxlength="1" class="otp-input" id="otp-a" autofocus />
+                                            <input type="text" maxlength="1" class="otp-input" id="otp-b" disabled="disabled" />
+                                            <input type="text" maxlength="1" class="otp-input" id="otp-c" disabled="disabled" />
+                                            <input type="text" maxlength="1" class="otp-input" id="otp-d" disabled="disabled" />
+                                        </div>
+                                        <input id="email" type="hidden" class="input-text formemail" name="email" placeholder="Email or mobile number" readonly autocomplete="off" value="" />
+                                        <input id="otp" type="hidden" readonly class="input-text" name="otp" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <button class="rn-btn edu-btn w-100 mb--30 loginbtn" id="loginotpbtn" type="submit">
+                                    <span>Login</span>
+                                </button>
+
+                                <div class="lineBox mb--20 text-center">
+                                    <p>Did not receive a code?</p>
+                                </div>
+
+                                @if (Route::has('login'))
+                                    <a class="rn-btn edu-btn w-100 mb--30 button-grey text-center" href="{{ route('login') }}">Use Password Instead</a>
+                                @endif
+
+                            </form>
+
+                            <form method="POST" action="{{ route('api.send.otp') }}" data-otp-url="{{ route('login.otp') }}" class="login ajx-sendotp-form" autocomplete="off">
+                                @csrf
+                                <input id="email" type="hidden" class="input-text formemail" name="email" readonly autocomplete="off">
+                                <div class="lineBox">
+                                    <button class="btnlink" type="submit"><span>Resend Code</span></button>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+@endsection
