@@ -229,7 +229,12 @@ class AuthController extends Controller
             // if(!empty($request->email))
             //     Session::put('formEmail', $request->email);
 
+            $country_code_value = $request->country_code ?? '';
             $request->validated($request->only(['email']),$request->otp_message_type);
+	    
+	    if (empty($country_code_value)) {
+                $country_code_value = '+91';
+            }
 
             /* ----- Hardcoded number for Google Play Console (START 1) ----- */
             // if ($request->email === '9345299927') {
@@ -262,7 +267,7 @@ class AuthController extends Controller
 
                 if(is_numeric($request->email)){
                     //send otp via message
-                    Otp::otpverify($request->email,$otp,$request->otp_message_type);
+                    Otp::otpverify($request->email,$otp,$request->otp_message_type,$country_code_value);
                 }else{
 
                     //Email::otp(array('mailbody'=>'','user'=>$user,'otp'=>$otp));
@@ -403,6 +408,7 @@ class AuthController extends Controller
                 'name' => empty($request->name)?'User':$request->name,
                 'firstname' => empty($request->name)?'':$request->name,
                 'email' => $request->phone."_".date("YmdHis")."@bestcast.co",//$request->email,
+                'country_code' => $request->country_code ?? '+91',
                 'phone' => empty($request->phone)?'':$request->phone,
                 'password' => Hash::make( Str::random(20)),//Hash::make($request->password),
 		        'otp_message_type' => $request->otp_message_type,
@@ -426,9 +432,8 @@ class AuthController extends Controller
 
             //Request Token
             $response=User::userRequestLoginToken($user,$request);
-	        $response['otp_message_type'] = $request->otp_message_type;
-	        // $response['otp_message_type'] = 'sms';
-
+            $response['otp_message_type'] = $request->otp_message_type;
+            $response['country_code'] = $request->country_code ?? '+91';
 
             if(!empty($request->device)){
                 if($request->device=='mobile' || $request->device=='tv' || $request->device=='postman'){
@@ -436,8 +441,7 @@ class AuthController extends Controller
                     $user->updated_at=date("Y-m-d H:i:s");
                     $user->save();
                     if(is_numeric($user->phone)){
-			        Otp::otpverify($request->phone,$otp,$request->otp_message_type);
-			        // Otp::otpverify($request->phone,$otp,'sms');
+                        Otp::otpverify($request->phone,$otp,$request->otp_message_type,$request->country_code ?? '+91');
                     }
                 }
             }

@@ -1,8 +1,10 @@
 @extends('layouts.frontend')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
 
 @section('header-script')
 <script src="{{ asset('js/auth/tokenexist.js') }}?v=1" defer></script>
 <script src="{{ asset('js/auth/send-otp.js') }}?v=1" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 @endsection
 
 @section('content')
@@ -32,10 +34,12 @@
                                     <div class="fieldtab-phone active">Mobile</div> | <div class="fieldtab-email">Email</div>
                                 </div>
                                 <div class="input-box fieldtab-action phone mb--30">
-                                    <div class="icon-phone"> +91 | </div>
-                                    <div class="icon-email"> | </div>
-                                    <input id="email" type="number" class="input-text fieldtab-field formemail_disable" name="email" placeholder="Enter mobile number" autocomplete="off" autofocus>
+                                    <input id="email" type="tel" class="input-text fieldtab-field formemail_disable w-100" name="email"
+                                           placeholder="Enter mobile number" autocomplete="off" autofocus>
+                                    <input type="hidden" name="country_code" id="country_code"> 
+                                    <!-- hidden field -->
                                 </div>
+
                                 <button class="rn-btn edu-btn w-100 mb--30 loginbtn" type="submit">
                                     <span>Next</span>
                                 </button>
@@ -52,3 +56,42 @@
             </div>
         </div>
 @endsection
+@section('footer-script')
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.querySelector("#email");
+    if (!input) return;
+
+    const iti = window.intlTelInput(input, {
+    initialCountry: "auto",
+    geoIpLookup: function(callback) {
+      fetch("https://ipapi.co/json/")
+        .then(res => res.json())
+        .then(data => callback(data.country_code ? data.country_code.toLowerCase() : "in"))
+        .catch(() => callback("in"));
+    },
+    separateDialCode: true,
+    preferredCountries: ["in", "us", "gb", "ae", "sg"],
+    allowDropdown: true,
+    showSearch: true,
+    customPlaceholder: function() { return "Enter mobile number"; },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    });
+
+    // Update hidden input whenever user changes country
+    input.addEventListener("countrychange", function() {
+    const countryCode = "+" + iti.getSelectedCountryData().dialCode;
+    document.querySelector("#country_code").value = countryCode;
+    });
+
+    // Initialize default country code
+    setTimeout(() => {
+    const countryCode = "+" + iti.getSelectedCountryData().dialCode;
+    document.querySelector("#country_code").value = countryCode;
+    }, 1000);
+});
+</script>
+@endsection
+
+
+

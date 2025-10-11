@@ -529,7 +529,10 @@ class UserController extends Controller
         $user = User::find($user->id);
         $otp=$user->otp=rand(1000,9999);
         $user->save();
-        Otp::otpverify($user->phone,$otp,$request->otp_message_type);
+
+        // country code from request → user DB → fallback +91
+        $country_code = $request->country_code ?? $user->country_code ?? '+91';
+        Otp::otpverify($user->phone,$otp,$request->otp_message_type,$country_code);
         return $this->success($user);
     }
 
@@ -565,7 +568,7 @@ class UserController extends Controller
                 $otp=$user->otp=rand(1000,9999);
                 $user->save();
                 if(isset($_GET['phone'])){
-                    Otp::otpverify($user->phone,$otp,$user->otp_message_type);
+                    Otp::otpverify($user->phone,$otp,$user->otp_message_type,$user->country_code);
                     sleep(1);
                     return redirect()->route('otp.verification', ['phone' => 1]);
                 }else{
