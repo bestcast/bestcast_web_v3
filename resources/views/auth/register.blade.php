@@ -73,33 +73,106 @@ document.addEventListener("DOMContentLoaded", function() {
     const input = document.querySelector("#phone");
     if (!input) return;
 
-    const iti = window.intlTelInput(input, {
-    initialCountry: "auto",
-    geoIpLookup: function(callback) {
-      fetch("https://ipapi.co/json/")
-        .then(res => res.json())
-        .then(data => callback(data.country_code ? data.country_code.toLowerCase() : "in"))
-        .catch(() => callback("in"));
-    },
-    separateDialCode: true,
-    preferredCountries: ["in", "us", "gb", "ae", "sg"],
-    allowDropdown: true,
-    showSearch: true,
-    customPlaceholder: function() { return "Enter mobile number"; },
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-    });
+    const hiddenInput = document.querySelector("#country_code");
+    let iti; // we will assign later
 
-    // Update hidden input whenever user changes country
-    input.addEventListener("countrychange", function() {
-    const countryCode = "+" + iti.getSelectedCountryData().dialCode;
-    document.querySelector("#country_code").value = countryCode;
-    });
+    // Initialize intl-tel-input based on otp message type
+    function initIntlTelInput(type) {
+        if (iti) iti.destroy(); // destroy previous instance
 
-    // Initialize default country code
-    setTimeout(() => {
-    const countryCode = "+" + iti.getSelectedCountryData().dialCode;
-    document.querySelector("#country_code").value = countryCode;
-    }, 1000);
+        if (type === 'sms') {
+            iti = window.intlTelInput(input, {
+                initialCountry: "in",
+                allowDropdown: false,
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+            });
+        } else {
+            iti = window.intlTelInput(input, {
+                initialCountry: "auto",
+                geoIpLookup: function(callback) {
+                    fetch("https://ipapi.co/json/")
+                        .then(res => res.json())
+                        .then(data => callback(data.country_code ? data.country_code.toLowerCase() : "in"))
+                        .catch(() => callback("in"));
+                },
+                preferredCountries: ["in", "us", "gb", "ae", "sg"],
+                allowDropdown: true,
+                separateDialCode: true,
+                dropdownContainer: document.body,
+                customPlaceholder: () => "Enter mobile number",
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+            });
+
+            // Add search input dynamically when dropdown opens (your existing code)
+            input.addEventListener("open:countrydropdown", function() {
+                setTimeout(() => {
+                    const dropdown = document.querySelector(".iti__country-list");
+                    if (dropdown && !document.querySelector(".custom-iti-search")) {
+                        const searchInput = document.createElement("input");
+                        searchInput.className = "custom-iti-search";
+                        searchInput.type = "text";
+                        searchInput.placeholder = "🔍 Search...";
+                        dropdown.prepend(searchInput);
+
+                        Object.assign(searchInput.style, {
+                            position: "sticky",
+                            top: "0",
+                            zIndex: "9999",
+                            background: "#111",
+                            padding: "6px 10px",
+                            marginBottom: "5px",
+                            border: "1px solid #444",
+                            borderRadius: "5px",
+                            width: "90%",
+                            color: "#fff",
+                        });
+
+                        ["mousedown", "click", "touchstart"].forEach(evt => {
+                            searchInput.addEventListener(evt, e => e.stopPropagation());
+                        });
+
+                        searchInput.addEventListener("keydown", e => e.stopPropagation());
+
+                        searchInput.addEventListener("input", function() {
+                            const search = this.value.replace("+", "").trim();
+                            let firstVisible = null;
+                            document.querySelectorAll(".iti__country").forEach(country => {
+                                const dialCode = country.querySelector(".iti__dial-code")?.innerText.replace("+", "") || "";
+                                const visible = dialCode.includes(search);
+                                country.style.display = visible ? "" : "none";
+                                if (visible && !firstVisible) firstVisible = country;
+                            });
+                            if (firstVisible) {
+                                const countryCode = firstVisible.getAttribute("data-country-code");
+                                iti.setCountry(countryCode);
+                                updateCountryCode();
+                            }
+                        });
+                    }
+                }, 100);
+            });
+        }
+
+        // Update hidden field whenever country changes
+        function updateCountryCode() {
+            hiddenInput.value = "+" + iti.getSelectedCountryData().dialCode;
+        }
+
+        input.addEventListener("countrychange", updateCountryCode);
+        updateCountryCode();
+    }
+
+    // Initialize with the default checked radio
+    const defaultType = document.querySelector('input[name="otp_message_type"]:checked')?.value || 'whatsapp';
+    initIntlTelInput(defaultType);
+
+    // Listen for radio button change
+    document.querySelectorAll('input[name="otp_message_type"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            initIntlTelInput(this.value);
+        });
+    });
 });
 </script>
 @endsection
