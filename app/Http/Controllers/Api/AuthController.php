@@ -229,10 +229,12 @@ class AuthController extends Controller
             // if(!empty($request->email))
             //     Session::put('formEmail', $request->email);
 
-            $country_code_value = $request->country_code ?? '';
+            $country_code_value = $request->country_code ?? '+91';
+
             $request->validated($request->only(['email']),$request->otp_message_type);
-	    
-	    if (empty($country_code_value)) {
+	           
+
+	        if (empty($country_code_value)) {
                 $country_code_value = '+91';
             }
 
@@ -245,7 +247,24 @@ class AuthController extends Controller
 
             //Verify user 
             if(is_numeric($request->email)){
-                $user = User::where('phone',$request->email)->first();
+                // Fallback to +91 if not provided
+                $finalCode = $request->country_code ?: '+91';
+
+                //$user = User::where('phone',$request->email)->first();
+                $user = User::where('country_code', $request->country_code)
+                        ->where('phone', $request->email)
+                        ->first();
+
+
+                 //If not found, check if phone exists under a *different* country code
+                if (empty($user)) {
+                    $existsWithDifferentCode = User::where('phone', $request->email)
+                                                   ->exists();
+
+                    if ($existsWithDifferentCode) {
+                        return $this->error('', 'Please choose the correct country code for this mobile number.', 200);
+                    }
+                }
             }else{
                 $user = User::where('email', $request->email)->first();
             }
@@ -264,6 +283,9 @@ class AuthController extends Controller
                 //set a session variable as message type.
                 $type = $request->otp_message_type;
                 session()->put('otp_message_type', $type);
+
+                $dial_code = $request->country_code;
+                session()->put('country_code', $dial_code);
 
                 if(is_numeric($request->email)){
                     //send otp via message
@@ -384,10 +406,27 @@ class AuthController extends Controller
             //     Session::put('formEmail', $request->email);
 
 
-            $rule['name']=['required', 'min:5', 'regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'];
-            $rule['phone']='digits_between:10,10|unique:users,phone';
+            //$rule['name']=['required', 'min:5', 'regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'];
+            //$rule['phone']='digits_between:10,10|unique:users,phone';
+            //$rule['phone']= ['required', 'regex:/^\+[1-9]\d{6,14}$/'];
             //$rule['email']=['required', 'email', 'max:255', 'unique:users,email'];
             //$rule['password']=['required', 'min:8'];
+
+            $rule = [
+                'name' => ['required','min:5','regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'],
+                'country_code' => ['required'],
+                'phone' => [
+                    'required',
+                    'digits_between:6,15',
+                    function($attribute, $value, $fail) use ($request) {
+                        if (\App\User::where('country_code', $request->country_code)
+                                             ->where('phone', $value)
+                                             ->exists()) {
+                            $fail('Mobile number is already linked to another account.');
+                        }
+                    },
+                ],
+            ];
 
             $messages = [
                 'name' => 'Please enter a valid name.',
@@ -395,9 +434,9 @@ class AuthController extends Controller
                 'password.min' => 'Password required atleast 8 character.',
                 'email' => 'Please enter a valid email address.',
                 'email.unique' => 'Email address is already linked to another account.',
-                'phone' => 'Please enter a valid mobile number.',
-                'phone.unique' => 'Mobile number is already linked to another account.',
-                'phone.digits_between' => 'Please enter the 10 digit mobile number.'
+                'phone.required' => 'Please enter a valid mobile number.',
+                'phone.digits_between' => 'Mobile number should be between 6 to 15 digits.',
+                'country_code.required' => 'Country code is required.'
             ];
 
             $request->validate($rule,$messages);

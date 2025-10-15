@@ -38,14 +38,16 @@ class OtpUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required',new EmailOrPhone]
+            'email' => ['required',new EmailOrPhone],
+            'country_code' => ['required']
         ];
     }
     
     public function messages()
     {
         return [
-            'email' => 'Please enter a valid email address or mobile number.'
+            'email' => 'Please enter a valid mobile number.',
+            'country_code.required' => 'Please select your country code.'
         ];
     }
 }

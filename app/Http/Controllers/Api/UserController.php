@@ -562,6 +562,8 @@ class UserController extends Controller
             //set a session variable as message type.
             $type = $user->otp_message_type;
             session()->put('otp_message_type', $type);
+            $dial_code = $user->country_code;
+            session()->put('country_code', $dial_code);
             if (!Cache::has($user->id)) { 
                 Cache::put($user->id, true, 10);
                 $user = User::find($user->id);

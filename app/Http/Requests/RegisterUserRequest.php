@@ -40,10 +40,21 @@ class RegisterUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5|regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u',
-            'phone' => 'digits_between:10,10|unique:users,phone',
-            //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            //'password' => ['required',  Rules\Password::defaults()], //'confirmed',
+            'name' => ['required','min:5','regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'],
+            'country_code' => ['required'],
+            'phone' => [
+                'required',
+                'digits_between:6,15', // national number length
+                function($attribute, $value, $fail) {
+                    // optional: unique check with country code
+                    if (\App\User::where('country_code', request()->country_code)
+                                         ->where('phone', $value)
+                                         ->exists()) {
+                        $fail('Mobile number is already linked to another account.');
+                    }
+                },
+            ],
         ];
     }
+
 }
