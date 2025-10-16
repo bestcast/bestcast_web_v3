@@ -41,7 +41,7 @@ class LoginUserRequest extends FormRequest
         return [
             'email' => ['required',new EmailOrPhone],
             'password' => ['required', 'string', 'min:8'],
-            'country_code' => ['required'],
+            /*'country_code' => ['required'],*/
         ];
     }
 
@@ -50,7 +50,7 @@ class LoginUserRequest extends FormRequest
         return [
             'email' => 'Please enter a valid mobile number.',
             'password' => 'Your password must contain between 8 and 60 characters.',
-            'country_code.required' => 'Please select your country code.',
+            /*'country_code.required' => 'Please select your country code.',*/
         ];
     }
 }

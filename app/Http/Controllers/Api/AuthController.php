@@ -254,16 +254,9 @@ class AuthController extends Controller
                 $user = User::where('country_code', $request->country_code)
                         ->where('phone', $request->email)
                         ->first();
-
-
-                 //If not found, check if phone exists under a *different* country code
+                
                 if (empty($user)) {
-                    $existsWithDifferentCode = User::where('phone', $request->email)
-                                                   ->exists();
-
-                    if ($existsWithDifferentCode) {
-                        return $this->error('', 'Please choose the correct country code for this mobile number.', 200);
-                    }
+                    return $this->error('', "User with {$country_code_value} {$request->email} not found. Please create a new account.", 200);
                 }
             }else{
                 $user = User::where('email', $request->email)->first();
@@ -414,7 +407,6 @@ class AuthController extends Controller
 
             $rule = [
                 'name' => ['required','min:5','regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'],
-                'country_code' => ['required'],
                 'phone' => [
                     'required',
                     'digits_between:6,15',
@@ -435,8 +427,7 @@ class AuthController extends Controller
                 'email' => 'Please enter a valid email address.',
                 'email.unique' => 'Email address is already linked to another account.',
                 'phone.required' => 'Please enter a valid mobile number.',
-                'phone.digits_between' => 'Mobile number should be between 6 to 15 digits.',
-                'country_code.required' => 'Country code is required.'
+                'phone.digits_between' => 'Mobile number should be between 6 to 15 digits.'
             ];
 
             $request->validate($rule,$messages);
