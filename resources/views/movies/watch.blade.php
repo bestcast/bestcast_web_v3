@@ -189,6 +189,7 @@
                           if(!isPaused){
                               let getCurrentTime=parseInt(player.getCurrentTime(),10);
 
+                              let movieDuration = parseInt(player.getDuration(), 10);
 
                               //render percentage watched
                               if(getCurrentTime && playbacktime){
@@ -203,7 +204,8 @@
                               setusermoviedata = {
                                   watch_time: getCurrentTime,
                                   watching: 1,
-                                  watched_percent: percentageWatched
+                                  watched_percent: percentageWatched,
+                                  movieDuration: movieDuration
                               };
 
                               //render watched seconds total

@@ -32,6 +32,8 @@ use App\Http\Requests\LoginOtpUserRequest;
 use Email;
 use Otp;
 use Cache;
+use App\Models\UserMovieWatchLog;
+use App\Models\UserMovieWatched;
 
 use Laravel\Sanctum\PersonalAccessToken;
 class UserController extends Controller
@@ -370,6 +372,7 @@ class UserController extends Controller
         if(empty($user->id) || empty($request->profile_id))
             return $this->error('', "No Records Found!", 200);
 
+        $movieDuration = $request->input('movieDuration'); 
         $usersMovies=UsersMovies::getUsersMovies($user->id,$request->profile_id,$movieid);
         if(empty($usersMovies)){
             $usersMovies=new UsersMovies();
@@ -395,9 +398,122 @@ class UserController extends Controller
         $usersMovies->viewed=isset($request->viewed)?$request->viewed:$usersMovies->viewed;
         $usersMovies->save();
         
+        $this->trackMovieWatch($user->id, $movieid, 'web', $movieDuration);
+
         $usersMovies=UsersMovies::getMovie($user->id,$request->profile_id,$movieid);
-        return new MoviesListResource($usersMovies);
+        //return new MoviesListResource($usersMovies);
+        $response = new MoviesListResource($usersMovies);
+        $response->additional(['movieDuration' => $movieDuration]); // send it back without saving
+        return $response;
         //return new UsermoviesResource($usersMovies);
+    }
+
+    public function trackMovieWatch($userId, $movieId, $platform = 'web', $movieDurationFromRequest = null)
+    {
+        $movie = Movies::select('video_url', 'duration')->find($movieId);
+        if (!$movie) {
+            return;
+        }
+
+        $watchType = stripos($movie->video_url, 'trailer') !== false ? 'trailer' : 'movie';
+        $movieDuration = max(1, $movieDurationFromRequest ?? $movie->duration);
+
+        $userMovie = UsersMovies::firstOrNew([
+            'user_id'  => $userId,
+            'movie_id' => $movieId,
+        ]);
+
+        // Calculate watched percent
+        if ($userMovie->watch_time && $movieDuration > 0) {
+            $userMovie->watched_percent = round(($userMovie->watch_time / $movieDuration) * 100, 2);
+        }
+
+        $watchTime = $userMovie->watch_time ?? 0;
+        $watchedPercent = $userMovie->watched_percent ?? 0;
+
+        // Check today's latest watch log
+        $todayLog = UserMovieWatchLog::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->where('platform', $platform)
+            ->whereDate('watched_at', today())
+            ->orderByDesc('id')
+            ->first();
+
+        $shouldAddLog = false;
+
+        /*CASE 1: First time today — reached 1 hour*/
+         
+        if (!$todayLog && $watchTime >= 3600) {
+            $shouldAddLog = true;
+            Cache::put("user_{$userId}_movie_{$movieId}_first_hour_reached", true, now()->endOfDay());
+        }
+
+        /* CASE 2: Already has a log today (maybe completed 100%)
+         * If they start again (watchTime small) and again reach 1 hour → add count
+         */
+        $firstHourReached = Cache::get("user_{$userId}_movie_{$movieId}_first_hour_reached");
+        $previousWatchTime = Cache::get("user_{$userId}_movie_{$movieId}_last_watch_time", 0);
+
+        // Keep track of how many hourly logs were added today
+        $hourlyLogCount = Cache::get("user_{$userId}_movie_{$movieId}_hourly_count", 0);
+
+        // Detect restart (user dropped from high to near 0)
+        if ($firstHourReached && $previousWatchTime > 1000 && $watchTime < 300) {
+            // Reset restart and second-hour flags
+            Cache::put("user_{$userId}_movie_{$movieId}_restart_started", true, now()->endOfDay());
+            Cache::forget("user_{$userId}_movie_{$movieId}_second_hour_added");
+        }
+
+        // After restart, if again crosses 1 hour, add once more
+        if (
+            Cache::get("user_{$userId}_movie_{$movieId}_restart_started") &&
+            $watchTime >= 3600 &&
+            !Cache::get("user_{$userId}_movie_{$movieId}_second_hour_added")
+        ) {
+            $shouldAddLog = true;
+            Cache::put("user_{$userId}_movie_{$movieId}_second_hour_added", true, now()->endOfDay());
+            Cache::increment("user_{$userId}_movie_{$movieId}_hourly_count");
+        }
+
+        // Always keep last watch time updated
+        Cache::put("user_{$userId}_movie_{$movieId}_last_watch_time", $watchTime, now()->endOfDay());
+
+        // Add the log if conditions met
+        if ($shouldAddLog) {
+            UserMovieWatchLog::create([
+                'user_id'    => $userId,
+                'movie_id'   => $movieId,
+                'watched_at' => now(),
+                'platform'   => $platform,
+                'watch_type' => $watchType,
+            ]);
+
+            // Update summary count
+            $record = UserMovieWatched::firstOrNew([
+                'user_id'  => $userId,
+                'movie_id' => $movieId,
+            ]);
+
+            if (!$record->exists) {
+                $record->first_watched_at = now();
+                $record->watch_count = 1;
+            } else {
+                $record->watch_count += 1;
+            }
+
+            $record->last_watched_at = now();
+            $record->save();
+        }
+
+        /*\Log::info("trackMovieWatch => movieId: $movieId | Duration Used: $movieDuration | watchTime: $watchTime | watchedPercent: $watchedPercent | Added: " . ($shouldAddLog ? 'YES' : 'NO'));
+
+        \Log::info('CACHE DEBUG', [
+            'first_hour_reached' => Cache::get("user_{$userId}_movie_{$movieId}_first_hour_reached"),
+            'restart_started' => Cache::get("user_{$userId}_movie_{$movieId}_restart_started"),
+            'second_hour_added' => Cache::get("user_{$userId}_movie_{$movieId}_second_hour_added"),
+            'hourly_count' => Cache::get("user_{$userId}_movie_{$movieId}_hourly_count"),
+            'last_watch_time' => Cache::get("user_{$userId}_movie_{$movieId}_last_watch_time"),
+        ]);*/
     }
 
     public function getusermovietime($movieid,Request $request)
