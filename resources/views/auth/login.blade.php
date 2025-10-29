@@ -93,6 +93,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
             });
 
+            // Ensure default +91 flag is always shown (even if geo lookup fails)
+            setTimeout(() => {
+                if (!iti.getSelectedCountryData().iso2) {
+                    iti.setCountry("in");
+                }
+                updateCountryCode();
+            }, 500);
+
             // Add search input dynamically when dropdown opens (your existing code)
             input.addEventListener("open:countrydropdown", function() {
                 setTimeout(() => {
@@ -156,11 +164,31 @@ document.addEventListener("DOMContentLoaded", function() {
     const defaultType = document.querySelector('input[name="otp_message_type"]:checked')?.value || 'whatsapp';
     initIntlTelInput(defaultType);
 
-    // Listen for radio button change
+    //Handle radio button change between SMS / WhatsApp cleanly
     document.querySelectorAll('input[name="otp_message_type"]').forEach(radio => {
         radio.addEventListener('change', function() {
+            const input = document.querySelector("#email");
+
+            // Step 1: clean current number
+            let cleanValue = input.value.replace(/\s+/g, '');
+            if (window.iti && typeof iti.getNumber === 'function') {
+                cleanValue = iti.getNumber().replace(/\s+/g, '');
+            }
+
+            // Step 2: reinitialize plugin
             initIntlTelInput(this.value);
+
+            // Step 3: reapply cleaned number
+            setTimeout(() => {
+                input.value = cleanValue.replace(/\s+/g, '');
+            }, 200);
         });
+    });
+
+    //Clean number before form submit
+    document.querySelector('.ajx-sendotp-form')?.addEventListener('submit', function(e) {
+        const input = document.querySelector("#email");
+        if (input) input.value = input.value.replace(/\s+/g, ''); // remove spaces
     });
 });
 </script>
