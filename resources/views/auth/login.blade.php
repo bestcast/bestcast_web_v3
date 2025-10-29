@@ -23,12 +23,12 @@
                                     <span><h6>Choose any one to receive an OTP message.</h6></span>
                                 </div>
                                 <div class="form-check form-check-inline mb--30">
+                                  <input class="form-check-input" type="radio" name="otp_message_type" id="whatsapp" value="whatsapp" checked>
+                                  <label class="form-check-label" for="whatsapp">WhatsApp</label>
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-check form-check-inline mb--30">
                                   <input class="form-check-input" type="radio" name="otp_message_type" id="sms" value="sms">
                                   <label class="form-check-label" for="sms">SMS</label>
-                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <div class="form-check form-check-inline mb--30">
-                                  <input class="form-check-input" type="radio" name="otp_message_type" id="whatsapp" value="whatsapp" checked>
-                                  <label class="form-check-label" for="whatsapp">Whatsapp</label>
                                 </div>
                                 <div class="fieldtab dnn">
                                     <div class="fieldtab-phone active">Mobile</div> | <div class="fieldtab-email">Email</div>
