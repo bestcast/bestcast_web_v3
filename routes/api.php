@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Api\QuizController;
 
 use App\Http\Controllers\Movies\BrowseController;
 use App\Http\Controllers\Movies\GuestController;
@@ -98,6 +98,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/setusermovie/{movieid}', [UserController::class, 'setusermovie'])->name('setusermovie');
     Route::get('/appnotifylist/{id}', [UserController::class, 'appnotifylist'])->name('appnotifylist');
     Route::get('/deleteuser', [UserController::class, 'deleteuser'])->name('deleteuser');
+
+
+    Route::post('/quiz/{movieId}', [QuizController::class, 'getQuiz']);
+    Route::post('/submit-quiz', [QuizController::class, 'quizsubmit']);
+    Route::post('/quiz-result', [QuizController::class, 'quizresult']);
 });
 
 //Route::get('/data', [YourController::class, 'noAuthRequired']);

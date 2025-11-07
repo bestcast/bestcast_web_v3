@@ -491,3 +491,46 @@ table.table tr.header td{background:var(--bs-border-color);font-size: 17px;font-
                           .credits .points .used span{color:var(--color-primary);}
                           .credits table {margin-top: 30px;margin-bottom: 20px;}
                           .credits table .header td{background:#000 !important;color:#FFF !important; }
+
+.option-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.option-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #1f2937;
+    margin-top: 10px;
+}
+
+.add-button {
+    background-color: #1f2937;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.alert.alert-danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 5px;
+}

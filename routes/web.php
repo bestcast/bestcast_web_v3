@@ -365,6 +365,12 @@ Route::group([
     Route::get('/admin/trailerviews','TrailerViewsReportController@index')->name('admin.trailerviews.index');
     Route::get('/admin/trailerviews/data','TrailerViewsReportController@getViewsData')->name('admin.trailerviews.data');
 
+    Route::get('/admin/questions/list/{movieId}', 'QuestionController@list')->name('admin.questions.list');
+    Route::get('/admin/questions/create/{movieId}', 'QuestionController@create')->name('admin.questions.createQuestion');
+    Route::post('/admin/questions/saveQuestion', 'QuestionController@saveQuestion')->name('admin.questions.saveQuestion');
+    Route::get('/admin/questions/edit/{movieId}/{questionId}', 'QuestionController@edit')->name('admin.questions.editQuestion');
+    Route::post('/admin/questions/updateQuestion', 'QuestionController@updateQuestion')->name('admin.questions.updateQuestion');
+    Route::get('/admin/questions/deleteQuestion/{movieId}/{questionId}', 'QuestionController@deleteQuestion')->name('admin.questions.deleteQuestion');
 
 });
 

@@ -35,6 +35,7 @@ use App\Models\UsersMovies;
 use App\Models\UsersDevice;
 use Email;
 use Redirect;
+use App\Models\Question;
 
 class BrowseController extends Controller
 {
@@ -115,7 +116,7 @@ class BrowseController extends Controller
 
         return view('movies.search');
     }
-    public function watch($id)
+    public function watch(Request $request, $id)
     {
         header('Access-Control-Allow-Origin: *');
         //Force user to buy plan start
@@ -161,8 +162,14 @@ class BrowseController extends Controller
             $meta=$post->meta->pluck('value','path');
             return view('errors.lost',['post'=>$post,'meta'=>$meta]);
         }
-
-        return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken]);
+	
+	$exists = Question::where('movie_id', $movie->id)->exists();
+        if ($exists) {
+            $question_available = 1;
+        } else {
+            $question_available = 0;
+        }
+        return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken, 'question_available'=>$question_available]);
     }
 
     public function mylist()
@@ -327,8 +334,4 @@ class BrowseController extends Controller
         //Session::forget('profileToken');
         return response()->json(['id' => $id]);
     }
-
-
-
-
 }

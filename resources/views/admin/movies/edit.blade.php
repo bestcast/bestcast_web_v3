@@ -7,7 +7,13 @@
     <div class="col-md-8">
       <div class="container-fluid">
         @include('admin.common.message')
-          <h2 class="pb-2 border-bottom">Edit subscription : {{ $model->title  }} </h2>
+          <h2 class="pb-2 border-bottom">Edit subscription : {{ $model->title  }} 
+            <a href="{{ route('admin.questions.list', ['movieId' => $model->id]) }}"class="btn btn-dark upload-media um-image_id" style="float:right"><span>Create Questions</span></a>
+            <!-- 
+
+            <button type="button" class="btn btn-dark upload-media um-image_id" data-div="image_id" data-id="114" data-bs-toggle="modal" data-bs-target="#mediaModal"><span>Change</span> Image</button> -->
+          </h2>
+
           <div class="form-row">
               <label class="form-label" for="name">Title <em>*</em></label>
               <input type="text" class="form-control" id="title" name="title" value="{{ old('title',$model->title) }}" >
