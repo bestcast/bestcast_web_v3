@@ -208,76 +208,64 @@
                 let quizShown = false; // NEW FLAG
                 let question_available = {{ $question_available }};
                 let getCurrentTime=parseInt(player.getCurrentTime(),10);
-                console.log("Movie currentTime in seconds:", getCurrentTime);
-
+                //console.log("Movie currentTime in seconds:", getCurrentTime);
                 const cookieValue = getCookie("quiz_popup_{{ $movie->id }}");
-                //console.log("⏱ Current time:", getCurrentTime, "| Cookie:", cookieValue);
-
-                // Trigger quiz confirm popup once movie started
-                if(getCurrentTime ===0 && !quizShown && {{ $question_available }} == 1 && cookieValue === ''){
-                    quizShown = true; //  Mark it shown immediately
-                    showQuizPrompt(player);
-                }
-                /*if (getCurrentTime === 0){
-                    alert('hi');
-                }*/
                 var isPaused=0;
                 player.addEventListener("mediaPause", function(data){
                     isPaused=1;
                 });
                 //let quizPromptShown = false;
-                player.addEventListener("mediaPlay", function(data){
-                    isPaused=0;
-                    // Trigger quiz confirm popup once movie started
-                    if(getCurrentTime ===0 && !quizShown && {{ $question_available }} == 1 && cookieValue === ''){
-                        quizShown = true; //  Mark it shown immediately
-                        showQuizPrompt(player);
-                    }
-                    /*if (!quizPromptShown && {{ $question_available }} == 1) {
-                        quizPromptShown = true; // ensure it only fires once
-                        showQuizPrompt(player);
-                    }*/
+                player.addEventListener("mediaPlay", function() {
+                    isPaused = 0;
+
+                    // Wait until 5 seconds to show quiz prompt (only once)
+                    const checkInterval = setInterval(() => {
+                        const currentTime = parseInt(player.getCurrentTime() || 0);
+                        if (
+                            currentTime >= 0 &&
+                            currentTime <= 5 &&
+                            !quizPromptShownOnce &&
+                            {{ $question_available }} == 1
+                        ) {
+                            const cookieValue = getCookie("quiz_popup_{{ $movie->id }}");
+
+                            // Only show popup if cookie not already set
+                            if (cookieValue === '' || cookieValue === '0') {
+                                quizPromptShownOnce = true;
+                                quizShown = true;
+                                showQuizPrompt(player);
+                                clearInterval(checkInterval);
+                            } else {
+                                // User already accepted/declined earlier
+                                disclaimerAccepted = (cookieValue === '1');
+                                quizActive = (cookieValue === '1');
+                                clearInterval(checkInterval);
+                            }
+                        }
+
+                        // Stop checking if video paused or ended
+                        if (isPaused || currentTime >= player.getDuration()) {
+                            clearInterval(checkInterval);
+                        }
+                    }, 1000); // check every 1 second
                 });
+
                 player.addEventListener("mediaEnd", function() {
-                    /*console.log("Movie ended — clearing quiz cookie");
-                    document.cookie = "quiz_popup_{{ $movie->id }}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    console.log("Movie ended — clearing FromTime cookie");
-                    document.cookie = "from_time=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-                    console.log("Movie ended — clearing AttemptID cookie");
-                    document.cookie = "attempt_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    alert('Movie ended');*/
-
-                    clearCookie(`quiz_popup_{{ $movie->id }}`);
-                    clearCookie("from_time");
-                    clearCookie("attempt_id");
-                    //location.reload(); // reload the entire page
-                    //alert("Movie ended — cookies cleared (mediaEnd)");
+                    $('.vpl-lightbox-wrap').css('display','contents');
+                    let videoElement = document.querySelector('#wrapper video');
+                    if (videoElement) videoElement.pause(); // Pause video manually
+                    showFinalQuizResult(player);
                 });
 
                 player.setVolume(0.7);
-                //let question_available = {{ $question_available }};
-
                 let secondsWatched=0;
                 let percentageWatched='{{ empty($usermovie)?0:$usermovie->watched_percent }}';
                 let intervalSecond=15;
-                //let quizShown = false; // NEW FLAG
-
-                //let movieId = {{$movie->id}};
                 let moviePlayInterval = setInterval(function(){
                     if(!isPaused){
                         let getCurrentTime=parseInt(player.getCurrentTime(),10);
                         //console.log("Movie currentTime in seconds:", getCurrentTime);
                         const currentTime = Math.floor(player.currentTime);
-                        // LIVE cookie check
-                        //const cookieValue = getCookie("quiz_popup_{{ $movie->id }}");
-                        //console.log("⏱ Current time:", getCurrentTime, "| Cookie:", cookieValue);
-
-                        // Trigger quiz confirm popup once movie started
-                        /*if(getCurrentTime >= 1 && !quizShown && {{ $question_available }} == 1 && cookieValue === ''){
-                            quizShown = true; //  Mark it shown immediately
-                            showQuizPrompt(player);
-                        }*/
                          // If disclaimer already accepted earlier
                         if(cookieValue === '1' && disclaimerAccepted === false){
                             disclaimerAccepted = true;
@@ -291,7 +279,6 @@
 
                         let movieDuration = parseInt(player.getDuration(), 10);
                         //console.log("Movie duration in seconds:",movieDuration);
-                        
                         //render percentage watched
                         if(getCurrentTime && playbacktime){
                             percentageWatched = parseInt(((getCurrentTime / '{{ empty($movie->duration)?7000:$movie->duration }}') * 100),10);
@@ -322,7 +309,6 @@
                         options.body = JSON.stringify(setusermoviedata);
                         fetchDataWithRetry(url, options,1).then(response => response.json());
                     }
-                        //console.log(isPaused);
                 }, (intervalSecond*1000)); //5000 is 5seconds only and when exit clearInterval(moviePlayInterval);
                 $('.vpl-back-refer').on('click',function(){
                     clearInterval(moviePlayInterval);
@@ -363,7 +349,6 @@
     let quizTimer;
     let timeLeft = 10;
     let selectedQuestions = [];
-
     let quizShown = false;
     let disclaimerAccepted = false;
     let quizActive = false;
@@ -373,6 +358,8 @@
     let quizInterval = null;
     let firstQuizTriggered = false;
     let questionLock = false; // prevent double-next on same question
+
+    let quizPromptShownOnce = false;
 
     function getCookie(name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -407,14 +394,20 @@
         Swal.fire({
             html: `
                 <div class="quiz-question-header">
-                  <div class="quiz-icon">❓</div>
-                  <h2 class="quiz-title">🎯 Quiz Time!</h2>
+                    <div class="quiz-icon">
+                        <img src="{{ asset('img/icon/quiz_application/question-mark.png') }}" width="40" alt="Question Icon">
+                    </div>
+                    <h2 class="quiz-title">
+                        <img src="{{ asset('img/icon/quiz_application/target.png') }}" width="30" alt="Target Icon">
+                        Quiz Time!
+                    </h2>
+                  
                   <p class="quiz-subtitle">You Want to play the quiz?</p>
                 </div>
             `,
             showCancelButton: true,
-            confirmButtonText: '🎮 Yes, Let\'s Play!',
-            cancelButtonText: '❌ Not Now',
+            confirmButtonText: `<img src="{{ asset('img/icon/quiz_application/joystick.png') }}" width="24" alt="Play"> Yes, Let's Play!`,
+            cancelButtonText: `<img src="{{ asset('img/icon/quiz_application/close.png') }}" width="22" alt="notnow"> Not Now`,
             allowOutsideClick: false,
             customClass: {
                 popup: 'custom-swal-popup',
@@ -424,12 +417,11 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // User clicked "Yes"
-                /*setCookie(quizPopupCookie, '1');
-                console.log("quizPopupCookieValue:", quizPopupCookie);*/
                 Swal.fire({
                     icon: 'info',
-                    title: '⚠️ Disclaimer',
-                    html: "Please don't click <strong>forward</strong> or <strong>rewind</strong> during the movie.<br><br>🧠 Quiz questions may appear <strong>anytime</strong>.",
+                    title: `<img src="{{ asset('img/icon/quiz_application/alert.png') }}" width="24" alt="disclaimer"> Disclaimer`,
+                    html: `Please don't click <strong>forward</strong> or <strong>rewind</strong> during the movie.<br><br><img src="{{ asset('img/icon/quiz_application/brain.png') }}" width="24" alt="Brain" style="vertical-align:middle; margin-right:4px;">
+                          Quiz questions may appear <strong>anytime</strong>.`,
                     confirmButtonText: "OK, I'm Ready!",
                     confirmButtonColor: "#6a0dad", // violet color
                     allowOutsideClick: false,
@@ -451,16 +443,11 @@
                     }
                 });
             }else{
-                // ❌ User clicked "No"
-                /*setCookie(quizPopupCookie, '0');
-                console.log("quizPopupCookieValue:", quizPopupCookie);*/
-
                 if (videoElement) videoElement.play(); // Resume
                 $('.vpl-lightbox-wrap').css('display','block');
             }
         });
     }
-
 
     function getCurrentTime() {
         const player = document.querySelector('video'); // your video element
@@ -471,21 +458,12 @@
         const [hours, minutes, seconds] = timeString.split(':').map(Number);
         return (hours * 3600) + (minutes * 60) + seconds;
     }
-
-    /*function startQuiz(movieId) {
-        // Set state only — do not fetch or show questions now
-        console.log("✅ Quiz Mode Started");
-        disclaimerAccepted = true;
-        quizActive = true;
-        //quizLastTriggeredAt = 0; // Reset to trigger first quiz at 15 mins
-        fetchQuestions(movieId);
-    }*/
     
     function startQuiz(movieId) {
         quizAnswers = [];
-        console.log(quizAnswers);
+        //console.log(quizAnswers);
         // Set state only — do not fetch or show questions now
-        console.log("Quiz Mode Started");
+        //console.log("Quiz Mode Started");
         disclaimerAccepted = true;
         quizActive = true;
         quizLastTriggeredAt = 0; // Reset to trigger first quiz at 15 mins
@@ -500,13 +478,12 @@
             if (currentMinutes % 15 === 0 && currentMinutes !== quizLastTriggeredAt) {
                 quizLastTriggeredAt = currentMinutes;
             quizAnswers = []; //Reset answers for this round
-            // Set cookie From_time=0 (expires in 1 hour)
             let from_time = incrementFromTime();
             //document.cookie = `from_time=0; path=/; max-age=3600;`;
-            console.log(document.cookie);
+            //console.log(document.cookie);
             $('.vpl-lightbox-wrap').css('display','contents');
             let videoElement = document.querySelector('#wrapper video');
-            if (videoElement) videoElement.pause(); // ✅ Pause video manually
+            if (videoElement) videoElement.pause(); // Pause video manually
             fetch(`/api/quiz/${movieId}`, {
                 method: 'POST',
                 credentials: 'include',
@@ -522,18 +499,12 @@
                 .then(data => {
                     
                     if (data.questions && data.questions.length) {
-                        /*quizQuestions = data.questions;
-                        quizAnswers = [];
-                        currentQIndex = 0;
-                        console.log(data.questions);*/
                         $('.vpl-lightbox-wrap').css('opacity','0');
                         document.getElementById('custom-quiz-popup').style.display = 'block';
                         startQuizFlow(data.questions);
-                        /*showQuizPopup();*/
-                        //renderCurrentQuestion(data.questions);
                     }else if (data.skip) {
-                        console.log("⏭ No questions in this interval, skipping ahead");
-                        incrementFromTime();
+                        //console.log("⏭ No questions in this interval, skipping ahead");
+                        //incrementFromTime();
                         if (videoElement) videoElement.play(); // Resume
                         $('.vpl-lightbox-wrap').css('display','block');
                         startQuizFlow(data.questions);
@@ -542,7 +513,7 @@
                         console.log("⚠ No more questions available");
                     }
                 })
-                .catch(err => console.error("❌ API Error:", err));
+                .catch(err => console.error("API Error:", err));
             }
         }, 10000); // check every 10 seconds
         
@@ -557,19 +528,17 @@
         if (!cookies.from_time) {
             // Cookie doesn't exist → create with default 0
             document.cookie = `from_time=0; path=/; max-age=86400;`;
-            console.log("🍪 from_time created with value 0");
+            //console.log("from_time created with value 0");
             return 0;
         } else {
             // Cookie exists → increment by 15
             let current = parseInt(cookies.from_time, 10) || 0;
             let updated = current + 15;
             document.cookie = `from_time=${updated}; path=/; max-age=86400;`;
-            console.log(`🍪 from_time incremented to ${updated}`);
+            //console.log(`from_time incremented to ${updated}`);
             return updated;
         }
     }
-
-
 
     function startQuizFlow(questions) {
         quizAnswers = []; //Reset answers for this interval
@@ -577,10 +546,6 @@
         currentQIndex = 0;
         renderCurrentQuestion(selectedQuestions[currentQIndex]);
     }
-    
-    /*function showQuizPopup() {
-        document.getElementById('custom-quiz-popup').style.display = 'block';
-    }*/
     function hideQuizPopup() {
         document.getElementById('custom-quiz-popup').style.display = 'none';
         $('.vpl-lightbox-wrap').css({
@@ -594,7 +559,7 @@
             return;
         }
 
-        console.log("Rendering question:", questionObj);
+        //console.log("Rendering question:", questionObj);
 
         if (!questionObj.options || !Array.isArray(questionObj.options)) {
             //console.error("Options missing or not an array:", questionObj);
@@ -691,7 +656,7 @@
         const attemptId = getCookie("attempt_id");
 
         let videoElement = document.querySelector('#wrapper video');
-        if (videoElement) videoElement.play(); // ✅ Pause video manually
+        if (videoElement) videoElement.play(); //Pause video manually
         $('.vpl-lightbox-wrap').css({
             'display': 'block',
             'opacity': '1'
@@ -709,71 +674,137 @@
                 attempt_id: attemptId,
             })
         })
-        /*.then(res => res.json())
-        .then(() => {
-            alert('Quiz submitted successfully!');
-        })*/
         .then(async response => {
             const text = await response.text(); // get raw text
-            console.log("Raw response:", text);
+            //console.log("Raw response:", text);
             try {
                 const data = JSON.parse(text);
                 const totalQuestions = data.totalQuestions;
                 const correctAnswerCount = data.correctAnswerCount;
                 const passingScore = totalQuestions - 1;
-                console.log("passingScore:", passingScore);
-                console.log("correctAnswerCount:", correctAnswerCount);
+                /*console.log("passingScore:", passingScore);
+                console.log("correctAnswerCount:", correctAnswerCount);*/
 
                 if (data.quizAttemptId) {
                     if (!getCookie("attempt_id")) {
-                        console.log("No attempt_id cookie found. Creating one...");
+                        //console.log("No attempt_id cookie found. Creating one...");
                         setCookie("attempt_id", data.quizAttemptId, 1); // expires in 1 day
                     } else {
-                        console.log("Attempt ID cookie already exists:", attemptId);
+                        //console.log("Attempt ID cookie already exists:", attemptId);
                     }
                 }
-
-                /*if(passingScore > 0 && correctAnswerCount >= passingScore){
-                    //Here check if cookie is created for attempt_id. If not then create cookie value here. For value use the attempt_id from response.
-                    Swal.fire({
-                        title: '<div style="margin-bottom: 10px;"><img src="https://img.icons8.com/emoji/96/check-mark-emoji.png" style="width: 60px; height: 60px;" alt="Check" /></div>🎉 You Win!',
-                        html: `
-                            <div style="font-size: 18px; margin-top: 10px; text-align: center;">
-                                Congratulations! You've completed the quiz successfully.<br><br>
-                                <a href="/rewards" id="reward-btn">
-                                    🎁 Claim Your Reward Points
-                                </a>
-                            </div>
-                        `,
-                        background: '#f0f9ff url("https://www.transparenttextures.com/patterns/stardust.png")',
-                        color: '#333',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        customClass: {
-                            popup: 'custom-swal-popup reward-popup'
-                        }
-                    });
-                    setTimeout(() => {
-                      // trigger after popup is shown
-                      confetti({
-                        particleCount: 150,
-                        spread: 90,
-                        origin: { y: 0.6 }
-                      });
-                    }, 100);
-
-                }
-                else{
-                    //Swal.fire('Good Try!', 'Better luck next time!', 'info');
-                }*/
-                /*console.log("Parsed JSON:", data);
-                alert("Quiz submitted successfully!");*/
             } catch (error) {
                 console.error("JSON parse error:", error);
             }
         })
         .catch(() => {
             alert('Something went wrong submitting your quiz.');
+        });
+    }
+    function showFinalQuizResult(player) {
+        //console.log("Movie ended — fetching final quiz result...");
+        const attemptId = getCookie('attempt_id');
+        fetch('/api/quiz-result', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ attemptId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            const { correctAnswerCount, totalQuestions, attemptId } = data;
+            if (typeof correctAnswerCount === 'undefined') {
+                /*Swal.fire({
+                  title: `
+                    <img src="{{ asset('img/icon/quiz_application/alert.png') }}" width="28" alt="Error Icon" 
+                         style="vertical-align:middle; margin-right:6px; margin-top:-4px;">
+                    Error
+                  `,
+                  text: 'Could not fetch your quiz score.',
+                  icon: 'error'
+                });*/
+
+                return;
+            }
+
+            const passingScore = totalQuestions > 1 ? totalQuestions - 1 : 1;
+            //console.log(`Passing Score: ${passingScore} | Correct: ${correctAnswerCount}`);
+            if(passingScore > 0 && correctAnswerCount >= passingScore){
+                //Here check if cookie is created for attempt_id. If not then create cookie value here. For value use the attempt_id from response.
+                Swal.fire({
+                    title: `<img src="{{ asset('img/icon/quiz_application/party.png') }}" width="24" alt="Party"> You Win!`,
+                    
+                    html: `<div style="font-size: 18px; margin-top: 10px; text-align: center;">
+                            Congratulations! You've completed the quiz successfully.<br><br>
+                                <a href="/rewards" id="reward-btn" style="text-decoration: none; font-weight: bold;">
+                                    <img src="{{ asset('img/icon/quiz_application/gift.png') }}" 
+                                     width="24" alt="Gift">
+                                    Claim Your Reward Points
+                                </a>
+                            </div>`,
+                    background: '#f0f9ff url("https://www.transparenttextures.com/patterns/stardust.png")',
+                    color: '#333',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    customClass: {
+                        popup: 'custom-swal-popup reward-popup'
+                    }
+                });
+                setTimeout(() => {
+                  // trigger after popup is shown
+                  confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                  });
+                }, 100);
+
+            }
+            else{
+                Swal.fire({
+                    icon: 'info',
+                    title: `<img src="{{ asset('img/icon/quiz_application/sad-face.png') }}" width="24" alt="betterluck"> Better Luck Next Time!`,
+                    html: `
+                          <p style="font-size:16px; margin-top:10px; color:#222020;">
+                            You did well! But unfortunately, you didn't pass this time.<br>
+                            Keep trying — success is just around the corner!
+                            <img src="{{ asset('img/icon/quiz_application/strong.png') }}" 
+                                 width="24" alt="Motivation">
+                          </p>
+                        `,
+                    confirmButtonText: `<img src="{{ asset('img/icon/quiz_application/home.png') }}" width="24" alt="goback"> Go Back`,
+                    confirmButtonColor: '#6a0dad',
+                    allowOutsideClick: false,
+                    showCancelButton: false,
+                    background: '#fff',
+                    color: '#333',
+                    customClass: {
+                      popup: 'custom-swal-popup disclaimer-popup',
+                      confirmButton: 'custom-swal-confirm'
+                    }
+                }).then(() => {
+                    window.location.href = "{{ url('/browse') }}";
+                });
+                setTimeout(() => {
+                  // trigger after popup is shown
+                  confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                  });
+                }, 100);
+            }
+
+            // 🧹 Cleanup cookies
+            clearCookie(`quiz_popup_{{ $movie->id }}`);
+            clearCookie("from_time");
+            clearCookie("attempt_id");
+        })
+        .catch(err => {
+            console.error('Result fetch error:', err);
         });
     }
 </script>

@@ -39,13 +39,15 @@ class QuizController extends Controller
             // $fromTime = (int) $request->cookie('from_time'); dd($fromTime);exit;
             $fromTime = $requestData['from_time']+1;
             $toTime = $fromTime + 14;
-            \Log::info("from_time (cookie): " . $fromTime);
-            \Log::info("to_time (calculated): " . $toTime);
+            /*\Log::info("from_time (cookie): " . $fromTime);
+            \Log::info("to_time (calculated): " . $toTime);*/
 
             $questions = Question::with('options')
                         ->where('movie_id', $movieId)
                         ->whereBetween('show_question_time', [$fromTime, $toTime])
                         ->orderBy('show_question_time')
+                        ->inRandomOrder()
+                        ->take(10)
                         ->get();
             if ($questions->isEmpty()) {
                 return response()->json([

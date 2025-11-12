@@ -37,7 +37,8 @@ class QuizModel extends Model
         }
         $answers = $requestData['answers'];
 
-        foreach ($answers as $ans) {Log::info('quiz attempt id'.$quizAttemptId);
+        foreach ($answers as $ans) {
+            //Log::info('quiz attempt id'.$quizAttemptId);
             QuizAttemptAnswer::create([
                 'quiz_attempts_id' => $quizAttemptId,
                 'quiz_question_id' => $ans['question_id'],
