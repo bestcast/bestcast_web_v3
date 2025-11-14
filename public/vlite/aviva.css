@@ -619,7 +619,9 @@
     }
 }
 
-
+.vpl-lightbox-wrap.quiz-mode {
+  background-color: transparent !important;
+}
 
 
 

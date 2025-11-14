@@ -251,8 +251,10 @@
                 });
 
                 player.addEventListener("mediaEnd", function() {
+                    const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
+                    window.fullscreenContainer = fullscreenContainer;
+                    const videoElement = fullscreenContainer.querySelector('video') || document.querySelector('#wrapper video');
                     $('.vpl-lightbox-wrap').css('display','contents');
-                    let videoElement = document.querySelector('#wrapper video');
                     if (videoElement) videoElement.pause(); // Pause video manually
                     showFinalQuizResult(player);
                 });
@@ -387,9 +389,57 @@
         }
     }
 
+    function showFullscreenSafePopup() {
+        const quizPopup = document.getElementById("custom-quiz-popup");
+
+        // Prevent duplicate popups
+        if (quizPopup.style.display === "flex") return;
+
+        const fullscreenElement = document.fullscreenElement;
+
+        // Move popup container safely
+        if (fullscreenElement) {
+            fullscreenElement.appendChild(quizPopup);
+        } else {
+            document.body.appendChild(quizPopup);
+        }
+
+        // Style only the popup, not the entire screen
+        Object.assign(quizPopup.style, {
+            display: "flex",
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: "999999999",
+            background: "rgba(0, 0, 0, 0.7)", // semi-transparent smaller overlay
+            color: "#fff",
+            padding: "20px 30px",
+            borderRadius: "16px",
+            textAlign: "center",
+            width: "auto",
+            maxWidth: "400px",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            backdropFilter: "blur(3px)",
+        });
+
+        // Pause video instead of darkening background
+        const video = document.querySelector("video");
+        if (video && !video.paused) {
+            video.pause();
+        }
+    }
+
+
     function showQuizPrompt(player){
+        // Detect fullscreen container or fallback to wrapper
+        const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
+        const videoElement = fullscreenContainer.querySelector('video') || document.querySelector('#wrapper video');
+
         $('.vpl-lightbox-wrap').css('display','contents');
-        let videoElement = document.querySelector('#wrapper video');
+        //let videoElement = document.querySelector('#wrapper video');
         if (videoElement) videoElement.pause(); // Pause video manually
         Swal.fire({
             html: `
@@ -409,6 +459,7 @@
             confirmButtonText: `<img src="{{ asset('img/icon/quiz_application/joystick.png') }}" width="24" alt="Play"> Yes, Let's Play!`,
             cancelButtonText: `<img src="{{ asset('img/icon/quiz_application/close.png') }}" width="22" alt="notnow"> Not Now`,
             allowOutsideClick: false,
+            target: fullscreenContainer, // Works in both fullscreen and normal
             customClass: {
                 popup: 'custom-swal-popup',
                 confirmButton: 'custom-swal-confirm',
@@ -425,6 +476,7 @@
                     confirmButtonText: "OK, I'm Ready!",
                     confirmButtonColor: "#6a0dad", // violet color
                     allowOutsideClick: false,
+                    target: fullscreenContainer, // Works in both fullscreen and normal
                     customClass: {
                         popup: 'custom-swal-popup disclaimer-popup',
                         confirmButton: 'custom-swal-confirm'
@@ -497,7 +549,6 @@
             })
                 .then(res => res.json())
                 .then(data => {
-                    
                     if (data.questions && data.questions.length) {
                         $('.vpl-lightbox-wrap').css('opacity','0');
                         document.getElementById('custom-quiz-popup').style.display = 'block';
@@ -510,7 +561,7 @@
                         startQuizFlow(data.questions);
                     } else {
                         window.location.href = data.redirect;
-                        console.log("⚠ No more questions available");
+                        console.log("No more questions available");
                     }
                 })
                 .catch(err => console.error("API Error:", err));
@@ -547,16 +598,28 @@
         renderCurrentQuestion(selectedQuestions[currentQIndex]);
     }
     function hideQuizPopup() {
-        document.getElementById('custom-quiz-popup').style.display = 'none';
+        const quizPopup = document.getElementById("custom-quiz-popup");
+        quizPopup.style.display = "none";
+
+        // Move popup back to body
+        if (!document.body.contains(quizPopup)) {
+            document.body.appendChild(quizPopup);
+        }
+
+        // Restore video layer
+        const wrapper = document.getElementById("wrapper");
+        wrapper.style.filter = "none";
+
         $('.vpl-lightbox-wrap').css({
             'display': 'block',
             'opacity': '1'
         });
     }
+
     function renderCurrentQuestion(questionObj) {
         if (!questionObj) {
-            //console.warn("Question is undefined at index", currentQIndex);
-            return;
+            console.warn("No question to render.");
+            return; // Do NOT hide popup anymore
         }
 
         //console.log("Rendering question:", questionObj);
@@ -615,7 +678,8 @@
             }
         }, 1000);
 
-        document.getElementById("custom-quiz-popup").style.display = "block";
+        /*document.getElementById("custom-quiz-popup").style.display = "block";*/
+        showFullscreenSafePopup();
     }
 
     function saveAnswerAndNext() {
@@ -749,6 +813,7 @@
                     color: '#333',
                     showConfirmButton: false,
                     allowOutsideClick: false,
+                    target: window.fullscreenContainer || document.body, // Works in both fullscreen and normal
                     customClass: {
                         popup: 'custom-swal-popup reward-popup'
                     }
@@ -778,6 +843,7 @@
                     confirmButtonText: `<img src="{{ asset('img/icon/quiz_application/home.png') }}" width="24" alt="goback"> Go Back`,
                     confirmButtonColor: '#6a0dad',
                     allowOutsideClick: false,
+                    target: fullscreenContainer, // Works in both fullscreen and normal
                     showCancelButton: false,
                     background: '#fff',
                     color: '#333',
@@ -798,7 +864,7 @@
                 }, 100);
             }
 
-            // 🧹 Cleanup cookies
+            // Cleanup cookies
             clearCookie(`quiz_popup_{{ $movie->id }}`);
             clearCookie("from_time");
             clearCookie("attempt_id");
@@ -807,5 +873,18 @@
             console.error('Result fetch error:', err);
         });
     }
+    document.addEventListener("fullscreenchange", () => {
+        const quizPopup = document.getElementById("custom-quiz-popup");
+        if (quizPopup.style.display === "flex") {
+            // move the popup without showing it again
+            const fullscreenElement = document.fullscreenElement;
+            if (fullscreenElement) {
+                fullscreenElement.appendChild(quizPopup);
+            } else {
+                document.body.appendChild(quizPopup);
+            }
+        }
+    });
+
 </script>
 @endsection
