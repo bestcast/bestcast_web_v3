@@ -413,6 +413,9 @@ Route::group([
     Route::get('/{urlkey}/{model}/{id}', 'Movies\BrowseController@urlkey')->name('movies.genre');
     #Route::get('/{urlkey}', 'Movies\BrowseController@urlkey')->name('urlkey');
     #Route::get('/deleteuser', 'App\Http\Controllers\Api\UserController@deleteuser')->name('deleteuser');
+
+    Route::get('/rewards/{user_id}', 'RewardController@reward')->name('rewards.claim');
+
 });
 
 

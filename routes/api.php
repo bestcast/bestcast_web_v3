@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\QuizController;
 use App\Http\Controllers\Movies\BrowseController;
 use App\Http\Controllers\Movies\GuestController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RewardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/quiz/{movieId}', [QuizController::class, 'getQuiz']);
     Route::post('/submit-quiz', [QuizController::class, 'quizsubmit']);
     Route::post('/quiz-result', [QuizController::class, 'quizresult']);
+
+    Route::post('/reward-claim', [RewardController::class, 'store']);
+    Route::put('/reward-claim/{id}', [RewardController::class, 'update']);
+
 });
 
 //Route::get('/data', [YourController::class, 'noAuthRequired']);

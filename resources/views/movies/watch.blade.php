@@ -72,7 +72,7 @@
 <?php
     $referurl=empty($_GET['refer'])?url('/browse'):$_GET['refer'];
     $usermovie=(empty($movie->usermovies[0]))?'':$movie->usermovies[0];
-    //dd($usermovie);
+    //dd($usermovie); user_id
     $subtitles=[];$issetActive=0;
     if(!empty($movie->subtitle)){
         foreach($movie->subtitle as $item){
@@ -803,7 +803,7 @@
                     
                     html: `<div style="font-size: 18px; margin-top: 10px; text-align: center;">
                             Congratulations! You've completed the quiz successfully.<br><br>
-                                <a href="/rewards" id="reward-btn" style="text-decoration: none; font-weight: bold;">
+                                <a href="/rewards/{{ $usermovie->user_id }}" id="reward-btn" style="text-decoration: none; font-weight: bold;">
                                     <img src="{{ asset('img/icon/quiz_application/gift.png') }}" 
                                      width="24" alt="Gift">
                                     Claim Your Reward Points
