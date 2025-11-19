@@ -135,8 +135,12 @@ class Transaction extends Database implements RoleHasRelationsContract
     }
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-    public static function getList()
+    /*public static function getList()
     {
         $data = Transaction::latest()->where('status','!=',0);
         if(!empty($_GET['user_id'])){
@@ -145,6 +149,32 @@ class Transaction extends Database implements RoleHasRelationsContract
         $data =$data->orderBy('created_at','desc');
         $data =$data->paginate(20);
         return $data;
+    }*/
+
+    public static function getList()
+    {
+        $data = Transaction::with('user')   // load user details
+                ->where('status', '!=', 0);
+
+        if (!empty($_GET['user_id'])) {
+            $data->where('user_id', $_GET['user_id']);
+        }
+        // Search filter
+        if (!empty($_GET['search'])) {
+            $search = $_GET['search'];
+
+            $data->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%$search%")
+                  ->orWhere('razorpay_order_id', 'LIKE', "%$search%")
+                  ->orWhere('razorpay_subscription_id', 'LIKE', "%$search%")
+                  ->orWhereHas('user', function ($uq) use ($search) {
+                        $uq->where('name', 'LIKE', "%$search%")
+                           ->orWhere('phone', 'LIKE', "%$search%");
+                  });
+            });
+        }
+        return $data->orderBy('created_at', 'desc')
+                    ->paginate(20);
     }
 
     public static function getPending($user,$planid)
