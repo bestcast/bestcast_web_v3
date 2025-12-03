@@ -25,51 +25,75 @@ class QuizController extends Controller
         $this->middleware('auth');
         $this->QuizModel = $QuizModel;
     }
-    public function getQuiz(Request $request, $movieId)
-    {   
+    public function getMovieQuiz(Request $request)
+    {
+        $userId = $request->user_id;
+        $movieId = $request->movie_id;
+        $interval = 15; 
+        $maxRequired = 3;  // total questions to show
+
         $user = Auth::user();
         $requestData = $request->all();
         if (!$user || $user->plan_expiry === null || Carbon::now()->gte(Carbon::parse($user->plan_expiry))) {
             return response()->json([
                 'redirect' => url('/pricing')
             ], 403);
-        }
-        else{
+        }else{
+            // Step 1 — Load ALL questions
+            $all = Question::where('movie_id', $movieId)
+                ->orderBy('show_question_time')
+                ->with('options')
+                ->get();
 
-            // $fromTime = (int) $request->cookie('from_time'); dd($fromTime);exit;
-            $fromTime = $requestData['from_time']+1;
-            $toTime = $fromTime + 14;
-            /*\Log::info("from_time (cookie): " . $fromTime);
-            \Log::info("to_time (calculated): " . $toTime);*/
-
-            $questions = Question::with('options')
-                        ->where('movie_id', $movieId)
-                        ->whereBetween('show_question_time', [$fromTime, $toTime])
-                        ->orderBy('show_question_time')
-                        ->inRandomOrder()
-                        ->take(10)
-                        ->get();
-            if ($questions->isEmpty()) {
-                return response()->json([
-                    'questions' => [],
-                    'skip' => true // tells frontend to skip ahead
-                ]);
+            if ($all->isEmpty()) {
+                return response()->json([]);
             }
 
-            $formatted = $questions->map(function ($q) {
-                return [
+            // Step 2 — Randomly select 9 questions
+            $selected = $all->shuffle()->take($maxRequired);
+
+            $final = [];
+
+            foreach ($selected as $q) {
+
+                // Step 3 — Determine interval dynamically
+                $intervalIndex = floor($q->show_question_time / $interval);
+                $intervalStart = $intervalIndex * $interval;
+                $intervalEnd   = $intervalStart + $interval;
+
+                // Step 4 — Ensure question belongs to this interval
+                if ($q->show_question_time > $intervalEnd) {
+                    continue;
+                }
+
+                // Step 5 — Dynamic buffer rule
+                $buffer = ($q->show_question_time >= 20) ? 3 : 2;
+
+                $popupTime = $q->show_question_time + $buffer;
+
+                $final[] = [
                     'id' => $q->id,
                     'question' => $q->question_name,
-                    // assuming each option has a 'name' field
-                    'options' => $q->options->toArray(),
-                    'show_question_time' => $q->show_question_time
+                    'show_question_time' => $q->show_question_time,
+                    'popup_time' => $popupTime,
+                    //'interval_start' => $intervalStart,
+                    //'interval_end' => $intervalEnd,
+                    'options' => $q->options
                 ];
-            });
-            /*dd($formatted);*/
-            return response()->json(['questions' => $formatted, 'skip' => false]);
+            }
+
+            // Step 6 — Sort by popup_time so popups appear in order
+            $final = collect($final)->sortBy('popup_time')->values();
+
+            //return response()->json($final);
+            return response()->json([
+                'questions' => $final
+            ]);
+
         }
         
     }
+
     public function quizsubmit(Request $request){
         $requestData = $request->all();
         return $this->QuizModel->QuizAttempt($requestData);

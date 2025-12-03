@@ -100,8 +100,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/appnotifylist/{id}', [UserController::class, 'appnotifylist'])->name('appnotifylist');
     Route::get('/deleteuser', [UserController::class, 'deleteuser'])->name('deleteuser');
 
-
-    Route::post('/quiz/{movieId}', [QuizController::class, 'getQuiz']);
+    Route::post('/quiz', [QuizController::class, 'getMovieQuiz']);
     Route::post('/submit-quiz', [QuizController::class, 'quizsubmit']);
     Route::post('/quiz-result', [QuizController::class, 'quizresult']);
 

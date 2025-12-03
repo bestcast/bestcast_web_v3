@@ -35,16 +35,22 @@ class QuizModel extends Model
         }else{
             $quizAttemptId = $requestData['attempt_id'];
         }
-        $answers = $requestData['answers'];
+        //$answers = $requestData['answers'];
+        $ans = $requestData['answer'];
 
-        foreach ($answers as $ans) {
+        QuizAttemptAnswer::create([
+            'quiz_attempts_id' => $quizAttemptId,
+            'quiz_question_id' => $ans['question_id'],
+            'question_option_id' => $ans['option_id'],
+        ]);
+        /*foreach ($answers as $ans) {
             //Log::info('quiz attempt id'.$quizAttemptId);
             QuizAttemptAnswer::create([
                 'quiz_attempts_id' => $quizAttemptId,
                 'quiz_question_id' => $ans['question_id'],
-                'question_option_id' => $ans['selectedOptionValue'],
+                'question_option_id' => $ans['option_id'],
             ]);
-        }
+        }*/
 
         $correctAnswerCount = QuizAttemptAnswer::with('option')
                                 ->where('quiz_attempts_id', $quizAttemptId)
