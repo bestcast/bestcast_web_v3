@@ -498,7 +498,8 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: JSON.stringify({
-                movie_id: movieId
+                movie_id: movieId,
+                user_id: {{ auth()->id() ?? 'null' }},
             })
         })
         .then(res => {
@@ -519,7 +520,7 @@
 
             console.log("===== QUIZ QUESTIONS LOADED =====");
             quizSchedule.forEach((q, i) => {
-                console.log(`${i + 1}. Question Time: ${q.show_question_time} mins | Popup Time: ${q.popup_time} mins`);
+                console.log(`${i + 1}. Question Time: ${q.show_question_time} mins | Popup Time: ${q.popup_time} mins | Question Id: ${q.id}`);
             });
             console.log("================================");
 

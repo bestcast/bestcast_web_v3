@@ -26,10 +26,6 @@ class Question extends Model
         return $this->hasMany(QuestionOptions::class)->orderBy('id','asc');
     }
 
-    public function quizzes()
-    {
-        return $this->belongsToMany(Quiz::class);
-    }
     public static function getQuestionsWithOptions($movieId)
     {
         return self::with('options')

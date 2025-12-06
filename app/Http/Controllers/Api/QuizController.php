@@ -8,8 +8,11 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use App\Http\Requests\QuizRequest;
+use App\Models\QuizAttempts;
 use App\Models\QuizModel;
 use App\Models\Question;
+use App\Models\QuizAttemptAnswer;
+use App\Models\QuizAttemptQuestionMap;
 
 class QuizController extends Controller
 {
@@ -25,82 +28,142 @@ class QuizController extends Controller
         $this->middleware('auth');
         $this->QuizModel = $QuizModel;
     }
+
     public function getMovieQuiz(Request $request)
     {
-        $userId = $request->user_id;
-        $movieId = $request->movie_id;
-        $interval = 15; 
-        $maxRequired = 3;  // total questions to show
+        $userId      = $request->user_id;
+        $movieId     = $request->movie_id;
+        $interval    = 15;
+        $maxRequired = 3;
 
         $user = Auth::user();
-        $requestData = $request->all();
         if (!$user || $user->plan_expiry === null || Carbon::now()->gte(Carbon::parse($user->plan_expiry))) {
             return response()->json([
                 'redirect' => url('/pricing')
             ], 403);
-        }else{
-            // Step 1 — Load ALL questions
-            $all = Question::where('movie_id', $movieId)
-                ->orderBy('show_question_time')
-                ->with('options')
-                ->get();
-
-            if ($all->isEmpty()) {
-                return response()->json([]);
-            }
-
-            // Step 2 — Randomly select 9 questions
-            $selected = $all->shuffle()->take($maxRequired);
-
-            $final = [];
-
-            foreach ($selected as $q) {
-
-                // Step 3 — Determine interval dynamically
-                $intervalIndex = floor($q->show_question_time / $interval);
-                $intervalStart = $intervalIndex * $interval;
-                $intervalEnd   = $intervalStart + $interval;
-
-                // Step 4 — Ensure question belongs to this interval
-                if ($q->show_question_time > $intervalEnd) {
-                    continue;
-                }
-
-                // Step 5 — Dynamic buffer rule
-                $buffer = ($q->show_question_time >= 20) ? 3 : 2;
-
-                $popupTime = $q->show_question_time + $buffer;
-
-                $final[] = [
-                    'id' => $q->id,
-                    'question' => $q->question_name,
-                    'show_question_time' => $q->show_question_time,
-                    'popup_time' => $popupTime,
-                    //'interval_start' => $intervalStart,
-                    //'interval_end' => $intervalEnd,
-                    'options' => $q->options
-                ];
-            }
-
-            // Step 6 — Sort by popup_time so popups appear in order
-            $final = collect($final)->sortBy('popup_time')->values();
-
-            //return response()->json($final);
-            return response()->json([
-                'questions' => $final
-            ]);
-
         }
         
+        // Detect Existing Attempt (not finished) or create new
+        
+        $attempt = QuizAttempts::where('participant_id', $userId)
+            ->where('movie_id', $movieId)
+            ->whereNull('ended_at')
+            ->first();
+
+        if (!$attempt) {
+            $attempt = QuizAttempts::create([
+                'participant_id' => $userId,
+                'movie_id'       => $movieId,
+                'started_at'     => now(),
+            ]);
+        }
+
+        $attemptId = $attempt->id;
+
+        
+        // Fetch Previously Used Questions in this Attempt
+        
+        $usedQuestions = QuizAttemptQuestionMap::where('user_id', $userId)
+                        ->pluck('question_id')
+                        ->toArray();
+
+
+        
+        // Unused Questions
+        
+        /*$unused = Question::where('movie_id', $movieId)
+            ->whereNotIn('id', $usedQuestions)
+            ->with('options')
+            ->orderBy('show_question_time')
+            ->get();
+
+        // If unused < required, mix unused + used
+        if ($unused->count() < $maxRequired) {
+
+            $needed = $maxRequired - $unused->count();
+
+            $usedAgain = Question::where('movie_id', $movieId)
+                ->whereIn('id', $usedQuestions)
+                ->with('options')
+                ->inRandomOrder()
+                ->take($needed)
+                ->get();
+
+            $allQuestions = $unused->merge($usedAgain);
+        } else {
+            $allQuestions = $unused;
+        }*/
+
+        // UNIQUE unused questions by show_question_time
+        $unused = Question::where('movie_id', $movieId)
+            ->whereNotIn('id', $usedQuestions)
+            ->with('options')
+            ->orderBy('show_question_time')
+            ->get()
+            ->groupBy('show_question_time')
+            ->map(fn($group) => $group->first())
+            ->values();
+
+        // If unused < required, mix unused + used
+        if ($unused->count() < $maxRequired) {
+
+            $needed = $maxRequired - $unused->count();
+
+            // UNIQUE used questions by show_question_time
+            $usedAgain = Question::where('movie_id', $movieId)
+                ->whereIn('id', $usedQuestions)
+                ->with('options')
+                ->get()
+                ->groupBy('show_question_time')
+                ->map(fn($group) => $group->first())
+                ->values()
+                ->shuffle()
+                ->take($needed);
+
+            $allQuestions = $unused->merge($usedAgain);
+        } else {
+            $allQuestions = $unused;
+        }
+
+
+        // Select final 3 questions (shuffled)
+        $selected = $allQuestions->shuffle()->take($maxRequired);
+
+        $final = [];
+
+        // Apply popup buffer logic
+        foreach ($selected as $q) {
+
+            // Dynamic buffer
+            $buffer = ($q->show_question_time >= 20) ? 3 : 6;
+
+            $popupTime = $q->show_question_time + $buffer;
+
+            $final[] = [
+                'id' => $q->id,
+                'question' => $q->question_name,
+                'show_question_time' => $q->show_question_time,
+                'popup_time' => $popupTime,
+                'options' => $q->options
+            ];
+        }
+
+        // Sort by popup time
+        $final = collect($final)->sortBy('popup_time')->values();
+
+        return response()->json([
+            'attempt_id' => $attemptId,
+            'questions'  => $final
+        ]);
     }
 
     public function quizsubmit(Request $request){
         $requestData = $request->all();
-        return $this->QuizModel->QuizAttempt($requestData);
+        return $this->QuizModel->submitAnswerQuiz($requestData);
     }
     public function quizresult(Request $request)
     {
         $requestData = $request->all();
-        return $this->QuizModel->QuizAttemptAnswer($requestData);
+        return $this->QuizModel->QuizAttemptAnswerCount($requestData);
     }
 }
