@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RewardClaim;
 use Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\QuizCryptoHelper;
+use Log;
 
 class RewardController extends Controller
 {
@@ -18,13 +21,20 @@ class RewardController extends Controller
     public function store(Request $request)
     {
         if (RewardClaim::where('user_id', auth()->id())->exists()) {
-            return response()->json([
+            $encrypted = QuizCryptoHelper::encryptPayload([
                 'success' => false,
                 'message' => 'You have already submitted a reward claim.'
-            ], 409);
+            ]);
+
+            return response()->json($encrypted, 409);
         }
+
+        $raw = $request->getContent();
+        $payload = json_decode($raw, true);
+        $decrypted = QuizCryptoHelper::decryptPayload($payload['data'], $payload['iv']);
+
         // Validation
-        $validated = $request->validate([
+        $validator = Validator::make($decrypted, [
             'full_name' => 'required|string|max:255',
             'bank_name' => 'required|string|max:255',
             'account_no' => 'required|string|max:30',
@@ -34,6 +44,17 @@ class RewardController extends Controller
             'upi' => 'nullable|string|max:50',
         ]);
 
+        // If validation fails — SEND ENCRYPTED ERROR
+        if ($validator->fails()) {
+            $encrypted = QuizCryptoHelper::encryptPayload([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors()->toArray()
+            ]);
+
+            return response()->json($encrypted, 422);
+        }
+        $validated = $validator->validated();
         // Save
         $claim = RewardClaim::create([
             'user_id'   => auth()->id(),
@@ -46,18 +67,24 @@ class RewardController extends Controller
             'upi'       => $validated['upi'] ?? null,
         ]);
 
-        return response()->json([
+        $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'success' => true,
             'message' => 'Reward claim submitted successfully!',
             'data'    => $claim
         ]);
+
+        return response()->json($encryptedResponse);
     }
 
     public function update(Request $request, $id)
     {
         $claim = RewardClaim::findOrFail($id);
 
-        $validated = $request->validate([
+        $raw = $request->getContent();
+        $payload = json_decode($raw, true);
+        $decrypted = QuizCryptoHelper::decryptPayload($payload['data'], $payload['iv']);
+
+        $validator = Validator::make($decrypted, [
             'full_name' => 'required|string|max:255',
             'bank_name' => 'required|string|max:255',
             'account_no' => 'required|string|max:30',
@@ -67,13 +94,26 @@ class RewardController extends Controller
             'upi' => 'nullable|string|max:50',
         ]);
 
+        // If validation fails — SEND ENCRYPTED ERROR
+        if ($validator->fails()) {
+            $encrypted = QuizCryptoHelper::encryptPayload([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors()->toArray()
+            ]);
+
+            return response()->json($encrypted, 422);
+        }
+
+        $validated = $validator->validated();
         $claim->update($validated);
 
-        return response()->json([
+        $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'success' => true,
             'message' => 'Reward claim updated successfully!',
             'data' => $claim
         ]);
+        return response()->json($encryptedResponse);
     }
 
 }

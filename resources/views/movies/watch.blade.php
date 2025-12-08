@@ -12,7 +12,7 @@
 <!-- Include SweetAlert2 JS (before closing </body>) -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+<script src="{{ asset('js/crypto-js.min-new.js') }}"></script>
 
 
 <link rel="stylesheet" type="text/css" href="{{ url('/') }}/vlite/vpl.css" />
@@ -350,6 +350,7 @@
     let selectedQuestions = [];
     let quizAnswers = [];
     let currentQIndex = 0;
+    const APP_AES_KEY = CryptoJS.enc.Base64.parse("{{ env('QUIZ_SECRET_KEY') }}");
 
     function getCookie(name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -377,6 +378,26 @@
             console.log(`Cookie "${name}" cleared successfully.`);
         }*/
     }
+    function decryptResponse(encrypted) {
+        try {
+            const iv  = CryptoJS.enc.Base64.parse(encrypted.iv);
+            const cipher = CryptoJS.lib.CipherParams.create({
+                ciphertext: CryptoJS.enc.Base64.parse(encrypted.data)
+            });
+
+            const decrypted = CryptoJS.AES.decrypt(cipher, APP_AES_KEY, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+        } catch (err) {
+            console.error("DECRYPT ERROR:", err);
+            return null;
+        }
+    }
+
     function showQuizPrompt(player){
         // Detect fullscreen container or fallback to wrapper
         const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
@@ -502,27 +523,15 @@
                 user_id: {{ auth()->id() ?? 'null' }},
             })
         })
-        .then(res => {
-            //console.log("RAW RESPONSE:", res);
-            return res.json();
-        })
-        .then(data => {
-            //console.log("PARSED JSON:", data);
-            let questions = Array.isArray(data) ? data : data.questions;
+        .then(res => res.json())
+        .then(enc => {
+            const data = decryptResponse(enc);
+            //console.log("DECRYPTED QUIZ:", data);
+            quizSchedule = data.questions;
 
-            //console.log("FINAL QUESTIONS:", questions);
-            if (!questions || questions.length === 0) {
-                console.warn("No questions returned from API");
-                return;
-            }
-
-            quizSchedule = questions;
-
-            console.log("===== QUIZ QUESTIONS LOADED =====");
             quizSchedule.forEach((q, i) => {
-                console.log(`${i + 1}. Question Time: ${q.show_question_time} mins | Popup Time: ${q.popup_time} mins | Question Id: ${q.id}`);
+                console.log(`${i+1}. Question Id: ${q.id}, Show Time: ${q.show_question_time}, Popup Time: ${q.popup_time} mins`);
             });
-            console.log("================================");
 
             startQuizWatcher(quizSchedule);
         })
@@ -701,12 +710,33 @@
             const raw = await res.text();
             //console.log("RAW:", raw);
 
-            let data;
-            try { data = JSON.parse(raw); } catch(e) { return; }
+            //let data;
+            let decrypted = null;
+
+            /*try { data = JSON.parse(raw); } catch(e) { return; }
 
             if (!attemptId && data.quizAttemptId) {
                 setCookie("attempt_id", data.quizAttemptId, 3);
                 attemptId = data.quizAttemptId;
+            }*/
+
+            try {
+                const encryptedJson = JSON.parse(raw);
+
+                // Decrypt using global helper
+                decrypted = decryptResponse(encryptedJson);
+
+                console.log("DECRYPTED:", decrypted);
+
+            } catch (e) {
+                console.error("DECRYPT ERROR (submit-quiz):", e);
+                return;
+            }
+
+            // Now use decrypted JSON safely
+            if (!attemptId && decrypted.quizAttemptId) {
+                setCookie("attempt_id", decrypted.quizAttemptId, 3);
+                attemptId = decrypted.quizAttemptId;
             }
 
             // Next question
@@ -740,9 +770,26 @@
             },
             body: JSON.stringify({ attemptId })
         })
-        .then(res => res.json())
-        .then(data => {
-            const { correctAnswerCount, totalQuestions, attemptId } = data;
+        //.then(res => res.json())
+        //.then(data => {
+        .then(async (res) => {
+            const raw = await res.text();
+            // console.log("RAW ENCRYPTED RESULT:", raw);
+
+            let decrypted = null;
+            try {
+                const encryptedJson = JSON.parse(raw);
+
+                // Decrypt using helper
+                decrypted = decryptResponse(encryptedJson);
+                console.log("DECRYPTED RESULT:", decrypted);
+
+            } catch (e) {
+                console.error("QUIZ-RESULT DECRYPT ERROR:", e);
+                return;
+            }
+
+            const { correctAnswerCount, totalQuestions, attemptId } = decrypted;
             if (typeof correctAnswerCount === 'undefined') {
                 /*Swal.fire({
                   title: `

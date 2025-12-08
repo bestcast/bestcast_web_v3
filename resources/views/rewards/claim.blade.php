@@ -7,7 +7,7 @@
     <title>Claim Your Winning Prize</title>
     <link rel="stylesheet" href="{{ url('/') }}/css/reward.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="{{ asset('js/crypto-js.min-new.js') }}"></script>
 </head>
 
 <body>
@@ -91,6 +91,40 @@
     </div>
 
 <script>
+const APP_AES_KEY = CryptoJS.enc.Base64.parse("{{ env('QUIZ_SECRET_KEY') }}");
+function encryptPayload(data) {
+    const iv = CryptoJS.lib.WordArray.random(16);
+
+    const encrypted = CryptoJS.AES.encrypt(
+        JSON.stringify(data),
+        APP_AES_KEY,
+        { iv: iv }
+    );
+
+    return {
+        iv: CryptoJS.enc.Base64.stringify(iv),
+        data: encrypted.ciphertext.toString(CryptoJS.enc.Base64)
+    };
+}
+function decryptResponse(encrypted) {
+    try {
+        const iv  = CryptoJS.enc.Base64.parse(encrypted.iv);
+        const cipher = CryptoJS.lib.CipherParams.create({
+            ciphertext: CryptoJS.enc.Base64.parse(encrypted.data)
+        });
+
+        const decrypted = CryptoJS.AES.decrypt(cipher, APP_AES_KEY, {
+            iv: iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+
+        return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+    } catch (err) {
+        console.error("DECRYPT ERROR:", err);
+        return null;
+    }
+}
 document.getElementById("claimForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -113,6 +147,8 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
         upi: document.getElementById("upi").value.trim()
     };
 
+    const encrypted = encryptPayload(formData);
+
     fetch(url, {
         method: method,
         headers: {
@@ -120,24 +156,74 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
             "Accept": "application/json",
             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(encrypted)
     })
-    .then(r => r.json().then(data => ({ status: r.status, body: data })))
-    .then(res => {
+    .then(async (r) => {
+        // read raw text for best debugging (works for both JSON and encrypted JSON)
+        const rawText = await r.text();
 
+        // try parse JSON
+        let parsed;
+        try { parsed = JSON.parse(rawText); }
+        catch (e) { 
+            console.error("Failed to parse JSON from server:", e, rawText);
+            throw new Error("Invalid server response");
+        }
+
+        return { status: r.status, body: parsed };
+    })
+    .then(res => {
+        // If server returned plain 409 conflict JSON (not encrypted): use it directly
         if (res.status === 409) {
-            alert(res.body.message);
+            // decrypted or plain, show server message if any
+            const msg = (res.body && (res.body.message || res.body.error)) ? (res.body.message || res.body.error) : "Conflict";
             return;
         }
 
-        if (res.body.success) {
-            //alert(claimId ? "Updated Successfully!" : "Submitted Successfully!");
+        // Determine if the body looks encrypted (has iv + data)
+        const body = res.body;
+        const isEncrypted = body && typeof body.iv === 'string' && typeof body.data === 'string';
+
+        let payload = null;
+
+        if (isEncrypted) {
+            try {
+                payload = decryptResponse(body);
+            } catch (err) {
+                console.error("Decrypt failed:", err);
+                return;
+            }
+        } else {
+            // not encrypted — maybe server returned validation errors or plain success
+            payload = body;
+        }
+
+        // If payload is not an object, stop
+        if (!payload || typeof payload !== 'object') {
+            console.error("Invalid payload after decrypt/parse:", payload);
+            return;
+        }
+
+        // If server returned validation errors format (Laravel), show messages
+        if (payload.errors && typeof payload.errors === 'object') {
+            // pick first error message
+            const firstField = Object.keys(payload.errors)[0];
+            const firstMsg = payload.errors[firstField][0];
+            return;
+        }
+
+        // If payload explicitly has success === false, show the server message if present
+        if (payload.success === false) {
+            const m = payload.message || payload.error || "Operation failed";
+            return;
+        }
+
+        // SUCCESS case: payload.success true or no success flag but we have data
+        if (payload.success === true || payload.data || payload.message) {
             Swal.fire({
                 title: claimId ? "Updated Successfully!" : "Submitted Successfully!",
-                text: (claimId 
-                    ? "Your reward details have been updated."
-                    : "Your reward claim has been submitted."
-                  ) + "\n\nPlease wait some time, you will receive your reward shortly.",
+                text: payload.message ? payload.message + "\n\nPlease wait some time, you will receive your reward shortly." :
+                      (claimId ? "Your reward details have been updated." : "Your reward claim has been submitted.") + "\n\nPlease wait some time, you will receive your reward shortly.",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
                 allowOutsideClick: false,
@@ -148,15 +234,18 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
             }).then(() => {
                 window.location.href = "/browse";
             });
-            if (!claimId) location.reload();
-        } else {
-            alert("Something went wrong!");
+            return;
         }
 
+        // fallback
+        console.warn("Unhandled payload:", payload);
+
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error("Fetch/processing error:", err);
+    });
+
 });
 </script>
-
 </body>
 </html>

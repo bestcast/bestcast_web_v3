@@ -8,6 +8,7 @@ use App\Models\QuestionOptions;
 use App\Models\QuizAttempts;
 use App\Models\QuizAttemptAnswer;
 use DB;use Log;
+use App\Helpers\QuizCryptoHelper;
 
 class QuizModel extends Model
 {
@@ -93,13 +94,15 @@ class QuizModel extends Model
             $attempt->update(['ended_at' => now()]);
         }
 
-        return response()->json([
+        $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'quizAttemptId'       => $attemptId,
             'success'             => true,
             'message'             => 'Answer submitted successfully.',
             'totalQuestions'      => $totalAnswered,
             'correctAnswerCount'  => $correctAnswerCount,
         ]);
+
+        return response()->json($encryptedResponse);
     }
 
     public function QuizAttemptAnswerCount($requestData){
@@ -115,11 +118,13 @@ class QuizModel extends Model
 
         $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
 
-        return response()->json([
+        $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'attemptId' => $attempt->id,
             'correctAnswerCount' => $correctAnswers,
             'totalQuestions' => $totalQuestions
         ]);
+
+        return response()->json($encryptedResponse);
         //get correctAnswer in quiz_attempts table column score
         //get totalQuestion count in quiz_attempts_answer table.
     }

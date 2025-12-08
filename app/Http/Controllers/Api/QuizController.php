@@ -13,6 +13,7 @@ use App\Models\QuizModel;
 use App\Models\Question;
 use App\Models\QuizAttemptAnswer;
 use App\Models\QuizAttemptQuestionMap;
+use App\Helpers\QuizCryptoHelper;
 
 class QuizController extends Controller
 {
@@ -151,10 +152,13 @@ class QuizController extends Controller
         // Sort by popup time
         $final = collect($final)->sortBy('popup_time')->values();
 
-        return response()->json([
+        $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'attempt_id' => $attemptId,
             'questions'  => $final
         ]);
+
+        return response()->json($encryptedResponse);
+
     }
 
     public function quizsubmit(Request $request){
