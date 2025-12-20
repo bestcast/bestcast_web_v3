@@ -40,7 +40,11 @@
                                         <div class="content">
                                             <h5 class="title">{{ $movie->title }}</h5>
                                             <div class="blog-card-bottom">
-                                            	Views: {{ App\Models\UsersMovies::getProducerMovieCount($movie->id) }}
+                                                @php
+                                                    $views = App\Models\UsersMovies::getProducerMovieCount($movie->id);
+                                                @endphp
+
+                                                Views: {{ $views * 60 }} Minutes
                                             </div>
                                         </div>
                                     </div>
