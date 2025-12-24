@@ -198,8 +198,13 @@
                     let question_available = {{ $question_available }};
                     let quizStatus = {{ $quiz_status ? 'true' : 'false' }};
                     let getCurrentTime=parseInt(player.getCurrentTime(),10);
-                      var isPaused=0;
-                      
+                    var isPaused=0;
+                    function getVideo() {
+                        return document.querySelector('#wrapper video') ||
+                               (document.fullscreenElement
+                                    ? document.fullscreenElement.querySelector('video')
+                                    : null);
+                    }
                       player.addEventListener("mediaPause", function(data){
                           isPaused=1;
                       });
@@ -249,7 +254,27 @@
                             initQuiz(movieId);
                         }
                       });
+                      /* space bar using play/pause */
+                      document.addEventListener("keydown", function (e) {
 
+                        if (e.code !== "Space") return;
+
+                        // prevent page scroll
+                        e.preventDefault();
+
+                        // block when quiz popup open
+                        if (typeof Swal !== "undefined" && Swal.isVisible()) return;
+
+                        const video = getVideo();
+                        if (!video) return;
+
+                        if (video.paused) {
+                            video.play();
+                        } else {
+                            video.pause();
+                        }
+                      });
+                      /* End */
                       player.addEventListener("mediaEnd", function() {
                         const cookieName = "quiz_popup_{{ $movie->id }}";
                         const popupValue = getCookie(cookieName);
@@ -341,6 +366,20 @@
 
               });
             });
+            window.addEventListener('beforeunload', function () {
+                const cookieValue = getCookie(`quiz_popup_${movieId}`);
+                if (cookieValue === '0') {
+                    clearCookie("quiz_popup_" + movieId);
+                    navigator.sendBeacon(
+                        '/api/quiz-prompt-skipped',
+                        JSON.stringify({
+                            movie_id: movieId,
+                            quiz_prompt_shown: 0
+                        })
+                    );
+                }
+            });
+
 </script>
 <script type="text/javascript">
     let disclaimerAccepted = false;
