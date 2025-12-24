@@ -36,7 +36,7 @@ class UsersDevice extends Database implements RoleHasRelationsContract
      */
     protected $dates = [
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
 
     /**
@@ -51,7 +51,9 @@ class UsersDevice extends Database implements RoleHasRelationsContract
         'token',
         'ip_address',
         'device',
-        'last_used_at'
+        'last_used_at',
+        'is_quiz_active',
+        'quiz_started_at'
     ];
 
     /**
@@ -70,6 +72,8 @@ class UsersDevice extends Database implements RoleHasRelationsContract
         'last_login'        => 'datetime',
         'created_at'        => 'datetime',
         'updated_at'        => 'datetime',
+        'is_quiz_active'    => 'integer',
+        'quiz_started_at'   => 'datetime',
     ];
 
 

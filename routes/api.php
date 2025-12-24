@@ -103,6 +103,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/quiz', [QuizController::class, 'getMovieQuiz']);
     Route::post('/submit-quiz', [QuizController::class, 'quizsubmit']);
     Route::post('/quiz-result', [QuizController::class, 'quizresult']);
+    Route::post('/quiz-status', [QuizController::class, 'quizStatus']);
+    Route::post('/quiz-prompt-shown', [QuizController::class, 'quizPromptShown']);
+    Route::post('/quiz-prompt-skipped', [QuizController::class, 'quizPromptSkipped']);
 
     Route::post('/reward-claim', [RewardController::class, 'store']);
     Route::put('/reward-claim/{id}', [RewardController::class, 'update']);

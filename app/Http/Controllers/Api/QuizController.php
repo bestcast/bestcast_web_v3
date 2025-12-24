@@ -14,9 +14,14 @@ use App\Models\Question;
 use App\Models\QuizAttemptAnswer;
 use App\Models\QuizAttemptQuestionMap;
 use App\Helpers\QuizCryptoHelper;
+use App\Models\UsersDevice;
+use App\Http\Controllers\Traits\DecryptsQuizPayload;
+use App\Models\UsersMovies;
 
 class QuizController extends Controller
 {
+    use DecryptsQuizPayload;
+
     private $QuizModel;
 
     /**
@@ -32,11 +37,38 @@ class QuizController extends Controller
 
     public function getMovieQuiz(Request $request)
     {
-        $userId      = $request->user_id;
-        $movieId     = $request->movie_id;
+        $payload = $this->decryptPayloadFromRequest($request);
+        // Access decrypted values
+        $movieId = $payload['movie_id'] ?? null;
+        $userId  = $payload['user_id'] ?? null;
+        $plainToken   = $payload['tokenEncrypted'] ?? null;
         $interval    = 15;
         $maxRequired = 3;
 
+        // Check if quiz already active on another device
+        $activeQuiz = UsersDevice::where('user_id', $userId)
+                        ->where('is_quiz_active', 1)
+                        ->first();
+
+        // Identify current device
+        if ($plainToken) {
+            $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+        }
+        // If quiz active on another device - BLOCK
+        if ($activeQuiz && $activeQuiz->token !== $currentDevice->token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You already participated in the quiz in another device.'
+            ], 403);
+        }
+
+        // Mark quiz active for this device (only if not active already)
+        if ($currentDevice) {
+            $currentDevice->update([
+                'is_quiz_active' => 1,
+                'quiz_started_at' => now()
+            ]);
+        }
         $user = Auth::user();
         if (!$user || $user->plan_expiry === null || Carbon::now()->gte(Carbon::parse($user->plan_expiry))) {
             return response()->json([
@@ -59,41 +91,11 @@ class QuizController extends Controller
             ]);
         }
 
-        $attemptId = $attempt->id;
-
-        
+        $attemptId = $attempt->id;        
         // Fetch Previously Used Questions in this Attempt
-        
         $usedQuestions = QuizAttemptQuestionMap::where('user_id', $userId)
                         ->pluck('question_id')
                         ->toArray();
-
-
-        
-        // Unused Questions
-        
-        /*$unused = Question::where('movie_id', $movieId)
-            ->whereNotIn('id', $usedQuestions)
-            ->with('options')
-            ->orderBy('show_question_time')
-            ->get();
-
-        // If unused < required, mix unused + used
-        if ($unused->count() < $maxRequired) {
-
-            $needed = $maxRequired - $unused->count();
-
-            $usedAgain = Question::where('movie_id', $movieId)
-                ->whereIn('id', $usedQuestions)
-                ->with('options')
-                ->inRandomOrder()
-                ->take($needed)
-                ->get();
-
-            $allQuestions = $unused->merge($usedAgain);
-        } else {
-            $allQuestions = $unused;
-        }*/
 
         // UNIQUE unused questions by show_question_time
         $unused = Question::where('movie_id', $movieId)
@@ -125,7 +127,6 @@ class QuizController extends Controller
         } else {
             $allQuestions = $unused;
         }
-
 
         // Select final 3 questions (shuffled)
         $selected = $allQuestions->shuffle()->take($maxRequired);
@@ -162,12 +163,62 @@ class QuizController extends Controller
     }
 
     public function quizsubmit(Request $request){
-        $requestData = $request->all();
-        return $this->QuizModel->submitAnswerQuiz($requestData);
+        //$requestData = $request->all();
+        $payload = $this->decryptPayloadFromRequest($request);
+        return $this->QuizModel->submitAnswerQuiz($payload);
     }
     public function quizresult(Request $request)
     {
-        $requestData = $request->all();
-        return $this->QuizModel->QuizAttemptAnswerCount($requestData);
+        $payload = $this->decryptPayloadFromRequest($request);
+        return $this->QuizModel->QuizAttemptAnswerCount($payload);
     }
+
+    public function quizStatus(Request $request)
+    {
+        $payload = $this->decryptPayloadFromRequest($request);
+        return $this->QuizModel->QuizPooling($payload);
+    }
+    public function quizPromptShown(Request $request)
+    {
+        $request->validate([
+            'movie_id' => 'required|exists:movies,id'
+        ]);
+
+        $userId = auth()->id();
+        $movieId = $request->movie_id;
+
+        // Always exists because already create it earlier
+        $record = UsersMovies::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->first();
+
+        // Already shown - block popup
+        if ($record && $record->quiz_prompt_shown == 1) {
+            return response()->json([
+                'already_shown' => true
+            ]);
+        }
+
+        // Mark as shown now
+        UsersMovies::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->update([
+                'quiz_prompt_shown' => 1
+            ]);
+
+        return response()->json([
+            'already_shown' => false
+        ]);
+    }
+    public function quizPromptSkipped(Request $request)
+    {
+        UsersMovies::where('user_id', auth()->id())
+            ->where('movie_id', $request->movie_id)
+            ->update([
+                'quiz_prompt_shown' => 0
+            ]);
+
+        return response()->json(['status' => true]);
+    }
+
 }

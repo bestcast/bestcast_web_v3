@@ -9,6 +9,8 @@ use App\Models\QuizAttempts;
 use App\Models\QuizAttemptAnswer;
 use DB;use Log;
 use App\Helpers\QuizCryptoHelper;
+use App\Models\UsersDevice;
+use App\Models\UsersMovies;
 
 class QuizModel extends Model
 {
@@ -59,7 +61,6 @@ class QuizModel extends Model
             'question_id' => $answer['question_id']
         ]);
 
-
         // Avoid Duplicate Answer Save
         $alreadyAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
             ->where('quiz_question_id', $answer['question_id'])
@@ -107,10 +108,35 @@ class QuizModel extends Model
 
     public function QuizAttemptAnswerCount($requestData){
         $attemptId = $requestData['attemptId'];
+        $plainToken = $requestData['tokenEncrypted'];
+        $userId  = $requestData['user_id'];
+        $movieId = $requestData['movieId'];
+        $currentDevice = null;
+
+        if ($plainToken) {
+            $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+        }
+
+        if ($currentDevice && $currentDevice->is_quiz_active == 1) {
+            $currentDevice->update([
+                'is_quiz_active'   => 0,
+                'quiz_started_at'  => null
+            ]);
+        }
+        UsersMovies::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->update([
+                'quiz_prompt_shown' => 0
+            ]);
         $attempt = QuizAttempts::find($attemptId);
 
         if (!$attempt) {
-            return response()->json(['error' => 'Attempt not found'], 404);
+            return response()->json(
+                QuizCryptoHelper::encryptPayload([
+                    'status' => false,
+                    'message' => 'Attempt not found'
+                ])
+            );
         }
 
         // Assuming "score" column already stores correct answer count
@@ -128,5 +154,33 @@ class QuizModel extends Model
         //get correctAnswer in quiz_attempts table column score
         //get totalQuestion count in quiz_attempts_answer table.
     }
-    
+
+    public function QuizPooling($requestData){
+        /*$user = $request->user();
+        $plainToken = $request->bearerToken();*/
+        $plainToken = $requestData['tokenEncrypted'];
+        $userId  = $requestData['user_id'];
+
+        $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+
+        $activeQuiz = UsersDevice::where('user_id', $userId)
+            ->where('is_quiz_active', 1)
+            ->first();
+
+        // Quiz active on another device
+        if ($activeQuiz && (!$currentDevice || $activeQuiz->id !== $currentDevice->id)) {
+            return response()->json(
+                QuizCryptoHelper::encryptPayload([
+                    'quiz_allowed' => false
+                ])
+            );
+        }
+
+        return response()->json(
+            QuizCryptoHelper::encryptPayload([
+                'quiz_allowed' => true
+            ])
+        );
+    }
+  
 }

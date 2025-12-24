@@ -141,7 +141,6 @@ class BrowseController extends Controller
             }
         }
 
-
         $profileToken=Session::get('profileToken');
         if(!empty($profileToken)){
             $data=UsersMovies::getMovie($user->id,$profileToken,$id);
@@ -156,20 +155,43 @@ class BrowseController extends Controller
         }
 
         $movie = UsersMovies::getMovie($user->id,$profileToken,$id);
-        //dd($movie);
+        
         if(empty($movie->id)){
             $post=Post::where('urlkey','page-not-found')->first();
             $meta=$post->meta->pluck('value','path');
             return view('errors.lost',['post'=>$post,'meta'=>$meta]);
         }
-	
-	$exists = Question::where('movie_id', $movie->id)->exists();
+	    
+        $plainToken = Session::get('setTokenEncryted');
+
+        $device = null;
+        if ($plainToken) {
+            $device = UsersDevice::where('token', md5($plainToken))->first();
+        }
+        $activeQuiz = UsersDevice::where('user_id', $user->id)
+                        ->where('is_quiz_active', 1)
+                        ->first();
+
+        $quiz_status = 0;
+
+        // Another device already running quiz
+        if ($activeQuiz && (!$device || $activeQuiz->id !== $device->id)) {
+            $quiz_status = 1;
+        }
+
+	    $exists = Question::where('movie_id', $movie->id)->exists();
         if ($exists) {
             $question_available = 1;
         } else {
             $question_available = 0;
         }
-        return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken, 'question_available'=>$question_available]);
+
+        $quiz_prompt_shown = UsersMovies::where([
+            'user_id' => $user->id,
+            'movie_id' => $movie->id
+        ])->value('quiz_prompt_shown') ?? 0;
+
+        return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken, 'question_available'=>$question_available, 'quiz_status' => $quiz_status, 'quiz_prompt_shown' => $quiz_prompt_shown]);
     }
 
     public function mylist()

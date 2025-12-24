@@ -55,7 +55,8 @@ class UsersMovies extends Database implements RoleHasRelationsContract
         'watching',
         'watched_percent',
         'watched', //for producer account count when user watch movie 20min atleast
-        'viewed'
+        'viewed',
+        'quiz_prompt_shown'
     ];
 
     /**
@@ -75,6 +76,7 @@ class UsersMovies extends Database implements RoleHasRelationsContract
         'watched_percent'   => 'integer',
         'watched'           => 'integer',
         'viewed'            => 'integer',
+        'quiz_prompt_shown' => 'integer',
         'created_at'        => 'datetime',
         'updated_at'        => 'datetime',
     ];

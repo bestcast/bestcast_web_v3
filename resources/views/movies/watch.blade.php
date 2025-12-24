@@ -13,6 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="{{ asset('js/crypto-js.min-new.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
 
 <link rel="stylesheet" type="text/css" href="{{ url('/') }}/vlite/vpl.css" />
@@ -195,6 +196,7 @@
                   if(player){
                     let quizShown = false; // NEW FLAG
                     let question_available = {{ $question_available }};
+                    let quizStatus = {{ $quiz_status ? 'true' : 'false' }};
                     let getCurrentTime=parseInt(player.getCurrentTime(),10);
                       var isPaused=0;
                       
@@ -203,6 +205,9 @@
                       });
                       player.addEventListener("mediaPlay", function(data){
                         isPaused=0;
+                        if (!quizPollingStarted) {
+                            startQuizPolling(movieId);
+                        }
                         // Wait until 5 seconds to show quiz prompt (only once)
                         const checkInterval = setInterval(() => {
                             const currentTime = parseInt(player.getCurrentTime() || 0);
@@ -217,7 +222,7 @@
                                 // Only show popup if cookie not already set
                                 if (cookieValue === '' || cookieValue === '0') {
                                     quizPromptShownOnce = true;
-                                    quizShown = true;
+                                    //quizShown = true;
                                     showQuizPrompt(player);
                                     clearInterval(checkInterval);
                                 } else {
@@ -241,12 +246,18 @@
                         // Trigger disclaimer accepted
                         if(disclaimerAccepted && !firstQuizTriggered){ 
                             firstQuizTriggered = true; // make sure it's only once
-                            //startQuiz(movieId); // This will then handle later intervals (30, 45, etc.)
                             initQuiz(movieId);
                         }
                       });
 
                       player.addEventListener("mediaEnd", function() {
+                        const cookieName = "quiz_popup_{{ $movie->id }}";
+                        const popupValue = getCookie(cookieName);
+
+                        // If user SKIPPED quiz clear cookie
+                        if (popupValue === '0') {
+                            clearCookie(cookieName);
+                        }
                         const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
                         window.fullscreenContainer = fullscreenContainer;
                         const videoElement = fullscreenContainer.querySelector('video') || document.querySelector('#wrapper video');
@@ -303,14 +314,9 @@
                           //console.log(isPaused);
                       },(intervalSecond*1000)); //5000 is 5seconds only and when exit clearInterval(moviePlayInterval);
 
-
-
-
                       $('.vpl-back-refer').on('click',function(){
                           clearInterval(moviePlayInterval);
                           player.cleanMedia();
-
-
                           //     let getCurrentTime=parseInt(player.getCurrentTime(),10);
                           //     //render percentage watched
                           //     let setusermoviedata ='';
@@ -334,24 +340,25 @@
                   }//player
 
               });
-
-
             });
 </script>
 <script type="text/javascript">
     let disclaimerAccepted = false;
     let quizPromptShownOnce = false;
     let firstQuizTriggered = false;
-
     let quizSchedule = [];       // All questions returned by backend (with popup_time)
-
     let quizTimer = null;
     let videoElement = null;
     let selectedQuestions = [];
     let quizAnswers = [];
     let currentQIndex = 0;
     const APP_AES_KEY = CryptoJS.enc.Base64.parse("{{ env('QUIZ_SECRET_KEY') }}");
-
+    let tokenEncrypted = localStorage.getItem("tokenEncrypted");
+    let quizStatus = {{ $quiz_status ? 'true' : 'false' }}; // server initial state
+    let lastQuizStatus = quizStatus;
+    let quizPollingStarted = false;
+    let quizPollingStopped = false;
+    let quizPromptAlreadyShown = {{ $quiz_prompt_shown ? 'true' : 'false' }};
     function getCookie(name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         if (match) return match[2];
@@ -378,6 +385,32 @@
             console.log(`Cookie "${name}" cleared successfully.`);
         }*/
     }
+    function encryptRequest(payload) {
+        try {
+            // Convert payload to string
+            const text = JSON.stringify(payload);
+
+            // Generate random IV (16 bytes)
+            const iv = CryptoJS.lib.WordArray.random(16);
+
+            // Encrypt
+            const encrypted = CryptoJS.AES.encrypt(text, APP_AES_KEY, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            return {
+                iv: CryptoJS.enc.Base64.stringify(iv),
+                data: CryptoJS.enc.Base64.stringify(encrypted.ciphertext)
+            };
+
+        } catch (err) {
+            console.error("ENCRYPT ERROR:", err);
+            return null;
+        }
+    }
+
     function decryptResponse(encrypted) {
         try {
             const iv  = CryptoJS.enc.Base64.parse(encrypted.iv);
@@ -397,7 +430,70 @@
             return null;
         }
     }
+    function startQuizPolling(movieId) {
+        if (quizPollingStarted || quizPollingStopped) return;
+        quizPollingStarted = true;
+        const encryptedPayload = encryptRequest({
+            movie_id: movieId,
+            user_id: {{ auth()->id() ?? 'null' }},
+            tokenEncrypted: tokenEncrypted,
+        });
 
+        const pollInterval = setInterval(() => {
+            if (quizPollingStopped || quizPromptShownOnce) {
+                clearInterval(pollInterval);
+                return;
+            }
+            fetch(`/api/quiz-status`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                     payload: encryptedPayload
+                })
+            })
+            .then(res => res.json())
+            .then(enc => {
+                const data = decryptResponse(enc);
+                // Server says quiz is NOT allowed (active elsewhere)
+                if (data.quiz_allowed === false) {
+                    quizStatus = true;
+                } else {
+                    quizStatus = false;
+                }
+
+                // STATE TRANSITION DETECTION
+                // was blocked - now allowed
+                if (lastQuizStatus === true && quizStatus === false) {
+                    //console.log("Quiz released by other device");
+
+                    quizPromptShownOnce = false;   // allow popup again
+                    showQuizPrompt(player);        // SHOW WITHOUT REFRESH
+                }
+
+                lastQuizStatus = quizStatus; // update snapshot
+            })
+            .catch(err => console.error("QUIZ LOAD ERROR:", err));
+        }, 5000); // every 5 seconds
+    }
+    function markQuizPromptAsShown() {
+        return fetch('/api/quiz-prompt-shown', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute('content')
+            },
+            body: JSON.stringify({
+                movie_id: movieId
+            })
+        })
+        .then(res => res.json());
+    }
     function showQuizPrompt(player){
         // Detect fullscreen container or fallback to wrapper
         const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
@@ -406,64 +502,92 @@
         $('.vpl-lightbox-wrap').css('display','contents');
         //let videoElement = document.querySelector('#wrapper video');
         if (videoElement) videoElement.pause(); // Pause video manually
-        Swal.fire({
-            html: `
-                <div class="quiz-box">
+        if (quizStatus === true) {
 
-                    <h1 class="quiz-heading">QUIZ</h1>
+            Swal.fire({
+                icon: 'info',
+                title: 'Quiz Already Active',
+                text: 'You already participated in the quiz on another device. You can only watch the movie here.',
+                allowOutsideClick: false,
+                confirmButtonText: 'OK',
+                target: fullscreenContainer,
+                customClass: {
+                    popup: 'quiz-popup-container'
+                }
+                }).then(() => {
+                    if (videoElement) videoElement.play();
+                    $('.vpl-lightbox-wrap').css('display','block');
+                });
 
-                    <div class="divider"></div>
+                return; // stop here
+        }
+        //console.log(quizPromptAlreadyShown);
 
-                    <h2 class="play-title">PLAY TO WIN</h2>
-
-                    <div class="terms-row">
-                        <input type="checkbox" id="terms_ok">
-                        <span> Accept the <a href="#" class="terms-link">Terms & Condition</a></span>
-                    </div>
-
-                    <div class="btn-row">
-                        <button id="playBtn" class="play-btn">PLAY</button>
-                        <button id="skipBtn" class="skip-btn">SKIP</button>
-                    </div>
-
-                    <div class="note-box">
-                        <b>NOTE:</b><br>
-                        Once Start to play do not <b>Forward</b> or <b>Rewind</b> the movie.<br>
-                        Your quiz appears anytime.
-                    </div>
-
-                </div>
-            `,
-            showConfirmButton: false,
-            showCancelButton: false,
-            allowOutsideClick: false,
-            target: fullscreenContainer, // Works in both fullscreen and normal
-            customClass: {
-                popup: 'quiz-popup-container'
+        /*quizPromptAlreadyShown = true;
+        markQuizPromptAsShown();*/
+        //console.log(markQuizPromptAsShown);
+        markQuizPromptAsShown().then(data => {
+            //console.log(data);
+            // Already shown somewhere else
+            if (data.already_shown === true) {
+                //console.log('Popup blocked');
+                if (videoElement) videoElement.play();
+                $('.vpl-lightbox-wrap').css('display','block');
+                return;
             }
+            //console.log('Popup allowed');
+            // Only FIRST browser reaches here
+            Swal.fire({
+                html: `
+                    <div class="quiz-box">
+
+                        <h1 class="quiz-heading">QUIZ</h1>
+
+                        <div class="divider"></div>
+
+                        <h2 class="play-title">PLAY TO WIN</h2>
+
+                        <div class="terms-row">
+                            <input type="checkbox" id="terms_ok">
+                            <span> Accept the <a href="#" class="terms-link">Terms & Condition</a></span>
+                        </div>
+
+                        <div class="btn-row">
+                            <button id="playBtn" class="play-btn">PLAY</button>
+                            <button id="skipBtn" class="skip-btn">SKIP</button>
+                        </div>
+
+                        <div class="note-box">
+                            <b>NOTE:</b><br>
+                            Once Start to play do not <b>Forward</b> or <b>Rewind</b> the movie.<br>
+                            Your quiz appears anytime.
+                        </div>
+
+                    </div>
+                `,
+                showConfirmButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false,
+                target: fullscreenContainer, // Works in both fullscreen and normal
+                customClass: {
+                    popup: 'quiz-popup-container'
+                }
+            });
+
         });
-
-
-        // ✔ PLAY button action
+        // PLAY button action
         $(document).on("click", "#playBtn", function () {
-
             if (!$("#terms_ok").is(":checked")) {
                 Swal.showValidationMessage("Please accept Terms & Condition");
                 return;
             }
-
             Swal.close();
-
             // LOGIC INSERTED HERE
             setCookie("quiz_popup_{{ $movie->id }}", 1, 3); // store for 3 hours
             disclaimerAccepted = true;
             quizActive = true;
-
             if (videoElement) videoElement.play(); // Resume video
-
             $('.vpl-lightbox-wrap').css('display', 'block');  // Show player again
-
-            // Optional: call your quiz start function
             // startQuiz(movieId);
         });
 
@@ -475,31 +599,16 @@
             $('.vpl-lightbox-wrap').css('display','block');
             // skip logic
             setCookie("quiz_popup_{{ $movie->id }}", 0, 3);
+            updateQuizPromptSkipped({{ $movie->id }});
         });
 
 
     }
-
-    $(document).on("click", "#playBtn", function() {
-        if (!$("#terms_ok").is(":checked")) {
-            Swal.showValidationMessage("Please accept Terms & Condition");
-            return;
-        }
-        Swal.close();
-        //startQuizNow();
-    });
-
-    $(document).on("click", "#skipBtn", function() {
-        Swal.close();
-    });
-
     
     function resetQuizState(movieId) {
         //console.log("Resetting quiz cookies...");
-
         clearCookie("attempt_id");
         clearCookie("quiz_popup_" + movieId);
-
         quizAnswers = [];
         selectedQuestions = [];
         currentQIndex = 0;
@@ -511,6 +620,11 @@
         resetQuizState(movieId);
         videoElement = document.querySelector("#wrapper video");
 
+        const encryptedPayload = encryptRequest({
+            movie_id: movieId,
+            user_id: {{ auth()->id() ?? 'null' }},
+            tokenEncrypted: tokenEncrypted,
+        });
         fetch(`/api/quiz`, {
             method: 'POST',
             credentials: 'include',
@@ -519,8 +633,7 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: JSON.stringify({
-                movie_id: movieId,
-                user_id: {{ auth()->id() ?? 'null' }},
+                 payload: encryptedPayload
             })
         })
         .then(res => res.json())
@@ -690,7 +803,12 @@
 
         // Store locally (for review or final submit)
         quizAnswers.push(currentAnswer);
-
+        const encryptedPayload = encryptRequest({
+            movie_id: {{ $movie->id }},
+            user_id: {{ auth()->id() ?? 'null' }},
+            answer: currentAnswer,   // single answer
+            attempt_id: attemptId
+        });
         //console.log("Submitting SINGLE answer:", currentAnswer, "Attempt ID:", attemptId);
 
         fetch('/api/submit-quiz', {
@@ -700,33 +818,23 @@
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
             },
             body: JSON.stringify({
-                movie_id: {{ $movie->id }},
-                user_id: {{ auth()->id() ?? 'null' }},
-                answer: currentAnswer,   // ONLY send 1, not full quizAnswers
-                attempt_id: attemptId,
+                payload: encryptedPayload
             })
         })
         .then(async (res) => {
             const raw = await res.text();
             //console.log("RAW:", raw);
-
             //let data;
             let decrypted = null;
-
             /*try { data = JSON.parse(raw); } catch(e) { return; }
-
             if (!attemptId && data.quizAttemptId) {
                 setCookie("attempt_id", data.quizAttemptId, 3);
                 attemptId = data.quizAttemptId;
             }*/
-
             try {
                 const encryptedJson = JSON.parse(raw);
-
                 // Decrypt using global helper
                 decrypted = decryptResponse(encryptedJson);
-
-                console.log("DECRYPTED:", decrypted);
 
             } catch (e) {
                 console.error("DECRYPT ERROR (submit-quiz):", e);
@@ -757,10 +865,31 @@
         document.getElementById("custom-quiz-popup").style.display = "none";
     }
 
+    function updateQuizPromptSkipped(movieId) {
+        fetch('/api/quiz-prompt-skipped', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ movie_id: movieId })
+        });
+    }
 
     function showFinalQuizResult(player) {
         //console.log("Movie ended — fetching final quiz result...");
         const attemptId = getCookie('attempt_id');
+        if (!attemptId) {
+            //console.log('No quiz attempt found. Skipping result fetch.');
+            window.location.href = "{{ url('/browse') }}";
+            return;
+        }
+        const encryptedPayload = encryptRequest({
+            movieId: movieId,
+            attemptId: attemptId,
+            user_id: {{ auth()->id() ?? 'null' }},
+            tokenEncrypted: tokenEncrypted,
+        });
         fetch('/api/quiz-result', {
             method: 'POST',
             headers: {
@@ -768,7 +897,9 @@
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: JSON.stringify({ attemptId })
+            body: JSON.stringify({ 
+                payload: encryptedPayload
+            })
         })
         //.then(res => res.json())
         //.then(data => {
@@ -779,10 +910,16 @@
             let decrypted = null;
             try {
                 const encryptedJson = JSON.parse(raw);
-
+                if (encryptedJson.error) {
+                    console.warn('Quiz result error:', encryptedJson.error);
+                    return;
+                }
                 // Decrypt using helper
                 decrypted = decryptResponse(encryptedJson);
-                console.log("DECRYPTED RESULT:", decrypted);
+                if (!decrypted) {
+                    console.warn('Decryption failed or empty response');
+                    return;
+                }
 
             } catch (e) {
                 console.error("QUIZ-RESULT DECRYPT ERROR:", e);
