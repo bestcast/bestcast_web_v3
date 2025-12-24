@@ -199,12 +199,14 @@
                     let quizStatus = {{ $quiz_status ? 'true' : 'false' }};
                     let getCurrentTime=parseInt(player.getCurrentTime(),10);
                     var isPaused=0;
+                    /* space bar using play,pause,mute,unmute,fullscreen */
                     function getVideo() {
                         return document.querySelector('#wrapper video') ||
                                (document.fullscreenElement
                                     ? document.fullscreenElement.querySelector('video')
                                     : null);
                     }
+                    /*End*/
                       player.addEventListener("mediaPause", function(data){
                           isPaused=1;
                       });
@@ -254,10 +256,61 @@
                             initQuiz(movieId);
                         }
                       });
-                      /* space bar using play/pause */
+                      /* space bar using play,pause,mute,unmute,fullscreen */
                       document.addEventListener("keydown", function (e) {
+                        // Ignore typing inside inputs
+                        if (
+                            e.target.tagName === "INPUT" ||
+                            e.target.tagName === "TEXTAREA" ||
+                            e.target.isContentEditable
+                        ) return;
 
-                        if (e.code !== "Space") return;
+                        // Block shortcuts during quiz popup
+                        if (typeof Swal !== "undefined" && Swal.isVisible()) return;
+
+                        const video = getVideo();
+                        if (!video) return;
+
+                        switch (e.code) {
+
+                            case "Space": // Play / Pause
+                                e.preventDefault(); // stop scroll
+                                if (video.paused) {
+                                    video.play();
+                                } else {
+                                    video.pause();
+                                }
+                                break;
+
+                            case "ArrowRight": // Forward 10s
+                                e.preventDefault();
+                                video.currentTime = Math.min(
+                                    video.currentTime + 10,
+                                    video.duration
+                                );
+                                break;
+
+                            case "ArrowLeft": // Rewind 10s
+                                e.preventDefault();
+                                video.currentTime = Math.max(
+                                    video.currentTime - 10,
+                                    0
+                                );
+                                break;
+
+                            case "KeyM": // Mute / Unmute
+                                video.muted = !video.muted;
+                                break;
+
+                            case "KeyF": // Fullscreen
+                                if (!document.fullscreenElement) {
+                                    document.getElementById('wrapper').requestFullscreen();
+                                } else {
+                                    document.exitFullscreen();
+                                }
+                                break;
+                        }
+                        /*if (e.code !== "Space") return;
 
                         // prevent page scroll
                         e.preventDefault();
@@ -272,7 +325,7 @@
                             video.play();
                         } else {
                             video.pause();
-                        }
+                        }*/
                       });
                       /* End */
                       player.addEventListener("mediaEnd", function() {
