@@ -198,6 +198,7 @@
                     let question_available = {{ $question_available }};
                     let quizStatus = {{ $quiz_status ? 'true' : 'false' }};
                     let getCurrentTime=parseInt(player.getCurrentTime(),10);
+
                     var isPaused=0;
                     /* space bar using play,pause,mute,unmute,fullscreen */
                     function getVideo() {
@@ -273,6 +274,16 @@
 
                         switch (e.code) {
 
+                            case "ArrowUp": // Volume up
+                                e.preventDefault();
+                                video.volume = Math.min(video.volume + 0.1, 1);
+                                break;
+
+                            case "ArrowDown": // Volume down
+                                e.preventDefault();
+                                video.volume = Math.max(video.volume - 0.1, 0);
+                                break;
+
                             case "Space": // Play / Pause
                                 e.preventDefault(); // stop scroll
                                 if (video.paused) {
@@ -326,7 +337,7 @@
                         } else {
                             video.pause();
                         }*/
-                      });
+                      }, true);
                       /* End */
                       player.addEventListener("mediaEnd", function() {
                         const cookieName = "quiz_popup_{{ $movie->id }}";
@@ -419,8 +430,10 @@
 
               });
             });
+            
             window.addEventListener('beforeunload', function () {
                 const cookieValue = getCookie(`quiz_popup_${movieId}`);
+
                 if (cookieValue === '0') {
                     clearCookie("quiz_popup_" + movieId);
                     navigator.sendBeacon(
