@@ -212,13 +212,26 @@ class QuizController extends Controller
     }
     public function quizPromptSkipped(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['movie_id'])) {
+            return response()->noContent();
+        }
+        $plainToken = $data['tokenEncrypted'];
+        $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+        if ($currentDevice) {
+            $currentDevice->update([
+                'is_quiz_active' => 0,
+                'quiz_started_at' => null
+            ]);
+        }
         UsersMovies::where('user_id', auth()->id())
-            ->where('movie_id', $request->movie_id)
+            ->where('movie_id', $data['movie_id'])
             ->update([
                 'quiz_prompt_shown' => 0
             ]);
 
-        return response()->json(['status' => true]);
+        return response()->noContent();
     }
 
 }

@@ -430,24 +430,25 @@
 
               });
             });
-            
             window.addEventListener('beforeunload', function () {
                 const cookieValue = getCookie(`quiz_popup_${movieId}`);
 
-                if (cookieValue === '0') {
+                if ((quizPromptShownOnce === true && firstQuizTriggered === false) || quizActive === true) {
                     clearCookie("quiz_popup_" + movieId);
                     navigator.sendBeacon(
                         '/api/quiz-prompt-skipped',
                         JSON.stringify({
                             movie_id: movieId,
-                            quiz_prompt_shown: 0
+                            tokenEncrypted: tokenEncrypted
                         })
                     );
                 }
             });
 
+
 </script>
 <script type="text/javascript">
+    let quizActive = false;
     let disclaimerAccepted = false;
     let quizPromptShownOnce = false;
     let firstQuizTriggered = false;
@@ -678,7 +679,6 @@
                     popup: 'quiz-popup-container'
                 }
             });
-
         });
         // PLAY button action
         $(document).on("click", "#playBtn", function () {
