@@ -263,24 +263,6 @@
 	color:#fff!important;
 }
 
-
-.custom-swal-popup {
-  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
-  border-radius: 25px;
-  width: 520px;        /* or try: 90%, max-width: 420px */
-  height: 400px;       /* or min-height: 60vh */
-  padding: 40px 30px;
-  border-radius: 25px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  color: #333;
-  position: relative;
-  overflow: hidden;
-}
-
-
-/* Optional animated background effect */
 .custom-swal-popup::before {
   content: "";
   position: absolute;
@@ -303,14 +285,6 @@
   font-size: 26px;
   font-weight: 700;
   color: #d81b60;
-  position: relative;
-  z-index: 1;
-}
-
-.swal2-html-container {
-  font-size: 16px;
-  color: #555;
-  margin-top: 8px;
   position: relative;
   z-index: 1;
 }
@@ -364,11 +338,9 @@
 .quiz-subtitle {
   font-size: 16px;
   color: #333;
-  margin-top: 20px; /* increased from 10px */
+  margin-top: 20px; 
 }
 
-
-/* Mobile View */
 @media (max-width: 767px) {
   .custom-swal-popup {
     height: 600px;
@@ -389,141 +361,28 @@
     padding: 14px 0;
   }
   .quiz-subtitle {
-    margin-top: 70px; /* move the question line down */
+    margin-top: 70px; 
   }
 }
 
 .custom-swal-popup {
   background: url('/img/quiz-bg.png') center/cover no-repeat;
-}
-
-/*#quiz-container {
-  background-color: black;
-  color: white;
+  border-radius: 25px;
+  width: 520px;
+  max-width: 92vw;
+  min-height: 400px;
+  padding: 40px 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
   text-align: center;
-  padding: 20px;
+  color: #333;
+  position: relative;
+  overflow: hidden;
 }
-#timer {
-  color: red;
-  font-weight: bold;
-  border: 2px solid red;
-  padding: 5px 10px;
-  display: inline-block;
-  margin-bottom: 20px;
-}
-#question-box {
-  border: 2px solid red;
-  padding: 20px;
-  margin: auto;
-  width: fit-content;
-}
-.option {
-  display: inline-block;
-  border: 2px solid red;
-  padding: 10px 20px;
-  margin: 10px;
-  cursor: pointer;
-}
-#next-button {
-  margin-top: 20px;
-  background-color: red;
-  color: black;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-}*/
-
-#custom-quiz-popup {
-    display: none;
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    color: black;
-    z-index: 9999;
-    padding: 30px;
-    border-radius: 14px;
-    width: 500px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-#quiz-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* two columns */
-  gap: 10px;                      /* space between items */
-}
-
-.quiz-option-label {
-  display: flex;
-  align-items: center;
-  background: #121212;
-  color: white;
-  padding: 18px; /* Increased padding */
-  border-radius: 14px; /* More rounded corners */
-  border: 2px solid #d92323;
-  cursor: pointer;
-  font-weight: bold;
-  gap: 10px;
-  transition: background-color 0.3s, color 0.3s;
-  width: 180px; /* Adjust as needed */
-  justify-content: center;
-  font-size: 16px; /* Optional: larger text */
-}
-
-.quiz-option-label input[type="radio"] {
-  accent-color: red;
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
-}
-
-
-/* Highlight the selected option's label in red */
-.quiz-option-label input[type="radio"]:checked + span,
-.quiz-option-label input[type="radio"]:checked {
-  background-color: #d92323;
-  color: white;
-}
-
-.quiz-option-label:has(input[type="radio"]:checked) {
-  background-color: #d92323;
-  color: white;
-}
-
-#next-question-btn {
-  margin-top: 20px;
-  background-color: red;
-  color: black;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-}
-
-#custom-quiz-popup {
-  z-index: 9999 !important;
-}
-
-
-.submit-button {
-  margin-top: 20px;
-  background-color: red;
-  color: white;
-  font-weight: bold;
-  padding: 10px 24px;
-  border: none;
-  border-radius: 12px; /* Rounded button */
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #b30000;
-}
-
 .reward-popup {
     width: 580px !important;
     max-width: 90vw;
-    height: 400px;       /* or min-height: 60vh */
+    height: 400px;       
     padding: 30px 25px !important;
     border-radius: 25px;
     font-family: 'Poppins', sans-serif;
@@ -556,7 +415,7 @@
   }
 
   #quiz-options {
-    grid-template-columns: 1fr; /* stack options vertically */
+    grid-template-columns: 1fr; 
     gap: 12px;
   }
 
@@ -581,16 +440,24 @@
     font-size: 14px;
     padding: 10px;
   }
+
+  .swal2-popup.quiz-swal-wide {
+      padding: 12px !important;
+      border-radius: 14px !important;
+      width: 96vw !important;
+      max-width: 96vw !important;
+      margin: 0 auto !important;
+  }
 }
-/* Put this in your <style> tag or CSS file */
+
 .disclaimer-popup {
-    height: 400px !important;  /* or whatever height you want */
+    height: 400px !important;  
     padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-/* Mobile styles */
+
 @media screen and (max-width: 600px) {
     .disclaimer-popup {
         height: 80vh !important;
@@ -623,10 +490,6 @@
   background-color: transparent !important;
 }
 
-
-/* Popup background & rounded card */
-
-/* FORCE override SweetAlert2 default background */
 .swal2-popup.quiz-popup-container {
     background: linear-gradient(180deg, #e9d9ff, #f3ecff) !important;
     border-radius: 30px !important;
@@ -634,14 +497,207 @@
     padding: 0 !important;
 }
 
-/* Inner content box */
+.swal2-html-container {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.swal2-backdrop-show {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+.swal2-popup.quiz-swal-wide {
+    position: relative;
+    padding: 16px !important;
+    border-radius: 18px !important;
+
+    width: 720px !important;
+    max-width: 92vw !important;
+    background: transparent !important;
+}
+
+/*.swal2-popup.quiz-swal-wide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 3px;
+    background: linear-gradient(
+        135deg,
+        #fff3b0,
+        #d4af37,
+        #b8860b,
+        #fff3b0
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}*/
+@media (max-width: 768px) {
+    .quiz-inner-wrapper {
+        max-width: 92%;
+    }
+}
+
+@media (max-width: 480px) {
+    .swal2-popup.quiz-swal-wide {
+        padding: 12px !important;
+        border-radius: 14px !important;
+        width: 90vw !important;
+        max-width: 90vw !important;
+    }
+
+     .quiz-inner-wrapper {
+        max-width: 96%;
+      }
+
+      .quiz-question-box {
+          font-size: 17px;
+          padding: 16px;
+      }
+
+      .quiz-option-btn {
+          padding: 14px;
+          font-size: 15px;
+          min-height: 60px;
+      }
+}
+
+.quiz-inner-wrapper {
+    max-width: 640px;      
+    margin: 0 auto;        
+    width: 100%;
+}
+
+/*.quiz-timer-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;            
+}*/
+
+.quiz-timer-above {
+    display: flex;
+    justify-content: center;
+    margin: -35px 0 8px; /* space above & below */
+    pointer-events: none; /* user can’t click it */
+}
+
+
+.circle-timer {
+    transform: scale(0.6);   /* try 0.6 – 0.75 */
+}
+/* SVG circle base */
+.circle-bg {
+    fill: none;
+    stroke: #ddd;
+    stroke-width: 6;
+}
+
+.circle-progress {
+    fill: none;
+    stroke: #e53935;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    stroke-dasharray: 201;     /* 2πr → r=32 */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.6s linear;
+}
+.timer-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #e53935;
+}
+
+.quiz-question-box {
+    background: transparent;
+    color: #fff;
+    padding: 0;
+    border-radius: 0;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
+    line-height: 1.4;
+    width: 100%;
+    max-width: 100%;
+    text-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
+}
+
+.quiz-options-grid {
+    position: relative;              
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;                       
+    margin-bottom: 20px;
+}
+
+.quiz-option-btn {
+    background: #f5f5f5;
+    border: 2px solid transparent;
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 17px;
+    min-height: 70px;
+    cursor: pointer;
+    width: 100%;
+
+    background-image:
+        linear-gradient(#f5f5f5, #f5f5f5),
+        linear-gradient(135deg, #ffd700, #d4af37, #b8860b);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+
+    transition: all 0.25s ease;
+}
+
+/* SELECTED OPTION */
+.quiz-option-btn.selected {
+    background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    border-color: #ffd700; /* bright gold */
+    color: #fff;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 14px rgba(255, 215, 0, 0.9);
+}
+
+.quiz-save-btn {
+    margin-top: -10px;
+    width: 43%;
+    padding: 16px;
+    border-radius: 18px;
+    background: #3085d6;
+    color: #fff;
+    font-size: 17px;
+    border: none;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.quiz-save-btn.enabled {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .quiz-box {
     padding: 22px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
 }
 
-/* QUIZ header (purple like your design) */
 .quiz-heading {
     font-size: 38px;
     font-weight: 800;
@@ -653,7 +709,6 @@
     text-shadow: 0 0 5px rgba(0,0,0,0.4);
 }
 
-/* Dotted divider */
 .divider {
     width: 100%;
     height: 12px;
@@ -667,7 +722,6 @@
     margin: 12px 0 18px 0;
 }
 
-/* PLAY TO WIN neon */
 .play-title {
     font-size: 28px;
     font-weight: 700;
@@ -676,22 +730,17 @@
     text-shadow: 0 0 6px #008cff;
 }
 
-/* Checkbox fix (make visible) */
-
-
-/* Container to keep checkbox on the left */
 .terms-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;        /* space between checkbox and text */
+    gap: 8px;        
     margin-top: 15px;
     font-size: 15px;
     color: #333;
     text-align: center;
 }
 
-/* Visible checkbox */
 .terms-row input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -701,14 +750,11 @@
     position: revert;
 }
 
-/* Terms link */
 .terms-link {
     color: #cc0000;
     font-weight: 600;
 }
 
-
-/* Buttons row */
 .btn-row {
     display: flex;
     justify-content: center;
@@ -716,7 +762,6 @@
     margin-top: 18px;
 }
 
-/* PLAY button */
 .play-btn {
     background: linear-gradient(180deg, #00ff64, #00b43b);
     padding: 12px 32px;
@@ -729,7 +774,6 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-/* SKIP button */
 .skip-btn {
     background: linear-gradient(180deg, #ff8c5a, #d14600);
     padding: 12px 32px;
@@ -742,7 +786,6 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-/* NOTE box */
 .note-box {
     background: #ffffffcc;
     padding: 14px;
@@ -751,5 +794,3 @@
     font-size: 13px;
     color: #333;
 }
-
-

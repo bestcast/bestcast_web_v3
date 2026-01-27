@@ -27,17 +27,7 @@
 @section('content') 
   <div class="ajxProfile"></div>
   <div id="wrapper" class="vpl-skin-aviva vpl-customized"></div>
-  <div id="custom-quiz-popup" style="display:none;">
-    <div id="quiz-timer" style="color:red; font-weight:bold; margin-bottom:10px;">Time left: 10s</div>
-
-    <div id="quiz-question-text" style="font-size:18px; margin-bottom:15px;"></div>
-    
-    <div id="quiz-options" style="margin-bottom:15px;"></div>
-    
-    <button id="next-question-btn" style="display:none;" class="btn btn-primary submit-button">Next</button>
-    <!-- <button type="button" class="next-button next-button">Next</button> -->
-</div>
-<input type="hidden" id="movieId" value="{{ $movie->id }}">
+  <input type="hidden" id="movieId" value="{{ $movie->id }}">
   <style type="text/css">
     .vpl-settings-menu .vpl-quality-menu .vpl-menu-item.vpl-btn-reset{display: none;}
     .vpl-settings-menu .vpl-quality-menu .vpl-menu-item.vpl-btn-reset.vpl-menu-active{display: block;}
@@ -483,29 +473,19 @@
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
         // Clear with path
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-
-        // Optional: verify immediately
-        /*if (document.cookie.split('; ').find(row => row.startsWith(name + '='))) {
-            console.warn(`Cookie "${name}" might not be fully cleared!`);
-        } else {
-            console.log(`Cookie "${name}" cleared successfully.`);
-        }*/
     }
     function encryptRequest(payload) {
         try {
             // Convert payload to string
             const text = JSON.stringify(payload);
-
             // Generate random IV (16 bytes)
             const iv = CryptoJS.lib.WordArray.random(16);
-
             // Encrypt
             const encrypted = CryptoJS.AES.encrypt(text, APP_AES_KEY, {
                 iv: iv,
                 mode: CryptoJS.mode.CBC,
                 padding: CryptoJS.pad.Pkcs7
             });
-
             return {
                 iv: CryptoJS.enc.Base64.stringify(iv),
                 data: CryptoJS.enc.Base64.stringify(encrypted.ciphertext)
@@ -523,13 +503,11 @@
             const cipher = CryptoJS.lib.CipherParams.create({
                 ciphertext: CryptoJS.enc.Base64.parse(encrypted.data)
             });
-
             const decrypted = CryptoJS.AES.decrypt(cipher, APP_AES_KEY, {
                 iv: iv,
                 mode: CryptoJS.mode.CBC,
                 padding: CryptoJS.pad.Pkcs7
             });
-
             return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
         } catch (err) {
             console.error("DECRYPT ERROR:", err);
@@ -570,14 +548,10 @@
                 } else {
                     quizStatus = false;
                 }
-
-                // STATE TRANSITION DETECTION
-                // was blocked - now allowed
                 if (lastQuizStatus === true && quizStatus === false) {
                     //console.log("Quiz released by other device");
-
-                    quizPromptShownOnce = false;   // allow popup again
-                    showQuizPrompt(player);        // SHOW WITHOUT REFRESH
+                    quizPromptShownOnce = false;   
+                    showQuizPrompt(player); // SHOW WITHOUT REFRESH
                 }
 
                 lastQuizStatus = quizStatus; // update snapshot
@@ -613,25 +587,24 @@
             Swal.fire({
                 icon: 'info',
                 title: 'Quiz Already Active',
-                text: 'You already participated in the quiz on another device. You can only watch the movie here.',
+                html: `
+                      <p style="font-size:16px; margin-top:10px; color:#222020;">
+                        You already participated in the quiz on another device. You can only watch the movie here.
+                      </p>
+                    `,
                 allowOutsideClick: false,
                 confirmButtonText: 'OK',
                 target: fullscreenContainer,
                 customClass: {
-                    popup: 'quiz-popup-container'
+                    popup: 'custom-swal-popup disclaimer-popup'
                 }
                 }).then(() => {
                     if (videoElement) videoElement.play();
                     $('.vpl-lightbox-wrap').css('display','block');
                 });
-
                 return; // stop here
         }
         //console.log(quizPromptAlreadyShown);
-
-        /*quizPromptAlreadyShown = true;
-        markQuizPromptAsShown();*/
-        //console.log(markQuizPromptAsShown);
         markQuizPromptAsShown().then(data => {
             //console.log(data);
             // Already shown somewhere else
@@ -695,8 +668,6 @@
             $('.vpl-lightbox-wrap').css('display', 'block');  // Show player again
             // startQuiz(movieId);
         });
-
-
         // SKIP button action
         $(document).on("click", "#skipBtn", function () {
             Swal.close();
@@ -706,8 +677,6 @@
             setCookie("quiz_popup_{{ $movie->id }}", 0, 3);
             updateQuizPromptSkipped({{ $movie->id }});
         });
-
-
     }
     
     function resetQuizState(movieId) {
@@ -721,10 +690,8 @@
 
     function initQuiz(movieId) {
         //console.log("initQuiz Started. movieId =", movieId);
-
         resetQuizState(movieId);
         videoElement = document.querySelector("#wrapper video");
-
         const encryptedPayload = encryptRequest({
             movie_id: movieId,
             user_id: {{ auth()->id() ?? 'null' }},
@@ -759,15 +726,11 @@
     function startQuizWatcher() {
         setInterval(() => {
             if (!videoElement) return;
-
             const currentTime = Math.floor(videoElement.currentTime);
             const currentMinute = Math.floor(currentTime / 60);
-
             const due = quizSchedule.filter(q => q.popup_time === currentMinute && !q.shown);
-
             if (due.length > 0) {
                 //console.log("POPUP TIME HIT:", currentMinute, due);
-                
                 due.forEach(q => {
                     q.shown = true;
                     triggerQuiz(q);
@@ -778,59 +741,60 @@
     }
     
     function triggerQuiz(question) {
-        let timeLeft = 20;
+        let timeLeft = 60;
         let chosenOption = null; // store selected option
-
         const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
         const videoElement = fullscreenContainer.querySelector('video') || document.querySelector('#wrapper video');
-
         $('.vpl-lightbox-wrap').css('display','contents');
         //let videoElement = document.querySelector('#wrapper video');
         if (videoElement) videoElement.pause(); // Pause video manually
-
         Swal.fire({
-            title: question.question,
+            title: '',
+            customClass: {
+                popup: 'quiz-swal-wide'   // unique class ONLY for this swal
+            },
             html: `
-                <div id="timer" style="font-size:20px;margin-bottom:10px;color:red;font-weight:bold;">
-                    ⏳ ${timeLeft}s
-                </div>
-                <div id="options-container">
-                    ${question.options.map((op) => `
-                        <button 
-                            class="quiz-option-btn" 
-                            data-qid="${question.id}" 
-                            data-opid="${op.id}"
-                            style="
-                                width:100%;
-                                margin:5px 0;
-                                padding:10px;
-                                border-radius:8px;
-                                background:#f2f2f2;
-                                border:2px solid #ccc;
-                                cursor:pointer;
-                            "
-                        >
-                            ${op.name}
-                        </button>
-                    `).join('')}
-                </div>
+                <!-- QUESTION BOX -->
+                <div class="quiz-inner-wrapper">
+                    <div class="quiz-question-box">
+                        ${question.question}
+                    </div>
+                    <div id="options-container" class="quiz-options-grid">
+                        ${question.options.map(op => `
+                            <button 
+                                class="quiz-option-btn"
+                                data-qid="${question.id}"
+                                data-opid="${op.id}">
+                                ${op.name}
+                            </button>
+                        `).join('')}
 
-                <button id="saveAnswerBtn"
-                    class="swal2-confirm swal2-styled"
-                    style="margin-top:15px; width:100%; opacity:0.5; pointer-events:none;">
-                    Save Answer
-                </button>
+                        
+                    </div>
+                    <!-- CENTER TIMER -->
+                    <div id="timer" class="quiz-timer-above">
+                        <div class="circle-timer">
+                            <svg width="72" height="72">
+                                <circle cx="36" cy="36" r="32" class="circle-bg"/>
+                                <circle cx="36" cy="36" r="32" class="circle-progress" id="circleProgress"/>
+                            </svg>
+                            <div class="timer-text">
+                                <span id="timeText">${timeLeft}s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="saveAnswerBtn" class="quiz-save-btn">
+                        Submit
+                    </button>
+                </div>
             `,
             showConfirmButton: false,
             allowOutsideClick: false,
             target: fullscreenContainer, // Works in both fullscreen and normal
             allowEscapeKey: false,
             didOpen: () => {
-
-                // ---------- OPTION CLICK HANDLER ----------
                 document.querySelectorAll(".quiz-option-btn").forEach(btn => {
                     btn.addEventListener("click", function () {
-
                         // remove highlight from all
                         document.querySelectorAll(".quiz-option-btn").forEach(b => {
                             b.style.background = "#f2f2f2";
@@ -853,18 +817,24 @@
                         saveBtn.style.pointerEvents = "auto";
                     });
                 });
-
-                // ---------- SAVE BUTTON ----------
                 document.getElementById("saveAnswerBtn").addEventListener("click", function () {
                     clearInterval(quizTimer);
                     Swal.close();
                     submitAnswer(question.id, chosenOption); // save selected answer
                 });
+                const totalTime = timeLeft;
+                const circle = document.getElementById("circleProgress");
+                const timeText = document.getElementById("timeText");
+                const circumference = 2 * Math.PI * 32;
 
-                // ---------- TIMER ----------
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = 0;
+
                 quizTimer = setInterval(() => {
                     timeLeft--;
-                    document.getElementById("timer").innerHTML = `⏳ ${timeLeft}s`;
+                    timeText.innerText = `${timeLeft}s`;
+                    const offset = circumference - (timeLeft / totalTime) * circumference;
+                    circle.style.strokeDashoffset = offset;
 
                     if (timeLeft <= 0) {
                         clearInterval(quizTimer);
@@ -886,20 +856,16 @@
 
     function selectAnswer(questionId, optionId) {
         //console.log("User selected:", questionId, optionId);
-
-        // Save answer locally (array for full quiz session)
         quizAnswers.push({
             question_id: questionId,
             option_id: optionId
         });
-
         Swal.close(); // Close popup immediately
         submitAnswer(questionId, optionId);
     }
 
     function submitAnswer(questionId, optionId) {
         let attemptId = getCookie("attempt_id");
-
         // Prepare current answer
         const currentAnswer = {
             question_id: questionId,
@@ -931,11 +897,6 @@
             //console.log("RAW:", raw);
             //let data;
             let decrypted = null;
-            /*try { data = JSON.parse(raw); } catch(e) { return; }
-            if (!attemptId && data.quizAttemptId) {
-                setCookie("attempt_id", data.quizAttemptId, 3);
-                attemptId = data.quizAttemptId;
-            }*/
             try {
                 const encryptedJson = JSON.parse(raw);
                 // Decrypt using global helper
@@ -951,7 +912,6 @@
                 setCookie("attempt_id", decrypted.quizAttemptId, 3);
                 attemptId = decrypted.quizAttemptId;
             }
-
             // Next question
             currentQIndex++;
             if (currentQIndex < selectedQuestions.length) {
@@ -962,13 +922,13 @@
         });
     }
 
-    function showQuizPopup() {
+    /*function showQuizPopup() {
         document.getElementById("custom-quiz-popup").style.display = "block";
     }
 
     function hideQuizPopup() {
         document.getElementById("custom-quiz-popup").style.display = "none";
-    }
+    }*/
 
     function updateQuizPromptSkipped(movieId) {
         fetch('/api/quiz-prompt-skipped', {
@@ -984,11 +944,30 @@
     function showFinalQuizResult(player) {
         //console.log("Movie ended — fetching final quiz result...");
         const attemptId = getCookie('attempt_id');
-        if (!attemptId) {
-            //console.log('No quiz attempt found. Skipping result fetch.');
+        /*if (!attemptId) {
+            console.log('No quiz attempt found. Skipping result fetch.');
             window.location.href = "{{ url('/browse') }}";
             return;
+        }*/
+        if (!attemptId) {
+            console.log('No quiz attempt found. Pausing video and staying on page.');
+
+            const fullscreenContainer =
+                document.fullscreenElement || document.getElementById('wrapper');
+
+            const videoElement =
+                fullscreenContainer.querySelector('video') ||
+                document.querySelector('#wrapper video');
+
+            $('.vpl-lightbox-wrap').css('display', 'contents');
+
+            if (videoElement) {
+                videoElement.pause(); // pause video
+            }
+
+            return; // stop further quiz logic
         }
+
         const encryptedPayload = encryptRequest({
             movieId: movieId,
             attemptId: attemptId,
@@ -1033,16 +1012,6 @@
 
             const { correctAnswerCount, totalQuestions, attemptId } = decrypted;
             if (typeof correctAnswerCount === 'undefined') {
-                /*Swal.fire({
-                  title: `
-                    <img src="{{ asset('img/icon/quiz_application/alert.png') }}" width="28" alt="Error Icon" 
-                         style="vertical-align:middle; margin-right:6px; margin-top:-4px;">
-                    Error
-                  `,
-                  text: 'Could not fetch your quiz score.',
-                  icon: 'error'
-                });*/
-
                 return;
             }
 
@@ -1092,7 +1061,7 @@
                                  width="24" alt="Motivation">
                           </p>
                         `,
-                    confirmButtonText: `<img src="{{ asset('img/icon/quiz_application/home.png') }}" width="24" alt="goback"> Go Back`,
+                    confirmButtonText: `<a href="/browse" id="reward-btn" style="text-decoration: none; font-weight: bold;"><img src="{{ asset('img/icon/quiz_application/home.png') }}" width="24" alt="goback">Go Back</a>`,
                     confirmButtonColor: '#6a0dad',
                     allowOutsideClick: false,
                     target: fullscreenContainer, // Works in both fullscreen and normal
@@ -1103,9 +1072,9 @@
                       popup: 'custom-swal-popup disclaimer-popup',
                       confirmButton: 'custom-swal-confirm'
                     }
-                }).then(() => {
+                })/*.then(() => {
                     window.location.href = "{{ url('/browse') }}";
-                });
+                })*/;
                 setTimeout(() => {
                   // trigger after popup is shown
                   confetti({
