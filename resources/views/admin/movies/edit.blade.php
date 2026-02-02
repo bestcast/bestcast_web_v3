@@ -7,13 +7,22 @@
     <div class="col-md-8">
       <div class="container-fluid">
         @include('admin.common.message')
-          <h2 class="pb-2 border-bottom">Edit subscription : {{ $model->title  }} 
-            <a href="{{ route('admin.questions.list', ['movieId' => $model->id]) }}"class="btn btn-dark upload-media um-image_id" style="float:right"><span>Create Questions</span></a>
-            <!-- 
+          <h2 class="pb-2 border-bottom d-flex justify-content-between align-items-center">
+              <span>Edit subscription : {{ $model->title }}</span>
 
-            <button type="button" class="btn btn-dark upload-media um-image_id" data-div="image_id" data-id="114" data-bs-toggle="modal" data-bs-target="#mediaModal"><span>Change</span> Image</button> -->
+              <div class="d-flex align-items-center gap-3">
+                  <a href="{{ route('admin.questions.list', ['movieId' => $model->id]) }}"
+                     class="btn btn-dark">
+                      Create Questions
+                  </a>
+                  <div class="form-check form-switch mb-0" style="transform: scale(0.7); transform-origin: center;">
+                      {{ Form::hidden('status', 0) }}
+                      <input
+                          class="form-check-input" type="checkbox" name="movie_quiz_status" role="switch"
+                          @if(old('status', !empty($model->movie_quiz_status))) checked @endif>
+                  </div>
+              </div>
           </h2>
-
           <div class="form-row">
               <label class="form-label" for="name">Title <em>*</em></label>
               <input type="text" class="form-control" id="title" name="title" value="{{ old('title',$model->title) }}" >

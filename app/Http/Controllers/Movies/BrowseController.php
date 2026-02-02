@@ -190,8 +190,8 @@ class BrowseController extends Controller
             'user_id' => $user->id,
             'movie_id' => $movie->id
         ])->value('quiz_prompt_shown') ?? 0;
-
-        return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken, 'question_available'=>$question_available, 'quiz_status' => $quiz_status, 'quiz_prompt_shown' => $quiz_prompt_shown]);
+        $movie_quiz_status = $movie->movie_quiz_status;
+        return view('movies.watch', ['movie'=>$movie,'profileToken'=>$profileToken, 'movie_quiz_status' => $movie_quiz_status,'question_available'=>$question_available, 'quiz_status' => $quiz_status, 'quiz_prompt_shown' => $quiz_prompt_shown]);
     }
 
     public function mylist()

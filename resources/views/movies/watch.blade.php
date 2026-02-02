@@ -185,6 +185,8 @@
 
                   if(player){
                     let quizShown = false; // NEW FLAG
+                    let movie_quiz_status = {{ $movie_quiz_status }};
+                    console.log(movie_quiz_status);
                     let question_available = {{ $question_available }};
                     let quizStatus = {{ $quiz_status ? 'true' : 'false' }};
                     let getCurrentTime=parseInt(player.getCurrentTime(),10);
@@ -213,6 +215,7 @@
                                 currentTime >= 0 &&
                                 currentTime <= 5 &&
                                 !quizPromptShownOnce &&
+                                {{ $movie_quiz_status }} == 1 &&
                                 {{ $question_available }} == 1
                             ) {
                                 const cookieValue = getCookie("quiz_popup_{{ $movie->id }}");
