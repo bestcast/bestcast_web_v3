@@ -9,11 +9,12 @@ class RewardClaim extends Model
     protected $fillable = [
         'user_id',
         'full_name',
-        'bank_name',
-        'account_no',
-        'ifsc',
-        'branch',
+        'door_no',
+        'street_name',
+        'country',
+        'state',
+        'city',
+        'pin_code',
         'mobile_no',
-        'upi'
     ];
 }

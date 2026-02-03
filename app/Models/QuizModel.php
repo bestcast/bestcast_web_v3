@@ -89,7 +89,7 @@ class QuizModel extends Model
 
         // End Attempt when Completed
         $totalAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
-        $required = 3;
+        $required = 9;
 
         if ($totalAnswered >= $required && $attempt->ended_at === null) {
             $attempt->update(['ended_at' => now()]);

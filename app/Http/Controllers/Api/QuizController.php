@@ -43,7 +43,7 @@ class QuizController extends Controller
         $userId  = $payload['user_id'] ?? null;
         $plainToken   = $payload['tokenEncrypted'] ?? null;
         $interval    = 15;
-        $maxRequired = 3;
+        $maxRequired = 9;
 
         // Check if quiz already active on another device
         $activeQuiz = UsersDevice::where('user_id', $userId)

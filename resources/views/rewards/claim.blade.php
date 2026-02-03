@@ -33,36 +33,51 @@
                 <div class="error" id="fullNameError"></div>
             </div>
 
-            <div class="form-group">
-                <label>Bank Name</label>
-                <input type="text" id="bankName" 
-                    value="{{ $claim->bank_name ?? '' }}"
-                    placeholder="Enter Bank Name" />
-                <div class="error" id="bankNameError"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Door No</label>
+                    <input type="text" id="doorNo" 
+                        value="{{ $claim->door_no ?? '' }}"
+                        placeholder="Door / House No" />
+                    <div class="error" id="doorNoError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Street Name</label>
+                    <input type="text" id="streetName" 
+                        value="{{ $claim->street_name ?? '' }}"
+                        placeholder="Street name" />
+                    <div class="error" id="streetNameError"></div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Account No</label>
-                <input type="text" id="accountNo" 
-                    value="{{ $claim->account_no ?? '' }}"
-                    placeholder="Enter Account Number" />
-                <div class="error" id="accountNoError"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Country</label>
+                    <select id="country"><option value="">Select Country</option></select>
+                    <div class="error" id="countryError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>State</label>
+                    <select id="state"><option value="">Select State</option></select>
+                    <div class="error" id="stateError"></div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>IFSC Code</label>
-                <input type="text" id="ifsc" 
-                    value="{{ $claim->ifsc ?? '' }}"
-                    placeholder="Enter IFSC" />
-                <div class="error" id="ifscError"></div>
-            </div>
-
-            <div class="form-group">
-                <label>Bank Branch</label>
-                <input type="text" id="branch" 
-                    value="{{ $claim->branch ?? '' }}"
-                    placeholder="Enter Branch Name" />
-                <div class="error" id="branchError"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>City</label>
+                    <select id="city"><option value="">Select City</option></select>
+                    <div class="error" id="cityError"></div>
+                </div>
+                 <div class="form-group">
+                    <label>Pincode</label>
+                    <input type="text" id="pinCode"
+                        value="{{ $claim->pin_code ?? '' }}"
+                        placeholder="Pincode" />
+                    <div class="error" id="pinCodeError"></div>
+                </div>
             </div>
 
             <div class="form-group full-width">
@@ -71,15 +86,7 @@
                     value="{{ $claim->mobile_no ?? '' }}"
                     placeholder="Enter your mobile number" />
                 <div class="error" id="mobileNoError"></div>
-            </div>
-
-            <div class="form-group full-width">
-                <label>UPI ID</label>
-                <input type="text" id="upi" 
-                    value="{{ $claim->upi ?? '' }}"
-                    placeholder="Enter your UPI ID" />
-                <div class="error" id="upiError"></div>
-            </div>
+            </div>   
 
             <div class="button-container full-width">
                 <button type="submit">
@@ -125,6 +132,21 @@ function decryptResponse(encrypted) {
         return null;
     }
 }
+const errorMap = {
+    full_name: "fullNameError",
+    door_no: "doorNoError",
+    street_name: "streetNameError",
+    country: "countryError",
+    state: "stateError",
+    city: "cityError",
+    pin_code: "pinCodeError",
+    mobile_no: "mobileNoError"
+
+};
+const SAVED_COUNTRY = "{{ $claim->country ?? '' }}";
+const SAVED_STATE   = "{{ $claim->state ?? '' }}";
+const SAVED_CITY    = "{{ $claim->city ?? '' }}";
+
 document.getElementById("claimForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -139,12 +161,13 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
     // Collect data
     const formData = {
         full_name: document.getElementById("fullName").value.trim(),
-        bank_name: document.getElementById("bankName").value.trim(),
-        account_no: document.getElementById("accountNo").value.trim(),
-        ifsc: document.getElementById("ifsc").value.trim(),
-        branch: document.getElementById("branch").value.trim(),
-        mobile_no: document.getElementById("mobile_no").value.trim(),
-        upi: document.getElementById("upi").value.trim()
+        door_no: document.getElementById("doorNo").value.trim(),
+        street_name: document.getElementById("streetName").value.trim(),
+        country: document.getElementById("country").value,
+        state: document.getElementById("state").value,
+        city: document.getElementById("city").value,
+        pin_code: document.getElementById("pinCode").value.trim(),
+        mobile_no: document.getElementById("mobile_no").value.trim()
     };
 
     const encrypted = encryptPayload(formData);
@@ -204,13 +227,20 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
             return;
         }
 
-        // If server returned validation errors format (Laravel), show messages
-        if (payload.errors && typeof payload.errors === 'object') {
-            // pick first error message
-            const firstField = Object.keys(payload.errors)[0];
-            const firstMsg = payload.errors[firstField][0];
-            return;
+        if (payload.errors && typeof payload.errors === "object") {
+
+            Object.keys(payload.errors).forEach(field => {
+                const errorDivId = errorMap[field];
+
+                if (errorDivId) {
+                    const msg = payload.errors[field][0];
+                    document.getElementById(errorDivId).textContent = msg;
+                }
+            });
+
+            return; // stop submit
         }
+
 
         // If payload explicitly has success === false, show the server message if present
         if (payload.success === false) {
@@ -245,6 +275,128 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
         console.error("Fetch/processing error:", err);
     });
 
+});
+let countryCodeMap = {}; // name → ISO2
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const countrySelect = document.getElementById("country");
+
+    fetch("https://restcountries.com/v3.1/all?fields=name,cca2")
+        .then(res => res.json())
+        .then(countries => {
+
+            countries.sort((a, b) =>
+                a.name.common.localeCompare(b.name.common)
+            );
+
+            countries.forEach(c => {
+                const name = c.name.common;
+                const iso2 = c.cca2;
+
+                countryCodeMap[name] = iso2;
+
+                const option = document.createElement("option");
+                option.value = name;
+                option.textContent = name;
+                countrySelect.appendChild(option);
+            });
+
+            // Edit mode auto-select
+            if (SAVED_COUNTRY) {
+                countrySelect.value = SAVED_COUNTRY;
+                countrySelect.dispatchEvent(new Event("change"));
+            }
+
+        })
+        .catch(err => console.error("Country load failed:", err));
+});
+document.getElementById("country").addEventListener("change", function () {
+
+    const countryName = this.value;
+    const stateSelect = document.getElementById("state");
+
+    stateSelect.innerHTML = '<option value="">Loading states...</option>';
+
+    if (!countryName) {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        return;
+    }
+
+    fetch("https://countriesnow.space/api/v0.1/countries/states", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country: countryName })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+
+        if (!data.data || !data.data.states) return;
+
+        data.data.states.forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = s.name;
+            opt.textContent = s.name;
+            stateSelect.appendChild(opt);
+        });
+        if (SAVED_STATE) {
+            stateSelect.value = SAVED_STATE;
+            stateSelect.dispatchEvent(new Event("change"));
+        }
+    })
+    .catch(err => {
+        console.error("State load error:", err);
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+    });
+});
+
+document.getElementById("state").addEventListener("change", function () {
+
+    const country = document.getElementById("country").value;
+    const state   = this.value;
+    const citySel = document.getElementById("city");
+
+    citySel.innerHTML = '<option value="">Loading cities...</option>';
+
+    if (!country || !state) {
+        citySel.innerHTML = '<option value="">Select City</option>';
+        return;
+    }
+
+    fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            country: country,
+            state: state
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        citySel.innerHTML = '<option value="">Select City</option>';
+
+        if (!data.data || !Array.isArray(data.data)) return;
+
+        data.data.forEach(city => {
+            const opt = document.createElement("option");
+            opt.value = city;
+            opt.textContent = city;
+            citySel.appendChild(opt);
+        });
+
+        // auto-select saved city (edit mode)
+        if (SAVED_CITY) {
+            citySel.value = SAVED_CITY;
+        }
+
+    })
+    .catch(err => {
+        console.error("City load error:", err);
+        citySel.innerHTML = '<option value="">Select City</option>';
+    });
 });
 </script>
 </body>

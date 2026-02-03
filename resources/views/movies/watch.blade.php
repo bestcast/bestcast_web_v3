@@ -186,7 +186,6 @@
                   if(player){
                     let quizShown = false; // NEW FLAG
                     let movie_quiz_status = {{ $movie_quiz_status }};
-                    console.log(movie_quiz_status);
                     let question_available = {{ $question_available }};
                     let quizStatus = {{ $quiz_status ? 'true' : 'false' }};
                     let getCurrentTime=parseInt(player.getCurrentTime(),10);
@@ -717,9 +716,9 @@
             //console.log("DECRYPTED QUIZ:", data);
             quizSchedule = data.questions;
 
-            quizSchedule.forEach((q, i) => {
+            /*quizSchedule.forEach((q, i) => {
                 console.log(`${i+1}. Question Id: ${q.id}, Show Time: ${q.show_question_time}, Popup Time: ${q.popup_time} mins`);
-            });
+            });*/
 
             startQuizWatcher(quizSchedule);
         })
