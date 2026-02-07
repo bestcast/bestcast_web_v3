@@ -15,6 +15,7 @@ class QuizAttemptAnswer extends Model
         'movie_id',
         'quiz_question_id',
         'question_option_id',
+        'answered_seconds',
     ];
 
     public function quizattempts(): BelongsTo

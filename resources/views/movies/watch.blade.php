@@ -716,9 +716,9 @@
             //console.log("DECRYPTED QUIZ:", data);
             quizSchedule = data.questions;
 
-            /*quizSchedule.forEach((q, i) => {
+            quizSchedule.forEach((q, i) => {
                 console.log(`${i+1}. Question Id: ${q.id}, Show Time: ${q.show_question_time}, Popup Time: ${q.popup_time} mins`);
-            });*/
+            });
 
             startQuizWatcher(quizSchedule);
         })
@@ -743,10 +743,13 @@
     }
     
     function triggerQuiz(question) {
-        let timeLeft = 60;
+        let timeLeft = 20;
         let chosenOption = null; // store selected option
         const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
         const videoElement = fullscreenContainer.querySelector('video') || document.querySelector('#wrapper video');
+        const QUESTION_TOTAL_TIME = 20;
+        const questionStartTime = Date.now(); // milliseconds
+
         $('.vpl-lightbox-wrap').css('display','contents');
         //let videoElement = document.querySelector('#wrapper video');
         if (videoElement) videoElement.pause(); // Pause video manually
@@ -821,8 +824,13 @@
                 });
                 document.getElementById("saveAnswerBtn").addEventListener("click", function () {
                     clearInterval(quizTimer);
+                    const timeTakenSeconds = Math.min(
+                        QUESTION_TOTAL_TIME,
+                        Math.floor((Date.now() - questionStartTime) / 1000)
+                    );
+                    console.log(timeTakenSeconds);
                     Swal.close();
-                    submitAnswer(question.id, chosenOption); // save selected answer
+                    submitAnswer(question.id, chosenOption, timeTakenSeconds); // save selected answer
                 });
                 const totalTime = timeLeft;
                 const circle = document.getElementById("circleProgress");
@@ -841,9 +849,9 @@
                     if (timeLeft <= 0) {
                         clearInterval(quizTimer);
                         Swal.close();
-
+                        console.log(QUESTION_TOTAL_TIME);
                         // auto-submit
-                        submitAnswer(question.id, chosenOption || "");
+                        submitAnswer(question.id, chosenOption || "", QUESTION_TOTAL_TIME);
                     }
                 }, 1000);
             },
@@ -866,12 +874,13 @@
         submitAnswer(questionId, optionId);
     }
 
-    function submitAnswer(questionId, optionId) {
+    function submitAnswer(questionId, optionId, timeTakenSeconds) {
         let attemptId = getCookie("attempt_id");
         // Prepare current answer
         const currentAnswer = {
             question_id: questionId,
-            option_id: optionId || null
+            option_id: optionId || null,
+            answered_seconds: timeTakenSeconds
         };
 
         // Store locally (for review or final submit)
