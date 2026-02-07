@@ -72,7 +72,8 @@ class QuizModel extends Model
                 'user_id'            => $userId,
                 'movie_id'           => $movieId,
                 'quiz_question_id'   => $answer['question_id'],
-                'question_option_id' => $answer['option_id']
+                'question_option_id' => $answer['option_id'],
+                'answered_seconds'   => $answer['answered_seconds']
             ]);
         }
 
@@ -83,8 +84,16 @@ class QuizModel extends Model
             })
             ->count();
 
+        $totalAnsweredSeconds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+            ->sum('answered_seconds');
+
+        $totalAttendedQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+            ->count();
+
         QuizAttempts::where('id', $attemptId)->update([
-            'score' => $correctAnswerCount
+            'score' => $correctAnswerCount,
+            'total_answered_seconds' => $totalAnsweredSeconds,
+            'total_attended_questions' => $totalAttendedQuestions,
         ]);
 
         // End Attempt when Completed
