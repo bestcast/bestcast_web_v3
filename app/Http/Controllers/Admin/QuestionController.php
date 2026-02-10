@@ -27,7 +27,7 @@ class QuestionController extends Controller
 
     public function list(int $movieId){
         $questions = $this->QuestionModel->getQuestions($movieId); 
-        return view('admin.questions.question-list', ['movieId' => $movieId,'questions' => $questions]);
+        return view('admin.questions.question-list', compact('questions', 'movieId'));
     }
 
     public function create($movieId){

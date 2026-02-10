@@ -36,12 +36,13 @@ class RewardController extends Controller
         // Validation
         $validator = Validator::make($decrypted, [
             'full_name' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'account_no' => 'required|string|max:30',
-            'ifsc' => 'required|string|max:20',
-            'branch' => 'required|string|max:255',
-            'mobile_no' => 'required|string|max:20',
-            'upi' => 'nullable|string|max:50',
+            'door_no'     => 'required|string|max:255',
+            'street_name' => 'required|string|max:255',
+            'country'     => 'required|string|max:100',
+            'state'       => 'required|string|max:100',
+            'city'        => 'required|string|max:100',
+            'pin_code'    => 'required|string|max:10',
+            'mobile_no'   => 'required|string|max:20',
         ]);
 
         // If validation fails — SEND ENCRYPTED ERROR
@@ -58,13 +59,14 @@ class RewardController extends Controller
         // Save
         $claim = RewardClaim::create([
             'user_id'   => auth()->id(),
-            'full_name' => $validated['full_name'],
-            'bank_name' => $validated['bank_name'],
-            'account_no'=> $validated['account_no'],
-            'ifsc'      => $validated['ifsc'],
-            'branch'    => $validated['branch'],
-            'mobile_no' => $validated['mobile_no'],
-            'upi'       => $validated['upi'] ?? null,
+            'full_name'   => $validated['full_name'],
+            'door_no'     => $validated['door_no'],
+            'street_name' => $validated['street_name'],
+            'country'     => $validated['country'],
+            'state'       => $validated['state'],
+            'city'        => $validated['city'],
+            'pin_code'    => $validated['pin_code'],
+            'mobile_no'   => $validated['mobile_no'],
         ]);
 
         $encryptedResponse = QuizCryptoHelper::encryptPayload([
@@ -86,12 +88,13 @@ class RewardController extends Controller
 
         $validator = Validator::make($decrypted, [
             'full_name' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'account_no' => 'required|string|max:30',
-            'ifsc' => 'required|string|max:20',
-            'branch' => 'required|string|max:255',
-            'mobile_no' => 'required|string|max:20',
-            'upi' => 'nullable|string|max:50',
+            'door_no'     => 'required|string|max:255',
+            'street_name' => 'required|string|max:255',
+            'country'     => 'required|string|max:100',
+            'state'       => 'required|string|max:100',
+            'city'        => 'required|string|max:100',
+            'pin_code'    => 'required|string|max:10',
+            'mobile_no'   => 'required|string|max:20',
         ]);
 
         // If validation fails — SEND ENCRYPTED ERROR

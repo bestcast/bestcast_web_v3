@@ -287,6 +287,7 @@
 
                             case "ArrowRight": // Forward 10s
                                 e.preventDefault();
+                                if (quizActive) return;
                                 video.currentTime = Math.min(
                                     video.currentTime + 10,
                                     video.duration
@@ -295,6 +296,7 @@
 
                             case "ArrowLeft": // Rewind 10s
                                 e.preventDefault();
+                                if (quizActive) return;
                                 video.currentTime = Math.max(
                                     video.currentTime - 10,
                                     0
@@ -516,6 +518,25 @@
             return null;
         }
     }
+    window.disableSeekControls = function () {
+        $('.vpl-skip-backward-toggle, .vpl-skip-forward-toggle')
+            .addClass('vpl-disabled')
+            .prop('disabled', true)
+            .css({
+                pointerEvents: 'none',
+                opacity: 0.35
+            });
+    };
+
+    window.enableSeekControls = function () {
+        $('.vpl-skip-backward-toggle, .vpl-skip-forward-toggle')
+            .removeClass('vpl-disabled')
+            .prop('disabled', false)
+            .css({
+                pointerEvents: '',
+                opacity: ''
+            });
+    };
     function startQuizPolling(movieId) {
         if (quizPollingStarted || quizPollingStopped) return;
         quizPollingStarted = true;
@@ -666,6 +687,7 @@
             setCookie("quiz_popup_{{ $movie->id }}", 1, 3); // store for 3 hours
             disclaimerAccepted = true;
             quizActive = true;
+            disableSeekControls();
             if (videoElement) videoElement.play(); // Resume video
             $('.vpl-lightbox-wrap').css('display', 'block');  // Show player again
             // startQuiz(movieId);

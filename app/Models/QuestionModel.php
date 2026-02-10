@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Question;
 use App\Models\QuestionOptions;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class QuestionModel extends Model
 {
@@ -29,8 +30,12 @@ class QuestionModel extends Model
      * Integer $movieId
      * @return Array
      */
-    public function getQuestions(int $movieId):array{
-        return $this->question->where('movie_id',$movieId)->get()->toArray();
+    public function getQuestions(int $movieId):LengthAwarePaginator{
+        return $this->question
+            ->where('movie_id', $movieId)
+            ->orderBy('show_question_time', 'asc')
+            ->orderBy('id')
+            ->paginate(25);
     }
     /**
      * Create a new question and options.
