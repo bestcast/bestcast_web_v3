@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\QuizController;
+use App\Http\Controllers\Api\MobileAppQuizController;
 
 use App\Http\Controllers\Movies\BrowseController;
 use App\Http\Controllers\Movies\GuestController;
@@ -110,6 +111,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/reward-claim', [RewardController::class, 'store']);
     Route::put('/reward-claim/{id}', [RewardController::class, 'update']);
 
-});
 
+    /* Mobile API*/
+    Route::post('/moviequiz', [MobileAppQuizController::class, 'getMovieQuizMobile']);
+});
 //Route::get('/data', [YourController::class, 'noAuthRequired']);

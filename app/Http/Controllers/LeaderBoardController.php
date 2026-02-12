@@ -40,12 +40,10 @@ class LeaderBoardController extends Controller
             ->limit(50)
             ->get();
 
-        $movies = Movies::where('status', 1)
+        $movies = Movies::where('movie_quiz_status', 1)
             ->whereIn('id', function ($q) {
                 $q->select('movie_id')
-                  ->from('quiz_attempts')
-                  ->whereNotNull('movie_id')
-                  ->whereNotNull('ended_at'); // only completed quizzes
+                  ->from('questions');
             })
             ->orderBy('title')
             ->get();

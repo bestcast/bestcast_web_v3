@@ -1,0 +1,145 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\QuizAttempts;
+use App\Models\QuizModel;
+use App\Models\Question;
+use App\Models\QuizAttemptAnswer;
+use App\Models\QuizAttemptQuestionMap;
+use App\Helpers\QuizCryptoHelper;
+use App\Models\UsersDevice;
+use App\Models\UsersMovies;
+use App\User;
+use Auth;
+
+class MobileAppQuizController extends Controller
+{
+    public function getMovieQuizMobile(Request $request)
+    {
+        $movieId     = $request['movie_id'] ?? null;
+        $userId      = $request['user_id'] ?? null;
+        $deviceToken = $request['device_token'] ?? null; // plain device token
+        $interval    = 15;
+        $maxRequired = 9;
+
+        /* ---------------------------------
+         |  Device quiz lock check
+         |----------------------------------*/
+        $activeQuiz = UsersDevice::where('user_id', $userId)
+            ->where('is_quiz_active', 1)
+            ->first();
+
+        $currentDevice = UsersDevice::where('token', $deviceToken)->first();
+
+        if ($activeQuiz && $currentDevice && $activeQuiz->token !== $currentDevice->token) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Quiz already active on another device'
+            ], 403);
+        }
+
+        if ($currentDevice) {
+            $currentDevice->update([
+                'is_quiz_active' => 1,
+                'quiz_started_at' => now()
+            ]);
+        }
+
+        /* ---------------------------------
+         |  Subscription check
+         |----------------------------------*/
+        $user = Auth::user();
+
+        if (!$user || !$user->plan_expiry || now()->gte($user->plan_expiry)) {
+            return response()->json([
+                'status'  => 'expired',
+                'message' => 'Subscription expired'
+            ], 403);
+        }
+
+        /* ---------------------------------
+         |  Attempt handling
+         |----------------------------------*/
+        $attempt = QuizAttempts::where('participant_id', $userId)
+            ->where('movie_id', $movieId)
+            ->whereNull('ended_at')
+            ->first();
+
+        if (!$attempt) {
+            $attempt = QuizAttempts::create([
+                'participant_id' => $userId,
+                'movie_id'       => $movieId,
+                'started_at'     => now(),
+            ]);
+        }
+
+        /* ---------------------------------
+         |  Previously used questions
+         |----------------------------------*/
+        $usedQuestions = QuizAttemptQuestionMap::where('user_id', $userId)
+            ->pluck('question_id')
+            ->toArray();
+
+        /* ---------------------------------
+         |  Fetch unused questions (unique time)
+         |----------------------------------*/
+        $unused = Question::where('movie_id', $movieId)
+            ->whereNotIn('id', $usedQuestions)
+            ->with('options')
+            ->orderBy('show_question_time')
+            ->get()
+            ->groupBy('show_question_time')
+            ->map(fn($g) => $g->first())
+            ->values();
+
+        if ($unused->count() < $maxRequired) {
+
+            $needed = $maxRequired - $unused->count();
+
+            $usedAgain = Question::where('movie_id', $movieId)
+                ->whereIn('id', $usedQuestions)
+                ->with('options')
+                ->get()
+                ->groupBy('show_question_time')
+                ->map(fn($g) => $g->first())
+                ->values()
+                ->shuffle()
+                ->take($needed);
+
+            $questions = $unused->merge($usedAgain);
+        } else {
+            $questions = $unused;
+        }
+
+        $selected = $questions->shuffle()->take($maxRequired);
+
+        /* ---------------------------------
+         |  Popup buffer logic
+         |----------------------------------*/
+        $finalQuestions = $selected->map(function ($q) {
+
+            $buffer = $q->show_question_time >= 20 ? 3 : 6;
+
+            return [
+                'id'                  => $q->id,
+                'question'            => $q->question_name,
+                'show_question_time'  => $q->show_question_time,
+                'popup_time'          => $q->show_question_time + $buffer,
+                'options'             => $q->options
+            ];
+        })->sortBy('popup_time')->values();
+
+        /* ---------------------------------
+         |  Plain JSON response (Mobile-ready)
+         |----------------------------------*/
+        return response()->json([
+            'status'     => 'success',
+            'attempt_id'=> $attempt->id,
+            'total'      => $finalQuestions->count(),
+            'questions'  => $finalQuestions
+        ]);
+    }
+}
