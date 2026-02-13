@@ -114,5 +114,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     /* Mobile API*/
     Route::post('/moviequiz', [MobileAppQuizController::class, 'getMovieQuizMobile']);
+    Route::post('/mobilesubmitquiz', [MobileAppQuizController::class, 'quizsubmitmobile']);
+    Route::post('/mobilequizresult', [MobileAppQuizController::class, 'quizresultmobile']);
+    Route::post('/mobilequizstatus', [MobileAppQuizController::class, 'mobilequizStatus']);
+    Route::post('/mobilequizpromptshown', [MobileAppQuizController::class, 'mobilequizPromptShown']);
+    Route::post('/mobilequizPromptSkipped', [MobileAppQuizController::class, 'mobilequizPromptSkipped']);
 });
 //Route::get('/data', [YourController::class, 'noAuthRequired']);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\QuizAttempts;
-use App\Models\QuizModel;
+use App\Models\MobileAppQuizModel;
 use App\Models\Question;
 use App\Models\QuizAttemptAnswer;
 use App\Models\QuizAttemptQuestionMap;
@@ -17,6 +17,17 @@ use Auth;
 
 class MobileAppQuizController extends Controller
 {
+    private $MobileAppQuizModel;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(MobileAppQuizModel $MobileAppQuizModel)
+    {
+        $this->MobileAppQuizModel = $MobileAppQuizModel;
+    }
     public function getMovieQuizMobile(Request $request)
     {
         $movieId     = $request['movie_id'] ?? null;
@@ -142,4 +153,77 @@ class MobileAppQuizController extends Controller
             'questions'  => $finalQuestions
         ]);
     }
+    public function quizsubmitmobile(Request $request)
+    {
+        $data = $request->all();
+        return $this->MobileAppQuizModel->submitAnswerQuiz($data);
+    }
+    public function quizresultmobile(Request $request)
+    {
+        $data = $request->all();
+        return $this->MobileAppQuizModel->QuizAttemptAnswerCount($data);
+    }
+    public function mobilequizStatus(Request $request)
+    {
+        $data = $request->all();
+        return $this->MobileAppQuizModel->QuizPooling($data);
+    }
+    public function mobilequizPromptShown(Request $request)
+    {
+        $request->validate([
+            'movie_id' => 'required|exists:movies,id'
+        ]);
+
+        $userId = auth()->id();
+        $movieId = $request->movie_id;
+
+        // Always exists because already create it earlier
+        $record = UsersMovies::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->first();
+
+        // Already shown - block popup
+        if ($record && $record->quiz_prompt_shown == 1) {
+            return response()->json([
+                'already_shown' => true
+            ]);
+        }
+
+        // Mark as shown now
+        UsersMovies::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->update([
+                'quiz_prompt_shown' => 1
+            ]);
+
+        $Response = [
+            'already_shown' => false
+        ];
+
+        return response()->json($Response);
+    }
+    public function mobilequizPromptSkipped(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['movie_id'])) {
+            return response()->noContent();
+        }
+        $plainToken = $data['tokenEncrypted'];
+        $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+        if ($currentDevice) {
+            $currentDevice->update([
+                'is_quiz_active' => 0,
+                'quiz_started_at' => null
+            ]);
+        }
+        UsersMovies::where('user_id', auth()->id())
+            ->where('movie_id', $data['movie_id'])
+            ->update([
+                'quiz_prompt_shown' => 0
+            ]);
+
+        return response()->noContent();
+    }
+
 }
