@@ -7,7 +7,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure? You will not be able to recover this!
+        <p>Are you sure? You will not be able to recover this!</p>
+
+        @if(!empty($deleteMessage))
+            <div class="alert alert-danger mt-2 mb-0">
+                {!! $deleteMessage !!}
+            </div>
+        @endif
       </div>
       <div class="modal-footer">
         <button type="button" class="delete btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> 

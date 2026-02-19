@@ -28,6 +28,13 @@
         </a>
       </li>
     @endif
+    @if (Route::has('admin.webseries.index'))
+      <li class="icon-movie {{ request()->is('admin/webseries') || request()->is('admin/webseries/*') ? 'active' : '' }}">
+        <a href="{{ route('admin.webseries.index') }}" class="nav-link link-dark">          
+          Webseries
+        </a>
+      </li>
+    @endif
     @if (Route::has('admin.shows.index')) <!--Tv Shows Extend-->
       <li class="icon-tvshows dnn {{ request()->is('admin/shows') || request()->is('admin/shows/*') || request()->is('admin/sessions') || request()->is('admin/sessions/*') || request()->is('admin/episodes') || request()->is('admin/episodes/*') ? 'active' : '' }}">
         <a href="{{ route('admin.shows.index') }}" class="nav-link link-dark">          

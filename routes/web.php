@@ -220,6 +220,23 @@ Route::group([
     Route::get('/admin/movies/searchbytitle/{key}', 'MoviesController@searchbytitle')->name('admin.movies.searchbytitle.key');
 
 
+    Route::get('/admin/webseries', 'WebSeriesController@index')->name('admin.webseries.index');
+    Route::get('/admin/webseries/create', 'WebSeriesController@create')->name('admin.webseries.create');
+    Route::post('/admin/webseries/createsave', 'WebSeriesController@createsave')->name('admin.webseries.createsave');
+    Route::get('/admin/webseries/edit/{id}', 'WebSeriesController@edit')->name('admin.webseries.edit');
+    Route::post('/admin/webseries/editsave/{id}', 'WebSeriesController@editsave')->name('admin.webseries.editsave');
+    Route::get('/admin/webseries/delete/{id}', 'WebSeriesController@delete')->name('admin.webseries.delete');
+    //Route::get('admin/webseries/{webseries}/season/auto-create',[SeasonController::class, 'autoCreate'])->name('admin.seasons.autoCreate');
+    Route::get('admin/webseries/{webseries}/seasons', 'SeasonController@index')->name('admin.seasons.index');
+    Route::get('admin/webseries/{webseries}/season/auto-create', 'SeasonController@autoCreate')->name('admin.seasons.autoCreate');
+
+    Route::get('admin/seasons/{season}/episodes', 'EpisodeController@index')->name('admin.episodes.index');
+    Route::get('admin/seasons/{season}/episodes/auto-create', 'EpisodeController@autoCreate')->name('admin.episodes.autoCreate');
+
+    Route::get('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/edit', 'EpisodeController@edit')->name('admin.episodes.edit');
+    Route::post('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/editsave','EpisodeController@editsave')->name('admin.episodes.editsave');
+    //Route::get('/admin/webseries/delete/{id}', 'WebSeriesController@delete')->name('admin.seasons.autoCreate');
+
 
     Route::get('/admin/shows', 'ShowsController@index')->name('admin.shows.index');
     Route::get('/admin/shows/list', 'ShowsController@list')->name('admin.shows.list');
