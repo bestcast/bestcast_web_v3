@@ -55,55 +55,60 @@ class MobileAppQuizModel extends Model
             }
         }
 
-        QuizAttemptQuestionMap::firstOrCreate([
-            'attempt_id'  => $attemptId,
-            'user_id'     => $userId,
-            'question_id' => $answer['question_id']
-        ]);
-
-        // Avoid Duplicate Answer Save
-        $alreadyAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
-            ->where('quiz_question_id', $answer['question_id'])
+        $isCorrect = QuestionOptions::where('id', $answer['option_id'])
+            ->where('question_id', $answer['question_id'])
+            ->where('is_correct', 1)
             ->exists();
 
-        if (!$alreadyAnswered) {
+        // Avoid Duplicate Answer Save
+        /*$alreadyAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+            ->where('quiz_question_id', $answer['question_id'])
+            ->exists();*/
+
+        /*if (!$alreadyAnswered) {*/
             QuizAttemptAnswer::create([
                 'quiz_attempts_id'   => $attemptId,
                 'user_id'            => $userId,
                 'movie_id'           => $movieId,
                 'quiz_question_id'   => $answer['question_id'],
                 'question_option_id' => $answer['option_id'],
-                'answered_seconds'   => $answer['answered_seconds']
+                'answered_seconds'   => $answer['answered_seconds'],
+                'is_correct'         => $isCorrect ? 1 : 0,
             ]);
-        }
+        //}
 
         // Recalculate Score
         $correctAnswerCount = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
-            ->whereHas('option', function ($q) {
-                $q->where('is_correct', 1);
-            })
+            ->where('is_correct', 1)
+            ->count();
+
+        $totalAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
             ->count();
 
         $totalAnsweredSeconds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
             ->sum('answered_seconds');
 
-        $totalAttendedQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
-            ->count();
-
         QuizAttempts::where('id', $attemptId)->update([
-            'score' => $correctAnswerCount,
-            'total_answered_seconds' => $totalAnsweredSeconds,
-            'total_attended_questions' => $totalAttendedQuestions,
+            'score'                     => $correctAnswerCount,
+            'total_answered_seconds'     => $totalAnsweredSeconds,
+            'total_attended_questions'   => $totalAnswered,
         ]);
 
         // End Attempt when Completed
-        $totalAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
+        /*$totalAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
         $required = 9;
 
         if ($totalAnswered >= $required && $attempt->ended_at === null) {
             $attempt->update(['ended_at' => now()]);
-        }
+        }*/
+        if ($totalAnswered >= 9) {
 
+            $updated = QuizAttempts::where('id', $attemptId)
+                ->whereNull('ended_at')
+                ->update([
+                    'ended_at' => now()
+                ]);
+        }
         $Response = [
             'quizAttemptId'       => $attemptId,
             'success'             => true,

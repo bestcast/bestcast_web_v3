@@ -25,24 +25,25 @@ class QuizModel extends Model
     {
         $this->QuizAttempts=$QuizAttempts;
     }
-
     public function submitAnswerQuiz($requestData)
     {
-
-        $userId  = $requestData['user_id'];
-        $movieId = $requestData['movie_id'];
+        $userId    = $requestData['user_id'];
+        $movieId   = $requestData['movie_id'];
         $attemptId = (int)$requestData['attempt_id'];
-        $answer = $requestData['answer'];
+        $answer    = $requestData['answer'];
 
-        // Load or Create Attempt
         if (!$attemptId || $attemptId == 0 || $attemptId === "0") {
+
             $attempt = QuizAttempts::create([
                 'participant_id' => $userId,
                 'movie_id'       => $movieId,
                 'started_at'     => now(),
             ]);
+
             $attemptId = $attempt->id;
+
         } else {
+
             $attempt = QuizAttempts::find($attemptId);
 
             if (!$attempt) {
@@ -51,64 +52,56 @@ class QuizModel extends Model
                     'movie_id'       => $movieId,
                     'started_at'     => now(),
                 ]);
+
                 $attemptId = $attempt->id;
             }
         }
-
-        QuizAttemptQuestionMap::firstOrCreate([
-            'attempt_id'  => $attemptId,
-            'user_id'     => $userId,
-            'question_id' => $answer['question_id']
-        ]);
-
-        // Avoid Duplicate Answer Save
-        $alreadyAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
-            ->where('quiz_question_id', $answer['question_id'])
+        $isCorrect = QuestionOptions::where('id', $answer['option_id'])
+            ->where('question_id', $answer['question_id'])
+            ->where('is_correct', 1)
             ->exists();
 
-        if (!$alreadyAnswered) {
-            QuizAttemptAnswer::create([
-                'quiz_attempts_id'   => $attemptId,
-                'user_id'            => $userId,
-                'movie_id'           => $movieId,
-                'quiz_question_id'   => $answer['question_id'],
-                'question_option_id' => $answer['option_id'],
-                'answered_seconds'   => $answer['answered_seconds']
-            ]);
-        }
+        QuizAttemptAnswer::create([
 
-        // Recalculate Score
+            'quiz_attempts_id'   => $attemptId,
+            'quiz_question_id'   => $answer['question_id'],
+            'user_id'            => $userId,
+            'movie_id'           => $movieId,
+            'question_option_id' => $answer['option_id'],
+            'answered_seconds'   => $answer['answered_seconds'],
+            'is_correct'         => $isCorrect ? 1 : 0,
+
+        ]);
         $correctAnswerCount = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
-            ->whereHas('option', function ($q) {
-                $q->where('is_correct', 1);
-            })
+            ->where('is_correct', 1)
+            ->count();
+
+        $totalAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
             ->count();
 
         $totalAnsweredSeconds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
             ->sum('answered_seconds');
 
-        $totalAttendedQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
-            ->count();
-
         QuizAttempts::where('id', $attemptId)->update([
-            'score' => $correctAnswerCount,
-            'total_answered_seconds' => $totalAnsweredSeconds,
-            'total_attended_questions' => $totalAttendedQuestions,
+            'score'                     => $correctAnswerCount,
+            'total_answered_seconds'     => $totalAnsweredSeconds,
+            'total_attended_questions'   => $totalAnswered,
         ]);
 
-        // End Attempt when Completed
-        $totalAnswered = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
-        $required = 9;
+        if ($totalAnswered >= 9) {
 
-        if ($totalAnswered >= $required && $attempt->ended_at === null) {
-            $attempt->update(['ended_at' => now()]);
+            $updated = QuizAttempts::where('id', $attemptId)
+                ->whereNull('ended_at')
+                ->update([
+                    'ended_at' => now()
+                ]);
         }
 
         $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'quizAttemptId'       => $attemptId,
             'success'             => true,
             'message'             => 'Answer submitted successfully.',
-            'totalQuestions'      => $totalAnswered,
+            'totalQuestions'      => $totalAnswered, // same key
             'correctAnswerCount'  => $correctAnswerCount,
         ]);
 
@@ -124,14 +117,14 @@ class QuizModel extends Model
 
         if ($plainToken) {
             $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+            if ($currentDevice && $currentDevice->is_quiz_active == 1) {
+                $currentDevice->update([
+                    'is_quiz_active'   => 0,
+                    'quiz_started_at'  => null
+                ]);
+            }
         }
 
-        if ($currentDevice && $currentDevice->is_quiz_active == 1) {
-            $currentDevice->update([
-                'is_quiz_active'   => 0,
-                'quiz_started_at'  => null
-            ]);
-        }
         UsersMovies::where('user_id', $userId)
             ->where('movie_id', $movieId)
             ->update([
@@ -152,7 +145,6 @@ class QuizModel extends Model
         $correctAnswers = $attempt->score;
 
         $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
-
         $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'attemptId' => $attempt->id,
             'correctAnswerCount' => $correctAnswers,

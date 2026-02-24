@@ -34,8 +34,142 @@ class QuizController extends Controller
         $this->middleware('auth');
         $this->QuizModel = $QuizModel;
     }
-
     public function getMovieQuiz(Request $request)
+    {
+        $payload = $this->decryptPayloadFromRequest($request);
+
+        $movieId   = $payload['movie_id'] ?? null;
+        $userId    = $payload['user_id'] ?? null;
+        $plainToken = $payload['tokenEncrypted'] ?? null;
+        $interval    = 15;
+        $maxRequired = 9;
+
+        // Device Validation
+        $activeQuiz = UsersDevice::where('user_id', $userId)
+            ->where('is_quiz_active', 1)
+            ->first();
+
+        $currentDevice = null;
+
+        if ($plainToken) {
+            $currentDevice = UsersDevice::where('token', md5($plainToken))->first();
+        }
+
+        if ($activeQuiz && $currentDevice && $activeQuiz->token !== $currentDevice->token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You already participated in the quiz in another device.'
+            ], 403);
+        }
+
+        if ($currentDevice) {
+            $currentDevice->update([
+                'is_quiz_active' => 1,
+                'quiz_started_at' => now()
+            ]);
+        }
+
+        // Plan Expiry Check
+        $user = Auth::user();
+
+        if (!$user || !$user->plan_expiry || now()->gte($user->plan_expiry)) {
+            return response()->json([
+                'redirect' => url('/pricing')
+            ], 403);
+        }
+
+        // Get or Create Active Attempt
+
+        $attempt = QuizAttempts::where('participant_id', $userId)
+            ->where('movie_id', $movieId)
+            ->whereNull('ended_at')
+            ->first();
+
+        if (!$attempt) {
+            $attempt = QuizAttempts::create([
+                'participant_id' => $userId,
+                'movie_id'       => $movieId,
+                'started_at'     => now(),
+            ]);
+        }
+
+        $attemptId = $attempt->id;
+
+        // Exclude ONLY Correctly Answered Questions
+
+        $correctAnsweredIds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+            ->pluck('quiz_question_id')
+            ->toArray();
+
+        // UNIQUE unused questions by show_question_time
+        $unused = Question::where('movie_id', $movieId)
+            ->whereNotIn('id', $correctAnsweredIds)
+            ->with('options')
+            ->orderBy('show_question_time')
+            ->get()
+            ->groupBy('show_question_time')
+            ->map(fn($group) => $group->first())
+            ->values();
+
+        // If not enough unused, mix with already correct ones
+
+        if ($unused->count() < $maxRequired) {
+
+            $needed = $maxRequired - $unused->count();
+
+            $usedAgain = Question::where('movie_id', $movieId)
+                ->whereIn('id', $correctAnsweredIds)
+                ->with('options')
+                ->get()
+                ->groupBy('show_question_time')
+                ->map(fn($group) => $group->first())
+                ->values()
+                ->shuffle()
+                ->take($needed);
+
+            $allQuestions = $unused->merge($usedAgain);
+
+        } else {
+            $allQuestions = $unused;
+        }
+
+        // Final Shuffle + Take Required
+
+        $selected = $allQuestions->shuffle()->take($maxRequired);
+
+        $final = [];
+
+        // Apply Popup Buffer Logic
+
+        foreach ($selected as $q) {
+
+            $buffer = ($q->show_question_time >= 20) ? 3 : 6;
+
+            $popupTime = $q->show_question_time + $buffer;
+
+            $final[] = [
+                'id' => $q->id,
+                'question' => $q->question_name,
+                'show_question_time' => $q->show_question_time,
+                'popup_time' => $popupTime,
+                'options' => $q->options
+            ];
+        }
+
+        $final = collect($final)
+            ->sortBy('popup_time')
+            ->values();
+
+        // Return Encrypted Response
+
+        $encryptedResponse = QuizCryptoHelper::encryptPayload([
+            'attempt_id' => $attemptId,
+            'questions'  => $final
+        ]);
+
+        return response()->json($encryptedResponse);
+    }
+    /*public function getMovieQuiz(Request $request)
     {
         $payload = $this->decryptPayloadFromRequest($request);
         // Access decrypted values
@@ -160,7 +294,7 @@ class QuizController extends Controller
 
         return response()->json($encryptedResponse);
 
-    }
+    }*/
 
     public function quizsubmit(Request $request){
         //$requestData = $request->all();

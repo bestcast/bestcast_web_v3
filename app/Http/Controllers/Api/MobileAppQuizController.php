@@ -37,14 +37,18 @@ class MobileAppQuizController extends Controller
         $interval    = 15;
         $maxRequired = 9;
 
-        /* ---------------------------------
-         |  Device quiz lock check
-         |----------------------------------*/
+        // Device quiz lock check
         $activeQuiz = UsersDevice::where('user_id', $userId)
             ->where('is_quiz_active', 1)
             ->first();
 
-        $currentDevice = UsersDevice::where('token', $deviceToken)->first();
+        $currentDevice = null;
+
+        if ($deviceToken) {
+            $currentDevice = UsersDevice::where('token', md5($deviceToken))->first();
+        }
+
+        //$currentDevice = UsersDevice::where('token', $deviceToken)->first();
 
         if ($activeQuiz && $currentDevice && $activeQuiz->token !== $currentDevice->token) {
             return response()->json([
@@ -60,9 +64,7 @@ class MobileAppQuizController extends Controller
             ]);
         }
 
-        /* ---------------------------------
-         |  Subscription check
-         |----------------------------------*/
+        // Subscription check
         $user = Auth::user();
 
         if (!$user || !$user->plan_expiry || now()->gte($user->plan_expiry)) {
@@ -72,9 +74,7 @@ class MobileAppQuizController extends Controller
             ], 403);
         }
 
-        /* ---------------------------------
-         |  Attempt handling
-         |----------------------------------*/
+        // Attempt handling
         $attempt = QuizAttempts::where('participant_id', $userId)
             ->where('movie_id', $movieId)
             ->whereNull('ended_at')
@@ -88,23 +88,25 @@ class MobileAppQuizController extends Controller
             ]);
         }
 
-        /* ---------------------------------
-         |  Previously used questions
-         |----------------------------------*/
-        $usedQuestions = QuizAttemptQuestionMap::where('user_id', $userId)
+        // Previously used questions
+        /*$usedQuestions = QuizAttemptQuestionMap::where('user_id', $userId)
             ->pluck('question_id')
-            ->toArray();
+            ->toArray();*/
+        $attemptId = $attempt->id;
 
-        /* ---------------------------------
-         |  Fetch unused questions (unique time)
-         |----------------------------------*/
+        // Exclude ONLY Correctly Answered Questions
+
+        $correctAnsweredIds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+            ->pluck('quiz_question_id')
+            ->toArray();
+        
         $unused = Question::where('movie_id', $movieId)
-            ->whereNotIn('id', $usedQuestions)
+            ->whereNotIn('id', $correctAnsweredIds)
             ->with('options')
             ->orderBy('show_question_time')
             ->get()
             ->groupBy('show_question_time')
-            ->map(fn($g) => $g->first())
+            ->map(fn($group) => $group->first())
             ->values();
 
         if ($unused->count() < $maxRequired) {
@@ -112,46 +114,46 @@ class MobileAppQuizController extends Controller
             $needed = $maxRequired - $unused->count();
 
             $usedAgain = Question::where('movie_id', $movieId)
-                ->whereIn('id', $usedQuestions)
+                ->whereIn('id', $correctAnsweredIds)
                 ->with('options')
                 ->get()
                 ->groupBy('show_question_time')
-                ->map(fn($g) => $g->first())
+                ->map(fn($group) => $group->first())
                 ->values()
                 ->shuffle()
                 ->take($needed);
 
-            $questions = $unused->merge($usedAgain);
+            $allQuestions = $unused->merge($usedAgain);
         } else {
-            $questions = $unused;
+            $allQuestions = $unused;
         }
 
-        $selected = $questions->shuffle()->take($maxRequired);
+        $selected = $allQuestions->shuffle()->take($maxRequired);
+        $final = [];
 
-        /* ---------------------------------
-         |  Popup buffer logic
-         |----------------------------------*/
-        $finalQuestions = $selected->map(function ($q) {
+        foreach ($selected as $q) {
 
-            $buffer = $q->show_question_time >= 20 ? 3 : 6;
+            $buffer = ($q->show_question_time >= 20) ? 3 : 6;
 
-            return [
-                'id'                  => $q->id,
-                'question'            => $q->question_name,
-                'show_question_time'  => $q->show_question_time,
-                'popup_time'          => $q->show_question_time + $buffer,
-                'options'             => $q->options
+            $popupTime = $q->show_question_time + $buffer;
+
+            $final[] = [
+                'id' => $q->id,
+                'question' => $q->question_name,
+                'show_question_time' => $q->show_question_time,
+                'popup_time' => $popupTime,
+                'options' => $q->options
             ];
-        })->sortBy('popup_time')->values();
-
-        /* ---------------------------------
-         |  Plain JSON response (Mobile-ready)
-         |----------------------------------*/
+        }
+        $final = collect($final)
+            ->sortBy('popup_time')
+            ->values();
+            
         return response()->json([
             'status'     => 'success',
             'attempt_id'=> $attempt->id,
-            'total'      => $finalQuestions->count(),
-            'questions'  => $finalQuestions
+            'total'      => $final->count(),
+            'questions'  => $final
         ]);
     }
     public function quizsubmitmobile(Request $request)
