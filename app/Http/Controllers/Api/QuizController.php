@@ -80,18 +80,18 @@ class QuizController extends Controller
 
         // Get or Create Active Attempt
 
-        $attempt = QuizAttempts::where('participant_id', $userId)
+        /*$attempt = QuizAttempts::where('participant_id', $userId)
             ->where('movie_id', $movieId)
             ->whereNull('ended_at')
-            ->first();
+            ->first();*/
 
-        if (!$attempt) {
-            $attempt = QuizAttempts::create([
-                'participant_id' => $userId,
-                'movie_id'       => $movieId,
-                'started_at'     => now(),
-            ]);
-        }
+        /*if (!$attempt) {*/
+        $attempt = QuizAttempts::create([
+            'participant_id' => $userId,
+            'movie_id'       => $movieId,
+            'started_at'     => now(),
+        ]);
+        //}
 
         $attemptId = $attempt->id;
 
@@ -299,6 +299,7 @@ class QuizController extends Controller
     public function quizsubmit(Request $request){
         //$requestData = $request->all();
         $payload = $this->decryptPayloadFromRequest($request);
+        //\Log::info('Decrypted Payload:', $payload);
         return $this->QuizModel->submitAnswerQuiz($payload);
     }
     public function quizresult(Request $request)

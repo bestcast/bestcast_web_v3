@@ -736,11 +736,15 @@
         .then(enc => {
             const data = decryptResponse(enc);
             //console.log("DECRYPTED QUIZ:", data);
+            if (data.attempt_id) {
+                setCookie("attempt_id", data.attempt_id, 3);
+                //console.log("Attempt ID saved:", data.attempt_id);
+            }
             quizSchedule = data.questions;
 
-            quizSchedule.forEach((q, i) => {
+            /*quizSchedule.forEach((q, i) => {
                 console.log(`${i+1}. Question Id: ${q.id}, Show Time: ${q.show_question_time}, Popup Time: ${q.popup_time} mins`);
-            });
+            });*/
 
             startQuizWatcher(quizSchedule);
         })
@@ -850,7 +854,7 @@
                         QUESTION_TOTAL_TIME,
                         Math.floor((Date.now() - questionStartTime) / 1000)
                     );
-                    console.log(timeTakenSeconds);
+                    //console.log(timeTakenSeconds);
                     Swal.close();
                     submitAnswer(question.id, chosenOption, timeTakenSeconds); // save selected answer
                 });
@@ -871,7 +875,7 @@
                     if (timeLeft <= 0) {
                         clearInterval(quizTimer);
                         Swal.close();
-                        console.log(QUESTION_TOTAL_TIME);
+                        //console.log(QUESTION_TOTAL_TIME);
                         // auto-submit
                         submitAnswer(question.id, chosenOption || "", QUESTION_TOTAL_TIME);
                     }
@@ -897,7 +901,7 @@
     }
 
     function submitAnswer(questionId, optionId, timeTakenSeconds) {
-        let attemptId = getCookie("attempt_id");
+        let attemptId = getCookie("attempt_id") || null;
         // Prepare current answer
         const currentAnswer = {
             question_id: questionId,
@@ -983,7 +987,7 @@
             return;
         }*/
         if (!attemptId) {
-            console.log('No quiz attempt found. Pausing video and staying on page.');
+            //console.log('No quiz attempt found. Pausing video and staying on page.');
 
             const fullscreenContainer =
                 document.fullscreenElement || document.getElementById('wrapper');

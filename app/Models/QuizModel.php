@@ -32,7 +32,7 @@ class QuizModel extends Model
         $attemptId = (int)$requestData['attempt_id'];
         $answer    = $requestData['answer'];
 
-        if (!$attemptId || $attemptId == 0 || $attemptId === "0") {
+        /*if (!$attemptId || $attemptId == 0 || $attemptId === "0") {
 
             $attempt = QuizAttempts::create([
                 'participant_id' => $userId,
@@ -55,6 +55,45 @@ class QuizModel extends Model
 
                 $attemptId = $attempt->id;
             }
+        }*/
+        $attempt = QuizAttempts::find($attemptId);
+       /* if (empty($attemptId)) {
+
+            $attempt = QuizAttempts::create([
+                'participant_id' => $userId,
+                'movie_id'       => $movieId,
+                'started_at'     => now(),
+            ]);
+
+            $attemptId = $attempt->id;
+
+        } else {
+
+            $attempt = QuizAttempts::where('id', $attemptId)
+                ->where('participant_id', $userId)
+                ->where('movie_id', $movieId)
+                ->first();
+
+            // If invalid attempt → create new attempt
+            if (!$attempt) {
+
+                $attempt = QuizAttempts::create([
+                    'participant_id' => $userId,
+                    'movie_id'       => $movieId,
+                    'started_at'     => now(),
+                ]);
+
+                $attemptId = $attempt->id;
+            }
+        }*/
+        if (!$attempt) {
+
+            $encryptedResponse = QuizCryptoHelper::encryptPayload([
+                'success' => false,
+                'message' => 'Invalid attempt id'
+            ]);
+
+            return response()->json($encryptedResponse, 400);
         }
         $isCorrect = QuestionOptions::where('id', $answer['option_id'])
             ->where('question_id', $answer['question_id'])

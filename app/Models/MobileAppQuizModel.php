@@ -35,7 +35,7 @@ class MobileAppQuizModel extends Model
         $answer = $requestData['answer'];
 
         // Load or Create Attempt
-        if (!$attemptId || $attemptId == 0 || $attemptId === "0") {
+        /*if (!$attemptId || $attemptId == 0 || $attemptId === "0") {
             $attempt = QuizAttempts::create([
                 'participant_id' => $userId,
                 'movie_id'       => $movieId,
@@ -53,6 +53,16 @@ class MobileAppQuizModel extends Model
                 ]);
                 $attemptId = $attempt->id;
             }
+        }*/
+        $attempt = QuizAttempts::find($attemptId);
+        if (!$attempt) {
+
+            $Response = [
+                'success' => false,
+                'message' => 'Invalid attempt id'
+            ];
+
+            return response()->json($Response, 400);
         }
 
         $isCorrect = QuestionOptions::where('id', $answer['option_id'])
