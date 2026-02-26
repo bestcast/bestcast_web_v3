@@ -15,6 +15,7 @@ use App\Models\UsersMovies;
 use App\User;
 use Auth;
 use App\Models\RewardClaim;
+use App\Models\Movies;
 
 class MobileAppQuizController extends Controller
 {
@@ -32,130 +33,139 @@ class MobileAppQuizController extends Controller
     public function getMovieQuizMobile(Request $request)
     {
         $movieId     = $request['movie_id'] ?? null;
-        $userId      = $request['user_id'] ?? null;
+        $userId      = auth()->id();
         $deviceToken = $request['device_token'] ?? null; // plain device token
         $interval    = 15;
         $maxRequired = 9;
 
-        // Device quiz lock check
-        $activeQuiz = UsersDevice::where('user_id', $userId)
-            ->where('is_quiz_active', 1)
-            ->first();
-
-        $currentDevice = null;
-
-        if ($deviceToken) {
-            $currentDevice = UsersDevice::where('token', md5($deviceToken))->first();
+        //Check Movie Exists
+        $movie = Movies::select('id', 'movie_quiz_status')->where('id', $movieId)->first();
+        if (!$movie) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Movie not found'
+            ], 404);
         }
 
-        //$currentDevice = UsersDevice::where('token', $deviceToken)->first();
+        //Check Admin Quiz Status
+        if ((int)$movie->movie_quiz_status !== 1) {
 
-        if ($activeQuiz && $currentDevice && $activeQuiz->token !== $currentDevice->token) {
             return response()->json([
-                'status'  => 'error',
-                'message' => 'Quiz already active on another device'
+                'status' => false,
+                'message' => 'Quiz is disabled by admin',
+                'movie_quiz_status' => 0,
+                'question_available' => 0
             ], 403);
         }
 
-        if ($currentDevice) {
-            $currentDevice->update([
-                'is_quiz_active' => 1,
-                'quiz_started_at' => now()
-            ]);
+        //Check Question Availability
+        $question_available = Question::where('movie_id', $movieId)->exists() ? 1 : 0;
+
+        if ($question_available !== 1) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Quiz questions not available',
+                'movie_quiz_status' => 1,
+                'question_available' => 0
+            ], 403);
         }
 
-        // Subscription check
-        $user = Auth::user();
+        //IMPORTANT: ONLY IF BOTH TRUE,QUIZ WILL OPEN
+        //Subscription Check
+        $user = auth()->user();
 
         if (!$user || !$user->plan_expiry || now()->gte($user->plan_expiry)) {
+
             return response()->json([
-                'status'  => 'expired',
+                'status' => false,
                 'message' => 'Subscription expired'
             ], 403);
         }
 
-        // Attempt handling
-        $attempt = QuizAttempts::where('participant_id', $userId)
-            ->where('movie_id', $movieId)
-            ->whereNull('ended_at')
-            ->first();
+        //Device Lock Check
+        if ($deviceToken) {
+            $currentDevice = UsersDevice::where('user_id', $userId)
+                ->where('token', md5($deviceToken))
+                ->first();
+            $activeDevice = UsersDevice::where('user_id', $userId)
+                ->where('is_quiz_active', 1)
+                ->first();
+            if ($activeDevice && $currentDevice && $activeDevice->id !== $currentDevice->id) {
 
-        if (!$attempt) {
-            $attempt = QuizAttempts::create([
-                'participant_id' => $userId,
-                'movie_id'       => $movieId,
-                'started_at'     => now(),
-            ]);
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Quiz already active on another device'
+                ], 403);
+            }
+
+            if ($currentDevice) {
+                $currentDevice->update([
+                    'is_quiz_active' => 1,
+                    'quiz_started_at' => now()
+                ]);
+            }
         }
 
-        // Previously used questions
-        /*$usedQuestions = QuizAttemptQuestionMap::where('user_id', $userId)
-            ->pluck('question_id')
-            ->toArray();*/
+        //Load or Create Attempt
+        $attempt = QuizAttempts::firstOrCreate(
+            [
+                'participant_id' => $userId,
+                'movie_id' => $movieId,
+                'ended_at' => null
+            ],
+            [
+                'started_at' => now()
+            ]
+        );
+
         $attemptId = $attempt->id;
 
-        // Exclude ONLY Correctly Answered Questions
-
-        $correctAnsweredIds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+        //Exclude Correct Answered Questions
+        $answeredIds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
             ->pluck('quiz_question_id')
             ->toArray();
-        
-        $unused = Question::where('movie_id', $movieId)
-            ->whereNotIn('id', $correctAnsweredIds)
-            ->with('options')
+
+        //Fetch Questions
+        $questions = Question::where('movie_id', $movieId)
+            ->whereNotIn('id', $answeredIds)
+            ->with('options:id,question_id,name')
             ->orderBy('show_question_time')
             ->get()
-            ->groupBy('show_question_time')
-            ->map(fn($group) => $group->first())
-            ->values();
+            ->unique('show_question_time')
+            ->shuffle()
+            ->take($maxRequired);
 
-        if ($unused->count() < $maxRequired) {
+        //Format Response
+        $final = $questions->map(function ($q) {
 
-            $needed = $maxRequired - $unused->count();
+            $buffer = $q->show_question_time >= 20 ? 3 : 6;
 
-            $usedAgain = Question::where('movie_id', $movieId)
-                ->whereIn('id', $correctAnsweredIds)
-                ->with('options')
-                ->get()
-                ->groupBy('show_question_time')
-                ->map(fn($group) => $group->first())
-                ->values()
-                ->shuffle()
-                ->take($needed);
-
-            $allQuestions = $unused->merge($usedAgain);
-        } else {
-            $allQuestions = $unused;
-        }
-
-        $selected = $allQuestions->shuffle()->take($maxRequired);
-        $final = [];
-
-        foreach ($selected as $q) {
-
-            $buffer = ($q->show_question_time >= 20) ? 3 : 6;
-
-            $popupTime = $q->show_question_time + $buffer;
-
-            $final[] = [
+            return [
                 'id' => $q->id,
                 'question' => $q->question_name,
                 'show_question_time' => $q->show_question_time,
-                'popup_time' => $popupTime,
-                'options' => $q->options
+                'popup_time' => $q->show_question_time + $buffer,
+                'options' => $q->options->map(function ($opt) {
+                    return [
+                        'id' => $opt->id,
+                        'option' => $opt->option_name
+                    ];
+                })
             ];
-        }
-        $final = collect($final)
-            ->sortBy('popup_time')
-            ->values();
-            
+        })->sortBy('popup_time')->values();
+
+        //Final Success Response
         return response()->json([
-            'status'     => 'success',
-            'attempt_id'=> $attempt->id,
-            'total'      => $final->count(),
-            'questions'  => $final
+            'status' => true,
+            'movie_quiz_status' => 1,
+            'question_available' => 1,
+            'attempt_id' => $attemptId,
+            'total_questions' => $final->count(),
+            'questions' => $final
         ]);
     }
+    
     public function quizsubmitmobile(Request $request)
     {
         $data = $request->all();
