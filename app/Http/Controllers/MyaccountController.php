@@ -21,6 +21,7 @@ use Paymentgateway;
 use App\Traits\HttpResponses;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Models\Notification;
+use App\Models\UsersMovies;
 
 class MyaccountController extends Controller
 {
@@ -214,5 +215,57 @@ class MyaccountController extends Controller
         }else{
             return redirect()->route('user.myaccount.profile')->with('success', 'Updated Successfully');
         }
+    }
+    public function movieReport(Request $request, $movieId)
+    {
+        $query = DB::table('users_movies as um')
+            ->join('movies as m', 'm.id', '=', 'um.movie_id')
+            ->where('um.movie_id', $movieId)
+            ->whereRaw('CAST(um.watch_time AS UNSIGNED) >= 60')
+
+            ->selectRaw("
+                um.user_id,
+                um.watch_time,
+                um.created_at,
+                um.updated_at,
+
+                CAST(m.duration AS UNSIGNED) as duration_seconds,
+
+                CASE
+                    WHEN CAST(um.watch_time AS UNSIGNED) >= CAST(m.duration AS UNSIGNED)
+                    THEN 100
+
+                    ELSE ROUND(
+                        (
+                            CAST(um.watch_time AS UNSIGNED)
+                            / CAST(m.duration AS UNSIGNED)
+                        ) * 100,
+                        2
+                    )
+                END as watch_percentage
+            ");
+
+        // Filter using updated_at
+        if ($request->from_date) {
+            $query->whereDate('um.created_at', '>=', $request->from_date);
+        }
+
+        if ($request->to_date) {
+            $query->whereDate('um.updated_at', '<=', $request->to_date);
+        }
+
+        // Pagination
+        $data = $query->orderByDesc('um.updated_at')->paginate(15);
+
+        // Get stats
+        $stats = \App\Models\UsersMovies::getProducerMovieCount($movieId);
+
+        return response()->json([
+            'data' => $data->items(),
+            'current_page' => $data->currentPage(),
+            'last_page' => $data->lastPage(),
+            'per_page' => $data->perPage(),
+            'views_count' => $stats['views_count']
+        ]);
     }
 }
