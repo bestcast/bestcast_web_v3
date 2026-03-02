@@ -94,6 +94,9 @@ Route::group([
     'namespace'     => 'App\Http\Controllers',
 ], function () {
    Route::get('/account/producer', 'MyaccountController@producer')->name('user.myaccount.producer');
+   Route::get('/producer/movie-report/{movie}', 'MyaccountController@movieReport')->name('producer.movie.report');
+
+   //Route::get('/producer/movie-report/{movie}', [ProducerController::class, 'movieReport']);
 });
 
 
