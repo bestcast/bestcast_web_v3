@@ -32,7 +32,6 @@ class RewardController extends Controller
         $raw = $request->getContent();
         $payload = json_decode($raw, true);
         $decrypted = QuizCryptoHelper::decryptPayload($payload['data'], $payload['iv']);
-
         // Validation
         $validator = Validator::make($decrypted, [
             'full_name' => 'required|string|max:255',

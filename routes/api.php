@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\MobileAppQuizController;
 use App\Http\Controllers\Movies\BrowseController;
 use App\Http\Controllers\Movies\GuestController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RewardController;
+use App\Http\Controllers\Api\RewardController;
 
 /*
 |--------------------------------------------------------------------------

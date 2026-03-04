@@ -156,7 +156,7 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
     let claimId = document.getElementById("claimId").value;
 
     let method = claimId ? "PUT" : "POST";
-    let url = claimId ? `/api/reward-claim/${claimId}` : `/api/reward-claim`;
+    let url = claimId ? `/reward-claim/${claimId}` : `/reward-claim`;
 
     // Collect data
     const formData = {
@@ -174,6 +174,7 @@ document.getElementById("claimForm").addEventListener("submit", function (e) {
 
     fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

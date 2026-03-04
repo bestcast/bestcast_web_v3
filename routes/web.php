@@ -418,6 +418,8 @@ Route::group([
     #Route::get('/deleteuser', 'App\Http\Controllers\Api\UserController@deleteuser')->name('deleteuser');
 
     Route::get('/rewards/{user_id}', 'RewardController@reward')->name('rewards.claim');
+    Route::post('/reward-claim', 'RewardController@store')->name('rewards.store');
+    Route::put('/reward-claim/{id}', 'RewardController@update')->name('rewards.update');
     Route::get('/leaderboard', 'LeaderBoardController@index')->name('leaderboard.index');
 });
 
