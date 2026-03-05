@@ -98,6 +98,14 @@ function applyDateFilter(movieId, movieTitle)
 
     loadReport(movieId, movieTitle, 1, fromDate, toDate);
 }
+function clearDateFilter(movieId, movieTitle)
+{
+    document.getElementById('from_date').value = '';
+    document.getElementById('to_date').value = '';
+
+    // reload report without filters
+    loadReport(movieId, movieTitle, 1, '', '');
+}
 function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
 {
      $.get(`/producer/movie-report/${movieId}`, {
@@ -113,7 +121,7 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
         <div style="background:#fff;padding:10px;border-radius:5px;">
 
         <!-- DATE FILTER -->
-        <div class="row align-items-end mb-3">
+        <div class="row align-items-end mb-3 g-2">
 
             <div class="col-md-4">
                 <label for="from_date" class="form-label">From</label>
@@ -126,8 +134,20 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-success w-100" style="height:40px;font-size: 18px;" onclick="applyDateFilter(${movieId}, '${movieTitle}')">
+                <button type="button"
+                    class="btn btn-success w-100"
+                    style="height:40px;font-size:16px;"
+                    onclick="applyDateFilter(${movieId}, '${movieTitle}')">
                     Search
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button"
+                    class="btn btn-secondary w-100"
+                    style="height:40px;font-size:16px;"
+                    onclick="clearDateFilter(${movieId}, '${movieTitle}')">
+                    Clear
                 </button>
             </div>
 
@@ -158,8 +178,8 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
                 <td>${row.user_id}</td>
                 <td>${new Date(row.watch_time * 1000).toISOString().substr(11, 8)}</td>
                 <td>${row.watch_percentage}%</td>
-                <td>${row.created_at}</td>
-                <td>${row.updated_at}</td>
+                <td>${row.created_at.split(' ')[0]}</td>
+                <td>${row.updated_at.split(' ')[0]}</td>
             </tr>
             `;
 
