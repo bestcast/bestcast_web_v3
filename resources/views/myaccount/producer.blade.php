@@ -22,7 +22,15 @@
 .swal2-popup .swal-pagination button.active {
     background: #28a745;
 }
+.swal2-close {
+    color: #000 !important;
+    font-size: 28px !important;
+    font-weight: bold;
+}
 
+.swal2-close:hover {
+    color: #333 !important;
+}
 </style>
 @endsection
 
@@ -235,7 +243,8 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
             width: 800,
             background: "#ffffff",
             color: "#000000",
-            showConfirmButton: false
+            showConfirmButton: false,
+            showCloseButton: true
         });
 
     });
