@@ -166,7 +166,16 @@ class MobileAppQuizModel extends Model
         // Assuming "score" column already stores correct answer count
         $correctAnswers = $attempt->score;
 
-        $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
+        $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attempt->id)->count();
+
+        if ($totalQuestions !== 9) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Quiz not completed.',
+                'attempted' => $totalQuestions
+            ]);
+        }
+
 
         $Response = [
             'attemptId' => $attempt->id,

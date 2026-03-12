@@ -55,8 +55,24 @@ class QuestionController extends Controller
         $requestData = $request->all();
         return $this->QuestionModel->updateQuestion($requestData);
     }
-    public function deleteQuestion(int $movieId,int $questionId){
+    public function deleteQuestion(int $movieId, int $questionId)
+    {
         $this->QuestionModel->deleteQuestion($questionId);
-        return to_route('admin.questions.list',$movieId)->with('success', 'Deleted Successfully');
+        return redirect()
+            ->route('admin.questions.list', ['movieId'=>$movieId, 'page'=>request()->page])
+            ->with('success','Deleted Successfully');
+    }
+    public function bulkDeleteQuestion(Request $request, int $movieId)
+    {
+        $questionIds = $request->question_ids;
+        if (!empty($questionIds)) {
+            $this->QuestionModel->bulkDeleteQuestion($questionIds);
+        }
+        return redirect()
+            ->route('admin.questions.list', [
+                'movieId'=>$movieId,
+                'page'=>$request->page
+            ])
+            ->with('success','Selected Questions Deleted Successfully');
     }
 }

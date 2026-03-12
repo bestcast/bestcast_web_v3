@@ -127,4 +127,8 @@ class QuestionModel extends Model
     public function deleteQuestion(int $questionId):int{
         return $this->question->where('id',$questionId)->delete();
     }
+    public function bulkDeleteQuestion(array $questionIds): int
+    {
+        return $this->question->whereIn('id', $questionIds)->delete();
+    }
 }

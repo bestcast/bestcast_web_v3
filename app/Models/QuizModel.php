@@ -182,8 +182,18 @@ class QuizModel extends Model
 
         // Assuming "score" column already stores correct answer count
         $correctAnswers = $attempt->score;
-
-        $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
+        $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attempt->id)
+                    ->count();
+        if ($totalQuestions !== 9) {
+            return response()->json(
+                QuizCryptoHelper::encryptPayload([
+                    'success' => false,
+                    'message' => 'Quiz not completed.',
+                    'attempted' => $totalQuestions
+                ]), 
+            );
+        }
+        //$totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)->count();
         $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'attemptId' => $attempt->id,
             'correctAnswerCount' => $correctAnswers,

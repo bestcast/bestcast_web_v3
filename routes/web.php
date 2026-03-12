@@ -374,7 +374,7 @@ Route::group([
     Route::get('/admin/questions/edit/{movieId}/{questionId}', 'QuestionController@edit')->name('admin.questions.editQuestion');
     Route::post('/admin/questions/updateQuestion', 'QuestionController@updateQuestion')->name('admin.questions.updateQuestion');
     Route::get('/admin/questions/deleteQuestion/{movieId}/{questionId}', 'QuestionController@deleteQuestion')->name('admin.questions.deleteQuestion');
-
+    Route::post('/admin/questions/bulk-delete/{movieId}', 'QuestionController@bulkDeleteQuestion')->name('admin.questions.bulkDelete');
 });
 
 
