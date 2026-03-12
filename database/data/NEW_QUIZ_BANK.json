@@ -1,0 +1,4562 @@
+[
+    {
+        "question_id": "Q_A7N_MOVIE_8a7b5a",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which letter is in negative shade of the hero’s friend T-shirt ?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "I",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "VI",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "V",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "VN",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 150,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_92b1c9",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the dollar symbol hero wears?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Chakra",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Moon",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Star",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Sun",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 179,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_40f4e0",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which planet was seen by the hero through his telescope?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Jupiter",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Venus",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Saturn",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Mercury",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 203,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_f69fff",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the color of hero’s Bike?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Red (சிவப்பு)",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Back (கருப்பு)",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Grey (சாம்பல்)",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Orange (ஆரஞ்சு)",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 228,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_fc6636",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Who is the Producer of the movie?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Murali Doss",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "A.R Murugadoss",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Murali Kabirdass",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Manohar Kabirdass",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 250,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_9d2f00",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "According to Hero, how many galaxies did the James Webb Telescope find?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "100 Billion",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "10 Million",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "100 Million",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "100 Trillion",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 313,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_812668",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the training period of crash course?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "6 Months",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "8 Months",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "3 Months",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "2 Months",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 260,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_df6705",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What course does the hero study?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Applied Physics",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Astrophysics",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Geophysics",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Biophysics",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 263,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_cb5e39",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many sofas in patient room?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "0",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "2",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 472,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_591cf3",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "In which college does the hero study?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "NIT",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "IIT",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "MIT",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "MITE",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 480,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_b7420e",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the letter of the ring minister wear?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "B",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "R",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "G",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "K",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 543,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_a3097c",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "From which hospital Minister exists after visiting his candidate secretary?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "B.K",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "R.K",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "P.R",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "P.K",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 542,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_9abeb7",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which batch number did the constable have who was talking to the accused?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3665",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3005",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "8665",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "3605",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 574,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_179c20",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the store name  hero and his friend visited?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Ken Store",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Ben Store",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Zen Shoppe",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Zen Store",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 595,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_327c9b",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the Icon inside the Letter  “O” in the store name?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Gear",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Circle",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Lens",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Flower",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 596,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_2d37a0",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What name did the hero’s friend say while entering the shop?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Sofie",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Baby",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Soby",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Gabie",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 602,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_5ec2fd",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the age of old telescope?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "500 Years",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "100 Years",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "200 Years",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "300 Years",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 658,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_275a13",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What was the heroine doing when Hero first saw her through the telescope?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Jumping",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Laughing",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Chatting",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Drinking",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 710,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4b1534",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the shape of Bindi in Heroine forehead?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Crescent Moon",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Half Moon",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Full Moon",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Half Sun",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 722,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_098db5",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What was the time in round calendar wall clock?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "03:45",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "09:15",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "10:15",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "03:50",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 758,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_3618d9",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What color is the water kettle the heroine uses to water the plant?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Orange",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Blue",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Turquoise",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Green",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 778,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_8f7d04",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the Name of the Heroine?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Mila",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Laila",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Nila",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Sheela",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 813,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4aef95",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many plates were there on the dining table at heroine’s house?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "2",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "4",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 820,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_052fe5",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many photo frames are there under the stairs in the heroine’s house?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "2",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "3",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 830,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_9c54f7",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What’s the name of Hero?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Adhithya",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Abiya",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Arya",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Adhiya",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 840,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_63b302",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which complex is the advocate office in?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Sri Vaani",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Shri Vaali",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Sri Vaari",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Shri Hari",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 864,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_88c24f",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of senior advocate?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Vimohini",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Binodhini",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Vinodhini",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Vinodhani",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 870,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_912600",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the color of water bottle on Advocate table?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Blue",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Gray",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Green",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "White",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 878,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_b376ba",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What position did the Advocate mention that the hero’s father aims to get?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "MLC",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "MC",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "MLA",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "MP",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 885,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_42ca2f",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How much does the Hero pay the shopkeeper to play the song , whenever  he comes?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "200",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "2000",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "500",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "100",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1049,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4db936",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many ladders seen through the telescope at the heroine’s house terrace?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "2",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1065,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_3a95d3",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What payment method is used in Tea Shop?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Paytm",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "G Pay",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Phonepe",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "IPPB",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1102,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_975906",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the white Tall sculpture on the junior advocate table?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Chess King",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Chess Rook",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Chess Knight",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Chess Queen",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1155,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_d3aa6e",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which is the correct Minister name with degree?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "A.S.Gunapriyan M.A., M.L.,",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "A.S.Gunaseelan M.A., M.L.,",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "A.S.Gunaseelan M.A., B.L.,",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "A.S.Gunapriyan M.A., B.L.,",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1189,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_d19e3c",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Who did the Minister suggest to the CM for MLA seat confirmation?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Gopal",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Thangavel",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Vairavel",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Vairavelu",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1257,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_0217c9",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What time did the hero and his father talk in the hero’s room at night?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "09:05 PM",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "08:55 PM",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "08:10 PM",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "09:15 PM",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1632,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_70b533",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "When Nila and her friend entered the police station, how many police mens were there?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "5",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "2",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "4",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1620,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_34de76",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the brand name printed on telescope?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Space Arcade",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Sky watcher Arcade",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Celestron Aperture",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Space Aperture",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1630,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_1dc8a5",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Why, Nila friend required NOC from police?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Employment in Private company",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Agency",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Government Exam",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Lost of Documents",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1657,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_d22dbc",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of the Tea shop?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Kudikalam Vaanga",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Aakalam Vaanga",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Aathalam Vaanga",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Aathilingam Tea Stall",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1978,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_eb0d5b",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Whose photo was in the frame behind the Inspector?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Dr. B.R.Ambedkar",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Jawaharlal Nehru",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Bhagat Singh",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Subas Chandra Bose",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1710,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_a8fba9",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Complete the car registration number TN10BT____ of the dog met accident with?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "0601",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "0861",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "0801",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "0661",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2225,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6e2227",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "On which website do the hero and his friend research about the old telescope?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Telescope Tells",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Cursed Telescope",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Tragic Wikis",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Telescope Talks",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2263,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_7d9789",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of little girl?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Kamali",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Kuyil",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Kulika",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Mayil",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2334,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_1b6193",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many coconuts were hanging on the tree after the little girl’s death?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "2",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2449,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_89455e",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "From what time were the hero and his friend waiting?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "12:00",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "10:00",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "09:10",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "10:10",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2593,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_362422",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which book was the hero’s father reading when the hero entered the house?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "English Vocabulary",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "English Grammar",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Political science",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Indian Politics",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2750,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_368939",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is activated when solar energy reaches the brain through the eye, as per the eye doctor?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Electrons",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Eye",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Brain",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Neurons",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2713,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_fbbc5c",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Before the hero picked from it, how many forks and spoons were placed on the gueridon trolley?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "5",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "2",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3376,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_64284a",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Where did Senior Advocate bought the old telescope?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Quikr",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "ONX",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "CEX",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "OLX",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3043,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_c2ff5d",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many days did the hero say remain for Nila to survive?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "6",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "5",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "7",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "8",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3445,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_8fbc9e",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of the brand printed on the big bag?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Best Cart",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Best Dart",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Belt Cast",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Bect Cart",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3656,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_c1991d",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many speed breakers does the bike cross?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "2",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "1",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "4",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3702,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_1ee308",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many stars can be seen on the inspector’s shoulder?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "8",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "3",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "6",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3714,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_0596ac",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many policemen were questioning the hero’s friends inside the room?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "2",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "5",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3862,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_e7d186",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many paper bags did the hero carry?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "2",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "None",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "1",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3955,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_256091",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many items did the hero inspect and remove from the house?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "5",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "7",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "6",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4005,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_a878bd",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "At which hospital did the hero took, heroine for check-up?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "KHSM",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "KHMS",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "KMHS",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "KMSH",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4067,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_b5901a",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of the lady doctor who said the heroine is normal?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "G.Sabhana",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "G.Sadhana",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "D.Sabhana",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "D.Sadhana",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4094,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_5debda",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Who spoke with the hero from the Meteorological Department?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "R. Rubakaran",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "M. Sundar",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "R. Rubaskaran",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "N. Sundar",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4150,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_ecb9f5",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What did the hero enquire about with the head of the Meteorological Department?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Landslides",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Earthquakes",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Rainfall",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Flash Floods",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4155,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_8a4858",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Who told the hero about his Superintendent position?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "R. Rubakaran",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "M. Sundar",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "N. Sundar",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "R. Rubaskaran",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4196,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6c5c90",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many muzzle holes are there on the gun, and what is its color?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1 Hole in Silver",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "1 Hole in Black",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "2 Holes in Silver",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "2 Holes in Black",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4260,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_72ee84",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What surprise gift does the Minister plan for his daughter?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "ISRO Order",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Nasa Order",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Bring Hari",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Bring Aadhi",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4353,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_c8c970",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which rupee coin does Nila toss?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "2",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "20",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "10",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "1",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4434,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_816ce1",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Before Aadhi presents the flower bouquet, what color bindi does Nila wear?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Red",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Black",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Green",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "None",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4494,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6efbb3",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Why hero left the medical shop in urge?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Fear of Policeman",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Bought the Medicine",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "None",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "After hearing the News",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4683,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4ac1b5",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many vaccinations does Nila mention are completed?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "6",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "5",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4858,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_5e6354",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of the condition that causes fear of water?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Pyrophobia",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Hydrophobia",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Aerophobia",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Acrophobia",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4965,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_d0a6da",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the reason Nila was bitten by the dog?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "To save the girl from falling on the dog",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "To save the dog from falling on the boy",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "To save the dog from falling on the girl",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "To save the boy from falling on the dog",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5042,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_df8e95",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Who is the ayurveda doctor?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Guru Bairavan",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Guru Braman",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Guru Bailwan",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Guru Bavanan",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5138,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_c5e2d9",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which place does ayurveda doctor mentioned in kodaikanal?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Naidupuram",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Kurinji",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Kulanji",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Mayilanji",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5161,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_bb7a77",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Where did the hero first meet the local traditional doctor earlier?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Side of the road",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Hotel",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Bus stand",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Tea Shop",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5317,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_56a3f1",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many rabies patients did the local traditional doctor save?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "16",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "14",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "17",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "15",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5340,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_b80b81",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How long does the local traditional doctor say it takes to prepare the medicine?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3 hours",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "None of the above",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "more than 4 hours",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "4 hours",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5371,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_b95623",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many hours should the medicine be kept underground?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "More than Nine hour's",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Nine and half hour's",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Nine hour's",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Less than Nine hour's",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5615,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_514b11",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What word was written on Hari’s T-shirt when Aadhi mentions “rabies” to Nila?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Ant Sleeps",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Can’t Sleep",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Can Sleep",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Ain’t Sleep",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5694,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_ab6851",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "At what time did Aadhi set the alarm for 7 o’clock?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "10:03",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "10:00",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "09:58",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "11:50",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5631,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_9f9f65",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which date did the CM confirm, as mentioned by the Minister?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Jan 15",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "None of the above",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Apr 16",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Feb 14",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5702,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_ccc6f1",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What item did Aadhi place to identify the medicine in the underground area?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "None of the above",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Pot with white flower",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Pot with Green Plant",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Pot with No flower",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5634,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_a4482d",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How did Aadhi’s father come to know where Aadhi was?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Through Constable",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Through Inspector",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Through Hari",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Through Bodyguard",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5708,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4f0b9d",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What object is seen under the staircase in the Minister’s house?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Sleeping Buddha",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Green Stone",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Green Buddha",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Green Mask face",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 5894,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_5eb657",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the name of Vairavelu’s bodyguard?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Ruban",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Raja",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Rajan",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Bharathiraja",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6100,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_eac436",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Aadhi mentioned how many minutes left for the rowdy who dragging?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "30",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "10",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "7",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "20",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6138,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_a4defc",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "At what time were Aadhi and Nila dragged by the rowdies?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "06:45 am",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "09:35 am",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "07:45 am",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "06:40 am",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6147,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_d168e7",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many rowdies grabbed the rope while Aadhi was kneeling?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "6",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "5",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "4",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6196,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_d9d509",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What reason did Aadhi give Nila for acting like a rabies patient?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Vairavelu debond both",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Rajadurai debond both",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Hari asked to care",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "To get rabies",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6687,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_806b9a",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "தெய்வத்தான் ஆகா தெனினும் முயற்சிதன் ________________ தரும்.",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "மெய்வருத்தக் கூலி",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "மொய்வருத்தக் கூளி",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "மெய்வருத்தக் கூளி",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "மொய்வருத்தக் கூலி",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6739,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4c6374",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Who got medicine from the traditional doctor?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Medical Rep",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Medical Client",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Medical Doctor",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "None of the above",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6781,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6d2485",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "At the temple, what color crescent moon bindi does Nila have?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Green",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Red",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "white",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "None",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 6832,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6809ca",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What emblem is on the hero's jacket sleeve?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Shield",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Eagle",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Star",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Anchor",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 135,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_95635c",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What color are the heroine’s sandals?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Blue",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Beige",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Black",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Red",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 670,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_8eb7ce",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many steps lead up to the college main door?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Nine",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Three",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Five",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Seven",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 492,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_da2fe8",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is written on the sticker of the hero's water bottle?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Stay Hydrated",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Keep Going",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "No Limits",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Adventure",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 890,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_30d271",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What type of flower is in the vase on the dining table?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Sunflower",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Rose",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Lily",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Tulip",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 822,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_64c380",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the color of the hero's notebook cover?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Green",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Yellow",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Gray",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Maroon",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 269,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4452c2",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which animal figure is on the child’s toy?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Lion",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Bear",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Elephant",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Rabbit",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2338,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6de657",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What number is on the mailbox outside the heroine’s house?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "36",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "48",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "12",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "24",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 785,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_987fd7",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many bulbs are lit on the street lamp when hero passes?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Two",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "One",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Three",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "None",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3671,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_e8959a",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the brand logo on the hero's cap?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Mountain",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Arrow",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Winged B",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Circle S",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 185,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_5e9899",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What color is the ribbon on the gift box the hero holds?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Blue",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Silver",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Gold",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Purple",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3570,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_eeac66",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many pieces of toast are on the breakfast plate?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "One",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Two",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Three",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Four",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 765,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_f3ac57",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many bookmarks were visible in the hero’s book?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "1",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "2",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "4",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 381,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_f746b6",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What color is the lead actor’s backpack?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Red",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Green",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Black",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Blue",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 310,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_0b5c8f",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What word is written on the cafe window sticker?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "WELCOME",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "OPEN",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "COFFEE",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "CLOSED",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1085,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_ac7bf7",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many postcards were pinned on the notice board?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "3",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "6",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "5",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1367,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_6b6654",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What number was on the bus the character boarded?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "45",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "21",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "78",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "12",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1876,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_4024d9",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which fruit was in the bowl on the kitchen counter?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Mango",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Orange",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Apple",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Banana",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 573,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_27d337",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What logo is on the delivery van parked outside?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Wave",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Leaf",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Globe",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Star",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2402,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_b8bc5d",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many candles were lit on the birthday cake?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "5",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "6",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "7",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 3150,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_93b9b5",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What color are the curtains in the clinic waiting area?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Purple",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Beige",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Grey",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Brown",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4212,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_339b66",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What model is printed on the hero’s laptop?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Nova",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Zen",
+                "is_correct": true
+            },
+            {
+                "option_id": "C",
+                "text": "Strix",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Matrix",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 908,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_142f4b",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many chess pieces remained on the board after the move?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "30",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "26",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "16",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "22",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 2025,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_3adc0c",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the label on the small jar beside the bed?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Spice",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "Seeds",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Sugar",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "Salt",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 175,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_87ce8b",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is written on the sticker on the hero's helmet?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "NO FEAR",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "SPEED KING",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "RIDE FREE",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "STAY SAFE",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 372,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_388d4f",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "How many rings are on the heroine's left hand during the wedding scene?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "2",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "4",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "3",
+                "is_correct": true
+            },
+            {
+                "option_id": "D",
+                "text": "1",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 4325,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_fb1823",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What model name is displayed on the car's dashboard?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "MOTO-X",
+                "is_correct": false
+            },
+            {
+                "option_id": "B",
+                "text": "RALLY-7",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "ZEN-3",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "XTR-500",
+                "is_correct": true
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1360,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_bbab8c",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What is the color of the folder the lawyer is holding?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Maroon",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Blue",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Black",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Green",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 855,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_f0b741",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "What number is on the policeman's badge who stops the hero?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "4127",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "2371",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "7401",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "1298",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 1821,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    },
+    {
+        "question_id": "Q_A7N_MOVIE_659676",
+        "movie_id": "A7N_MOVIE",
+        "question": {
+            "text": "Which fruit is on the stall outside the college?",
+            "language": "English",
+            "type": "intent"
+        },
+        "options": [
+            {
+                "option_id": "A",
+                "text": "Mangoes",
+                "is_correct": true
+            },
+            {
+                "option_id": "B",
+                "text": "Apples",
+                "is_correct": false
+            },
+            {
+                "option_id": "C",
+                "text": "Bananas",
+                "is_correct": false
+            },
+            {
+                "option_id": "D",
+                "text": "Oranges",
+                "is_correct": false
+            }
+        ],
+        "difficulty": "easy",
+        "quiz_rules": {
+            "spoiler_safe": true,
+            "ask_after_seconds": 535,
+            "time_limit_seconds": 20,
+            "max_attempts": 1
+        }
+    }
+]
