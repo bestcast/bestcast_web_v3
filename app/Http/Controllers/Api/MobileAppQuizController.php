@@ -175,13 +175,18 @@ class MobileAppQuizController extends Controller
         $selected = $allQuestions->shuffle()->take($maxRequired);
 
         $final = [];
-
+        $usedPopupTimes = [];
         foreach ($selected as $q) {
 
             $buffer = ($q->show_question_time >= 20) ? 3 : 6;
 
             $popupTime = $q->show_question_time + $buffer;
+            // Ensure popup_time is unique
+            while (in_array($popupTime, $usedPopupTimes)) {
+                $popupTime += 1; // shift by 1 second
+            }
 
+            $usedPopupTimes[] = $popupTime;
             $final[] = [
                 'id' => $q->id,
                 'question' => $q->question_name,
