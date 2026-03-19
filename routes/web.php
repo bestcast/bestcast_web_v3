@@ -95,6 +95,7 @@ Route::group([
 ], function () {
    Route::get('/account/producer', 'MyaccountController@producer')->name('user.myaccount.producer');
    Route::get('/producer/movie-report/{movie}', 'MyaccountController@movieReport')->name('producer.movie.report');
+   Route::get('/producer/movie-report-download/{movieId}', 'MyaccountController@downloadReport');
 
    //Route::get('/producer/movie-report/{movie}', [ProducerController::class, 'movieReport']);
 });

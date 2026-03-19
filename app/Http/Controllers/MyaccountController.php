@@ -22,6 +22,8 @@ use App\Traits\HttpResponses;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Models\Notification;
 use App\Models\UsersMovies;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MovieReportExport;
 
 class MyaccountController extends Controller
 {
@@ -267,5 +269,14 @@ class MyaccountController extends Controller
             'per_page' => $data->perPage(),
             'views_count' => $stats['views_count']
         ]);
+    }
+    public function downloadReport(Request $request, $movieId)
+    {
+        $stats = UsersMovies::getProducerMovieCount($movieId);
+
+        return Excel::download(
+            new MovieReportExport($movieId, $request->from_date, $request->to_date),
+            'movie_report_' . now()->timestamp . '.xlsx'
+        );
     }
 }

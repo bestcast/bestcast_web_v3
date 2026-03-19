@@ -31,6 +31,10 @@
 .swal2-close:hover {
     color: #333 !important;
 }
+.blog-card-bottom {
+    display: flex;
+    flex-direction: column;
+}
 </style>
 @endsection
 
@@ -65,16 +69,16 @@
                                             @php
                                                 $stats = App\Models\UsersMovies::getProducerMovieCount($movie->id);
                                             @endphp
-                                            <!-- Views: {{ $stats['views_count'] }} -->
+                                            
                                             <div class="blog-card-bottom">
-                                                Watch Time: {{ $stats['watch_minutes'] }} Minutes<br>
-                                                <br>
-                                                <button class="btn btn-primary btn-lg getReportBtn"
-                                                    style="font-size:12px;padding:2px 11px;border-radius:8px;"
-                                                    data-movie-id="{{ $movie->id }}"
-                                                    data-movie-title="{{ $movie->title }}">
-                                                    <i class="fa fa-chart-bar"></i> Get Report
-                                                </button>
+                                                    <span>Total Watch Time: {{ $stats['watch_minutes'] }} Minutes</span>
+                                                    <span>Views: {{ $stats['views_count'] }}</span>
+                                                    <button class="btn btn-primary getReportBtn mt-2"
+                                                        style="font-size:14px;padding:10px 11px;border-radius:8px;"
+                                                        data-movie-id="{{ $movie->id }}"
+                                                        data-movie-title="{{ $movie->title }}">
+                                                        <i class="fa fa-chart-bar"></i> Get Report
+                                                    </button>
                                             </div>
                                         </div>
                                     </div>
@@ -141,24 +145,29 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
                 <input type="date" id="to_date" value="${toDate}" class="form-control">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-4 d-flex align-items-end gap-2">
+    
                 <button type="button"
-                    class="btn btn-success w-100"
-                    style="height:40px;font-size:16px;"
+                    class="btn btn-success"
+                    style="height:40px;flex:2;"
                     onclick="applyDateFilter(${movieId}, '${movieTitle}')">
                     Search
                 </button>
-            </div>
 
-            <div class="col-md-2">
                 <button type="button"
-                    class="btn btn-secondary w-100"
-                    style="height:40px;font-size:16px;"
+                    class="btn btn-secondary"
+                    style="height:40px;flex:2;"
                     onclick="clearDateFilter(${movieId}, '${movieTitle}')">
                     Clear
                 </button>
-            </div>
 
+                <button type="button"
+                    class="btn btn-primary"
+                    style="height:40px; flex:2; white-space: nowrap;"
+                    onclick="downloadReport(${movieId}, '${fromDate}', '${toDate}')">
+                    Download
+                </button>
+            </div>
         </div>
 
         <table class="table table-bordered table-striped">
@@ -230,6 +239,14 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
         }
 
         html += `</div>`;
+        html += `
+        <div style="margin-top:15px; padding:10px; background:#f8f9fa; border-left:4px solid #28a745; font-size:14px;">
+            <b>Note:</b><br>
+            A view is counted when a full movie is streamed for at least one hour. 
+            For movies shorter than one hour, a complete stream counts as one view. 
+            Revenue is calculated based on the agreed terms and conditions at the time of signing.
+        </div>
+        `;
         // SHOW POPUP
         Swal.fire({
             title: movieTitle + " Report",
@@ -248,6 +265,12 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
         });
 
     });
+}
+function downloadReport(movieId, fromDate = '', toDate = '')
+{
+    let url = `/producer/movie-report-download/${movieId}?from_date=${fromDate}&to_date=${toDate}`;
+    // Trigger download
+    window.open(url, '_blank');
 }
 </script>
 @endsection
