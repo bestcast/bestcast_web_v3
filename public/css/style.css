@@ -16888,3 +16888,11 @@ Gallery Item
 .iti__search-input::placeholder {
   color: #aaa;
 }
+.blog-card-bottom {
+    display: flex;
+    flex-direction: column;
+}
+.view-row {
+    background-color: #d4edda !important; /* light green */
+    font-weight: 500;
+}

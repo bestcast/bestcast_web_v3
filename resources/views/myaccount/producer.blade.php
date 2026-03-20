@@ -31,10 +31,7 @@
 .swal2-close:hover {
     color: #333 !important;
 }
-.blog-card-bottom {
-    display: flex;
-    flex-direction: column;
-}
+
 </style>
 @endsection
 
@@ -180,6 +177,7 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
             <th>Watch %</th>
             <th>From Date</th>
             <th>To Date</th>
+            <th>Status</th>
         </tr>
         </thead>
 
@@ -188,15 +186,20 @@ function loadReport(movieId, movieTitle, page, fromDate = '', toDate = '')
 
         // Table rows
         res.data.forEach(function(row, index){
-
+            let rowClass = row.is_view == 1 ? 'view-row' : '';
             html += `
-            <tr>
+            <tr class="${rowClass}">
                 <td>${startSerial + index + 1}</td>
                 <td>${row.user_id}</td>
                 <td>${new Date(row.watch_time * 1000).toISOString().substr(11, 8)}</td>
                 <td>${row.watch_percentage}%</td>
                 <td>${row.created_at.split(' ')[0]}</td>
                 <td>${row.updated_at.split(' ')[0]}</td>
+                <td>
+                    ${row.is_view == 1 
+                        ? '<span style="color:green;font-weight:bold;">✔ View</span>' 
+                        : '<span style="color:#999;">--</span>'}
+                </td>
             </tr>
             `;
 

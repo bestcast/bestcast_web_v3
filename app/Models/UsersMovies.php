@@ -216,8 +216,8 @@ class UsersMovies extends Database implements RoleHasRelationsContract
         }
 
         // Per view seconds rule
-        $perViewSeconds = ($duration >= 3600) ? 3600 : $duration;
-
+        //$perViewSeconds = ($duration >= 3600) ? 3600 : $duration;
+        $perViewSeconds = ($duration >= 3600) ? 3600 : ($duration * 0.9); // 90% for short movies
         // Get total eligible watch seconds
         $totalSeconds = DB::table('users_movies')
             ->where('movie_id', $movieid)
@@ -229,8 +229,8 @@ class UsersMovies extends Database implements RoleHasRelationsContract
                         THEN 3600
 
                         WHEN {$duration} < 3600
-                             AND CAST(watch_time AS UNSIGNED) >= {$duration}
-                        THEN {$duration}
+                             AND CAST(watch_time AS UNSIGNED) >= ({$duration} * 0.9)
+                        THEN ({$duration} * 0.9)
 
                         ELSE 0
                     END

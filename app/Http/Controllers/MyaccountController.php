@@ -244,7 +244,23 @@ class MyaccountController extends Controller
                         ) * 100,
                         2
                     )
-                END as watch_percentage
+                END as watch_percentage,
+
+                CASE
+                    -- Movie >= 1 hour
+                    WHEN CAST(m.duration AS UNSIGNED) >= 3600
+                         AND CAST(um.watch_time AS UNSIGNED) >= 3600
+                    THEN 1
+
+                    -- Movie < 1 hour (90% rule)
+                    WHEN CAST(m.duration AS UNSIGNED) < 3600
+                         AND (
+                            (CAST(um.watch_time AS UNSIGNED) / CAST(m.duration AS UNSIGNED)) * 100
+                         ) >= 90
+                    THEN 1
+
+                    ELSE 0
+                END as is_view
             ");
 
         // Filter using updated_at
