@@ -227,7 +227,7 @@
 
             // Make header bold + center (extra clarity)
             $sheet->getStyle('A1:G3')->getFont()->setBold(true);
-            $sheet->getStyle('A1:G5')->getFont()->setBold(true);
+            $sheet->getStyle('A1:G6')->getFont()->setBold(true);
 
             return [];
         }
