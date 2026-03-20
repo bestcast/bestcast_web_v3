@@ -115,7 +115,7 @@
             $viewsCount   = $totalStats->views_count ?? 0;
             // Convert collection to array
             $dataArray = $data->toArray();
-
+            $date = now()->format('d-m-Y');
             // Add rows at TOP
             array_unshift($dataArray,
                 (object)[
@@ -153,16 +153,19 @@
             );
             $final = [];
 
-            // Row 1: Movie
+            // Row 1: Today Date
+            $final[] = ['', 'Date', $date, '', '', '', ''];
+
+            // Row 2: Movie
             $final[] = ['', 'Movie', $movieTitle, '', '', '', ''];
 
-            // Row 2: Total Watch Time
+            // Row 3: Total Watch Time
             $final[] = ['', 'Total Watch Time', $totalMinutes . ' Minutes', '', '', '', ''];
 
-            // Row 3: Total Views
+            // Row 4: Total Views
             $final[] = ['', 'Total Views', $viewsCount, '', '', '', ''];
 
-            // Row 4: Empty
+            // Row 5: Empty
             $final[] = ['', '', '', '', '', '', ''];
 
             // Row 5: HEADINGS (IMPORTANT FIX)
