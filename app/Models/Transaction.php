@@ -305,4 +305,14 @@ class Transaction extends Database implements RoleHasRelationsContract
         }
         return $data;
     }
+    public static function getActiveSubscribersCount()
+    {
+        return DB::table('transaction')
+            ->leftJoin('users', 'users.id', '=', 'transaction.user_id')
+            ->where('transaction.status', '!=', 0)
+            ->whereNotNull('users.plan_expiry')
+            ->where('users.plan_expiry', '>', now())
+            ->distinct('transaction.user_id')
+            ->count('transaction.user_id');
+    }
 }
