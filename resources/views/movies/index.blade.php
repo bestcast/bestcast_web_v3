@@ -28,6 +28,27 @@
          </div>
       </div>
    </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const observer = new MutationObserver(function () {
 
+        const firstProfile = document.querySelector('.ajxProfile .item');
+        if (firstProfile) {
+            firstProfile.click(); // auto select profile
+        }
 
+        // hide popup after selection
+        const modal = document.querySelector('.ajxProfile .prfModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
+</script>
 @endsection
