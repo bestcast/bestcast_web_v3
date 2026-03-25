@@ -90,7 +90,7 @@ class QuestionModel extends Model
 
         //if(isset($requestData))
 
-        $questionId = $this->question->id;
+        $questionId = $question->id;
         foreach($requestData['options'] as $index => $optionText){
             $isCorrect = $index == $requestData['correct_option'] ? 1 : 0;
             if (!empty($existingOptionIds[$index])) {
@@ -116,7 +116,7 @@ class QuestionModel extends Model
         $this->questionOptions->where('question_id', $question->id)
         ->whereNotIn('id', $submittedOptionIds)
         ->delete();
-        return to_route('admin.questions.editQuestion',['movieId'=>$requestData['movie_id'],'questionId' => $requestData['question_id']])->with('success', 'Updated Successfully');
+        return to_route('admin.questions.editQuestion',['movieId'=>$requestData['movie_id'],'questionId' => $requestData['question_id'],'page' => $requestData['page']])->with('success', 'Updated Successfully');
     }
     /**
      * Delete question by id

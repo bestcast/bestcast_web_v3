@@ -46,9 +46,10 @@ class QuestionController extends Controller
         
         return $this->QuestionModel->createQuestion($requestData);
     }
-    public function edit(int $movieId, int $questionId){
+    public function edit(Request $request,int $movieId, int $questionId){
         $questionDetail = $this->QuestionModel->getQuestionOptionsById($questionId);
-        return view('admin.questions.question-form', ['movieId' => $movieId,'questionDetail' => $questionDetail]);
+        $page = $request->page;
+        return view('admin.questions.question-form', ['movieId' => $movieId,'questionDetail' => $questionDetail,'page' => $page]);
     }
     public function updateQuestion(editQuestionRequest $request){
         $validated = $request->validated();
