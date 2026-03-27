@@ -133,46 +133,71 @@ class MobileAppQuizController extends Controller
         //}
 
         $attemptId = $attempt->id;
-        //Exclude Correct Answered Questions
-        $correctAnsweredIds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+        // Get ALL shown questions (answered + unanswered)
+        $shownQuestionIds = QuizAttemptAnswer::whereHas('attempt', function ($q) use ($userId, $movieId) {
+                $q->where('user_id', $userId)
+                  ->where('movie_id', $movieId);
+            })
             ->pluck('quiz_question_id')
+            ->unique()
             ->toArray();
 
+        // Total questions
+        $totalQuestions = Question::where('movie_id', $movieId)->count();
 
-        $unused = Question::where('movie_id', $movieId)
-            ->whereNotIn('id', $correctAnsweredIds)
-            ->with('options')
-            ->orderBy('show_question_time')
-            ->get()
-            ->groupBy('show_question_time')
-            ->map(fn($group) => $group->first())
-            ->values();
+        // Reset after full cycle
+        if (count($shownQuestionIds) >= $totalQuestions) {
+            $shownQuestionIds = [];
+        }
 
+        // Get questions grouped by interval slot
+        $questions = Question::where('movie_id', $movieId)
+                    ->with('options')
+                    ->get()
+                    ->groupBy(function ($q) {
+                        return intval(floor(($q->show_question_time - 1) / 15) + 1);
+                    });
 
-        //Fill if less than required
-        if ($unused->count() < $maxRequired) {
+        // Pick ONE question per interval
+        $selected = collect();
 
-            $needed = $maxRequired - $unused->count();
+        for ($i = 1; $i <= $maxRequired; $i++) {
 
-            $usedAgain = Question::where('movie_id', $movieId)
-                ->whereIn('id', $correctAnsweredIds)
+            if (!isset($questions[$i])) {
+                continue;
+            }
+
+            $group = $questions[$i];
+
+            $filtered = $group->whereNotIn('id', $shownQuestionIds);
+
+            if ($filtered->isEmpty()) {
+                continue;
+            }
+
+            // ALWAYS pick earliest in that interval
+            $selected->push(
+                $filtered->sortBy('show_question_time')->first()
+            );
+        }
+
+        // FILL REMAINING QUESTIONS (if less than 9)
+        if ($selected->count() < $maxRequired) {
+
+            $alreadySelectedIds = $selected->pluck('id')->toArray();
+
+            $remaining = Question::where('movie_id', $movieId)
+                ->whereNotIn('id', array_merge($shownQuestionIds, $alreadySelectedIds))
                 ->with('options')
-                ->get()
-                ->groupBy('show_question_time')
-                ->map(fn($group) => $group->first())
-                ->values()
-                ->shuffle()
-                ->take($needed);
+                ->orderBy('show_question_time') // IMPORTANT
+                ->get();
 
-            $allQuestions = $unused->merge($usedAgain);
+            $needed = $maxRequired - $selected->count();
+
+            $selected = $selected->merge(
+                $remaining->take($needed)
+            );
         }
-        else {
-            $allQuestions = $unused;
-        }
-
-
-        //Select Final Questions
-        $selected = $allQuestions->shuffle()->take($maxRequired);
 
         $final = [];
         $usedPopupTimes = [];

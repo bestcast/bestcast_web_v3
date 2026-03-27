@@ -459,6 +459,8 @@
     let quizPollingStarted = false;
     let quizPollingStopped = false;
     let quizPromptAlreadyShown = {{ $quiz_prompt_shown ? 'true' : 'false' }};
+    let questionCounter = 0;
+
     function getCookie(name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         if (match) return match[2];
@@ -761,14 +763,15 @@
                 //console.log("POPUP TIME HIT:", currentMinute, due);
                 due.forEach(q => {
                     q.shown = true;
-                    triggerQuiz(q);
+                    questionCounter++;
+                    triggerQuiz(q, questionCounter);
                 });
             }
 
         }, 1000);
     }
     
-    function triggerQuiz(question) {
+    function triggerQuiz(question, qNumber) {
         let timeLeft = 20;
         let chosenOption = null; // store selected option
         const fullscreenContainer = document.fullscreenElement || document.getElementById('wrapper');
@@ -788,14 +791,14 @@
                 <!-- QUESTION BOX -->
                 <div class="quiz-inner-wrapper">
                     <div class="quiz-question-box">
-                        ${question.question}
+                        <span class="quiz-qnumber">Q${qNumber}.</span>${question.question}
                     </div>
-                    <div id="options-container" class="quiz-options-grid">
+                    <div id="options-container" class="quiz-options-grid" style="display:none;">
                         ${question.options.map(op => `
                             <button 
                                 class="quiz-option-btn"
                                 data-qid="${question.id}"
-                                data-opid="${op.id}">
+                                data-opid="${op.id}" style="pointer-events:none; opacity:0.5;">
                                 ${op.name}
                             </button>
                         `).join('')}
@@ -814,7 +817,7 @@
                             </div>
                         </div>
                     </div>
-                    <button id="saveAnswerBtn" class="quiz-save-btn">
+                    <button id="saveAnswerBtn" class="quiz-save-btn" style="opacity:0; pointer-events:none;">
                         Submit
                     </button>
                 </div>
@@ -824,6 +827,21 @@
             target: fullscreenContainer, // Works in both fullscreen and normal
             allowEscapeKey: false,
             didOpen: () => {
+                // Show options after 5 seconds
+                setTimeout(() => {
+                    document.getElementById("options-container").style.display = "grid";
+
+                    // enable buttons only after showing
+                    document.querySelectorAll(".quiz-option-btn").forEach(btn => {
+                        btn.style.pointerEvents = "auto";
+                        btn.style.opacity = "1";
+                    });
+                    // show submit button AFTER 10 sec
+                    const saveBtn = document.getElementById("saveAnswerBtn");
+                    saveBtn.style.opacity = "1";
+                    saveBtn.style.pointerEvents = "auto";
+
+                }, 5000);
                 document.querySelectorAll(".quiz-option-btn").forEach(btn => {
                     btn.addEventListener("click", function () {
                         // remove highlight from all
@@ -843,9 +861,9 @@
                         chosenOption = this.getAttribute("data-opid");
 
                         // enable SAVE button
-                        const saveBtn = document.getElementById("saveAnswerBtn");
+                        /*const saveBtn = document.getElementById("saveAnswerBtn");
                         saveBtn.style.opacity = "1";
-                        saveBtn.style.pointerEvents = "auto";
+                        saveBtn.style.pointerEvents = "auto";*/
                     });
                 });
                 document.getElementById("saveAnswerBtn").addEventListener("click", function () {
@@ -952,7 +970,8 @@
             // Next question
             currentQIndex++;
             if (currentQIndex < selectedQuestions.length) {
-                triggerQuiz(selectedQuestions[currentQIndex]);
+                questionCounter++;
+                triggerQuiz(selectedQuestions[currentQIndex], questionCounter);
             } /*else {
                 console.log("Quiz finished.");
             }*/

@@ -38,11 +38,11 @@ class QuizController extends Controller
     {
         $payload = $this->decryptPayloadFromRequest($request);
 
-        $movieId   = $payload['movie_id'] ?? null;
-        $userId    = $payload['user_id'] ?? null;
+        $movieId    = $payload['movie_id'] ?? null;
+        $userId     = $payload['user_id'] ?? null;
         $plainToken = $payload['tokenEncrypted'] ?? null;
-        $interval    = 15;
         $maxRequired = 9;
+        $interval = 15;
 
         // Device Validation
         $activeQuiz = UsersDevice::where('user_id', $userId)
@@ -78,79 +78,96 @@ class QuizController extends Controller
             ], 403);
         }
 
-        // Get or Create Active Attempt
-
-        /*$attempt = QuizAttempts::where('participant_id', $userId)
-            ->where('movie_id', $movieId)
-            ->whereNull('ended_at')
-            ->first();*/
-
-        /*if (!$attempt) {*/
+        // Create New Attempt
         $attempt = QuizAttempts::create([
             'participant_id' => $userId,
             'movie_id'       => $movieId,
             'started_at'     => now(),
         ]);
-        //}
 
         $attemptId = $attempt->id;
 
-        // Exclude ONLY Correctly Answered Questions
-
-        $correctAnsweredIds = QuizAttemptAnswer::where('quiz_attempts_id', $attemptId)
+        // Get ALL shown questions (answered + unanswered)
+        $shownQuestionIds = QuizAttemptAnswer::whereHas('attempt', function ($q) use ($userId, $movieId) {
+                $q->where('user_id', $userId)
+                  ->where('movie_id', $movieId);
+            })
             ->pluck('quiz_question_id')
+            ->unique()
             ->toArray();
 
-        // UNIQUE unused questions by show_question_time
-        $unused = Question::where('movie_id', $movieId)
-            ->whereNotIn('id', $correctAnsweredIds)
-            ->with('options')
-            ->orderBy('show_question_time')
-            ->get()
-            ->groupBy('show_question_time')
-            ->map(fn($group) => $group->first())
-            ->values();
+        // Total questions
+        $totalQuestions = Question::where('movie_id', $movieId)->count();
 
-        // If not enough unused, mix with already correct ones
-
-        if ($unused->count() < $maxRequired) {
-
-            $needed = $maxRequired - $unused->count();
-
-            $usedAgain = Question::where('movie_id', $movieId)
-                ->whereIn('id', $correctAnsweredIds)
-                ->with('options')
-                ->get()
-                ->groupBy('show_question_time')
-                ->map(fn($group) => $group->first())
-                ->values()
-                ->shuffle()
-                ->take($needed);
-
-            $allQuestions = $unused->merge($usedAgain);
-
-        } else {
-            $allQuestions = $unused;
+        // Reset after full cycle
+        if (count($shownQuestionIds) >= $totalQuestions) {
+            $shownQuestionIds = [];
         }
 
-        // Final Shuffle + Take Required
+        // Get questions grouped by interval slot
+        $questions = Question::where('movie_id', $movieId)
+                    ->with('options')
+                    ->get()
+                    ->groupBy(function ($q) {
+                        return intval(floor(($q->show_question_time - 1) / 15) + 1);
+                    });
 
-        $selected = $allQuestions->shuffle()->take($maxRequired);
+        // Pick ONE question per interval
+        $selected = collect();
 
+        for ($i = 1; $i <= $maxRequired; $i++) {
+
+            if (!isset($questions[$i])) {
+                continue;
+            }
+
+            $group = $questions[$i];
+
+            $filtered = $group->whereNotIn('id', $shownQuestionIds);
+
+            if ($filtered->isEmpty()) {
+                continue;
+            }
+
+            // ALWAYS pick earliest in that interval
+            $selected->push(
+                $filtered->sortBy('show_question_time')->first()
+            );
+        }
+
+        // FILL REMAINING QUESTIONS (if less than 9)
+        if ($selected->count() < $maxRequired) {
+
+            $alreadySelectedIds = $selected->pluck('id')->toArray();
+
+            $remaining = Question::where('movie_id', $movieId)
+                ->whereNotIn('id', array_merge($shownQuestionIds, $alreadySelectedIds))
+                ->with('options')
+                ->orderBy('show_question_time') // IMPORTANT
+                ->get();
+
+            $needed = $maxRequired - $selected->count();
+
+            $selected = $selected->merge(
+                $remaining->take($needed)
+            );
+        }
+        //$selected = $selected->sortBy('show_question_time')->values();
+        // Prepare response
         $final = [];
         $usedPopupTimes = [];
-        // Apply Popup Buffer Logic
 
         foreach ($selected as $q) {
 
             $buffer = ($q->show_question_time >= 20) ? 3 : 6;
-
             $popupTime = $q->show_question_time + $buffer;
-            // Ensure popup_time is unique
+
             while (in_array($popupTime, $usedPopupTimes)) {
-                $popupTime += 1; // shift by 1 second
+                $popupTime += 1;
             }
+
             $usedPopupTimes[] = $popupTime;
+
             $final[] = [
                 'id' => $q->id,
                 'question' => $q->question_name,
@@ -163,8 +180,6 @@ class QuizController extends Controller
         $final = collect($final)
             ->sortBy('popup_time')
             ->values();
-
-        // Return Encrypted Response
 
         $encryptedResponse = QuizCryptoHelper::encryptPayload([
             'attempt_id' => $attemptId,
