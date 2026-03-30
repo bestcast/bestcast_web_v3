@@ -154,7 +154,8 @@ class Transaction extends Database implements RoleHasRelationsContract
     public static function getList()
     {
         $data = Transaction::with('user')   // load user details
-                ->where('status', '!=', 0);
+                ->where('status', '!=', 0)
+                ->whereHas('user');
 
         if (!empty($_GET['user_id'])) {
             $data->where('user_id', $_GET['user_id']);
@@ -173,8 +174,27 @@ class Transaction extends Database implements RoleHasRelationsContract
                   });
             });
         }
+        // Status Filter (NEW)
+        if (!empty($_GET['status_filter'])) {
+
+            if ($_GET['status_filter'] == 'active') {
+                $data->whereHas('user', function ($q) {
+                    $q->whereNotNull('plan_expiry')
+                      ->where('plan_expiry', '>', now());
+                });
+            }
+
+            if ($_GET['status_filter'] == 'inactive') {
+                $data->whereHas('user', function ($q) {
+                    $q->where(function ($q2) {
+                        $q2->whereNull('plan_expiry')
+                           ->orWhere('plan_expiry', '<=', now());
+                    });
+                });
+            }
+        }
         return $data->orderBy('created_at', 'desc')
-                    ->paginate(20);
+                    ->paginate(20)->appends($_GET);
     }
 
     public static function getPending($user,$planid)
@@ -305,14 +325,29 @@ class Transaction extends Database implements RoleHasRelationsContract
         }
         return $data;
     }
-    public static function getActiveSubscribersCount()
+    public static function getSubscribersCount($status = null)
     {
-        return DB::table('transaction')
-            ->leftJoin('users', 'users.id', '=', 'transaction.user_id')
-            ->where('transaction.status', '!=', 0)
-            ->whereNotNull('users.plan_expiry')
-            ->where('users.plan_expiry', '>', now())
-            ->distinct('transaction.user_id')
-            ->count('transaction.user_id');
+        $query = Transaction::where('status', '!=', 0)
+            ->whereHas('user'); // ensure valid users only
+
+        // Active
+        if ($status == 'active') {
+            $query->whereHas('user', function ($q) {
+                $q->whereNotNull('plan_expiry')
+                  ->where('plan_expiry', '>', now());
+            });
+        }
+
+        // Inactive
+        elseif ($status == 'inactive') {
+            $query->whereHas('user', function ($q) {
+                $q->where(function ($q2) {
+                    $q2->whereNull('plan_expiry')
+                       ->orWhere('plan_expiry', '<=', now());
+                });
+            });
+        }
+
+        return $query->count();
     }
 }
