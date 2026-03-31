@@ -1080,3 +1080,30 @@ padding-top:70px;
 @keyframes slowFade {0% {opacity: 1;}99.9% {opacity: 0;transform: scale(1);}100% {transform: scale(0);}}
 
 */
+.pricing-header {
+    position: relative;
+}
+
+/* Ads Free - top right */
+.ads-free-badge {
+    position: absolute;
+    top: -47px;
+    left: 0; /* left corner */
+    background: #28a745;
+    color: #fff;
+    padding: 6px 14px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    z-index: 2;
+}
+/* Optional: improve existing badge */
+
+@media (max-width: 768px) {
+    .ads-free-badge {
+        top: -42px;
+        left: 0;
+        font-size: 12px;
+        padding: 6px 14px;
+    }
+}

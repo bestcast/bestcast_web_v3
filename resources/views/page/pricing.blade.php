@@ -20,13 +20,15 @@
 			@foreach($pricemodel->items() as $item)
 	        <!-- Start Pricing Table  -->
 	        <div class="col-xl-3 col-lg-6 col-md-6 col-12" >
-	            <div class="pricing-table @if($item->tagtext) active @endif">
-	                <div class="pricing-header">
-	                	@if($item->tagtext)
+	            <!-- <div class="pricing-table @if($item->tagtext) active @endif"> -->
+	            <div class="pricing-table">
+	                <div class="pricing-header position-relative">
+	                	<div class="ads-free-badge">Ads Free</div>
+	                	<!-- @if($item->tagtext)
 	                    	<div class="edu-badge"><span>{{ $item->tagtext }}</span></div>
-	                    @endif
+	                    @endif -->
 	                    <h3 class="title">{{ $item->title }}</h3>
-	                    <div class="price-wrap">
+	                    <!-- <div class="price-wrap">
 	                        <div class="yearly-pricing">
 
 			                    @if(!empty($item->before_price) && $item->before_price>$item->price)
@@ -35,17 +37,27 @@
 	                            <span class="amount">₹{{ $item->price }}</span>
 	                            <span class="duration">/{{ App\Models\Subscription::getDurationText($item) }}</span>
 	                        </div>
-	                    </div>
+	                    </div> -->
 	                </div>
-	                <div class="pricing-body">
+	                <!-- <div class="pricing-body">
 	                    @if(!empty($item->content))
 	                        <div class="content">
 	                            {!! $item->content !!}
 	                        </div>
 	                    @endif
-	                </div>
+	                </div> -->
 	                <div class="pricing-btn">
-	                    <a class="edu-btn @if(!$item->tagtext) btn-dark @endif" href="{{ route('buyplan',$item->id) }}">Buy This Plan<i class="icon-arrow-right-line-right"></i></a>
+	                    <a class="edu-btn @if(!$item->tagtext) btn-dark @endif" href="{{ route('buyplan',$item->id) }}">
+	                    	<!-- Buy This Plan -->
+	                    	@if(!empty($item->before_price) && $item->before_price > $item->price)
+										        <span class="amount strike">₹{{ $item->before_price }}</span>
+										    @endif
+
+										    <span class="amount">₹{{ $item->price }}</span>
+										    <span class="duration">/{{ App\Models\Subscription::getDurationText($item) }}</span>
+
+										    <i class="icon-arrow-right-line-right"></i>
+										  </a>
 	                </div>
 	            </div>
 	        </div>
