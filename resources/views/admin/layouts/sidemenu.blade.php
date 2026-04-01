@@ -112,6 +112,30 @@
               <li class="icon-arrow-double-right {{ request()->is('admin/user/producer')?'active':'' }}">
                 <a href="{{ route('admin.user.producer') }}">Producer</a>
               </li>
+              <!-- <li class="icon-arrow-double-right {{ request()->is('admin/user/director')?'active':'' }}">
+                <a href="{{ route('admin.user.director') }}">Director</a></li>
+              <li class="icon-arrow-double-right {{ request()->is('admin/user/actor')?'active':'' }}">
+                <a href="{{ route('admin.user.actor') }}">Actor</a></li>
+              <li class="icon-arrow-double-right {{ request()->is('admin/user/actress')?'active':'' }}">
+                <a href="{{ route('admin.user.actress') }}">Actress</a></li>
+              <li class="icon-arrow-double-right {{ request()->is('admin/user/musicdirector')?'active':'' }}">
+                <a href="{{ route('admin.user.musicdirector') }}">Music Director</a></li> -->
+              @role('admin,subadmin')
+                <!-- <li class="icon-arrow-double-right {{ request()->is('admin/user/editor')?'active':'' }}">
+                  <a href="{{ route('admin.user.editor') }}">Editor</a></li> -->
+                <li class="icon-arrow-double-right {{ request()->is('admin/user/admin')?'active':'' }}">
+                  <a href="{{ route('admin.user.admin') }}">Admin</a></li>
+              @endrole
+            </ul>
+        </li>
+      @endif
+      @if (Route::has('admin.user.director'))
+        <li class="icon-cast  {{ request()->is('admin/user/director') || request()->is('admin/user/director*') ? 'active' : '' }}">
+          <a href="{{ route('admin.user.director') }}" class="nav-link link-dark">
+              Cast
+              <span class="arrow icon-arrow-right">&nbsp;</span>
+            </a>
+            <ul class="subnavpills" style="{{ request()->is('admin/user/director') || request()->is('admin/user/*') ? 'display:block' : '' }}">
               <li class="icon-arrow-double-right {{ request()->is('admin/user/director')?'active':'' }}">
                 <a href="{{ route('admin.user.director') }}">Director</a></li>
               <li class="icon-arrow-double-right {{ request()->is('admin/user/actor')?'active':'' }}">
@@ -120,12 +144,6 @@
                 <a href="{{ route('admin.user.actress') }}">Actress</a></li>
               <li class="icon-arrow-double-right {{ request()->is('admin/user/musicdirector')?'active':'' }}">
                 <a href="{{ route('admin.user.musicdirector') }}">Music Director</a></li>
-              @role('admin,subadmin')
-                <!-- <li class="icon-arrow-double-right {{ request()->is('admin/user/editor')?'active':'' }}">
-                  <a href="{{ route('admin.user.editor') }}">Editor</a></li> -->
-                <li class="icon-arrow-double-right {{ request()->is('admin/user/admin')?'active':'' }}">
-                  <a href="{{ route('admin.user.admin') }}">Admin</a></li>
-              @endrole
             </ul>
         </li>
       @endif
