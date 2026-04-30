@@ -41,8 +41,8 @@ class QuizController extends Controller
         $movieId    = $payload['movie_id'] ?? null;
         $userId     = $payload['user_id'] ?? null;
         $plainToken = $payload['tokenEncrypted'] ?? null;
-        $maxRequired = 9;
-        $interval = 15;
+        $maxRequired = 18;
+        $interval = 5;
 
         // Device Validation
         $activeQuiz = UsersDevice::where('user_id', $userId)

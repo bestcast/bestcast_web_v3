@@ -111,7 +111,7 @@ class MobileAppQuizModel extends Model
         if ($totalAnswered >= $required && $attempt->ended_at === null) {
             $attempt->update(['ended_at' => now()]);
         }*/
-        if ($totalAnswered >= 9) {
+        if ($totalAnswered >= 18) {
 
             $updated = QuizAttempts::where('id', $attemptId)
                 ->whereNull('ended_at')
@@ -168,7 +168,7 @@ class MobileAppQuizModel extends Model
 
         $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attempt->id)->count();
 
-        if ($totalQuestions !== 9) {
+        if ($totalQuestions !== 18) {
             return response()->json([
                 'status' => false,
                 'message' => 'Quiz not completed.',

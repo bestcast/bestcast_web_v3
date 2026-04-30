@@ -127,7 +127,7 @@ class QuizModel extends Model
             'total_attended_questions'   => $totalAnswered,
         ]);
 
-        if ($totalAnswered >= 9) {
+        if ($totalAnswered >= 18) {
 
             $updated = QuizAttempts::where('id', $attemptId)
                 ->whereNull('ended_at')
@@ -184,7 +184,7 @@ class QuizModel extends Model
         $correctAnswers = $attempt->score;
         $totalQuestions = QuizAttemptAnswer::where('quiz_attempts_id', $attempt->id)
                     ->count();
-        if ($totalQuestions !== 9) {
+        if ($totalQuestions !== 18) {
             return response()->json(
                 QuizCryptoHelper::encryptPayload([
                     'success' => false,

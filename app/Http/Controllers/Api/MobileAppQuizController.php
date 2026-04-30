@@ -35,8 +35,8 @@ class MobileAppQuizController extends Controller
     {
         $movieId     = $request['movie_id'] ?? null;
         $deviceToken = $request['device_token'] ?? null;
-        $interval    = 15;
-        $maxRequired = 9;
+        $interval    = 5;
+        $maxRequired = 18;
 
         $userId = auth()->id();
         if (!$userId) {
