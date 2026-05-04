@@ -126,4 +126,9 @@ class Media extends Database implements RoleHasRelationsContract
         return $data;
     }
 
+    public function getUrlAttribute()
+    {
+        return url($this->urlkey);
+    }
+
 }

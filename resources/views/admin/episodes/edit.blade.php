@@ -8,8 +8,8 @@
     <div class="col-md-8">
       <div class="container-fluid">
         @include('admin.common.message')
-        <h5 class="fw-bold">Webseries Info: {{ $model->title  }}</h5>
-        <p class="mt-2">
+        <h5 class="fw-bold">Webseries Info: {{ $webseries->title }}</h5>
+        <p class="mt-1">
             <strong>Season:</strong> {{ $season->title }}
         </p>
           <div class="form-row">
@@ -148,34 +148,6 @@
             </script>
           </div>
           @endforeach
-
-
-          <div class="form-row form-select2 fluid"  id="related_tagging_box">
-            <label class="form-label">Related</label>
-            <select name="related[]" class="form-control" id="related_tagging" multiple="multiple">
-              @if(!empty($model->related) && count($model->related))
-                @foreach($model->related as $relShowItem)
-                  @if(!empty($relShowItem->movies) && !empty($relShowItem->related))
-                    <option value="{{$relShowItem->movie_id}}" selected="selected">{{$relShowItem->related->title}}</option>
-                  @endif
-                @endforeach
-              @endif
-            </select>
-            <script>
-            jQuery(document).ready(function($) {
-              $('#related_tagging').select2({
-                  placeholder: "Choose movies...",
-                  minimumInputLength: 2,
-                  ajax: {
-                      url: function (params) {
-                        return  "{{ route('admin.movies.searchbytitle') }}/"+params.term;
-                      },  dataType: 'json',
-                      processResults: function (data) { return {  results: data };  },cache: true
-                  }
-              });
-            });
-            </script>
-          </div>
 
 
           <h3 class="sectitle">Video Information</h3>
@@ -408,7 +380,7 @@
                   <div class="form-row col-md-12">
                       <div class="form-row btnaction">
                           <button type="submit" class="btn btn-primary">Update</button>
-                          <a href="{{ route('admin.movies.index') }}" class="btn btn-secondary backbtn">Back</a>
+                          <a href="{{ route('admin.webseries.index') }}" class="btn btn-secondary backbtn">Back</a>
                       </div>
                   </div>
               </div>

@@ -161,10 +161,12 @@ class User extends Authenticatable
     }
     public static function groupLabel()
     {
+        //return array(4=>'Director',5=>'Actor',6=>'Actress',7=>'Music Director');
         return array(3=>'Producer',4=>'Director',5=>'Actor',6=>'Actress',7=>'Music Director');
     }
     public static function groupSlug()
     {
+        //return array(4=>'director',5=>'actor',6=>'actress',7=>'musicdirector');
         return array(3=>'producer',4=>'director',5=>'actor',6=>'actress',7=>'musicdirector');
     }
 

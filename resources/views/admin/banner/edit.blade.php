@@ -34,7 +34,17 @@
                 });
             </script>
           </div>
+          <div class="form-row">
+              <label class="form-label">Content Type</label><br>
 
+              <input type="radio" name="content_type" value="movies"
+                  {{ old('content_type', $model->content_type ?? 'movies') == 'movies' ? 'checked' : '' }}>
+              Movies
+
+              <input type="radio" name="content_type" value="webseries"
+                  {{ old('content_type', $model->content_type ?? '') == 'webseries' ? 'checked' : '' }}>
+              Webseries
+          </div>
 
           <div class="form-row form-select2 {{ empty($model->type)?'':'dnn' }}" id="movies_dropdown">
             <label class="form-label">Movies</label>
@@ -55,6 +65,36 @@
               });
             });
             </script>
+          </div>
+
+          <div class="form-row form-select2 {{ empty($model->type)?'':'dnn' }}" id="webseries_dropdown">
+              <label class="form-label">Webseries</label>
+
+              @php ($selectedValue=empty($model->webseries_id)?[]:[$model->webseries_id=>$model->webseries->title])
+
+              {{ Form::select('webseries_id', $selectedValue, old('webseries_id', $model->webseries_id), ['id'=>'webseries_id','class'=>'form-select']) }}
+
+              <script>
+              jQuery(document).ready(function($) {
+                  $('#webseries_id').select2({
+                      placeholder: "Choose Webseries...",
+                      minimumInputLength: 0,
+                      ajax: {
+                          url: "{{ route('admin.webseries.searchbytitle') }}",
+                          dataType: 'json',
+                          data: function (params) {
+                              return {
+                                  q: params.term // search keyword
+                              };
+                          },
+                          processResults: function (data) {
+                              return { results: data };
+                          },
+                          cache: true
+                      }
+                  });
+              });
+              </script>
           </div>
 
 
@@ -235,7 +275,31 @@
         </div>
     </div>
 </div>
+<script>
+jQuery(document).ready(function ($) {
 
+    function toggleDropdown() {
+        let selected = $('input[name="content_type"]:checked').val();
+
+        if (selected === 'movies') {
+            $('#movies_dropdown').removeClass('dnn');
+            $('#webseries_dropdown').addClass('dnn');
+        } else if (selected === 'webseries') {
+            $('#movies_dropdown').addClass('dnn');
+            $('#webseries_dropdown').removeClass('dnn');
+        }
+    }
+
+    // Run on load (edit case)
+    toggleDropdown();
+
+    // On change
+    $('input[name="content_type"]').change(function () {
+        toggleDropdown();
+    });
+
+});
+</script>
 {{ Form::close() }}
 
 @endsection

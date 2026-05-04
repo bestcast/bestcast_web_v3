@@ -122,9 +122,6 @@ Route::group([
 
 });
 
-
-
-
 // Route::group([
 //     'middleware'    => ['role:user,admin,subadmin'],
 //     'namespace'     => 'App\Http\Controllers',
@@ -221,6 +218,7 @@ Route::group([
 
 
     Route::get('/admin/webseries', 'WebSeriesController@index')->name('admin.webseries.index');
+    Route::get('/admin/webseries/searchbytitle', 'WebSeriesController@searchbytitle')->name('admin.webseries.searchbytitle');
     Route::get('/admin/webseries/create', 'WebSeriesController@create')->name('admin.webseries.create');
     Route::post('/admin/webseries/createsave', 'WebSeriesController@createsave')->name('admin.webseries.createsave');
     Route::get('/admin/webseries/edit/{id}', 'WebSeriesController@edit')->name('admin.webseries.edit');
@@ -233,10 +231,11 @@ Route::group([
     Route::get('admin/seasons/{season}/episodes', 'EpisodeController@index')->name('admin.episodes.index');
     Route::get('admin/seasons/{season}/episodes/auto-create', 'EpisodeController@autoCreate')->name('admin.episodes.autoCreate');
 
-    Route::get('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/edit', 'EpisodeController@edit')->name('admin.episodes.edit');
-    Route::post('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/editsave','EpisodeController@editsave')->name('admin.episodes.editsave');
-    //Route::get('/admin/webseries/delete/{id}', 'WebSeriesController@delete')->name('admin.seasons.autoCreate');
-
+    Route::get('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/edit', 
+        'EpisodeController@edit')->name('admin.episodes.edit');
+    Route::post('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/editsave',
+        'EpisodeController@editsave')->name('admin.episodes.editsave');
+    Route::get('/admin/episodes/searchbytitle','EpisodeController@searchbytitle')->name('admin.episodes.searchbytitle');
 
     Route::get('/admin/shows', 'ShowsController@index')->name('admin.shows.index');
     Route::get('/admin/shows/list', 'ShowsController@list')->name('admin.shows.list');
@@ -423,7 +422,7 @@ Route::group([
     Route::get('/setprofiletoken/{id}', 'Movies\BrowseController@setprofiletoken')->name('setprofiletoken');
     Route::get('/{urlkey}/{model}/{id}', 'Movies\BrowseController@urlkey')->name('movies.genre');
     #Route::get('/{urlkey}', 'Movies\BrowseController@urlkey')->name('urlkey');
-    #Route::get('/deleteuser', 'App\Http\Controllers\Api\UserController@deleteuser')->name('deleteuser');
+    #Route::get('/deleteuser', 'App\Http\Controllers\Api\UserController@deleteuser')->name('deleteuser');   
 });
 
 
@@ -436,6 +435,13 @@ Route::group([
 
 ##Route::post('/contact', [App\Http\Controllers\FormController::class, 'contact'])->name('form.contact');
 ##Route::post('/newsletter', [App\Http\Controllers\FormController::class, 'newsletter'])->name('form.newsletter');
+
+Route::get('/webserieswatchepisode/{episode_id}', 'App\Http\Controllers\Webseries\WebseriesController@episodewebserieswatch')
+    ->middleware(['role:admin,subadmin,user,producer'])
+    ->name('episodewebserieswatch');
+Route::get('/webserieswatch/{id}', 'App\Http\Controllers\Webseries\WebseriesController@webserieswatch')
+    ->middleware(['role:admin,subadmin,user,producer'])
+    ->name('webserieswatch');
 
 Route::get('/refer/{id}', 'App\Http\Controllers\HomeController@refer')->name('refer');
 Route::get('/{urlkey}', 'App\Http\Controllers\HomeController@urlkey')->name('urlkey');

@@ -4,13 +4,34 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Movies;
 use App\Models\Webseries;
 use App\Models\Season;
 use App\Models\Episode;
+use App\Models\EpisodeGenres;
+use App\Models\EpisodeLanguages;
+use App\Models\EpisodeUsers;
+use App\Models\EpisodeRelated;
+use App\Models\EpisodeSubtitle;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class EpisodeController extends Controller
 {
+    public function searchbytitle(Request $request)
+    {
+        $key = $request->key;
+
+        $episodes = Episode::where('title', 'LIKE', "%{$key}%")
+            ->select('id', 'title as text')
+            ->limit(20)
+            ->get();
+
+        return response()->json($episodes);
+    }
+
+
     public function index($seasonId)
     {
         $season = Season::with('episodes')->findOrFail($seasonId);
@@ -55,8 +76,9 @@ class EpisodeController extends Controller
             'season'
         ));
     }
-    public function editsave(Request $request, $webseriesId, $seasonId, $episodeId)
+    /*public function editsave(Request $request, $webseriesId, $seasonId, $episodeId)
     {
+
         $model = Episode::where('season_id', $seasonId)
                         ->findOrFail($episodeId);
 
@@ -74,6 +96,112 @@ class EpisodeController extends Controller
                 $episodeId
             ])
             ->with('success', 'Episode Updated Successfully');
+    }*/
+    public function editsave(Request $request, $webseriesId, $seasonId, $episodeId)
+    {
+        if($episodeId)
+        {
+            $model = Episode::where('season_id', $seasonId)
+                ->findOrFail($episodeId);
+
+            $rules = Episode::$rules;
+            $rules['urlkey'] = $rules['urlkey'] . ',' . $episodeId . ",id";
+
+            // Slug conversion (same like Movies)
+            $request['urlkey'] = \Str::slug($request['urlkey']);
+
+            $requestData = $request->all();
+
+            $validatedData = $request->validate(
+                $rules,
+                Episode::$messages
+            );
+            //dd($requestData);exit;
+            // Boolean flags
+            $requestData['status']          = empty($requestData['status']) ? 0 : 1;
+            $requestData['movie_access']    = empty($requestData['movie_access']) ? 0 : 1;
+            $requestData['subtitle_status'] = empty($requestData['subtitle_status']) ? 0 : 1;
+            $requestData['is_upcoming']     = empty($requestData['is_upcoming']) ? 0 : 1;
+            $requestData['topten']          = empty($requestData['topten']) ? 0 : 1;
+
+            $model->fill($requestData);
+            $model->updated_by = Auth::user()->id;
+            $model->save();
+
+            $EpisodeGenres = EpisodeGenres::where('episode_id',$episodeId)->delete();
+            if(!empty($requestData['genre_id']) && count($requestData['genre_id'])){
+                foreach($requestData['genre_id'] as $key=>$itm_id){
+                    if($itm_id){
+                        $EpisodeGenres = new EpisodeGenres();
+                        $EpisodeGenres->episode_id = $episodeId;
+                        $EpisodeGenres->genre_id = $itm_id;
+                        $EpisodeGenres->save();
+                    }
+                }
+            }
+            $EpisodeLanguages = EpisodeLanguages::where('episode_id',$episodeId)->delete();
+            if(!empty($requestData['language_id']) && count($requestData['language_id'])){
+                foreach($requestData['language_id'] as $key=>$itm_id){
+                    if($itm_id){
+                        $EpisodeLanguages = new EpisodeLanguages();
+                        $EpisodeLanguages->episode_id = $episodeId;
+                        $EpisodeLanguages->language_id = $itm_id;
+                        $EpisodeLanguages->save();
+                    }
+                }
+            }
+
+            $EpisodeUsers = EpisodeUsers::where('episode_id',$episodeId)->delete();
+            $usertype=User::groupSlug();
+            foreach($usertype as $ukey=>$uname):
+                if(!empty($requestData[$uname]) && count($requestData[$uname])){
+                    foreach($requestData[$uname] as $key=>$itm_id){
+                        if($itm_id){
+                            $EpisodeUsers = new EpisodeUsers();
+                            $EpisodeUsers->episode_id = $episodeId;
+                            $EpisodeUsers->user_id = $itm_id;
+                            $EpisodeUsers->group = $ukey;
+                            $EpisodeUsers->save();
+                        }
+                    }
+                }
+            endforeach;
+
+            $EpisodeRelated = EpisodeRelated::where('episode_id',$episodeId)->delete();
+            if(!empty($requestData['related']) && count($requestData['related'])){
+                foreach($requestData['related'] as $key=>$itm_id){
+                    if($itm_id){
+                        $EpisodeRelated = new EpisodeRelated();
+                        $EpisodeRelated->episode_id = $id;
+                        $EpisodeRelated->related_id = $itm_id;
+                        $EpisodeRelated->save();
+                    }
+                }
+            }
+
+            $EpisodeSubtitle = EpisodeSubtitle::where('episode_id',$episodeId)->delete();
+            if(!empty($requestData['subtitle']) && count($requestData['subtitle'])){
+                $i=0;foreach($requestData['subtitle'] as $key=>$itm_id){$i++;
+                    if($itm_id){
+                        if(!empty($requestData['subtitle_label'][$key]) && !empty($requestData['subtitle_url'][$key])){
+                            $EpisodeSubtitle = new EpisodeSubtitle();
+                            $EpisodeSubtitle->episode_id = $episodeId;
+                            $EpisodeSubtitle->is_active = empty($requestData['subtitle_is_active'][$key])?0:1;
+                            $EpisodeSubtitle->label = $requestData['subtitle_label'][$key];
+                            $EpisodeSubtitle->url = $requestData['subtitle_url'][$key];
+                            $EpisodeSubtitle->save();
+                        }
+                    }
+                }
+            }
+            return redirect()
+                ->route('admin.episodes.edit', [
+                    $webseriesId,
+                    $seasonId,
+                    $episodeId
+                ])
+                ->with('success', 'Episode Updated Successfully');
+        }
     }
 
 

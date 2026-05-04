@@ -219,6 +219,7 @@ class BrowseController extends Controller
         $langid=Session::get('setLanguage');if(!empty($langid)){$language=Languages::find($langid);}
 
         if($post->template==0){ //movies
+            //dd($post);exit;
             return view('movies.index', ['post'=>$post,'meta'=>$meta,'urlkey'=>$urlkey,'genre'=>$genre,'language'=>$language]);       
         }
 
@@ -289,6 +290,15 @@ class BrowseController extends Controller
         }else{
             return new BannerResource($data);
         }
+            /* Multi Banner */
+            /*$user = Auth::user();
+            $data = Banner::getApiList($user->id);
+
+            if (empty($data) || $data->isEmpty()) {
+                return $this->error('', "No Records Found!", 200);
+            }
+
+            return BannerResource::collection($data);*/
     }
 
     public function blockslist(Request $request)
@@ -327,8 +337,5 @@ class BrowseController extends Controller
         //Session::forget('profileToken');
         return response()->json(['id' => $id]);
     }
-
-
-
 
 }

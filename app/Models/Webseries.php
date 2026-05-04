@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use jeremykenedy\LaravelRoles\Contracts\RoleHasRelations as RoleHasRelationsContract;
+use jeremykenedy\LaravelRoles\Database\Database;
+use jeremykenedy\LaravelRoles\Traits\RoleHasRelations;
+use jeremykenedy\LaravelRoles\Traits\Slugable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Media;
 
 class Webseries extends Model
 {
@@ -28,10 +33,6 @@ class Webseries extends Model
      *
      * @var array
      */
-    /*protected $dates = [
-        'created_at',
-        'updated_at',
-    ];*/
 
     /**
      * The attributes that are mass assignable.
@@ -73,8 +74,6 @@ class Webseries extends Model
      * @var bool
      */
     public $timestamps = true;
-
-
 
     /**
      * Validation rules for the attributes
@@ -118,11 +117,14 @@ class Webseries extends Model
         return $this->belongsTo('App\Models\Media','medium_id','id');
     }
     
-    public function thumbnail()
+    /*public function thumbnail()
     {
         return $this->belongsTo('App\Models\Media','thumbnail_id','id');
+    }*/
+    public function thumbnail()
+    {
+        return $this->belongsTo(Media::class, 'thumbnail_id');
     }
-    
     public function portrait()
     {
         return $this->belongsTo('App\Models\Media','portrait_id','id');
@@ -133,38 +135,27 @@ class Webseries extends Model
         return $this->belongsTo('App\Models\Media','portraitsmall_id','id');
     }
 
-    /*public function genres()
-    {
-        return $this->hasMany('App\Models\MoviesGenres','movie_id','id');
-    }
-    public function languages()
-    {
-        return $this->hasMany('App\Models\MoviesLanguages','movie_id','id');
-    }
     public function users()
     {
-        return $this->hasMany('App\Models\MoviesUsers','movie_id','id');
-    }*/
+        return $this->hasMany('App\Models\EpisodeUsers','episode_id','id');
+    }
     public function related()
     {
-        return $this->hasMany('App\Models\MoviesRelated','movie_id','id')
-                ->whereHas('related', function ($q) {
-                    $q->where('status', 1);
-                });
+        return $this->hasMany(EpisodeRelated::class, 'episode_id');
     }
     public function meta()
     {
         return $this->hasMany('App\Models\Meta','meta_id','id')->where('type','2');
     }
-    /*public function subtitle()
+    public function subtitle()
     {
         return $this->hasMany('App\Models\MoviesSubtitle','movie_id','id');
     }
     
-    public function usermovies()//$user_id, $profile_id //should not pass here
+    public function userepisodes()//$user_id, $profile_id //should not pass here
     {
-        return $this->hasMany('App\Models\UsersMovies','movie_id','id');//->where('user_id',$user_id)->where('profile_id',$profile_id); //should not pass here
-    }*/
+        return $this->hasMany('App\Models\UsersEpisodes','episode_id','id');//->where('user_id',$user_id)->where('profile_id',$profile_id); //should not pass here
+    }
 
 
     public static function getList()
@@ -208,7 +199,11 @@ class Webseries extends Model
     }
     public function seasons()
     {
-        return $this->hasMany(Season::class);
+        return $this->hasMany(Season::class)->orderBy('season_number');
+    }
+    public function firstSeason()
+    {
+        return $this->hasOne(Season::class, 'webseries_id')->orderBy('id', 'asc');
     }
     protected static function boot()
     {

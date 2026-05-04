@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Movies\BrowseController;
 use App\Http\Controllers\Movies\GuestController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Webseries\WebseriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/blockslist', [BrowseController::class, 'blockslist'])->name('blockslist');
     Route::get('/latestlist', [BrowseController::class, 'latestlist'])->name('latestlist');
 
+    Route::get('/webseriesblockslist', [WebseriesController::class, 'webseriesblockslist'])->name('webseriesblockslist');
+    Route::get('/seasonepisodebannerlist/{webseries_id}', [WebseriesController::class, 'seasonepisodebannerlist'])->name('seasonepisodebannerlist');
+    Route::get('/webserieswatchdetail/{webseries_id}', [WebseriesController::class, 'webserieswatchdetail'])->name('webserieswatchdetail');
 
     Route::get('/paymentgatewayinfo', [PaymentController::class, 'paymentgatewayinfo'])->name('paymentgatewayinfo');
     Route::get('/subscriptionlist', [PaymentController::class, 'subscriptionlist'])->name('subscriptionlist');
@@ -98,6 +102,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/setusermovie/{movieid}', [UserController::class, 'setusermovie'])->name('setusermovie');
     Route::get('/appnotifylist/{id}', [UserController::class, 'appnotifylist'])->name('appnotifylist');
     Route::get('/deleteuser', [UserController::class, 'deleteuser'])->name('deleteuser');
+
+    Route::get('/getuserepisode/{episodeid}', [UserController::class, 'getuserepisode'])->name('getuserepisode');
+    Route::post('/setuserepisode/{episodeid}', [UserController::class, 'setuserepisode'])->name('setuserepisode');
 });
 
 //Route::get('/data', [YourController::class, 'noAuthRequired']);

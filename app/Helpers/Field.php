@@ -174,7 +174,7 @@ class Field {
   --*/
   public static function template()
   {
-      return array(0 => 'Movies', 1 => 'Content');
+      return array(0 => 'Movies', 1 => 'Content', 2 => 'Webseries');
   }
   public static function getTemplateSlug($val)
   {

@@ -65,6 +65,7 @@ class MoviesController extends Controller
         $requestData = $request->all();
         $model = new Movies();
         $requestData['status']=empty($requestData['status'])?0:1;
+        //$requestData['category'] = 'movies';
         $model->fill($requestData);
         $model->created_by = Auth::user()->id;
         $model->save();
@@ -130,7 +131,7 @@ class MoviesController extends Controller
                     }
                 }
             }
-
+            
             $MoviesLanguages = MoviesLanguages::where('movie_id',$id)->delete();
             if(!empty($requestData['language_id']) && count($requestData['language_id'])){
                 foreach($requestData['language_id'] as $key=>$itm_id){

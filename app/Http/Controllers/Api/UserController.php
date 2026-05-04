@@ -34,6 +34,8 @@ use Otp;
 use Cache;
 use App\Models\UserMovieWatchLog;
 use App\Models\UserMovieWatched;
+use App\Models\UsersEpisodes;
+use App\Http\Resources\EpisodeListResource;
 
 use Laravel\Sanctum\PersonalAccessToken;
 class UserController extends Controller
@@ -407,7 +409,84 @@ class UserController extends Controller
         return $response;
         //return new UsermoviesResource($usersMovies);
     }
+    public function getuserepisode($episodeid,Request $request)
+    {
+        //Force user to buy plan start
+        // $plan=Subscription::getPlan();
+        // if(empty($plan))
+        //     return $this->error('', "Plan expired", 200);
+        //Force user to buy plan end
 
+        $user=Auth::user();
+        if(empty($user->id) || empty($episodeid) || empty($request->profile_id))
+            return $this->error('', "No Records Found!", 200);
+
+        $data=UsersEpisodes::getEpisode($user->id,$request->profile_id,$episodeid);
+        if(empty($data)){
+            $usersEpisodes=new UsersEpisodes();
+            $usersEpisodes->user_id=$user->id;
+            $usersEpisodes->profile_id=$request->profile_id;
+            $usersEpisodes->episode_id=$episodeid;
+            $usersEpisodes->viewed=1;
+            $usersEpisodes->save();
+            $data=UsersEpisodes::getEpisode($user->id,$request->profile_id,$episodeid);
+        }
+        if(empty($data))
+            return $this->error('', "No Records Found!", 200);
+
+        return new EpisodeResource($data);
+        //return new UsermoviesResource($data);
+    }
+    public function setuserepisode($episodeid, Request $request)
+    {
+        $user = Auth::user();
+        if (empty($user->id) || empty($request->profile_id))
+            return $this->error('', "No Records Found!", 200);
+
+        $movieDuration = $request->input('movieDuration');
+
+        $usersEpisodes = UsersEpisodes::getUsersEpisodes($user->id, $request->profile_id, $episodeid);
+        if (empty($usersEpisodes)) {
+            $usersEpisodes = new UsersEpisodes();
+            $usersEpisodes->user_id          = $user->id;
+            $usersEpisodes->profile_id       = $request->profile_id;
+            $usersEpisodes->episode_id       = $episodeid;
+            $usersEpisodes->mylist           = 0;
+            $usersEpisodes->likes            = 0;
+            $usersEpisodes->watch_time       = 0;
+            $usersEpisodes->watching         = 0;
+            $usersEpisodes->watched_percent  = 0;
+            $usersEpisodes->watched          = 0;
+            $usersEpisodes->viewed           = 0;
+        }
+
+        $usersEpisodes->mylist          = isset($request->mylist)          ? $request->mylist          : $usersEpisodes->mylist;
+        $usersEpisodes->likes           = isset($request->likes)           ? $request->likes           : $usersEpisodes->likes;
+        $usersEpisodes->watch_time      = isset($request->watch_time)      ? $request->watch_time      : $usersEpisodes->watch_time;
+        $usersEpisodes->watching        = isset($request->watching)        ? $request->watching        : $usersEpisodes->watching;
+        $usersEpisodes->watched_percent = isset($request->watched_percent) ? $request->watched_percent : $usersEpisodes->watched_percent;
+        $usersEpisodes->watched         = isset($request->watched)         ? $request->watched         : $usersEpisodes->watched;
+        $usersEpisodes->viewed          = isset($request->viewed)          ? $request->viewed          : $usersEpisodes->viewed;
+        $usersEpisodes->save();
+
+        // Return episode user data directly — not EpisodeListResource
+        return response()->json([
+            'data' => [
+                'usermovies' => [  // JS reads data.usermovies.watch_time etc
+                    'id'              => $usersEpisodes->id,
+                    'episode_id'      => $usersEpisodes->episode_id,
+                    'mylist'          => $usersEpisodes->mylist,
+                    'likes'           => $usersEpisodes->likes,
+                    'watch_time'      => $usersEpisodes->watch_time,
+                    'watching'        => $usersEpisodes->watching,
+                    'watched_percent' => $usersEpisodes->watched_percent,
+                    'watched'         => $usersEpisodes->watched,
+                    'viewed'          => $usersEpisodes->viewed,
+                ],
+                'movieDuration' => $movieDuration,
+            ]
+        ]);
+    }
     public function trackMovieWatch($userId, $movieId, $platform = 'web', $movieDurationFromRequest = null)
     {
         $movie = Movies::select('video_url', 'duration')->find($movieId);

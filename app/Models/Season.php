@@ -20,9 +20,17 @@ class Season extends Model
     {
         return $this->belongsTo(Webseries::class);
     }
+    /*public function episodes()
+    {
+        return $this->hasMany(Episode::class, 'season_id');
+    }*/
     public function episodes()
     {
-        return $this->hasMany(Episode::class);
+        return $this->hasMany(Episode::class)->orderBy('episode_number');
+    }
+    public function firstEpisode()
+    {
+        return $this->hasOne(Episode::class, 'season_id')->orderBy('id', 'asc');
     }
     protected static function boot()
     {

@@ -15,15 +15,25 @@
           </div>
 
           <div class="row mt-1 form-img-upload">
-            
+            <div class="col-3 themed-grid-col">
+                {!! Field::mediaUpload('image_id','Image',$model) !!}
+            </div>
+            <div class="col-3 themed-grid-col">
+                {!! Field::mediaUpload('medium_id','Medium',$model) !!}
+            </div>
             <div class="col-3 themed-grid-col">
                 {!! Field::mediaUpload('thumbnail_id','Thumbnail',$model) !!}
             </div>
           </div>
           <div class="row pt-2 form-img-upload">
-            
             <div class="col-3 themed-grid-col">
-                <p><b>Thumbnail</b> (360X203)</p>
+                {!! Field::mediaUpload('portraitsmall_id','Portrait Small',$model) !!}
+            </div>
+            <div class="col-3 themed-grid-col">
+                {!! Field::mediaUpload('portrait_id','Portrait',$model) !!}
+            </div>
+            <div class="col-3 themed-grid-col">
+                <p><b>Image</b> (1920X1080)<br><b>Medium</b> (720X405)<br><b>Thumbnail</b> (360X203)<br><b>Portrait Small</b> (400X600)<br><b>Portrait</b> (1000X1500)</p>
             </div>
           </div>
 
