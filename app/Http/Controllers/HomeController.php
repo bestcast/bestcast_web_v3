@@ -143,8 +143,12 @@ class HomeController extends Controller
                     }
                 } else if ($post->template == 2) {
                     // post->id = banner id → get webseries_id from banner
-                    $banner = Banner::find($post->id);
-
+                    //$banner = Banner::find($post->id);
+                    $banner = Banner::where('status', 1)
+                        ->whereNotNull('webseries_id')
+                        ->latest()
+                        ->first();
+                        
                     if (!$banner || !$banner->webseries_id) {
                         $post = Post::where('urlkey', 'page-not-found')->first();
                         $meta = $post->meta->pluck('value', 'path');

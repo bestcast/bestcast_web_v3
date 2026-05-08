@@ -100,6 +100,26 @@ class WebseriesController extends Controller
             abort(404);
         }
 
+        // Get webseries_id from episode's season
+        $webseries_id = $episode->season->webseries_id;
+        $nextEpisode = Episode::where('season_id', $episode->season_id)
+            ->where('id', '>', $episode_id)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        // If no next episode in same season, check next season
+        if (!$nextEpisode) {
+            $nextSeason = Season::where('webseries_id', $webseries_id)
+                ->where('id', '>', $episode->season_id)
+                ->orderBy('id', 'asc')
+                ->first();
+
+            if ($nextSeason) {
+                $nextEpisode = Episode::where('season_id', $nextSeason->id)
+                    ->orderBy('id', 'asc')
+                    ->first();
+            }
+        }
         if (empty($episode->movie_access)) {
             $plan = Subscription::getPlan();
             if (empty($plan)) {
@@ -129,6 +149,7 @@ class WebseriesController extends Controller
             'userEpisode'  => $userEpisode,
             'webseries_id' => $webseries_id,
             'profileToken' => $profileToken ?? '',
+            'nextEpisode'  => $nextEpisode,
         ]);
     }
     
