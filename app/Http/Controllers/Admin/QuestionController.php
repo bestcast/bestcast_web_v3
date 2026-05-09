@@ -30,9 +30,10 @@ class QuestionController extends Controller
         return view('admin.questions.question-list', compact('questions', 'movieId'));
     }
 
-    public function create($movieId){
+    public function create(Request $request, $movieId){
         //$options = [];
-        return view('admin.questions.question-form', ['movieId' => $movieId]);
+        $page = $request->page;
+        return view('admin.questions.question-form', ['movieId' => $movieId, 'page' => $page]);
     }
     public function saveQuestion(StoreQuestionRequest $request){
         $validated = $request->validated();
