@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Webseries;
 use App\Models\Season;
+use App\Models\Episode;
 
 class SeasonController extends Controller
 {
@@ -48,5 +49,25 @@ class SeasonController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Season ' . $nextSeasonNumber . ' created successfully');
+    }
+    public function delete($webseries_id, $season_id)
+    {
+        $season = Season::find($season_id);
+
+        if (!$season || $season->webseries_id != $webseries_id) {
+            return redirect()
+                ->route('admin.seasons.index', $webseries_id)
+                ->with('error', 'Season not found!');
+        }
+
+        // Delete all episodes under this season first
+        Episode::where('season_id', $season_id)->delete();
+
+        // Delete the season
+        $season->delete();
+
+        return redirect()
+            ->route('admin.seasons.index', $webseries_id)
+            ->with('success', 'Season and its episodes deleted successfully!');
     }
 }

@@ -227,15 +227,16 @@ Route::group([
     //Route::get('admin/webseries/{webseries}/season/auto-create',[SeasonController::class, 'autoCreate'])->name('admin.seasons.autoCreate');
     Route::get('admin/webseries/{webseries}/seasons', 'SeasonController@index')->name('admin.seasons.index');
     Route::get('admin/webseries/{webseries}/season/auto-create', 'SeasonController@autoCreate')->name('admin.seasons.autoCreate');
+    Route::get('admin/webseries/{webseries}/seasons/{season}/delete', 'SeasonController@delete')->name('admin.seasons.delete');
 
     Route::get('admin/seasons/{season}/episodes', 'EpisodeController@index')->name('admin.episodes.index');
     Route::get('admin/seasons/{season}/episodes/auto-create', 'EpisodeController@autoCreate')->name('admin.episodes.autoCreate');
-
     Route::get('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/edit', 
         'EpisodeController@edit')->name('admin.episodes.edit');
     Route::post('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/editsave',
         'EpisodeController@editsave')->name('admin.episodes.editsave');
     Route::get('/admin/episodes/searchbytitle','EpisodeController@searchbytitle')->name('admin.episodes.searchbytitle');
+    Route::get('admin/seasons/{season}/episodes/{episode}/delete', 'EpisodeController@delete')->name('admin.episodes.delete');
 
     Route::get('/admin/shows', 'ShowsController@index')->name('admin.shows.index');
     Route::get('/admin/shows/list', 'ShowsController@list')->name('admin.shows.list');

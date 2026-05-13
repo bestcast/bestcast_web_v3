@@ -66,37 +66,84 @@ class EpisodeController extends Controller
         $webseries = Webseries::findOrFail($webseriesId);
         $season = Season::where('webseries_id', $webseriesId)
                         ->findOrFail($seasonId);
-
         $model = Episode::where('season_id', $seasonId)
+                        ->with(['genres', 'languages', 'users'])
                         ->findOrFail($episodeId);
 
+        $autoFillData = null;
+
+        // Check if current episode has no relations
+        $isNewEpisode = $model->genres->isEmpty()
+                     && $model->languages->isEmpty()
+                     && $model->users->isEmpty();
+
+        if ($isNewEpisode) {
+            // Get first episode of season with relations loaded
+            $referenceEpisode = Episode::where('season_id', $seasonId)
+                ->where('id', '!=', $episodeId)
+                ->with(['genres.genres', 'languages.languages', 'users.users'])
+                ->orderBy('episode_number', 'asc')
+                ->first();
+
+            if ($referenceEpisode) {
+                // Build genres array
+                $genres = [];
+                foreach ($referenceEpisode->genres as $g) {
+                    if (!empty($g->genres)) {
+                        $genres[] = [
+                            'id'   => $g->genre_id,
+                            'text' => $g->genres->title,
+                        ];
+                    }
+                }
+
+                // Build languages array
+                $languages = [];
+                foreach ($referenceEpisode->languages as $l) {
+                    if (!empty($l->languages)) {
+                        $languages[] = [
+                            'id'   => $l->language_id,
+                            'text' => $l->languages->title,
+                        ];
+                    }
+                }
+
+                // Build users array
+                $users = [];
+                foreach ($referenceEpisode->users as $u) {
+                    if (!empty($u->users)) {
+                        $users[] = [
+                            'id'    => $u->user_id,
+                            'text'  => $u->users->name,
+                            'group' => $u->group,
+                        ];
+                    }
+                }
+
+                if (!empty($genres) || !empty($languages) || !empty($users)) {
+                    $autoFillData = [
+                        'genres'    => $genres,
+                        'languages' => $languages,
+                        'users'     => $users,
+                    ];
+                }
+            }
+        }
+
+        /*dd([
+            'referenceEpisode_id' => $referenceEpisode?->id,
+            'genres'    => $referenceEpisode?->genres?->toArray(),
+            'languages' => $referenceEpisode?->languages?->toArray(),
+            'users'     => $referenceEpisode?->users?->toArray(),
+            'autoFillData' => $autoFillData,
+        ]);*/
         return view('admin.episodes.edit', compact(
             'model',
             'webseries',
-            'season'
+            'season',
+            'autoFillData'
         ));
     }
-    /*public function editsave(Request $request, $webseriesId, $seasonId, $episodeId)
-    {
-
-        $model = Episode::where('season_id', $seasonId)
-                        ->findOrFail($episodeId);
-
-        $data = $request->all();
-
-        $data['status'] = empty($data['status']) ? 0 : 1;
-
-        $model->fill($data);
-        $model->save();
-
-        return redirect()
-            ->route('admin.episodes.edit', [
-                $webseriesId,
-                $seasonId,
-                $episodeId
-            ])
-            ->with('success', 'Episode Updated Successfully');
-    }*/
     public function editsave(Request $request, $webseriesId, $seasonId, $episodeId)
     {
         if($episodeId)
@@ -202,6 +249,22 @@ class EpisodeController extends Controller
                 ])
                 ->with('success', 'Episode Updated Successfully');
         }
+    }
+    public function delete($season_id, $episode_id)
+    {
+        $episode = Episode::find($episode_id);
+
+        if (!$episode || $episode->season_id != $season_id) {
+            return redirect()
+                ->route('admin.episodes.index', $season_id)
+                ->with('error', 'Episode not found!');
+        }
+
+        $episode->delete();
+
+        return redirect()
+            ->route('admin.episodes.index', $season_id)
+            ->with('success', 'Episode deleted successfully!');
     }
 
 

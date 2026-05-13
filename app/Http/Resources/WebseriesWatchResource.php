@@ -23,9 +23,13 @@ class WebseriesWatchResource extends JsonResource
         $video_url = '';
         /*$season = $this->firstSeason ?? null;
         $episode = optional($season)->firstEpisode;*/
-        $season  = $this->seasons->sortByDesc('id')->first();            // latest season
-        $episode = optional($season)->episodes->sortByDesc('id')->first(); // latest episode of that season
-        $episodeUser = optional($episode)->episode_users->first();
+        //$season  = $this->seasons->sortByDesc('id')->first();            // latest season
+        //$episode = optional($season)->episodes->sortByDesc('id')->first(); // latest episode of that season
+        //$episodeUser = optional($episode)->episode_users->first();
+
+        $season  = $this->seasons ? $this->seasons->sortByDesc('id')->first() : null;
+        $episode = optional($season)->episodes ? optional($season)->episodes->sortByDesc('id')->first() : null;
+        $episodeUser = optional($episode)->episode_users ? optional($episode)->episode_users->first() : null;
 
         if ($episode) {
             //dd($episode);exit;
@@ -47,11 +51,17 @@ class WebseriesWatchResource extends JsonResource
                 }
             }
         }
-        $video_url=empty($video_url)?$episode->video_url:$video_url;
+        /*$video_url=empty($video_url)?$episode->video_url:$video_url;
         $moviesource=$this->moviesource;
         $video_url_1080p = $episode->video_url_1080p ?? $video_url;
         $video_url_720p  = $episode->video_url_720p ?? $video_url_1080p;
-        $video_url_480p  = $episode->video_url_480p ?? $video_url_720p;
+        $video_url_480p  = $episode->video_url_480p ?? $video_url_720p;*/
+
+        $video_url       = empty($video_url) ? (optional($episode)->video_url ?? '') : $video_url;
+        $moviesource     = $this->moviesource ?? '';
+        $video_url_1080p = optional($episode)->video_url_1080p ?? $video_url;
+        $video_url_720p  = optional($episode)->video_url_720p  ?? $video_url_1080p;
+        $video_url_480p  = optional($episode)->video_url_480p  ?? $video_url_720p;
 
         $arrayData=(object)[];
         $jsonData = '{
@@ -106,7 +116,7 @@ class WebseriesWatchResource extends JsonResource
             'id' => (string)$this->id,
             'title' => $this->title,
             'image'  => $episode ? (empty($episode->image) ? '' : $episode->image->urlkey) : '',
-            'trailer'=> $episode->trailer_url ?? '',       // ← JS reads data.movies.trailer
+            'trailer'=> $this->trailer_url ?? '',       // ← JS reads data.movies.trailer
             'seasons' => !empty($this->seasons)
                 ? SeasonResource::collection($this->seasons)
                 : [],

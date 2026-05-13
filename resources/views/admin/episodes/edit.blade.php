@@ -60,7 +60,9 @@
 
 
           <h3 class="sectitle">Category Details</h3>
-
+          <script>
+                const autoFillData = @json($autoFillData ?? null);
+            </script>
 
           <div class="form-row form-select2 fluid"  id="genres_tagging_box">
             <label class="form-label">Genres</label>
@@ -74,18 +76,32 @@
               @endif
             </select>
             <script>
-            jQuery(document).ready(function($) {
-              $('#genres_tagging').select2({
-                  placeholder: "Choose genres...",
-                  minimumInputLength: 2,
-                  ajax: {
-                      url: function (params) {
-                        return  "{{ route('admin.genres.searchbytitle') }}/"+params.term;
-                      },  dataType: 'json',
-                      processResults: function (data) { return {  results: data };  },cache: true
-                  }
-              });
-            });
+                jQuery(document).ready(function($) {
+                    var $genreSelect = $('#genres_tagging');
+
+                    $genreSelect.select2({
+                        placeholder: "Choose genres...",
+                        minimumInputLength: 2,
+                        ajax: {
+                            url: function(params) {
+                                return "{{ route('admin.genres.searchbytitle') }}/" + params.term;
+                            },
+                            dataType: 'json',
+                            processResults: function(data) { return { results: data }; },
+                            cache: true
+                        }
+                    });
+
+                    // Auto-fill if no existing values
+                    if (autoFillData && autoFillData.genres && $genreSelect.find('option:selected').length === 0) {
+                        autoFillData.genres.forEach(function(item) {
+                            if ($genreSelect.find("option[value='" + item.id + "']").length === 0) {
+                                $genreSelect.append(new Option(item.text, item.id, true, true));
+                            }
+                        });
+                        $genreSelect.trigger('change');
+                    }
+                });
             </script>
           </div>
 
@@ -102,18 +118,32 @@
               @endif
             </select>
             <script>
-            jQuery(document).ready(function($) {
-              $('#languages_tagging').select2({
-                  placeholder: "Choose language...",
-                  minimumInputLength: 2,
-                  ajax: {
-                      url: function (params) {
-                        return  "{{ route('admin.languages.searchbytitle') }}/"+params.term;
-                      },  dataType: 'json',
-                      processResults: function (data) { return {  results: data };  },cache: true
-                  }
-              });
-            });
+                jQuery(document).ready(function($) {
+                    var $langSelect = $('#languages_tagging');
+
+                    $langSelect.select2({
+                        placeholder: "Choose language...",
+                        minimumInputLength: 2,
+                        ajax: {
+                            url: function(params) {
+                                return "{{ route('admin.languages.searchbytitle') }}/" + params.term;
+                            },
+                            dataType: 'json',
+                            processResults: function(data) { return { results: data }; },
+                            cache: true
+                        }
+                    });
+
+                    // Auto-fill if no existing values
+                    if (autoFillData && autoFillData.languages && $langSelect.find('option:selected').length === 0) {
+                        autoFillData.languages.forEach(function(item) {
+                            if ($langSelect.find("option[value='" + item.id + "']").length === 0) {
+                                $langSelect.append(new Option(item.text, item.id, true, true));
+                            }
+                        });
+                        $langSelect.trigger('change');
+                    }
+                });
             </script>
           </div>
 
@@ -133,18 +163,38 @@
               @endif
             </select>
             <script>
-            jQuery(document).ready(function($) {
-              $('#{{ $uSlug }}_tagging').select2({
-                  placeholder: "Choose {{ $userGroupLabel[$uKey] }}...",
-                  minimumInputLength: 2,
-                  ajax: {
-                      url: function (params) {
-                        return  "{{ route('admin.user.searchcastbyname') }}/"+params.term;
-                      },  dataType: 'json',
-                      processResults: function (data) { return {  results: data };  },cache: true
-                  }
-              });
-            });
+                jQuery(document).ready(function($) {
+                    var $userSelect = $('#{{ $uSlug }}_tagging');
+                    var groupKey    = {{ $uKey }};
+
+                    $userSelect.select2({
+                        placeholder: "Choose {{ $userGroupLabel[$uKey] }}...",
+                        minimumInputLength: 2,
+                        ajax: {
+                            url: function(params) {
+                                return "{{ route('admin.user.searchcastbyname') }}/" + params.term;
+                            },
+                            dataType: 'json',
+                            processResults: function(data) { return { results: data }; },
+                            cache: true
+                        }
+                    });
+
+                    // Auto-fill users matching this group
+                    if (autoFillData && autoFillData.users && $userSelect.find('option:selected').length === 0) {
+                        var groupUsers = autoFillData.users.filter(function(u) {
+                            return u.group == groupKey;
+                        });
+                        groupUsers.forEach(function(item) {
+                            if ($userSelect.find("option[value='" + item.id + "']").length === 0) {
+                                $userSelect.append(new Option(item.text, item.id, true, true));
+                            }
+                        });
+                        if (groupUsers.length > 0) {
+                            $userSelect.trigger('change');
+                        }
+                    }
+                });
             </script>
           </div>
           @endforeach
@@ -380,7 +430,7 @@
                   <div class="form-row col-md-12">
                       <div class="form-row btnaction">
                           <button type="submit" class="btn btn-primary">Update</button>
-                          <a href="{{ route('admin.webseries.index') }}" class="btn btn-secondary backbtn">Back</a>
+                          <a href="{{ route('admin.episodes.index', $season->id) }}" class="btn btn-secondary backbtn">Back</a>
                       </div>
                   </div>
               </div>
@@ -389,10 +439,13 @@
                 <div class="deleteaction">
                   <a class="btn btn-danger btn-delete-copy-{{ $model->id }}"  data-bs-toggle="modal" data-bs-target="#delete{{ $model->id }}">Delete</a>
                   @php ($delid=$model->id)
-                  @php ($delurl=route('admin.movies.delete',$model->id))
+                  @php ($delurl=route('admin.episodes.delete',[$model->season_id, $model->id]))
                   @include('admin.common.modaldelete')
                 </div>
               </div>
+
+              
+
             </div>
 
 

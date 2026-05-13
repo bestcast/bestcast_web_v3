@@ -9,10 +9,16 @@
         Episodes - {{ $season->title }}
     </span>
 
-    <a href="{{ route('admin.episodes.autoCreate',$season->id) }}"
-       class="btn btn-success">
-       + Add Episode
-    </a>
+    <div  class="d-flex gap-2">
+        <a href="{{ route('admin.episodes.autoCreate',$season->id) }}"
+           class="btn btn-success">
+           + Add Episode
+        </a>
+        <a href="{{ route('admin.seasons.index', $season->webseries_id) }}"
+           class="btn btn-secondary">
+           <- Back
+        </a>
+    </div>
 </h2>
 
 @if($model->count() > 0)

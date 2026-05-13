@@ -33,6 +33,10 @@ class Webseries extends Model
      *
      * @var array
      */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -41,13 +45,29 @@ class Webseries extends Model
      */
     protected $fillable = [
         'title',
+        'status',
+        'urlkey', 
+        'content', 
+        'published_date',
+        'release_date',
         'thumbnail_id',
         'medium_id',
         'image_id',
         'portrait_id',
         'portraitsmall_id',
-        'status',
-        'movie_access'
+        'duration',//must be in seconds
+        'age_restriction',
+        'certificate',
+        'certificate_text',
+        'tag_text',
+        'is_upcoming',
+        'topten',
+        'trailer_url',
+        'trailer_url_480p',
+        'video_url',
+        'movie_access',
+        'moviesource',
+        'subtitle_status',
     ];
 
     /**
@@ -57,13 +77,35 @@ class Webseries extends Model
      */
     protected $casts = [
         'title'             => 'string',
+        'status'            => 'string',
+        'urlkey'            => 'string',
+        'title'             => 'string',
+        'content'           => 'string',
+        'published_date'    => 'datetime',
+        'release_date'      => 'date',
         'thumbnail_id'      => 'integer',
         'medium_id'         => 'integer',
         'image_id'          => 'integer',
         'portrait_id'       => 'integer',
         'portraitsmall_id'  => 'integer',
-        'status'            => 'string',
+        'duration'          => 'string',
+        'age_restriction'   => 'integer',
+        'certificate'       => 'string',
+        'certificate_text'  => 'string',
+        'tag_text'          => 'string',
+        'is_upcoming'       => 'integer',
+        'topten'            => 'integer',
         'movie_access'      => 'integer',
+        'trailer_url'       => 'string',
+        'trailer_url_480p'  => 'string',
+        'video_url'         => 'string',
+        'movie_access'      => 'integer',
+        'moviesource'       => 'string',
+        'subtitle_status'   => 'integer',
+        'created_by'        => 'integer',
+        'updated_by'        => 'integer',
+        'created_at'        => 'datetime',
+        'updated_at'        => 'datetime',
         /*'created_at'        => 'datetime',
         'updated_at'        => 'datetime',*/
     ];
@@ -81,12 +123,22 @@ class Webseries extends Model
      * @var array
      */
     public static $rules = [
-        'title' => 'required|max:1000'
+        'title' => 'required|max:1000',
+        'urlkey' => 'required|max:1000|unique:movies,urlkey',
+        'trailer_url'=>'required',
+        'release_date'=>'required',
+        'duration'=>'required|numeric'
     ];
 
 
     public static $messages = [
-        'title.required' => 'Title is required.'
+        'title.required' => 'Title is required.',
+        'trailer_url.required' => 'Video URL is required.',
+        'release_date.required' => 'Release Date is required.',
+        'urlkey.required' => 'URL Key is required.',
+        'urlkey.unique' => 'URL Key already exists.',
+        'duration.required' => 'Duration is required. Must be in seconds',
+        'duration.numeric' => 'Duration should be in seconds. eg: 8520 for 2hr 22min'
     ];
 
 
@@ -133,6 +185,15 @@ class Webseries extends Model
     public function portraitsmall()
     {
         return $this->belongsTo('App\Models\Media','portraitsmall_id','id');
+    }
+
+    public function genres()
+    {
+        return $this->hasMany('App\Models\WebseriesGenres','webseries_id','id');
+    }
+    public function languages()
+    {
+        return $this->hasMany('App\Models\WebseriesLanguages','webseries_id','id');
     }
 
     public function users()

@@ -36,7 +36,309 @@
                 <p><b>Image</b> (1920X1080)<br><b>Medium</b> (720X405)<br><b>Thumbnail</b> (360X203)<br><b>Portrait Small</b> (400X600)<br><b>Portrait</b> (1000X1500)</p>
             </div>
           </div>
+          <div class="form-row">
+              <label class="form-label" for="name">Tag Text</label>
+              <input type="text" class="form-control" id="tag_text" name="tag_text" value="{{ old('tag_text',$model->tag_text) }}" >
+              <p class="comment">eg: Voilent, Action, Thriller (visiblity only on movies listing grid)</p>
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="content">Content</label>
+            <textarea class="form-control editor-content" name="content" rows="5">{{ old('content',(!empty($model->content)?$model->content:'')) }}</textarea>
+            {!! Field::editor('editor-content') !!}
+          </div>
 
+
+          <h3 class="sectitle">Category Details</h3>
+
+
+          <div class="form-row form-select2 fluid"  id="genres_tagging_box">
+            <label class="form-label">Genres</label>
+            <select name="genre_id[]" class="form-control" id="genres_tagging" multiple="multiple">
+              @if(!empty($model->genres) && count($model->genres))
+                @foreach($model->genres as $relShowItem)
+                  @if(!empty($relShowItem->genres))
+                    <option value="{{$relShowItem->genre_id}}" selected="selected">{{$relShowItem->genres->title}}</option>
+                  @endif
+                @endforeach
+              @endif
+            </select>
+            <script>
+            jQuery(document).ready(function($) {
+              $('#genres_tagging').select2({
+                  placeholder: "Choose genres...",
+                  minimumInputLength: 2,
+                  ajax: {
+                      url: function (params) {
+                        return  "{{ route('admin.genres.searchbytitle') }}/"+params.term;
+                      },  dataType: 'json',
+                      processResults: function (data) { return {  results: data };  },cache: true
+                  }
+              });
+            });
+            </script>
+          </div>
+
+
+          <div class="form-row form-select2 fluid"  id="languages_tagging_box">
+            <label class="form-label">Languages</label>
+            <select name="language_id[]" class="form-control" id="languages_tagging" multiple="multiple">
+              @if(!empty($model->languages) && count($model->languages))
+                @foreach($model->languages as $relShowItem)
+                  @if(!empty($relShowItem->languages))
+                    <option value="{{$relShowItem->language_id}}" selected="selected">{{$relShowItem->languages->title}}</option>
+                  @endif
+                @endforeach
+              @endif
+            </select>
+            <script>
+            jQuery(document).ready(function($) {
+              $('#languages_tagging').select2({
+                  placeholder: "Choose language...",
+                  minimumInputLength: 2,
+                  ajax: {
+                      url: function (params) {
+                        return  "{{ route('admin.languages.searchbytitle') }}/"+params.term;
+                      },  dataType: 'json',
+                      processResults: function (data) { return {  results: data };  },cache: true
+                  }
+              });
+            });
+            </script>
+          </div>
+
+
+          <!-- @php($userGroupLabel=App\User::groupLabel())
+          @php($userGroupSlug=App\User::groupSlug())
+          @foreach($userGroupSlug as $uKey=>$uSlug)
+          <div class="form-row form-select2 fluid"  id="{{ $uSlug }}_tagging_box">
+            <label class="form-label">{{ $userGroupLabel[$uKey] }}</label>
+            <select name="{{ $uSlug }}[]" class="form-control" id="{{ $uSlug }}_tagging" multiple="multiple">
+              @if(!empty($model->users) && count($model->users))
+                @foreach($model->users as $relShowItem)
+                  @if(!empty($relShowItem->users) && ($relShowItem->group==$uKey))
+                    <option value="{{$relShowItem->user_id}}" selected="selected">{{$relShowItem->users->name}}</option>
+                  @endif
+                @endforeach
+              @endif
+            </select>
+            <script>
+                jQuery(document).ready(function($) {
+                    var $userSelect = $('#{{ $uSlug }}_tagging');
+                    var groupKey    = {{ $uKey }};
+
+                    $userSelect.select2({
+                        placeholder: "Choose {{ $userGroupLabel[$uKey] }}...",
+                        minimumInputLength: 2,
+                        ajax: {
+                            url: function(params) {
+                                return "{{ route('admin.user.searchcastbyname') }}/" + params.term;
+                            },
+                            dataType: 'json',
+                            processResults: function(data) { return { results: data }; },
+                            cache: true
+                        }
+                    });
+
+                    // Auto-fill users matching this group
+                    if (autoFillData && autoFillData.users && $userSelect.find('option:selected').length === 0) {
+                        var groupUsers = autoFillData.users.filter(function(u) {
+                            return u.group == groupKey;
+                        });
+                        groupUsers.forEach(function(item) {
+                            if ($userSelect.find("option[value='" + item.id + "']").length === 0) {
+                                $userSelect.append(new Option(item.text, item.id, true, true));
+                            }
+                        });
+                        if (groupUsers.length > 0) {
+                            $userSelect.trigger('change');
+                        }
+                    }
+                });
+            </script>
+          </div>
+          @endforeach -->
+
+
+          <h3 class="sectitle">Video Information</h3>
+          <div class="form-row">
+              <label class="form-label" for="name">Trailer URL <em>*</em></label>
+              <input type="text" class="form-control full" id="trailer_url" name="trailer_url" value="{{ old('trailer_url',$model->trailer_url) }}" onclick="this.select();">
+          </div>
+          <div class="form-row">
+              <label class="form-label" for="name">Trailer URL (480p)</label>
+              <input type="text" class="form-control full" id="trailer_url_480p" name="trailer_url_480p" value="{{ old('trailer_url_480p',$model->trailer_url_480p) }}" onclick="this.select();">
+          </div>
+
+          <div class="form-row">
+              <label class="form-label" for="name">Video URL <em>*</em></label>
+              <input type="text" class="form-control full" id="video_url" name="video_url" value="{{ old('video_url',$model->video_url) }}" onclick="this.select();">
+          </div>
+          <!-- <div class="form-row">
+              <label class="form-label" for="name">Video URL (480p)</label>
+              <input type="text" class="form-control full" id="video_url_480p" name="video_url_480p" value="{{ old('video_url_480p',$model->video_url_480p) }}" onclick="this.select();">
+          </div>
+          <div class="form-row">
+              <label class="form-label" for="name">Video URL (720p)</label>
+              <input type="text" class="form-control full" id="video_url_720p" name="video_url_720p" value="{{ old('video_url_720p',$model->video_url_720p) }}" onclick="this.select();">
+          </div>
+          <div class="form-row">
+              <label class="form-label" for="name">Video URL (1080p)</label>
+              <input type="text" class="form-control full" id="video_url_1080p" name="video_url_1080p" value="{{ old('video_url_1080p',$model->video_url_1080p) }}" onclick="this.select();">
+          </div>
+
+
+          <div class="form-row">
+              <label class="form-label" for="name">Download Movie URL (mobile app only)</label>
+              <input type="text" class="form-control full" id="moviesource" name="moviesource" value="{{ old('moviesource',$model->moviesource) }}" onclick="this.select();">
+          </div> -->
+
+
+
+
+
+          <h3 class="sectitle">Additional Information</h3>
+
+          <div class="form-group row">
+            <div class="col-sm-3">
+              <div class="form-row">
+                  <label class="form-label" for="name">Certificate</label>
+                  <input type="text" class="form-control" id="certificate" name="certificate" value="{{ old('certificate',$model->certificate) }}" >
+                  <p class="comment">eg: U/A 13+ </p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-row">
+                  <label class="form-label" for="name">Certificate Text</label>
+                  <input type="text" class="form-control" id="certificate_text" name="certificate_text" value="{{ old('certificate_text',$model->certificate_text) }}" >
+                  <p class="comment">eg: tobacoo, substances, violence </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-3">
+              <div class="form-row">
+                  <label class="form-label" for="name">Duration</label>
+                  <input type="text" class="form-control" id="duration" name="duration" value="{{ old('duration',$model->duration) }}" >
+                  <p class="comment">Duration should be in seconds. eg: 8520 for 2hr 22min</p>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-row">
+                  <label class="form-label" for="name">Age Restriction</label>
+                  <input type="number" class="form-control" id="age_restriction" name="age_restriction" value="{{ old('age_restriction',$model->age_restriction) }}" >
+                  <p class="comment">eg: 18 (above 18yr user only)</p>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-row">
+                  <label class="form-label" for="name">Is Upcoming</label>
+                  <div class="mb-3 form-check form-switch">
+                    {{Form::hidden('is_upcoming',0)}}
+                    <input class="form-check-input" type="checkbox" name="is_upcoming" role="switch" @if(old('is_upcoming' ,(empty($model->is_upcoming)?0:1))) checked="" @endif />
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-row">
+                  <label class="form-label" for="name">Top Ten</label>
+                  <div class="mb-3 form-check form-switch">
+                    {{Form::hidden('topten',0)}}
+                    <input class="form-check-input" type="checkbox" name="topten" role="switch" @if(old('topten' ,(empty($model->topten)?0:1))) checked="" @endif />
+                  </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <h3 class="sectitle">Subtitle Details</h3>
+
+          <div class="row">
+              <div class="col-4">
+                  <div class="form-row">
+                    <label for="excerpt" class="form-label">Subtitle Status</label>
+                    <div class="mb-3 form-check form-switch">
+                      {{Form::hidden('subtitle_status',0)}}
+                      <input class="form-check-input" type="checkbox" name="subtitle_status" role="switch" @if(old('subtitle_status' ,(empty($model->subtitle_status)?0:1))) checked="" @endif />
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="btn-sec">
+            <script type="text/javascript">
+              function deleteParentOfParent(element) {
+                  var grandparent = element.parentNode.parentNode;
+                  grandparent.parentNode.removeChild(grandparent);
+              }
+            </script>
+              @php($i=0)
+              @if(!empty($model->subtitle) && count($model->subtitle))
+                @foreach($model->subtitle as $subtitleItem)
+                  @if(!empty($subtitleItem->url) && !empty($subtitleItem->label))
+                    <div class="card mb-4">
+                        <div class="card-header">Subtitle {{ ($i+1) }} <div onclick="deleteParentOfParent(this)" class="close btn btn-danger btn-sm" style="float: right;">Delete</div></div>
+                        <div class="card-body"><input type="hidden" name="subtitle[]" value="1">
+                          <div class="row">
+                              <div class="col-2">
+                                  <div class="form-row">
+                                    <label for="excerpt" class="form-label">Is Active</label>
+                                    <div class="mb-3 form-check form-switch">
+                                      @php($val=empty($subtitleItem->is_active)?0:1)
+                                      {{Form::hidden('subtitle_is_active['.$i.']',0)}}
+                                      <input class="form-check-input" type="checkbox" name="subtitle_is_active[{{$i}}]" role="switch" @if(old('subtitle_is_active.'.$i,$val)) checked="" @endif />
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-10">
+                                <div class="form-row">
+                                    <label class="form-label">Label</label>
+                                     @php($val=empty($subtitleItem->label)?'':$subtitleItem->label)
+                                    <input type="text" class="form-control" name="subtitle_label[]" value="{{ old('subtitle_label.'.$i,$val) }}" >
+                                </div>
+                              </div>
+                          </div>
+                          <div class="form-row">
+                              <label class="form-label">URL</label>
+                               @php($val=empty($subtitleItem->url)?'':$subtitleItem->url)
+                              <input type="text" class="form-control full" name="subtitle_url[]" value="{{ old('subtitle_url.'.$i,$val) }}" >
+                          </div>
+                        </div>
+                    </div>
+                    @php($i++)
+                  @endif
+                @endforeach
+              @endif
+              <div class="card mb-4">
+                  <div class="card-header">Subtitle New</div>
+                  <div class="card-body"><input type="hidden" name="subtitle[]" value="1">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-row">
+                              <label for="excerpt" class="form-label">Is Active</label>
+                              <div class="mb-3 form-check form-switch">
+                                {{Form::hidden('subtitle_is_active['.$i.']',0)}}
+                                <input class="form-check-input" type="checkbox" name="subtitle_is_active[{{$i}}]" role="switch" />
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                          <div class="form-row">
+                              <label class="form-label">Label</label>
+                              <input type="text" class="form-control" name="subtitle_label[{{$i}}]" value="" >
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">URL</label>
+                        <input type="text" class="form-control full" name="subtitle_url[{{$i}}]" value="" >
+                    </div>
+                  </div>
+              </div>
+
+          </div>
 
     </div>
   </div>
@@ -63,7 +365,7 @@
                     </div>
                   </div>
 
-                  <!-- <div class="form-row">
+                  <div class="form-row">
                       <label class="form-label" for="name">Published Date</label>
                       <?php
                       $pubdate=empty($model->published_date)?'':date("Y-m-d",strtotime($model->published_date));
@@ -81,8 +383,7 @@
                       <label class="form-label" for="urlkey">URL Key</label>
                       <input type="text" class="form-control" id="urlkey" name="urlkey" value="{{ old('urlkey',$model->urlkey) }}">
                       <div class="comment">eg: loriem-ipsum</div>
-                  </div> -->
-                  
+                  </div>
 
                   <div class="form-row col-md-12">
                       <div class="form-row btnaction">
@@ -91,6 +392,10 @@
                       </div>
                   </div>
               </div>
+              <div class="card-footer text-muted">
+                @include('admin.common.userinfo') 
+              </div>
+            </div>
             </div>
 
 
