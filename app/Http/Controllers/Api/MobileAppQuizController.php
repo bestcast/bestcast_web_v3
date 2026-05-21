@@ -37,6 +37,7 @@ class MobileAppQuizController extends Controller
         $deviceToken = $request['device_token'] ?? null;
         $interval    = 5;
         $maxRequired = 18;
+        $language = strtolower($request['language'] ?? 'english');
 
         $userId = auth()->id();
         if (!$userId) {
@@ -143,7 +144,9 @@ class MobileAppQuizController extends Controller
             ->toArray();
 
         // Total questions
-        $totalQuestions = Question::where('movie_id', $movieId)->count();
+        $totalQuestions = Question::where('movie_id', $movieId)
+                        ->where('language', $language)
+                        ->count();
 
         // Reset after full cycle
         if (count($shownQuestionIds) >= $totalQuestions) {
@@ -152,6 +155,7 @@ class MobileAppQuizController extends Controller
 
         // Get questions grouped by interval slot
         $questions = Question::where('movie_id', $movieId)
+                    ->where('language', $language)
                     ->with('options')
                     ->get()
                     ->groupBy(function ($q) {
@@ -187,6 +191,7 @@ class MobileAppQuizController extends Controller
             $alreadySelectedIds = $selected->pluck('id')->toArray();
 
             $remaining = Question::where('movie_id', $movieId)
+                ->where('language', $language)
                 ->whereNotIn('id', array_merge($shownQuestionIds, $alreadySelectedIds))
                 ->with('options')
                 ->orderBy('show_question_time') // IMPORTANT
@@ -217,7 +222,8 @@ class MobileAppQuizController extends Controller
                 'question' => $q->question_name,
                 'show_question_time' => $q->show_question_time,
                 'popup_time' => $popupTime,
-                'options' => $q->options
+                'options' => $q->options,
+                'language' => $q->language
             ];
         }
 

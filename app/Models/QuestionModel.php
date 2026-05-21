@@ -82,6 +82,7 @@ class QuestionModel extends Model
         $question->show_time_min = $requestData['show_time_min'];
         $question->show_time_sec = $requestData['show_time_sec'];
         $question->show_question_time = ($requestData['show_time_hour'] * 60) + $requestData['show_time_min'];
+        $question->language = $requestData['language'];
         $question->save();
 
         $existingOptionIds = $requestData['option_ids'] ?? []; // old IDs from form

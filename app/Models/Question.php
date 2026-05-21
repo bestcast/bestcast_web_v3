@@ -19,6 +19,7 @@ class Question extends Model
         'show_time_sec',
         'show_question_time',
         'is_active',
+        'language',
     ];
 
     public function options(): HasMany

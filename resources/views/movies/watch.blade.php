@@ -651,9 +651,22 @@
 
                         <h2 class="play-title">PLAY TO WIN</h2>
 
+                        <div class="language-row" style="margin:15px 0;">
+                            <label style="font-weight:bold; font-size:14px;">Select Language</label>
+
+                            <select id="quiz_language" class="swal2-input" style="color:black">
+                                <option value="">Choose Language</option>
+                                <option value="english">English</option>
+                                <option value="tamil">Tamil</option>
+                            </select>
+                        </div>
+
                         <div class="terms-row">
                             <input type="checkbox" id="terms_ok">
-                            <span> Accept the <a href="#" class="terms-link">Terms & Condition</a></span>
+                            <span>
+                                Accept the
+                                <a href="#" class="terms-link">Terms & Condition</a>
+                            </span>
                         </div>
 
                         <div class="btn-row">
@@ -680,10 +693,18 @@
         });
         // PLAY button action
         $(document).on("click", "#playBtn", function () {
+            const selectedLanguage = $("#quiz_language").val();
+            if (selectedLanguage === '') {
+                Swal.showValidationMessage("Please select language");
+                return;
+            }
             if (!$("#terms_ok").is(":checked")) {
                 Swal.showValidationMessage("Please accept Terms & Condition");
                 return;
             }
+            // SAVE LANGUAGE
+            localStorage.setItem("quiz_language", selectedLanguage);
+            console.log("Saved Language:", selectedLanguage);
             Swal.close();
             // LOGIC INSERTED HERE
             setCookie("quiz_popup_{{ $movie->id }}", 1, 3); // store for 3 hours
@@ -716,11 +737,14 @@
 
     function initQuiz(movieId) {
         //console.log("initQuiz Started. movieId =", movieId);
+        const quizLanguage = localStorage.getItem("quiz_language");
+        console.log(quizLanguage);
         resetQuizState(movieId);
         videoElement = document.querySelector("#wrapper video");
         const encryptedPayload = encryptRequest({
             movie_id: movieId,
             user_id: {{ auth()->id() ?? 'null' }},
+            language: quizLanguage,
             tokenEncrypted: tokenEncrypted,
         });
         fetch(`/api/quiz`, {
@@ -745,7 +769,7 @@
             quizSchedule = data.questions;
 
             /*quizSchedule.forEach((q, i) => {
-                console.log(`${i+1}. Question Id: ${q.id}, Show Time: ${q.show_question_time}, Popup Time: ${q.popup_time} mins`);
+                console.log(`${i+1}. Question Id: ${q.id}, Show Time: ${q.show_question_time}, Popup Time: ${q.popup_time} mins, Language: ${q.language}`);
             });*/
 
             startQuizWatcher(quizSchedule);

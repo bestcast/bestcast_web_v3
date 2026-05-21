@@ -43,7 +43,7 @@ class QuizController extends Controller
         $plainToken = $payload['tokenEncrypted'] ?? null;
         $maxRequired = 18;
         $interval = 5;
-
+        $language = strtolower($payload['language'] ?? 'english');
         // Device Validation
         $activeQuiz = UsersDevice::where('user_id', $userId)
             ->where('is_quiz_active', 1)
@@ -97,7 +97,9 @@ class QuizController extends Controller
             ->toArray();
 
         // Total questions
-        $totalQuestions = Question::where('movie_id', $movieId)->count();
+        $totalQuestions = Question::where('movie_id', $movieId)
+                        ->where('language', $language)
+                        ->count();
 
         // Reset after full cycle
         if (count($shownQuestionIds) >= $totalQuestions) {
@@ -106,6 +108,7 @@ class QuizController extends Controller
 
         // Get questions grouped by interval slot
         $questions = Question::where('movie_id', $movieId)
+                    ->where('language', $language)
                     ->with('options')
                     ->get()
                     ->groupBy(function ($q) {
@@ -141,6 +144,7 @@ class QuizController extends Controller
             $alreadySelectedIds = $selected->pluck('id')->toArray();
 
             $remaining = Question::where('movie_id', $movieId)
+                ->where('language', $language)
                 ->whereNotIn('id', array_merge($shownQuestionIds, $alreadySelectedIds))
                 ->with('options')
                 ->orderBy('show_question_time') // IMPORTANT
@@ -173,7 +177,8 @@ class QuizController extends Controller
                 'question' => $q->question_name,
                 'show_question_time' => $q->show_question_time,
                 'popup_time' => $popupTime,
-                'options' => $q->options
+                'options' => $q->options,
+                'language' => $q->language
             ];
         }
 

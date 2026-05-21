@@ -15,6 +15,27 @@
         <input type="hidden" name="movie_id" value="{{$movieId}}"/>
         <input type="hidden" name="page" value="{{ $page }}">
         <div class="form-row">
+            <label for="language">Question Language</label>
+
+            <select name="language" id="language" class="form-control" required>
+                <option value="">Select Language</option>
+
+                <option value="english"
+                    {{ old('language', $questionDetail->language ?? '') == 'english' ? 'selected' : '' }}>
+                    English
+                </option>
+
+                <option value="tamil"
+                    {{ old('language', $questionDetail->language ?? '') == 'tamil' ? 'selected' : '' }}>
+                    Tamil
+                </option>
+            </select>
+
+            @error('language')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-row">
             <label for="question">Question</label>
             <input type="text" class="form-control" id="question_name" name="question_name" 
             value="{{ (isset($questionDetail))?$questionDetail->question_name:old('question_name') }}" required>

@@ -30,7 +30,8 @@ class StoreQuestionRequest extends FormRequest
             'checkBoolean' => '',
             'show_time_hour' => 'required|integer|min:0',
             'show_time_min' => 'required|integer|min:0',
-            'show_time_sec' => 'required|integer|min:0|max:59'
+            'show_time_sec' => 'required|integer|min:0|max:59',
+            'language' => 'required|in:english,tamil'
         ];
     }
     /**
@@ -46,7 +47,8 @@ class StoreQuestionRequest extends FormRequest
             'options.*.required' => 'Please enter the options',
             'correct_option.required' => 'Please enter option',
             'show_time_min.required' => 'Please enter quiz time in minutes',
-            'show_time_sec.required' => 'Please enter quiz time in seconds'
+            'show_time_sec.required' => 'Please enter quiz time in seconds',
+            'language.required' => 'Please choose a language'
         ];
     }
 }

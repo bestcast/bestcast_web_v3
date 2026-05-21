@@ -44,6 +44,7 @@ class QuestionController extends Controller
         $requestData['show_time_sec']  = (int) $request->input('show_time_sec');
         $show_question_time = ($requestData['show_time_hour'] * 60) + $requestData['show_time_min'];
         $requestData['show_question_time'] = $show_question_time;
+        $requestData['language'] = $request->input('language');
         
         return $this->QuestionModel->createQuestion($requestData);
     }

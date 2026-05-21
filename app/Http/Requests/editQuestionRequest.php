@@ -28,7 +28,8 @@ class editQuestionRequest extends FormRequest
             'options' => 'required|array|min:2|max:4',
             'options.*' => 'required|string|max:255',
             'correct_option' => 'required|in:0,1,2,3',
-            'checkBoolean' => ''
+            'checkBoolean' => '',
+            'language' => 'required|in:english,tamil'
         ];
     }
     /**
@@ -43,6 +44,7 @@ class editQuestionRequest extends FormRequest
             'options.required' => 'Please add options, to click add button',
             'options.*.required' => 'Please enter the options',
             'correct_option.required' => 'Please enter option',
+            'language.required' => 'Please choose a language'
         ];
     }
 }
