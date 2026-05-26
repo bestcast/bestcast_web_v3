@@ -1,0 +1,928 @@
+{"id":"1","question_id":"1","name":"Anandan","is_correct":"0","created_at":"2025-11-15 14:42:42","updated_at":"2025-11-15 14:42:42","deleted_at":null,"name_tamil":"ஆனந்தன்"}
+{"id":"2","question_id":"1","name":"Rathnam","is_correct":"1","created_at":"2025-11-15 14:42:42","updated_at":"2025-11-15 14:42:42","deleted_at":null,"name_tamil":"ரத்னம்"}
+{"id":"3","question_id":"1","name":"Raja","is_correct":"0","created_at":"2025-11-15 14:42:42","updated_at":"2025-11-15 14:42:42","deleted_at":null,"name_tamil":"ராஜா"}
+{"id":"4","question_id":"1","name":"Veera","is_correct":"0","created_at":"2025-11-15 14:42:42","updated_at":"2025-11-15 14:42:42","deleted_at":null,"name_tamil":"வீர"}
+{"id":"5","question_id":"2","name":"2","is_correct":"0","created_at":"2025-11-15 14:43:47","updated_at":"2025-11-15 14:43:47","deleted_at":null,"name_tamil":"2"}
+{"id":"6","question_id":"2","name":"6","is_correct":"0","created_at":"2025-11-15 14:43:47","updated_at":"2025-11-15 14:43:47","deleted_at":null,"name_tamil":"6"}
+{"id":"7","question_id":"2","name":"4","is_correct":"1","created_at":"2025-11-15 14:43:47","updated_at":"2025-11-15 14:43:47","deleted_at":null,"name_tamil":"4"}
+{"id":"8","question_id":"2","name":"3","is_correct":"0","created_at":"2025-11-15 14:43:47","updated_at":"2025-11-15 14:43:47","deleted_at":null,"name_tamil":"3"}
+{"id":"9","question_id":"3","name":"2days","is_correct":"1","created_at":"2025-11-15 14:46:24","updated_at":"2025-11-15 14:46:24","deleted_at":null,"name_tamil":"2 நாட்கள்"}
+{"id":"10","question_id":"3","name":"3days","is_correct":"0","created_at":"2025-11-15 14:46:24","updated_at":"2025-11-15 14:46:24","deleted_at":null,"name_tamil":"3 நாட்கள்"}
+{"id":"11","question_id":"3","name":"1day","is_correct":"0","created_at":"2025-11-15 14:46:24","updated_at":"2025-11-15 14:46:24","deleted_at":null,"name_tamil":"1 நாள்"}
+{"id":"12","question_id":"3","name":"5days","is_correct":"0","created_at":"2025-11-15 14:46:24","updated_at":"2025-11-15 14:46:24","deleted_at":null,"name_tamil":"5 நாட்கள்"}
+{"id":"13","question_id":"4","name":"2days","is_correct":"1","created_at":"2025-11-15 14:47:12","updated_at":"2025-11-15 14:47:12","deleted_at":null,"name_tamil":"2 நாட்கள்"}
+{"id":"14","question_id":"4","name":"within week","is_correct":"0","created_at":"2025-11-15 14:47:12","updated_at":"2025-11-15 14:47:12","deleted_at":null,"name_tamil":"வாரத்திற்குள்"}
+{"id":"15","question_id":"4","name":"Immediate","is_correct":"0","created_at":"2025-11-15 14:47:12","updated_at":"2025-11-15 14:47:12","deleted_at":null,"name_tamil":"உடனடி"}
+{"id":"16","question_id":"4","name":"one month","is_correct":"0","created_at":"2025-11-15 14:47:12","updated_at":"2025-11-15 14:47:12","deleted_at":null,"name_tamil":"ஒரு மாதம்"}
+{"id":"17","question_id":"5","name":"Panasonic","is_correct":"1","created_at":"2025-11-15 14:48:08","updated_at":"2025-11-15 14:48:08","deleted_at":null,"name_tamil":"பானாசோனிக்"}
+{"id":"18","question_id":"5","name":"Aiwa","is_correct":"0","created_at":"2025-11-15 14:48:08","updated_at":"2025-11-15 14:48:08","deleted_at":null,"name_tamil":"அைவ"}
+{"id":"19","question_id":"5","name":"Onida","is_correct":"0","created_at":"2025-11-15 14:48:08","updated_at":"2025-11-15 14:48:08","deleted_at":null,"name_tamil":"ஒனிடா"}
+{"id":"20","question_id":"5","name":"Philips","is_correct":"0","created_at":"2025-11-15 14:48:08","updated_at":"2025-11-15 14:48:08","deleted_at":null,"name_tamil":"பிலிப்ஸ்"}
+{"id":"21","question_id":"6","name":"7","is_correct":"0","created_at":"2025-11-15 14:49:03","updated_at":"2025-11-15 14:49:03","deleted_at":null,"name_tamil":"7"}
+{"id":"22","question_id":"6","name":"5","is_correct":"1","created_at":"2025-11-15 14:49:03","updated_at":"2025-11-15 14:49:03","deleted_at":null,"name_tamil":"5"}
+{"id":"23","question_id":"6","name":"2","is_correct":"0","created_at":"2025-11-15 14:49:03","updated_at":"2025-11-15 14:49:03","deleted_at":null,"name_tamil":"2"}
+{"id":"24","question_id":"6","name":"4","is_correct":"0","created_at":"2025-11-15 14:49:03","updated_at":"2025-11-15 14:49:03","deleted_at":null,"name_tamil":"4"}
+{"id":"25","question_id":"7","name":"30%","is_correct":"0","created_at":"2025-11-15 14:49:52","updated_at":"2025-11-15 14:49:52","deleted_at":null,"name_tamil":"30%"}
+{"id":"26","question_id":"7","name":"25%","is_correct":"0","created_at":"2025-11-15 14:49:52","updated_at":"2025-11-15 14:49:52","deleted_at":null,"name_tamil":"25%"}
+{"id":"27","question_id":"7","name":"40%","is_correct":"1","created_at":"2025-11-15 14:49:52","updated_at":"2025-11-15 14:49:52","deleted_at":null,"name_tamil":"40%"}
+{"id":"28","question_id":"7","name":"50%","is_correct":"0","created_at":"2025-11-15 14:49:52","updated_at":"2025-11-15 14:49:52","deleted_at":null,"name_tamil":"50%"}
+{"id":"29","question_id":"8","name":"5 Years","is_correct":"0","created_at":"2025-11-15 14:50:40","updated_at":"2025-11-15 14:50:40","deleted_at":null,"name_tamil":"5 ஆண்டுகள்"}
+{"id":"30","question_id":"8","name":"2 Years","is_correct":"0","created_at":"2025-11-15 14:50:40","updated_at":"2025-11-15 14:50:40","deleted_at":null,"name_tamil":"2 ஆண்டுகள்"}
+{"id":"31","question_id":"8","name":"3 Years","is_correct":"1","created_at":"2025-11-15 14:50:40","updated_at":"2025-11-15 14:50:40","deleted_at":null,"name_tamil":"3 ஆண்டுகள்"}
+{"id":"32","question_id":"8","name":"4 Years","is_correct":"0","created_at":"2025-11-15 14:50:40","updated_at":"2025-11-15 14:50:40","deleted_at":null,"name_tamil":"4 ஆண்டுகள்"}
+{"id":"33","question_id":"9","name":"Doctor","is_correct":"0","created_at":"2025-11-15 14:52:39","updated_at":"2025-11-15 14:52:39","deleted_at":null,"name_tamil":"டாக்டர்"}
+{"id":"34","question_id":"9","name":"Lawyer","is_correct":"0","created_at":"2025-11-15 14:52:39","updated_at":"2025-11-15 14:52:39","deleted_at":null,"name_tamil":"வழக்கறிஞர்"}
+{"id":"35","question_id":"9","name":"Judge","is_correct":"1","created_at":"2025-11-15 14:52:40","updated_at":"2025-11-15 14:52:40","deleted_at":null,"name_tamil":"நீதிபதி"}
+{"id":"36","question_id":"9","name":"Teacher","is_correct":"0","created_at":"2025-11-15 14:52:40","updated_at":"2025-11-15 14:52:40","deleted_at":null,"name_tamil":"ஆசிரியர்"}
+{"id":"37","question_id":"10","name":"Heart Care Foundation","is_correct":"0","created_at":"2025-11-15 14:53:45","updated_at":"2025-11-15 14:53:45","deleted_at":null,"name_tamil":"ஹார்ட் கேர் அறக்கட்டளை"}
+{"id":"38","question_id":"10","name":"New Vision","is_correct":"1","created_at":"2025-11-15 14:53:45","updated_at":"2025-11-15 14:53:45","deleted_at":null,"name_tamil":"புதிய பார்வை"}
+{"id":"39","question_id":"10","name":"Life Aid Trust","is_correct":"0","created_at":"2025-11-15 14:53:45","updated_at":"2025-11-15 14:53:45","deleted_at":null,"name_tamil":"வாழ்க்கை உதவி அறக்கட்டளை"}
+{"id":"40","question_id":"10","name":"Pulse India","is_correct":"0","created_at":"2025-11-15 14:53:45","updated_at":"2025-11-15 14:53:45","deleted_at":null,"name_tamil":"பல்ஸ் இந்தியா"}
+{"id":"53","question_id":"14","name":"12 'o' Clock","is_correct":"1","created_at":"2025-12-15 16:54:20","updated_at":"2025-12-15 16:54:20","deleted_at":null,"name_tamil":"12 மணி"}
+{"id":"54","question_id":"14","name":"2 'o' Clock","is_correct":"0","created_at":"2025-12-15 16:54:20","updated_at":"2025-12-15 16:54:20","deleted_at":null,"name_tamil":"2 'ஓ' கடிகாரம்"}
+{"id":"55","question_id":"14","name":"4 'o' Clock","is_correct":"0","created_at":"2025-12-15 16:54:20","updated_at":"2025-12-15 16:54:20","deleted_at":null,"name_tamil":"4 'மணி' கடிகாரம்"}
+{"id":"56","question_id":"14","name":"10 'o' Clock","is_correct":"0","created_at":"2025-12-15 16:54:20","updated_at":"2025-12-15 16:54:20","deleted_at":null,"name_tamil":"10 'மணி' கடிகாரம்"}
+{"id":"57","question_id":"15","name":"5","is_correct":"0","created_at":"2025-12-15 18:45:10","updated_at":"2025-12-15 18:45:10","deleted_at":null,"name_tamil":"5"}
+{"id":"58","question_id":"15","name":"3","is_correct":"0","created_at":"2025-12-15 18:45:10","updated_at":"2025-12-15 18:45:10","deleted_at":null,"name_tamil":"3"}
+{"id":"59","question_id":"15","name":"6","is_correct":"0","created_at":"2025-12-15 18:45:10","updated_at":"2025-12-15 18:45:10","deleted_at":null,"name_tamil":"6"}
+{"id":"60","question_id":"15","name":"4","is_correct":"1","created_at":"2025-12-15 18:45:10","updated_at":"2025-12-15 18:45:10","deleted_at":null,"name_tamil":"4"}
+{"id":"65","question_id":"17","name":"Pongal","is_correct":"0","created_at":"2025-12-17 16:52:54","updated_at":"2025-12-17 16:52:54","deleted_at":null,"name_tamil":"பொங்கல்"}
+{"id":"66","question_id":"17","name":"Diwali","is_correct":"0","created_at":"2025-12-17 16:52:54","updated_at":"2025-12-17 16:52:54","deleted_at":null,"name_tamil":"தீபாவளி"}
+{"id":"67","question_id":"17","name":"Holi","is_correct":"1","created_at":"2025-12-17 16:52:54","updated_at":"2025-12-17 16:52:54","deleted_at":null,"name_tamil":"ஹோலி"}
+{"id":"68","question_id":"17","name":"Songkran","is_correct":"0","created_at":"2025-12-17 16:52:54","updated_at":"2025-12-17 16:52:54","deleted_at":null,"name_tamil":"சோங்க்ரான்"}
+{"id":"69","question_id":"18","name":"V","is_correct":"0","created_at":"2026-01-28 12:54:44","updated_at":"2026-01-28 12:54:44","deleted_at":null,"name_tamil":"வி"}
+{"id":"70","question_id":"18","name":"I","is_correct":"0","created_at":"2026-01-28 12:54:44","updated_at":"2026-01-28 12:54:44","deleted_at":null,"name_tamil":"ஐ"}
+{"id":"71","question_id":"18","name":"VI","is_correct":"0","created_at":"2026-01-28 12:54:44","updated_at":"2026-01-28 12:54:44","deleted_at":null,"name_tamil":"VI"}
+{"id":"72","question_id":"18","name":"VN","is_correct":"1","created_at":"2026-01-28 12:54:44","updated_at":"2026-01-28 12:54:44","deleted_at":null,"name_tamil":"வி.என்"}
+{"id":"73","question_id":"19","name":"Moon","is_correct":"0","created_at":"2026-01-28 12:55:31","updated_at":"2026-01-28 12:55:31","deleted_at":null,"name_tamil":"சந்திரன்"}
+{"id":"74","question_id":"19","name":"Star","is_correct":"0","created_at":"2026-01-28 12:55:31","updated_at":"2026-01-28 12:55:31","deleted_at":null,"name_tamil":"நட்சத்திரம்"}
+{"id":"75","question_id":"19","name":"Sun","is_correct":"1","created_at":"2026-01-28 12:55:31","updated_at":"2026-01-28 12:55:31","deleted_at":null,"name_tamil":"சூரியன்"}
+{"id":"76","question_id":"19","name":"Chakra","is_correct":"0","created_at":"2026-01-28 12:55:31","updated_at":"2026-01-28 12:55:31","deleted_at":null,"name_tamil":"சக்ரா"}
+{"id":"77","question_id":"20","name":"Mercury","is_correct":"0","created_at":"2026-01-28 13:04:06","updated_at":"2026-01-28 14:14:27","deleted_at":null,"name_tamil":"பாதரசம்"}
+{"id":"78","question_id":"20","name":"Jupiter","is_correct":"0","created_at":"2026-01-28 13:04:06","updated_at":"2026-01-28 14:14:27","deleted_at":null,"name_tamil":"வியாழன்"}
+{"id":"79","question_id":"20","name":"Venus","is_correct":"0","created_at":"2026-01-28 13:04:06","updated_at":"2026-01-28 14:14:27","deleted_at":null,"name_tamil":"சுக்கிரன்"}
+{"id":"80","question_id":"20","name":"Saturn","is_correct":"1","created_at":"2026-01-28 13:04:06","updated_at":"2026-01-28 14:14:27","deleted_at":null,"name_tamil":"சனி"}
+{"id":"81","question_id":"21","name":"Orange (ஆரஞ்சு)","is_correct":"1","created_at":"2026-01-28 13:06:56","updated_at":"2026-01-28 13:06:56","deleted_at":null,"name_tamil":"ஆரஞ்சு (ஆரஞ்சு)"}
+{"id":"82","question_id":"21","name":"Back (கருப்பு)","is_correct":"0","created_at":"2026-01-28 13:06:56","updated_at":"2026-01-28 13:06:56","deleted_at":null,"name_tamil":"பின் (கருப்பு)"}
+{"id":"83","question_id":"21","name":"Grey (சாம்பல்)","is_correct":"0","created_at":"2026-01-28 13:06:56","updated_at":"2026-01-28 13:06:56","deleted_at":null,"name_tamil":"சாம்பல் (சாம்பல்)"}
+{"id":"84","question_id":"21","name":"Red (சிவப்பு)","is_correct":"0","created_at":"2026-01-28 13:06:56","updated_at":"2026-01-28 13:06:56","deleted_at":null,"name_tamil":"சிவப்பு (சிவப்பு)"}
+{"id":"85","question_id":"22","name":"Manohar Kabirdass","is_correct":"0","created_at":"2026-01-28 14:16:36","updated_at":"2026-01-28 14:16:36","deleted_at":null,"name_tamil":"மனோகர் கபீர்தாஸ்"}
+{"id":"86","question_id":"22","name":"Murali Doss","is_correct":"0","created_at":"2026-01-28 14:16:36","updated_at":"2026-01-28 14:16:36","deleted_at":null,"name_tamil":"முரளி தாஸ்"}
+{"id":"87","question_id":"22","name":"Murali Kabirdass","is_correct":"1","created_at":"2026-01-28 14:16:36","updated_at":"2026-01-28 14:16:36","deleted_at":null,"name_tamil":"முரளி கபீர்தாஸ்"}
+{"id":"88","question_id":"22","name":"A.R Murugadoss","is_correct":"0","created_at":"2026-01-28 14:16:36","updated_at":"2026-01-28 14:16:36","deleted_at":null,"name_tamil":"ஏ.ஆர்.முருகதாஸ்"}
+{"id":"89","question_id":"23","name":"100 Billion","is_correct":"0","created_at":"2026-01-28 14:17:58","updated_at":"2026-01-28 14:17:58","deleted_at":null,"name_tamil":"100 பில்லியன்"}
+{"id":"90","question_id":"23","name":"100 Trillion","is_correct":"0","created_at":"2026-01-28 14:17:58","updated_at":"2026-01-28 14:17:58","deleted_at":null,"name_tamil":"100 டிரில்லியன்"}
+{"id":"91","question_id":"23","name":"100 Million","is_correct":"1","created_at":"2026-01-28 14:17:58","updated_at":"2026-01-28 14:17:58","deleted_at":null,"name_tamil":"100 மில்லியன்"}
+{"id":"92","question_id":"23","name":"10 Million","is_correct":"0","created_at":"2026-01-28 14:17:58","updated_at":"2026-01-28 14:17:58","deleted_at":null,"name_tamil":"10 மில்லியன்"}
+{"id":"93","question_id":"24","name":"6 Months","is_correct":"0","created_at":"2026-01-28 14:22:42","updated_at":"2026-01-28 14:22:42","deleted_at":null,"name_tamil":"6 மாதங்கள்"}
+{"id":"94","question_id":"24","name":"2 Months","is_correct":"0","created_at":"2026-01-28 14:22:42","updated_at":"2026-01-28 14:22:42","deleted_at":null,"name_tamil":"2 மாதங்கள்"}
+{"id":"95","question_id":"24","name":"8 Months","is_correct":"0","created_at":"2026-01-28 14:22:42","updated_at":"2026-01-28 14:22:42","deleted_at":null,"name_tamil":"8 மாதங்கள்"}
+{"id":"96","question_id":"24","name":"3 Months","is_correct":"1","created_at":"2026-01-28 14:22:42","updated_at":"2026-01-28 14:22:42","deleted_at":null,"name_tamil":"3 மாதங்கள்"}
+{"id":"97","question_id":"25","name":"Astrophysics","is_correct":"1","created_at":"2026-01-28 14:45:06","updated_at":"2026-01-28 14:45:06","deleted_at":null,"name_tamil":"வானியற்பியல்"}
+{"id":"98","question_id":"25","name":"Biophysics","is_correct":"0","created_at":"2026-01-28 14:45:06","updated_at":"2026-01-28 14:45:06","deleted_at":null,"name_tamil":"உயிர் இயற்பியல்"}
+{"id":"99","question_id":"25","name":"Geophysics","is_correct":"0","created_at":"2026-01-28 14:45:06","updated_at":"2026-01-28 14:45:06","deleted_at":null,"name_tamil":"புவி இயற்பியல்"}
+{"id":"100","question_id":"25","name":"Applied Physics","is_correct":"0","created_at":"2026-01-28 14:45:06","updated_at":"2026-01-28 14:45:06","deleted_at":null,"name_tamil":"பயன்பாட்டு இயற்பியல்"}
+{"id":"101","question_id":"26","name":"1","is_correct":"0","created_at":"2026-01-28 14:46:13","updated_at":"2026-01-28 14:46:13","deleted_at":null,"name_tamil":"1"}
+{"id":"102","question_id":"26","name":"3","is_correct":"0","created_at":"2026-01-28 14:46:13","updated_at":"2026-01-28 14:46:13","deleted_at":null,"name_tamil":"3"}
+{"id":"103","question_id":"26","name":"2","is_correct":"1","created_at":"2026-01-28 14:46:13","updated_at":"2026-01-28 14:46:13","deleted_at":null,"name_tamil":"2"}
+{"id":"104","question_id":"26","name":"0","is_correct":"0","created_at":"2026-01-28 14:46:13","updated_at":"2026-01-28 14:46:13","deleted_at":null,"name_tamil":"0"}
+{"id":"105","question_id":"27","name":"NIT","is_correct":"0","created_at":"2026-01-28 15:07:43","updated_at":"2026-01-28 15:07:43","deleted_at":null,"name_tamil":"என்ஐடி"}
+{"id":"106","question_id":"27","name":"IIT","is_correct":"0","created_at":"2026-01-28 15:07:43","updated_at":"2026-01-28 15:07:43","deleted_at":null,"name_tamil":"ஐ.ஐ.டி"}
+{"id":"107","question_id":"27","name":"MIT","is_correct":"1","created_at":"2026-01-28 15:07:43","updated_at":"2026-01-28 15:07:43","deleted_at":null,"name_tamil":"எம்ஐடி"}
+{"id":"108","question_id":"27","name":"MITE","is_correct":"0","created_at":"2026-01-28 15:07:43","updated_at":"2026-01-28 15:07:43","deleted_at":null,"name_tamil":"MITE"}
+{"id":"109","question_id":"28","name":"K","is_correct":"0","created_at":"2026-01-28 15:33:18","updated_at":"2026-01-28 15:33:18","deleted_at":null,"name_tamil":"கே"}
+{"id":"110","question_id":"28","name":"B","is_correct":"0","created_at":"2026-01-28 15:33:18","updated_at":"2026-01-28 15:33:18","deleted_at":null,"name_tamil":"பி"}
+{"id":"111","question_id":"28","name":"R","is_correct":"1","created_at":"2026-01-28 15:33:18","updated_at":"2026-01-28 15:33:18","deleted_at":null,"name_tamil":"ஆர்"}
+{"id":"112","question_id":"28","name":"G","is_correct":"0","created_at":"2026-01-28 15:33:18","updated_at":"2026-01-28 15:33:18","deleted_at":null,"name_tamil":"ஜி"}
+{"id":"113","question_id":"29","name":"P.K","is_correct":"1","created_at":"2026-01-28 15:34:51","updated_at":"2026-01-28 15:34:51","deleted_at":null,"name_tamil":"பி.கே"}
+{"id":"114","question_id":"29","name":"P.R","is_correct":"0","created_at":"2026-01-28 15:34:51","updated_at":"2026-01-28 15:34:51","deleted_at":null,"name_tamil":"பி.ஆர்"}
+{"id":"115","question_id":"29","name":"B.K","is_correct":"0","created_at":"2026-01-28 15:34:51","updated_at":"2026-01-28 15:34:51","deleted_at":null,"name_tamil":"பி.கே"}
+{"id":"116","question_id":"29","name":"R.K","is_correct":"0","created_at":"2026-01-28 15:34:51","updated_at":"2026-01-28 15:34:51","deleted_at":null,"name_tamil":"ஆர்.கே"}
+{"id":"117","question_id":"30","name":"3005","is_correct":"0","created_at":"2026-01-28 15:36:28","updated_at":"2026-01-28 15:36:28","deleted_at":null,"name_tamil":"3005"}
+{"id":"118","question_id":"30","name":"3605","is_correct":"0","created_at":"2026-01-28 15:36:28","updated_at":"2026-01-28 15:36:28","deleted_at":null,"name_tamil":"3605"}
+{"id":"119","question_id":"30","name":"8665","is_correct":"0","created_at":"2026-01-28 15:36:29","updated_at":"2026-01-28 15:36:29","deleted_at":null,"name_tamil":"8665"}
+{"id":"120","question_id":"30","name":"3665","is_correct":"1","created_at":"2026-01-28 15:36:29","updated_at":"2026-01-28 15:36:29","deleted_at":null,"name_tamil":"3665"}
+{"id":"121","question_id":"31","name":"Zen Store","is_correct":"1","created_at":"2026-01-28 15:38:41","updated_at":"2026-01-28 15:38:41","deleted_at":null,"name_tamil":"ஜென் கடை"}
+{"id":"122","question_id":"31","name":"Ken Store","is_correct":"0","created_at":"2026-01-28 15:38:41","updated_at":"2026-01-28 15:38:41","deleted_at":null,"name_tamil":"கென் ஸ்டோர்"}
+{"id":"123","question_id":"31","name":"Ben Store","is_correct":"0","created_at":"2026-01-28 15:38:41","updated_at":"2026-01-28 15:38:41","deleted_at":null,"name_tamil":"பென் ஸ்டோர்"}
+{"id":"124","question_id":"31","name":"Zen Shoppe","is_correct":"0","created_at":"2026-01-28 15:38:41","updated_at":"2026-01-28 15:38:41","deleted_at":null,"name_tamil":"ஜென் கடை"}
+{"id":"125","question_id":"32","name":"Lens","is_correct":"0","created_at":"2026-01-28 15:39:29","updated_at":"2026-01-28 15:39:29","deleted_at":null,"name_tamil":"லென்ஸ்"}
+{"id":"126","question_id":"32","name":"Flower","is_correct":"0","created_at":"2026-01-28 15:39:29","updated_at":"2026-01-28 15:39:29","deleted_at":null,"name_tamil":"மலர்"}
+{"id":"127","question_id":"32","name":"Circle","is_correct":"0","created_at":"2026-01-28 15:39:29","updated_at":"2026-01-28 15:39:29","deleted_at":null,"name_tamil":"வட்டம்"}
+{"id":"128","question_id":"32","name":"Gear","is_correct":"1","created_at":"2026-01-28 15:39:29","updated_at":"2026-01-28 15:39:29","deleted_at":null,"name_tamil":"கியர்"}
+{"id":"129","question_id":"33","name":"Soby","is_correct":"0","created_at":"2026-01-28 15:40:57","updated_at":"2026-01-28 15:40:57","deleted_at":null,"name_tamil":"சோபி"}
+{"id":"130","question_id":"33","name":"Sofie","is_correct":"1","created_at":"2026-01-28 15:40:57","updated_at":"2026-01-28 15:40:57","deleted_at":null,"name_tamil":"சோஃபி"}
+{"id":"131","question_id":"33","name":"Gabie","is_correct":"0","created_at":"2026-01-28 15:40:57","updated_at":"2026-01-28 15:40:57","deleted_at":null,"name_tamil":"கேபி"}
+{"id":"132","question_id":"33","name":"Baby","is_correct":"0","created_at":"2026-01-28 15:40:57","updated_at":"2026-01-28 15:40:57","deleted_at":null,"name_tamil":"குழந்தை"}
+{"id":"133","question_id":"34","name":"500 Years","is_correct":"0","created_at":"2026-01-28 15:42:02","updated_at":"2026-01-28 15:42:02","deleted_at":null,"name_tamil":"500 ஆண்டுகள்"}
+{"id":"134","question_id":"34","name":"100 Years","is_correct":"0","created_at":"2026-01-28 15:42:02","updated_at":"2026-01-28 15:42:02","deleted_at":null,"name_tamil":"100 ஆண்டுகள்"}
+{"id":"135","question_id":"34","name":"300 Years","is_correct":"1","created_at":"2026-01-28 15:42:02","updated_at":"2026-01-28 15:42:02","deleted_at":null,"name_tamil":"300 ஆண்டுகள்"}
+{"id":"136","question_id":"34","name":"200 Years","is_correct":"0","created_at":"2026-01-28 15:42:03","updated_at":"2026-01-28 15:42:03","deleted_at":null,"name_tamil":"200 ஆண்டுகள்"}
+{"id":"137","question_id":"35","name":"Laughing","is_correct":"0","created_at":"2026-01-28 15:44:35","updated_at":"2026-01-28 15:44:35","deleted_at":null,"name_tamil":"சிரிக்கிறது"}
+{"id":"138","question_id":"35","name":"Drinking","is_correct":"1","created_at":"2026-01-28 15:44:35","updated_at":"2026-01-28 15:44:35","deleted_at":null,"name_tamil":"குடிப்பது"}
+{"id":"139","question_id":"35","name":"Chatting","is_correct":"0","created_at":"2026-01-28 15:44:35","updated_at":"2026-01-28 15:44:35","deleted_at":null,"name_tamil":"அரட்டை அடிப்பது"}
+{"id":"140","question_id":"35","name":"Jumping","is_correct":"0","created_at":"2026-01-28 15:44:35","updated_at":"2026-01-28 15:44:35","deleted_at":null,"name_tamil":"குதித்தல்"}
+{"id":"141","question_id":"36","name":"Full Moon","is_correct":"0","created_at":"2026-01-28 15:49:40","updated_at":"2026-01-28 15:49:40","deleted_at":null,"name_tamil":"முழு நிலவு"}
+{"id":"142","question_id":"36","name":"Half Moon","is_correct":"0","created_at":"2026-01-28 15:49:40","updated_at":"2026-01-28 15:49:40","deleted_at":null,"name_tamil":"அரை நிலவு"}
+{"id":"143","question_id":"36","name":"Crescent Moon","is_correct":"1","created_at":"2026-01-28 15:49:40","updated_at":"2026-01-28 15:49:40","deleted_at":null,"name_tamil":"பிறை நிலவு"}
+{"id":"144","question_id":"36","name":"Half Sun","is_correct":"0","created_at":"2026-01-28 15:49:40","updated_at":"2026-01-28 15:49:40","deleted_at":null,"name_tamil":"பாதி சூரியன்"}
+{"id":"145","question_id":"37","name":"10:15","is_correct":"0","created_at":"2026-01-28 15:50:55","updated_at":"2026-01-28 15:50:55","deleted_at":null,"name_tamil":"10:15"}
+{"id":"146","question_id":"37","name":"03:45","is_correct":"0","created_at":"2026-01-28 15:50:55","updated_at":"2026-01-28 15:50:55","deleted_at":null,"name_tamil":"03:45"}
+{"id":"147","question_id":"37","name":"09:15","is_correct":"1","created_at":"2026-01-28 15:50:55","updated_at":"2026-01-28 15:50:55","deleted_at":null,"name_tamil":"09:15"}
+{"id":"148","question_id":"37","name":"03:50","is_correct":"0","created_at":"2026-01-28 15:50:55","updated_at":"2026-01-28 15:50:55","deleted_at":null,"name_tamil":"03:50"}
+{"id":"149","question_id":"38","name":"Green","is_correct":"1","created_at":"2026-01-28 15:53:57","updated_at":"2026-01-28 15:53:57","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"150","question_id":"38","name":"Blue","is_correct":"0","created_at":"2026-01-28 15:53:57","updated_at":"2026-01-28 15:53:57","deleted_at":null,"name_tamil":"நீலம்"}
+{"id":"151","question_id":"38","name":"Turquoise","is_correct":"0","created_at":"2026-01-28 15:53:57","updated_at":"2026-01-28 15:53:57","deleted_at":null,"name_tamil":"டர்க்கைஸ்"}
+{"id":"152","question_id":"38","name":"Orange","is_correct":"0","created_at":"2026-01-28 15:53:57","updated_at":"2026-01-28 15:53:57","deleted_at":null,"name_tamil":"ஆரஞ்சு"}
+{"id":"153","question_id":"39","name":"Mila","is_correct":"0","created_at":"2026-01-28 15:54:51","updated_at":"2026-01-28 15:54:51","deleted_at":null,"name_tamil":"மிலா"}
+{"id":"154","question_id":"39","name":"Nila","is_correct":"1","created_at":"2026-01-28 15:54:51","updated_at":"2026-01-28 15:54:51","deleted_at":null,"name_tamil":"நிலா"}
+{"id":"155","question_id":"39","name":"Sheela","is_correct":"0","created_at":"2026-01-28 15:54:51","updated_at":"2026-01-28 15:54:51","deleted_at":null,"name_tamil":"ஷீலா"}
+{"id":"156","question_id":"39","name":"Laila","is_correct":"0","created_at":"2026-01-28 15:54:51","updated_at":"2026-01-28 15:54:51","deleted_at":null,"name_tamil":"லைலா"}
+{"id":"157","question_id":"40","name":"3","is_correct":"0","created_at":"2026-01-28 15:55:44","updated_at":"2026-01-28 15:55:44","deleted_at":null,"name_tamil":"3"}
+{"id":"158","question_id":"40","name":"1","is_correct":"0","created_at":"2026-01-28 15:55:44","updated_at":"2026-01-28 15:55:44","deleted_at":null,"name_tamil":"1"}
+{"id":"159","question_id":"40","name":"2","is_correct":"1","created_at":"2026-01-28 15:55:44","updated_at":"2026-01-28 15:55:44","deleted_at":null,"name_tamil":"2"}
+{"id":"160","question_id":"40","name":"4","is_correct":"0","created_at":"2026-01-28 15:55:44","updated_at":"2026-01-28 15:55:44","deleted_at":null,"name_tamil":"4"}
+{"id":"161","question_id":"41","name":"3","is_correct":"1","created_at":"2026-01-28 15:56:15","updated_at":"2026-01-28 15:56:15","deleted_at":null,"name_tamil":"3"}
+{"id":"162","question_id":"41","name":"4","is_correct":"0","created_at":"2026-01-28 15:56:15","updated_at":"2026-01-28 15:56:15","deleted_at":null,"name_tamil":"4"}
+{"id":"163","question_id":"41","name":"1","is_correct":"0","created_at":"2026-01-28 15:56:15","updated_at":"2026-01-28 15:56:15","deleted_at":null,"name_tamil":"1"}
+{"id":"164","question_id":"41","name":"2","is_correct":"0","created_at":"2026-01-28 15:56:15","updated_at":"2026-01-28 15:56:15","deleted_at":null,"name_tamil":"2"}
+{"id":"165","question_id":"42","name":"Arya","is_correct":"0","created_at":"2026-01-28 15:57:31","updated_at":"2026-01-28 15:57:31","deleted_at":null,"name_tamil":"ஆர்யா"}
+{"id":"166","question_id":"42","name":"Adhithya","is_correct":"1","created_at":"2026-01-28 15:57:31","updated_at":"2026-01-28 15:57:31","deleted_at":null,"name_tamil":"ஆதித்யா"}
+{"id":"167","question_id":"42","name":"Adhiya","is_correct":"0","created_at":"2026-01-28 15:57:31","updated_at":"2026-01-28 15:57:31","deleted_at":null,"name_tamil":"அதியா"}
+{"id":"168","question_id":"42","name":"Abiya","is_correct":"0","created_at":"2026-01-28 15:57:31","updated_at":"2026-01-28 15:57:31","deleted_at":null,"name_tamil":"அபியா"}
+{"id":"169","question_id":"43","name":"Sri Vaari","is_correct":"1","created_at":"2026-01-28 15:59:13","updated_at":"2026-01-28 15:59:13","deleted_at":null,"name_tamil":"ஸ்ரீ வாரி"}
+{"id":"170","question_id":"43","name":"Shri Hari","is_correct":"0","created_at":"2026-01-28 15:59:13","updated_at":"2026-01-28 15:59:13","deleted_at":null,"name_tamil":"ஸ்ரீ ஹரி"}
+{"id":"171","question_id":"43","name":"Sri Vaani","is_correct":"0","created_at":"2026-01-28 15:59:13","updated_at":"2026-01-28 15:59:13","deleted_at":null,"name_tamil":"ஸ்ரீ வாணி"}
+{"id":"172","question_id":"43","name":"Shri Vaali","is_correct":"0","created_at":"2026-01-28 15:59:13","updated_at":"2026-01-28 15:59:13","deleted_at":null,"name_tamil":"ஸ்ரீ வாலி"}
+{"id":"173","question_id":"44","name":"Binodhini","is_correct":"0","created_at":"2026-01-28 16:00:37","updated_at":"2026-01-28 16:00:37","deleted_at":null,"name_tamil":"பினோதினி"}
+{"id":"174","question_id":"44","name":"Vinodhani","is_correct":"0","created_at":"2026-01-28 16:00:37","updated_at":"2026-01-28 16:00:37","deleted_at":null,"name_tamil":"வினோதனி"}
+{"id":"175","question_id":"44","name":"Vimohini","is_correct":"0","created_at":"2026-01-28 16:00:37","updated_at":"2026-01-28 16:00:37","deleted_at":null,"name_tamil":"விமோகினி"}
+{"id":"176","question_id":"44","name":"Vinodhini","is_correct":"1","created_at":"2026-01-28 16:00:37","updated_at":"2026-01-28 16:00:37","deleted_at":null,"name_tamil":"வினோதினி"}
+{"id":"177","question_id":"45","name":"Gray","is_correct":"0","created_at":"2026-01-28 16:04:29","updated_at":"2026-01-28 16:04:29","deleted_at":null,"name_tamil":"சாம்பல்"}
+{"id":"178","question_id":"45","name":"Green","is_correct":"0","created_at":"2026-01-28 16:04:29","updated_at":"2026-01-28 16:04:29","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"179","question_id":"45","name":"White","is_correct":"0","created_at":"2026-01-28 16:04:29","updated_at":"2026-01-28 16:04:29","deleted_at":null,"name_tamil":"வெள்ளை"}
+{"id":"180","question_id":"45","name":"Blue","is_correct":"1","created_at":"2026-01-28 16:04:29","updated_at":"2026-01-28 16:04:29","deleted_at":null,"name_tamil":"நீலம்"}
+{"id":"181","question_id":"46","name":"MP","is_correct":"0","created_at":"2026-01-28 16:36:40","updated_at":"2026-01-28 16:36:40","deleted_at":null,"name_tamil":"எம்.பி"}
+{"id":"182","question_id":"46","name":"MLA","is_correct":"1","created_at":"2026-01-28 16:36:40","updated_at":"2026-01-28 16:36:40","deleted_at":null,"name_tamil":"எம்.எல்.ஏ"}
+{"id":"183","question_id":"46","name":"MLC","is_correct":"0","created_at":"2026-01-28 16:36:40","updated_at":"2026-01-28 16:36:40","deleted_at":null,"name_tamil":"எம்.எல்.சி"}
+{"id":"184","question_id":"46","name":"MC","is_correct":"0","created_at":"2026-01-28 16:36:40","updated_at":"2026-01-28 16:36:40","deleted_at":null,"name_tamil":"எம்.சி"}
+{"id":"185","question_id":"47","name":"100","is_correct":"0","created_at":"2026-01-28 16:37:19","updated_at":"2026-01-28 16:37:19","deleted_at":null,"name_tamil":"100"}
+{"id":"186","question_id":"47","name":"200","is_correct":"0","created_at":"2026-01-28 16:37:19","updated_at":"2026-01-28 16:37:19","deleted_at":null,"name_tamil":"200"}
+{"id":"187","question_id":"47","name":"500","is_correct":"1","created_at":"2026-01-28 16:37:19","updated_at":"2026-01-28 16:37:19","deleted_at":null,"name_tamil":"500"}
+{"id":"188","question_id":"47","name":"2000","is_correct":"0","created_at":"2026-01-28 16:37:19","updated_at":"2026-01-28 16:37:19","deleted_at":null,"name_tamil":"2000"}
+{"id":"189","question_id":"48","name":"2","is_correct":"1","created_at":"2026-01-28 16:37:50","updated_at":"2026-01-28 16:37:50","deleted_at":null,"name_tamil":"2"}
+{"id":"190","question_id":"48","name":"1","is_correct":"0","created_at":"2026-01-28 16:37:50","updated_at":"2026-01-28 16:37:50","deleted_at":null,"name_tamil":"1"}
+{"id":"191","question_id":"48","name":"3","is_correct":"0","created_at":"2026-01-28 16:37:50","updated_at":"2026-01-28 16:37:50","deleted_at":null,"name_tamil":"3"}
+{"id":"192","question_id":"48","name":"4","is_correct":"0","created_at":"2026-01-28 16:37:50","updated_at":"2026-01-28 16:37:50","deleted_at":null,"name_tamil":"4"}
+{"id":"193","question_id":"49","name":"Paytm","is_correct":"0","created_at":"2026-01-28 16:38:50","updated_at":"2026-01-28 16:38:50","deleted_at":null,"name_tamil":"Paytm"}
+{"id":"194","question_id":"49","name":"Phonepe","is_correct":"0","created_at":"2026-01-28 16:38:50","updated_at":"2026-01-28 16:38:50","deleted_at":null,"name_tamil":"ஃபோன்பே"}
+{"id":"195","question_id":"49","name":"G Pay","is_correct":"1","created_at":"2026-01-28 16:38:50","updated_at":"2026-01-28 16:38:50","deleted_at":null,"name_tamil":"ஜி பே"}
+{"id":"196","question_id":"49","name":"IPPB","is_correct":"0","created_at":"2026-01-28 16:38:50","updated_at":"2026-01-28 16:38:50","deleted_at":null,"name_tamil":"IPPB"}
+{"id":"197","question_id":"50","name":"To Check Agreement","is_correct":"0","created_at":"2026-01-28 17:43:05","updated_at":"2026-01-28 17:43:05","deleted_at":null,"name_tamil":"ஒப்பந்தத்தை சரிபார்க்க"}
+{"id":"198","question_id":"50","name":"To See Advocate","is_correct":"0","created_at":"2026-01-28 17:43:05","updated_at":"2026-01-28 17:43:05","deleted_at":null,"name_tamil":"வழக்கறிஞரைப் பார்க்க"}
+{"id":"199","question_id":"50","name":"To See her","is_correct":"1","created_at":"2026-01-28 17:43:05","updated_at":"2026-01-28 17:43:05","deleted_at":null,"name_tamil":"அவளை பார்க்க"}
+{"id":"200","question_id":"50","name":"Just Visited","is_correct":"0","created_at":"2026-01-28 17:43:05","updated_at":"2026-01-28 17:43:05","deleted_at":null,"name_tamil":"இப்போதுதான் பார்வையிட்டேன்"}
+{"id":"201","question_id":"51","name":"Chess Rook","is_correct":"0","created_at":"2026-01-28 17:46:16","updated_at":"2026-01-28 17:46:16","deleted_at":null,"name_tamil":"செஸ் ரூக்"}
+{"id":"202","question_id":"51","name":"Chess Queen","is_correct":"1","created_at":"2026-01-28 17:46:16","updated_at":"2026-01-28 17:46:16","deleted_at":null,"name_tamil":"சதுரங்க ராணி"}
+{"id":"203","question_id":"51","name":"Chess King","is_correct":"0","created_at":"2026-01-28 17:46:16","updated_at":"2026-01-28 17:46:16","deleted_at":null,"name_tamil":"சதுரங்க ராஜா"}
+{"id":"204","question_id":"51","name":"Chess Knight","is_correct":"0","created_at":"2026-01-28 17:46:16","updated_at":"2026-01-28 17:46:16","deleted_at":null,"name_tamil":"செஸ் நைட்"}
+{"id":"205","question_id":"52","name":"A.C.Gunaseelan M.A., M.L.,","is_correct":"0","created_at":"2026-01-28 18:01:57","updated_at":"2026-05-12 10:02:39","deleted_at":null,"name_tamil":"ஏ.சி.குணசீலன் எம்.ஏ., எம்.எல்.,"}
+{"id":"206","question_id":"52","name":"A.C.Gunaseelan M.A., B.L.,","is_correct":"0","created_at":"2026-01-28 18:01:57","updated_at":"2026-05-12 10:02:39","deleted_at":null,"name_tamil":"ஏ.சி.குணசீலன் எம்.ஏ., பி.எல்.,"}
+{"id":"207","question_id":"52","name":"A.S.Gunaseeran M.A., M.L.,","is_correct":"0","created_at":"2026-01-28 18:01:57","updated_at":"2026-05-12 10:02:39","deleted_at":null,"name_tamil":"ஏ.எஸ்.குணசீரன் எம்.ஏ., எம்.எல்.,"}
+{"id":"208","question_id":"52","name":"A.S.Gunaseelan M.A., B.L.,","is_correct":"1","created_at":"2026-01-28 18:01:57","updated_at":"2026-01-28 18:01:57","deleted_at":null,"name_tamil":"ஏ.எஸ்.குணசீலன் எம்.ஏ., பி.எல்.,"}
+{"id":"209","question_id":"53","name":"Gopal","is_correct":"0","created_at":"2026-01-28 18:18:17","updated_at":"2026-01-28 18:18:17","deleted_at":null,"name_tamil":"கோபால்"}
+{"id":"210","question_id":"53","name":"Vairavel","is_correct":"1","created_at":"2026-01-28 18:18:17","updated_at":"2026-01-28 18:18:17","deleted_at":null,"name_tamil":"வைரவேல்"}
+{"id":"211","question_id":"53","name":"Thangavel","is_correct":"0","created_at":"2026-01-28 18:18:17","updated_at":"2026-01-28 18:18:17","deleted_at":null,"name_tamil":"தங்கவேல்"}
+{"id":"212","question_id":"53","name":"Vairavelu","is_correct":"0","created_at":"2026-01-28 18:18:17","updated_at":"2026-01-28 18:18:17","deleted_at":null,"name_tamil":"வைரவேலு"}
+{"id":"213","question_id":"54","name":"09:05 PM","is_correct":"1","created_at":"2026-01-30 10:38:47","updated_at":"2026-01-30 10:38:47","deleted_at":null,"name_tamil":"09:05 PM"}
+{"id":"214","question_id":"54","name":"08:10 PM","is_correct":"0","created_at":"2026-01-30 10:38:47","updated_at":"2026-01-30 10:38:47","deleted_at":null,"name_tamil":"08:10 PM"}
+{"id":"215","question_id":"54","name":"09:15 PM","is_correct":"0","created_at":"2026-01-30 10:38:47","updated_at":"2026-01-30 10:38:47","deleted_at":null,"name_tamil":"09:15 PM"}
+{"id":"216","question_id":"54","name":"08:55 PM","is_correct":"0","created_at":"2026-01-30 10:38:47","updated_at":"2026-01-30 10:38:47","deleted_at":null,"name_tamil":"08:55 PM"}
+{"id":"217","question_id":"55","name":"2","is_correct":"0","created_at":"2026-01-30 12:01:13","updated_at":"2026-01-30 12:01:13","deleted_at":null,"name_tamil":"2"}
+{"id":"218","question_id":"55","name":"4","is_correct":"1","created_at":"2026-01-30 12:01:13","updated_at":"2026-01-30 12:01:13","deleted_at":null,"name_tamil":"4"}
+{"id":"219","question_id":"55","name":"3","is_correct":"0","created_at":"2026-01-30 12:01:13","updated_at":"2026-01-30 12:01:13","deleted_at":null,"name_tamil":"3"}
+{"id":"220","question_id":"55","name":"5","is_correct":"0","created_at":"2026-01-30 12:01:13","updated_at":"2026-01-30 12:01:13","deleted_at":null,"name_tamil":"5"}
+{"id":"221","question_id":"56","name":"Celestron Aperture","is_correct":"0","created_at":"2026-01-30 12:11:00","updated_at":"2026-01-30 12:11:00","deleted_at":null,"name_tamil":"செலஸ்ட்ரான் துளை"}
+{"id":"222","question_id":"56","name":"Space Aperture","is_correct":"0","created_at":"2026-01-30 12:11:00","updated_at":"2026-01-30 12:11:00","deleted_at":null,"name_tamil":"விண்வெளி துளை"}
+{"id":"223","question_id":"56","name":"Sky watcher Arcade","is_correct":"0","created_at":"2026-01-30 12:11:00","updated_at":"2026-01-30 12:11:00","deleted_at":null,"name_tamil":"ஸ்கை வாட்சர் ஆர்கேட்"}
+{"id":"224","question_id":"56","name":"Space Arcade","is_correct":"1","created_at":"2026-01-30 12:11:00","updated_at":"2026-01-30 12:11:00","deleted_at":null,"name_tamil":"விண்வெளி ஆர்கேட்"}
+{"id":"225","question_id":"57","name":"Government Exam","is_correct":"1","created_at":"2026-01-30 12:41:07","updated_at":"2026-01-30 12:41:07","deleted_at":null,"name_tamil":"அரசு தேர்வு"}
+{"id":"226","question_id":"57","name":"Employment in Private company","is_correct":"0","created_at":"2026-01-30 12:41:07","updated_at":"2026-01-30 12:41:07","deleted_at":null,"name_tamil":"தனியார் நிறுவனத்தில் வேலைவாய்ப்பு"}
+{"id":"227","question_id":"57","name":"Lost of Documents","is_correct":"0","created_at":"2026-01-30 12:41:07","updated_at":"2026-01-30 12:41:07","deleted_at":null,"name_tamil":"ஆவணங்களை இழந்தது"}
+{"id":"228","question_id":"57","name":"Agency","is_correct":"0","created_at":"2026-01-30 12:41:07","updated_at":"2026-01-30 12:41:07","deleted_at":null,"name_tamil":"ஏஜென்சி"}
+{"id":"229","question_id":"58","name":"Aakalam Vaanga","is_correct":"0","created_at":"2026-01-30 14:06:01","updated_at":"2026-01-30 14:06:01","deleted_at":null,"name_tamil":"ஆகலாம் வாங்க"}
+{"id":"230","question_id":"58","name":"Kudikalam Vaanga","is_correct":"0","created_at":"2026-01-30 14:06:01","updated_at":"2026-01-30 14:06:01","deleted_at":null,"name_tamil":"குடிகாலம் வாங்க"}
+{"id":"231","question_id":"58","name":"Aathalam Vaanga","is_correct":"1","created_at":"2026-01-30 14:06:01","updated_at":"2026-01-30 14:06:01","deleted_at":null,"name_tamil":"ஆதலம் வாங்க"}
+{"id":"232","question_id":"58","name":"Aathilingam Tea Stall","is_correct":"0","created_at":"2026-01-30 14:06:01","updated_at":"2026-01-30 14:06:01","deleted_at":null,"name_tamil":"ஆதிலிங்கம் தேநீர் கடை"}
+{"id":"233","question_id":"59","name":"Subas Chandra Bose","is_correct":"1","created_at":"2026-01-30 14:13:13","updated_at":"2026-01-30 14:13:13","deleted_at":null,"name_tamil":"சுபாஸ் சந்திர போஸ்"}
+{"id":"234","question_id":"59","name":"Dr. B.R.Ambedkar","is_correct":"0","created_at":"2026-01-30 14:13:13","updated_at":"2026-01-30 14:13:13","deleted_at":null,"name_tamil":"டாக்டர் பி.ஆர்.அம்பேத்கர்"}
+{"id":"235","question_id":"59","name":"Bhagat Singh","is_correct":"0","created_at":"2026-01-30 14:13:13","updated_at":"2026-01-30 14:13:13","deleted_at":null,"name_tamil":"பகத் சிங்"}
+{"id":"236","question_id":"59","name":"Jawaharlal Nehru","is_correct":"0","created_at":"2026-01-30 14:13:13","updated_at":"2026-01-30 14:13:13","deleted_at":null,"name_tamil":"ஜவஹர்லால் நேரு"}
+{"id":"237","question_id":"60","name":"0801","is_correct":"0","created_at":"2026-01-30 15:19:31","updated_at":"2026-01-30 15:19:31","deleted_at":null,"name_tamil":"0801"}
+{"id":"238","question_id":"60","name":"0661","is_correct":"0","created_at":"2026-01-30 15:19:31","updated_at":"2026-01-30 15:19:31","deleted_at":null,"name_tamil":"0661"}
+{"id":"239","question_id":"60","name":"0861","is_correct":"0","created_at":"2026-01-30 15:19:31","updated_at":"2026-01-30 15:19:31","deleted_at":null,"name_tamil":"0861"}
+{"id":"240","question_id":"60","name":"0601","is_correct":"1","created_at":"2026-01-30 15:19:31","updated_at":"2026-01-30 15:19:31","deleted_at":null,"name_tamil":"0601"}
+{"id":"241","question_id":"61","name":"Cursed Telescope","is_correct":"0","created_at":"2026-01-30 15:56:50","updated_at":"2026-01-30 15:56:50","deleted_at":null,"name_tamil":"சபிக்கப்பட்ட தொலைநோக்கி"}
+{"id":"242","question_id":"61","name":"Telescope Talks","is_correct":"1","created_at":"2026-01-30 15:56:50","updated_at":"2026-01-30 15:56:50","deleted_at":null,"name_tamil":"தொலைநோக்கி பேச்சு"}
+{"id":"243","question_id":"61","name":"Telescope Tells","is_correct":"0","created_at":"2026-01-30 15:56:50","updated_at":"2026-01-30 15:56:50","deleted_at":null,"name_tamil":"தொலைநோக்கி சொல்கிறது"}
+{"id":"244","question_id":"61","name":"Tragic Wikis","is_correct":"0","created_at":"2026-01-30 15:56:50","updated_at":"2026-01-30 15:56:50","deleted_at":null,"name_tamil":"சோக விக்கிகள்"}
+{"id":"245","question_id":"62","name":"Kuyil","is_correct":"1","created_at":"2026-01-30 16:11:41","updated_at":"2026-01-30 16:11:41","deleted_at":null,"name_tamil":"குயில்"}
+{"id":"246","question_id":"62","name":"Mayil","is_correct":"0","created_at":"2026-01-30 16:11:41","updated_at":"2026-01-30 16:11:41","deleted_at":null,"name_tamil":"மயில்"}
+{"id":"247","question_id":"62","name":"Kulika","is_correct":"0","created_at":"2026-01-30 16:11:41","updated_at":"2026-01-30 16:11:41","deleted_at":null,"name_tamil":"குளிகா"}
+{"id":"248","question_id":"62","name":"Kamali","is_correct":"0","created_at":"2026-01-30 16:11:41","updated_at":"2026-01-30 16:11:41","deleted_at":null,"name_tamil":"கமலி"}
+{"id":"249","question_id":"63","name":"2","is_correct":"1","created_at":"2026-01-30 16:17:23","updated_at":"2026-01-30 16:17:23","deleted_at":null,"name_tamil":"2"}
+{"id":"250","question_id":"63","name":"3","is_correct":"0","created_at":"2026-01-30 16:17:23","updated_at":"2026-01-30 16:17:23","deleted_at":null,"name_tamil":"3"}
+{"id":"251","question_id":"63","name":"4","is_correct":"0","created_at":"2026-01-30 16:17:23","updated_at":"2026-01-30 16:17:23","deleted_at":null,"name_tamil":"4"}
+{"id":"252","question_id":"63","name":"1","is_correct":"0","created_at":"2026-01-30 16:17:23","updated_at":"2026-01-30 16:17:23","deleted_at":null,"name_tamil":"1"}
+{"id":"253","question_id":"64","name":"Kavin","is_correct":"0","created_at":"2026-01-30 16:22:57","updated_at":"2026-01-30 16:22:57","deleted_at":null,"name_tamil":"கவின்"}
+{"id":"254","question_id":"64","name":"Hari","is_correct":"1","created_at":"2026-01-30 16:22:57","updated_at":"2026-01-30 16:22:57","deleted_at":null,"name_tamil":"ஹரி"}
+{"id":"255","question_id":"64","name":"Aadhi","is_correct":"0","created_at":"2026-01-30 16:22:57","updated_at":"2026-01-30 16:22:57","deleted_at":null,"name_tamil":"ஆதி"}
+{"id":"256","question_id":"64","name":"Paari","is_correct":"0","created_at":"2026-01-30 16:22:57","updated_at":"2026-01-30 16:22:57","deleted_at":null,"name_tamil":"பாரி"}
+{"id":"257","question_id":"65","name":"09:10","is_correct":"0","created_at":"2026-01-30 16:27:23","updated_at":"2026-01-30 16:27:23","deleted_at":null,"name_tamil":"09:10"}
+{"id":"258","question_id":"65","name":"10:00","is_correct":"1","created_at":"2026-01-30 16:27:23","updated_at":"2026-01-30 16:27:23","deleted_at":null,"name_tamil":"10:00"}
+{"id":"259","question_id":"65","name":"10:10","is_correct":"0","created_at":"2026-01-30 16:27:23","updated_at":"2026-01-30 16:27:23","deleted_at":null,"name_tamil":"10:10"}
+{"id":"260","question_id":"65","name":"12:00","is_correct":"0","created_at":"2026-01-30 16:27:23","updated_at":"2026-01-30 16:27:23","deleted_at":null,"name_tamil":"12:00"}
+{"id":"261","question_id":"66","name":"To confirm Grandmas death","is_correct":"0","created_at":"2026-01-30 17:34:29","updated_at":"2026-01-30 17:34:29","deleted_at":null,"name_tamil":"பாட்டியின் மரணத்தை உறுதி செய்ய"}
+{"id":"262","question_id":"66","name":"To Confirm Grandma Health","is_correct":"0","created_at":"2026-01-30 17:34:29","updated_at":"2026-01-30 17:34:29","deleted_at":null,"name_tamil":"பாட்டியின் ஆரோக்கியத்தை உறுதிப்படுத்த"}
+{"id":"263","question_id":"66","name":"To Confirm Hero Vision","is_correct":"1","created_at":"2026-01-30 17:34:29","updated_at":"2026-01-30 17:34:29","deleted_at":null,"name_tamil":"ஹீரோவின் பார்வையை உறுதிப்படுத்த"}
+{"id":"264","question_id":"66","name":"To Clear Hero's Thought","is_correct":"0","created_at":"2026-01-30 17:34:29","updated_at":"2026-01-30 17:34:29","deleted_at":null,"name_tamil":"ஹீரோவின் எண்ணத்தை தெளிவுபடுத்த"}
+{"id":"265","question_id":"67","name":"English Vocabulary","is_correct":"0","created_at":"2026-01-31 12:45:47","updated_at":"2026-01-31 12:45:47","deleted_at":null,"name_tamil":"ஆங்கில சொற்களஞ்சியம்"}
+{"id":"266","question_id":"67","name":"Indian Politics","is_correct":"0","created_at":"2026-01-31 12:45:47","updated_at":"2026-01-31 12:45:47","deleted_at":null,"name_tamil":"இந்திய அரசியல்"}
+{"id":"267","question_id":"67","name":"English Grammar","is_correct":"1","created_at":"2026-01-31 12:45:47","updated_at":"2026-01-31 12:45:47","deleted_at":null,"name_tamil":"ஆங்கில இலக்கணம்"}
+{"id":"268","question_id":"67","name":"Political science","is_correct":"0","created_at":"2026-01-31 12:45:47","updated_at":"2026-01-31 12:45:47","deleted_at":null,"name_tamil":"அரசியல் அறிவியல்"}
+{"id":"269","question_id":"68","name":"Electrons","is_correct":"0","created_at":"2026-01-31 15:10:36","updated_at":"2026-02-02 10:06:18","deleted_at":null,"name_tamil":"எலக்ட்ரான்கள்"}
+{"id":"270","question_id":"68","name":"Neurons","is_correct":"1","created_at":"2026-01-31 15:10:36","updated_at":"2026-02-02 10:06:18","deleted_at":null,"name_tamil":"நியூரான்கள்"}
+{"id":"271","question_id":"68","name":"Brain","is_correct":"0","created_at":"2026-01-31 15:10:36","updated_at":"2026-02-02 10:06:18","deleted_at":null,"name_tamil":"மூளை"}
+{"id":"272","question_id":"68","name":"Eye","is_correct":"0","created_at":"2026-01-31 15:10:36","updated_at":"2026-02-02 10:06:18","deleted_at":null,"name_tamil":"கண்"}
+{"id":"273","question_id":"69","name":"3","is_correct":"1","created_at":"2026-02-02 10:39:32","updated_at":"2026-02-02 10:39:32","deleted_at":null,"name_tamil":"3"}
+{"id":"274","question_id":"69","name":"4","is_correct":"0","created_at":"2026-02-02 10:39:32","updated_at":"2026-02-02 10:39:32","deleted_at":null,"name_tamil":"4"}
+{"id":"275","question_id":"69","name":"5","is_correct":"0","created_at":"2026-02-02 10:39:32","updated_at":"2026-02-02 10:39:32","deleted_at":null,"name_tamil":"5"}
+{"id":"276","question_id":"69","name":"2","is_correct":"0","created_at":"2026-02-02 10:39:32","updated_at":"2026-02-02 10:39:32","deleted_at":null,"name_tamil":"2"}
+{"id":"277","question_id":"70","name":"OLX","is_correct":"0","created_at":"2026-02-02 10:50:16","updated_at":"2026-02-02 10:50:16","deleted_at":null,"name_tamil":"OLX"}
+{"id":"278","question_id":"70","name":"CEX","is_correct":"0","created_at":"2026-02-02 10:50:16","updated_at":"2026-02-02 10:50:16","deleted_at":null,"name_tamil":"CEX"}
+{"id":"279","question_id":"70","name":"Quikr","is_correct":"0","created_at":"2026-02-02 10:50:16","updated_at":"2026-02-02 10:50:16","deleted_at":null,"name_tamil":"குயிக்ர்"}
+{"id":"280","question_id":"70","name":"ONX","is_correct":"1","created_at":"2026-02-02 10:50:16","updated_at":"2026-02-02 10:50:16","deleted_at":null,"name_tamil":"ஓஎன்எக்ஸ்"}
+{"id":"281","question_id":"71","name":"8","is_correct":"0","created_at":"2026-02-02 11:03:42","updated_at":"2026-02-02 11:03:42","deleted_at":null,"name_tamil":"8"}
+{"id":"282","question_id":"71","name":"6","is_correct":"0","created_at":"2026-02-02 11:03:42","updated_at":"2026-02-02 11:03:42","deleted_at":null,"name_tamil":"6"}
+{"id":"283","question_id":"71","name":"7","is_correct":"1","created_at":"2026-02-02 11:03:42","updated_at":"2026-02-02 11:03:42","deleted_at":null,"name_tamil":"7"}
+{"id":"284","question_id":"71","name":"5","is_correct":"0","created_at":"2026-02-02 11:03:42","updated_at":"2026-02-02 11:03:42","deleted_at":null,"name_tamil":"5"}
+{"id":"285","question_id":"72","name":"Belt Cast","is_correct":"0","created_at":"2026-02-02 11:25:49","updated_at":"2026-02-02 11:25:49","deleted_at":null,"name_tamil":"பெல்ட் நடிகர்கள்"}
+{"id":"286","question_id":"72","name":"Best Dart","is_correct":"0","created_at":"2026-02-02 11:25:49","updated_at":"2026-02-02 11:25:49","deleted_at":null,"name_tamil":"சிறந்த டார்ட்"}
+{"id":"287","question_id":"72","name":"Bect Cart","is_correct":"0","created_at":"2026-02-02 11:25:49","updated_at":"2026-02-02 11:25:49","deleted_at":null,"name_tamil":"பெக்ட் கார்ட்"}
+{"id":"288","question_id":"72","name":"Best Cart","is_correct":"1","created_at":"2026-02-02 11:25:49","updated_at":"2026-02-02 11:25:49","deleted_at":null,"name_tamil":"சிறந்த வண்டி"}
+{"id":"289","question_id":"73","name":"4","is_correct":"0","created_at":"2026-02-02 11:30:40","updated_at":"2026-02-02 11:30:40","deleted_at":null,"name_tamil":"4"}
+{"id":"290","question_id":"73","name":"3","is_correct":"1","created_at":"2026-02-02 11:30:40","updated_at":"2026-02-02 11:30:40","deleted_at":null,"name_tamil":"3"}
+{"id":"291","question_id":"73","name":"2","is_correct":"0","created_at":"2026-02-02 11:30:40","updated_at":"2026-02-02 11:30:40","deleted_at":null,"name_tamil":"2"}
+{"id":"292","question_id":"73","name":"1","is_correct":"0","created_at":"2026-02-02 11:30:40","updated_at":"2026-02-02 11:30:40","deleted_at":null,"name_tamil":"1"}
+{"id":"293","question_id":"74","name":"3","is_correct":"0","created_at":"2026-02-02 11:32:27","updated_at":"2026-02-02 11:32:27","deleted_at":null,"name_tamil":"3"}
+{"id":"294","question_id":"74","name":"4","is_correct":"0","created_at":"2026-02-02 11:32:27","updated_at":"2026-02-02 11:32:27","deleted_at":null,"name_tamil":"4"}
+{"id":"295","question_id":"74","name":"6","is_correct":"1","created_at":"2026-02-02 11:32:27","updated_at":"2026-02-02 11:32:27","deleted_at":null,"name_tamil":"6"}
+{"id":"296","question_id":"74","name":"8","is_correct":"0","created_at":"2026-02-02 11:32:27","updated_at":"2026-02-02 11:32:27","deleted_at":null,"name_tamil":"8"}
+{"id":"297","question_id":"75","name":"04BH","is_correct":"0","created_at":"2026-02-02 11:36:38","updated_at":"2026-02-02 11:38:50","deleted_at":null,"name_tamil":"04BH"}
+{"id":"298","question_id":"75","name":"07DH","is_correct":"0","created_at":"2026-02-02 11:36:38","updated_at":"2026-02-02 11:38:50","deleted_at":null,"name_tamil":"07DH"}
+{"id":"299","question_id":"75","name":"04DH","is_correct":"0","created_at":"2026-02-02 11:36:38","updated_at":"2026-02-02 11:38:50","deleted_at":null,"name_tamil":"04DH"}
+{"id":"300","question_id":"75","name":"07BH","is_correct":"1","created_at":"2026-02-02 11:36:38","updated_at":"2026-02-02 11:36:38","deleted_at":null,"name_tamil":"07BH"}
+{"id":"301","question_id":"76","name":"4","is_correct":"1","created_at":"2026-02-02 11:45:19","updated_at":"2026-02-02 11:45:19","deleted_at":null,"name_tamil":"4"}
+{"id":"302","question_id":"76","name":"3","is_correct":"0","created_at":"2026-02-02 11:45:19","updated_at":"2026-02-02 11:45:19","deleted_at":null,"name_tamil":"3"}
+{"id":"303","question_id":"76","name":"5","is_correct":"0","created_at":"2026-02-02 11:45:19","updated_at":"2026-02-02 11:45:19","deleted_at":null,"name_tamil":"5"}
+{"id":"304","question_id":"76","name":"2","is_correct":"0","created_at":"2026-02-02 11:45:19","updated_at":"2026-02-02 11:45:19","deleted_at":null,"name_tamil":"2"}
+{"id":"305","question_id":"77","name":"2","is_correct":"0","created_at":"2026-02-02 11:59:55","updated_at":"2026-02-02 11:59:55","deleted_at":null,"name_tamil":"2"}
+{"id":"306","question_id":"77","name":"3","is_correct":"0","created_at":"2026-02-02 11:59:55","updated_at":"2026-02-02 11:59:55","deleted_at":null,"name_tamil":"3"}
+{"id":"307","question_id":"77","name":"1","is_correct":"1","created_at":"2026-02-02 11:59:55","updated_at":"2026-02-02 11:59:55","deleted_at":null,"name_tamil":"1"}
+{"id":"308","question_id":"77","name":"None","is_correct":"0","created_at":"2026-02-02 11:59:55","updated_at":"2026-02-02 11:59:55","deleted_at":null,"name_tamil":"இல்லை"}
+{"id":"309","question_id":"78","name":"5","is_correct":"0","created_at":"2026-02-02 12:03:56","updated_at":"2026-02-02 12:03:56","deleted_at":null,"name_tamil":"5"}
+{"id":"310","question_id":"78","name":"6","is_correct":"1","created_at":"2026-02-02 12:03:56","updated_at":"2026-02-02 12:03:56","deleted_at":null,"name_tamil":"6"}
+{"id":"311","question_id":"78","name":"4","is_correct":"0","created_at":"2026-02-02 12:03:56","updated_at":"2026-02-02 12:03:56","deleted_at":null,"name_tamil":"4"}
+{"id":"312","question_id":"78","name":"7","is_correct":"0","created_at":"2026-02-02 12:03:56","updated_at":"2026-02-02 12:03:56","deleted_at":null,"name_tamil":"7"}
+{"id":"313","question_id":"79","name":"KMSH","is_correct":"0","created_at":"2026-02-02 12:11:37","updated_at":"2026-02-02 12:11:37","deleted_at":null,"name_tamil":"கேஎம்எஸ்எச்"}
+{"id":"314","question_id":"79","name":"KHSM","is_correct":"0","created_at":"2026-02-02 12:11:37","updated_at":"2026-02-02 12:11:37","deleted_at":null,"name_tamil":"KHSM"}
+{"id":"315","question_id":"79","name":"KMHS","is_correct":"0","created_at":"2026-02-02 12:11:37","updated_at":"2026-02-02 12:11:37","deleted_at":null,"name_tamil":"KMHS"}
+{"id":"316","question_id":"79","name":"KHMS","is_correct":"1","created_at":"2026-02-02 12:11:37","updated_at":"2026-02-02 12:11:37","deleted_at":null,"name_tamil":"KHMS"}
+{"id":"317","question_id":"80","name":"G.Sadhana","is_correct":"1","created_at":"2026-02-02 12:17:21","updated_at":"2026-02-02 12:17:21","deleted_at":null,"name_tamil":"ஜி.சாதனா"}
+{"id":"318","question_id":"80","name":"D.Sabhana","is_correct":"0","created_at":"2026-02-02 12:17:21","updated_at":"2026-02-02 12:17:21","deleted_at":null,"name_tamil":"டி.சபானா"}
+{"id":"319","question_id":"80","name":"D.Sadhana","is_correct":"0","created_at":"2026-02-02 12:17:21","updated_at":"2026-02-02 12:17:21","deleted_at":null,"name_tamil":"டி.சாதனா"}
+{"id":"320","question_id":"80","name":"G.Sabhana","is_correct":"0","created_at":"2026-02-02 12:17:21","updated_at":"2026-02-02 12:17:21","deleted_at":null,"name_tamil":"ஜி.சபானா"}
+{"id":"321","question_id":"81","name":"D. Rubakaran","is_correct":"0","created_at":"2026-02-02 12:45:12","updated_at":"2026-03-20 16:32:12","deleted_at":null,"name_tamil":"டி.ரூபகரன்"}
+{"id":"322","question_id":"81","name":"M. Sundar","is_correct":"0","created_at":"2026-02-02 12:45:12","updated_at":"2026-02-02 12:45:12","deleted_at":null,"name_tamil":"எம்.சுந்தர்"}
+{"id":"323","question_id":"81","name":"N. Sundar","is_correct":"0","created_at":"2026-02-02 12:45:12","updated_at":"2026-02-02 12:45:12","deleted_at":null,"name_tamil":"என்.சுந்தர்"}
+{"id":"324","question_id":"81","name":"R. Rubakaran","is_correct":"1","created_at":"2026-02-02 12:45:12","updated_at":"2026-02-02 12:45:12","deleted_at":null,"name_tamil":"ஆர்.ரூபகரன்"}
+{"id":"325","question_id":"82","name":"Earthquakes","is_correct":"0","created_at":"2026-02-02 12:49:27","updated_at":"2026-02-02 12:49:27","deleted_at":null,"name_tamil":"பூகம்பங்கள்"}
+{"id":"326","question_id":"82","name":"Rainfall","is_correct":"1","created_at":"2026-02-02 12:49:27","updated_at":"2026-02-02 12:49:27","deleted_at":null,"name_tamil":"மழைப்பொழிவு"}
+{"id":"327","question_id":"82","name":"Landslides","is_correct":"0","created_at":"2026-02-02 12:49:27","updated_at":"2026-02-02 12:49:27","deleted_at":null,"name_tamil":"நிலச்சரிவுகள்"}
+{"id":"328","question_id":"82","name":"Flash Floods","is_correct":"0","created_at":"2026-02-02 12:49:27","updated_at":"2026-02-02 12:49:27","deleted_at":null,"name_tamil":"திடீர் வெள்ளம்"}
+{"id":"329","question_id":"83","name":"R. Rubaskaran","is_correct":"0","created_at":"2026-02-02 13:09:07","updated_at":"2026-02-02 13:09:07","deleted_at":null,"name_tamil":"ஆர்.ரூபஸ்கரன்"}
+{"id":"330","question_id":"83","name":"M. Sundar","is_correct":"1","created_at":"2026-02-02 13:09:07","updated_at":"2026-02-02 13:09:07","deleted_at":null,"name_tamil":"எம்.சுந்தர்"}
+{"id":"331","question_id":"83","name":"N. Sundar","is_correct":"0","created_at":"2026-02-02 13:09:07","updated_at":"2026-02-02 13:09:07","deleted_at":null,"name_tamil":"என்.சுந்தர்"}
+{"id":"332","question_id":"83","name":"R. Rubakaran","is_correct":"0","created_at":"2026-02-02 13:09:07","updated_at":"2026-02-02 13:09:07","deleted_at":null,"name_tamil":"ஆர்.ரூபகரன்"}
+{"id":"333","question_id":"84","name":"2 Holes in Silver","is_correct":"1","created_at":"2026-02-02 14:18:01","updated_at":"2026-02-02 14:18:01","deleted_at":null,"name_tamil":"வெள்ளியில் 2 துளைகள்"}
+{"id":"334","question_id":"84","name":"1 Hole in Silver","is_correct":"0","created_at":"2026-02-02 14:18:01","updated_at":"2026-02-02 14:18:01","deleted_at":null,"name_tamil":"வெள்ளியில் 1 துளை"}
+{"id":"335","question_id":"84","name":"2 Holes in Black","is_correct":"0","created_at":"2026-02-02 14:18:01","updated_at":"2026-02-02 14:18:01","deleted_at":null,"name_tamil":"கருப்பு நிறத்தில் 2 ஓட்டைகள்"}
+{"id":"336","question_id":"84","name":"1 Hole in Black","is_correct":"0","created_at":"2026-02-02 14:18:01","updated_at":"2026-02-02 14:18:01","deleted_at":null,"name_tamil":"கருப்பு நிறத்தில் 1 துளை"}
+{"id":"337","question_id":"85","name":"Bring Hari","is_correct":"0","created_at":"2026-02-02 15:11:42","updated_at":"2026-02-02 15:11:42","deleted_at":null,"name_tamil":"ஹரியை அழைத்து வா"}
+{"id":"338","question_id":"85","name":"Nasa Order","is_correct":"0","created_at":"2026-02-02 15:11:42","updated_at":"2026-02-02 15:11:42","deleted_at":null,"name_tamil":"நாசா உத்தரவு"}
+{"id":"339","question_id":"85","name":"Bring Aadhi","is_correct":"1","created_at":"2026-02-02 15:11:42","updated_at":"2026-02-02 15:11:42","deleted_at":null,"name_tamil":"ஆதி கொண்டு வா"}
+{"id":"340","question_id":"85","name":"ISRO Order","is_correct":"0","created_at":"2026-02-02 15:11:42","updated_at":"2026-02-02 15:11:42","deleted_at":null,"name_tamil":"இஸ்ரோ உத்தரவு"}
+{"id":"341","question_id":"86","name":"2","is_correct":"0","created_at":"2026-02-02 15:18:04","updated_at":"2026-02-02 15:18:04","deleted_at":null,"name_tamil":"2"}
+{"id":"342","question_id":"86","name":"1","is_correct":"0","created_at":"2026-02-02 15:18:04","updated_at":"2026-02-02 15:18:04","deleted_at":null,"name_tamil":"1"}
+{"id":"343","question_id":"86","name":"10","is_correct":"0","created_at":"2026-02-02 15:18:04","updated_at":"2026-02-02 15:18:04","deleted_at":null,"name_tamil":"10"}
+{"id":"344","question_id":"86","name":"20","is_correct":"1","created_at":"2026-02-02 15:18:04","updated_at":"2026-02-02 15:18:04","deleted_at":null,"name_tamil":"20"}
+{"id":"345","question_id":"87","name":"Black","is_correct":"0","created_at":"2026-02-02 15:20:20","updated_at":"2026-02-02 15:20:20","deleted_at":null,"name_tamil":"கருப்பு"}
+{"id":"346","question_id":"87","name":"Red","is_correct":"0","created_at":"2026-02-02 15:20:20","updated_at":"2026-02-02 15:20:20","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"347","question_id":"87","name":"Green","is_correct":"1","created_at":"2026-02-02 15:20:20","updated_at":"2026-02-02 15:25:49","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"348","question_id":"87","name":"None","is_correct":"0","created_at":"2026-02-02 15:20:20","updated_at":"2026-02-02 15:25:49","deleted_at":null,"name_tamil":"இல்லை"}
+{"id":"349","question_id":"88","name":"After hearing the News","is_correct":"0","created_at":"2026-02-02 15:50:15","updated_at":"2026-02-02 15:50:15","deleted_at":null,"name_tamil":"செய்தி கேட்ட பிறகு"}
+{"id":"350","question_id":"88","name":"Fear of Policeman","is_correct":"1","created_at":"2026-02-02 15:50:15","updated_at":"2026-02-09 14:32:03","deleted_at":null,"name_tamil":"போலீஸ்காரருக்கு பயம்"}
+{"id":"351","question_id":"88","name":"Bought the Medicine","is_correct":"0","created_at":"2026-02-02 15:50:15","updated_at":"2026-02-09 14:32:03","deleted_at":null,"name_tamil":"மருந்து வாங்கினார்"}
+{"id":"352","question_id":"88","name":"None","is_correct":"0","created_at":"2026-02-02 15:50:15","updated_at":"2026-02-02 15:50:15","deleted_at":null,"name_tamil":"இல்லை"}
+{"id":"353","question_id":"89","name":"5","is_correct":"1","created_at":"2026-02-02 15:57:32","updated_at":"2026-02-02 15:57:32","deleted_at":null,"name_tamil":"5"}
+{"id":"354","question_id":"89","name":"4","is_correct":"0","created_at":"2026-02-02 15:57:32","updated_at":"2026-02-02 15:57:32","deleted_at":null,"name_tamil":"4"}
+{"id":"355","question_id":"89","name":"6","is_correct":"0","created_at":"2026-02-02 15:57:32","updated_at":"2026-02-02 15:57:32","deleted_at":null,"name_tamil":"6"}
+{"id":"356","question_id":"89","name":"3","is_correct":"0","created_at":"2026-02-02 15:57:32","updated_at":"2026-02-02 15:57:32","deleted_at":null,"name_tamil":"3"}
+{"id":"357","question_id":"90","name":"Aerophobia","is_correct":"0","created_at":"2026-02-02 16:05:53","updated_at":"2026-02-02 16:05:53","deleted_at":null,"name_tamil":"ஏரோபோபியா"}
+{"id":"358","question_id":"90","name":"Pyrophobia","is_correct":"0","created_at":"2026-02-02 16:05:53","updated_at":"2026-02-02 16:05:53","deleted_at":null,"name_tamil":"பைரோபோபியா"}
+{"id":"359","question_id":"90","name":"Hydrophobia","is_correct":"1","created_at":"2026-02-02 16:05:53","updated_at":"2026-02-02 16:05:53","deleted_at":null,"name_tamil":"ஹைட்ரோபோபியா"}
+{"id":"360","question_id":"90","name":"Acrophobia","is_correct":"0","created_at":"2026-02-02 16:05:53","updated_at":"2026-02-02 16:05:53","deleted_at":null,"name_tamil":"அக்ரோபோபியா"}
+{"id":"361","question_id":"91","name":"To save the dog from falling on the boy","is_correct":"0","created_at":"2026-02-02 16:37:59","updated_at":"2026-02-02 16:37:59","deleted_at":null,"name_tamil":"சிறுவன் மீது விழுந்த நாயைக் காப்பாற்ற"}
+{"id":"362","question_id":"91","name":"To save the dog from falling on the girl","is_correct":"0","created_at":"2026-02-02 16:37:59","updated_at":"2026-02-02 16:37:59","deleted_at":null,"name_tamil":"பெண் மீது படாமல் நாய் காப்பாற்ற"}
+{"id":"363","question_id":"91","name":"To save the boy from falling on the dog","is_correct":"0","created_at":"2026-02-02 16:37:59","updated_at":"2026-02-02 16:37:59","deleted_at":null,"name_tamil":"நாய் மீது விழுந்த சிறுவனை காப்பாற்ற"}
+{"id":"364","question_id":"91","name":"To save the girl from falling on the dog","is_correct":"1","created_at":"2026-02-02 16:37:59","updated_at":"2026-02-02 16:37:59","deleted_at":null,"name_tamil":"நாயின் மீது படாமல் சிறுமியை காப்பாற்ற"}
+{"id":"365","question_id":"92","name":"Guru Bailwan","is_correct":"0","created_at":"2026-02-02 16:47:33","updated_at":"2026-02-02 16:47:33","deleted_at":null,"name_tamil":"குரு பைலவான்"}
+{"id":"366","question_id":"92","name":"Guru Bairavan","is_correct":"1","created_at":"2026-02-02 16:47:33","updated_at":"2026-02-02 16:47:33","deleted_at":null,"name_tamil":"குரு பைரவன்"}
+{"id":"367","question_id":"92","name":"Guru Bavanan","is_correct":"0","created_at":"2026-02-02 16:47:33","updated_at":"2026-02-02 16:47:33","deleted_at":null,"name_tamil":"குரு பாவாணன்"}
+{"id":"368","question_id":"92","name":"Guru Braman","is_correct":"0","created_at":"2026-02-02 16:47:33","updated_at":"2026-02-02 16:47:33","deleted_at":null,"name_tamil":"குரு பிரமன்"}
+{"id":"369","question_id":"93","name":"Mayilanji","is_correct":"1","created_at":"2026-02-02 17:10:38","updated_at":"2026-02-02 17:10:38","deleted_at":null,"name_tamil":"மயிலஞ்சி"}
+{"id":"370","question_id":"93","name":"Kulanji","is_correct":"0","created_at":"2026-02-02 17:10:38","updated_at":"2026-02-02 17:10:38","deleted_at":null,"name_tamil":"குளஞ்சி"}
+{"id":"371","question_id":"93","name":"Kurinji","is_correct":"0","created_at":"2026-02-02 17:10:38","updated_at":"2026-02-02 17:10:38","deleted_at":null,"name_tamil":"குறிஞ்சி"}
+{"id":"372","question_id":"93","name":"Naidupuram","is_correct":"0","created_at":"2026-02-02 17:10:38","updated_at":"2026-02-02 17:10:38","deleted_at":null,"name_tamil":"நாயுடுபுரம்"}
+{"id":"373","question_id":"94","name":"Bus stand","is_correct":"0","created_at":"2026-02-02 17:16:31","updated_at":"2026-02-02 17:16:31","deleted_at":null,"name_tamil":"பேருந்து நிலையம்"}
+{"id":"374","question_id":"94","name":"Tea Shop","is_correct":"1","created_at":"2026-02-02 17:16:31","updated_at":"2026-02-02 17:16:31","deleted_at":null,"name_tamil":"தேநீர் கடை"}
+{"id":"375","question_id":"94","name":"Hotel","is_correct":"0","created_at":"2026-02-02 17:16:31","updated_at":"2026-02-02 17:16:31","deleted_at":null,"name_tamil":"ஹோட்டல்"}
+{"id":"376","question_id":"94","name":"Side of the road","is_correct":"0","created_at":"2026-02-02 17:16:31","updated_at":"2026-02-02 17:16:31","deleted_at":null,"name_tamil":"சாலையின் ஓரம்"}
+{"id":"377","question_id":"95","name":"14","is_correct":"1","created_at":"2026-02-02 17:20:57","updated_at":"2026-02-02 17:20:57","deleted_at":null,"name_tamil":"14"}
+{"id":"378","question_id":"95","name":"15","is_correct":"0","created_at":"2026-02-02 17:20:57","updated_at":"2026-02-02 17:20:57","deleted_at":null,"name_tamil":"15"}
+{"id":"379","question_id":"95","name":"16","is_correct":"0","created_at":"2026-02-02 17:20:57","updated_at":"2026-02-02 17:20:57","deleted_at":null,"name_tamil":"16"}
+{"id":"380","question_id":"95","name":"17","is_correct":"0","created_at":"2026-02-02 17:20:57","updated_at":"2026-02-02 17:20:57","deleted_at":null,"name_tamil":"17"}
+{"id":"381","question_id":"96","name":"3 hours","is_correct":"0","created_at":"2026-02-02 17:25:08","updated_at":"2026-02-02 17:25:08","deleted_at":null,"name_tamil":"3 மணி நேரம்"}
+{"id":"382","question_id":"96","name":"4 hours","is_correct":"0","created_at":"2026-02-02 17:25:08","updated_at":"2026-02-02 17:25:08","deleted_at":null,"name_tamil":"4 மணி நேரம்"}
+{"id":"383","question_id":"96","name":"more than 4 hours","is_correct":"0","created_at":"2026-02-02 17:25:08","updated_at":"2026-02-02 17:25:08","deleted_at":null,"name_tamil":"4 மணி நேரத்திற்கும் மேலாக"}
+{"id":"384","question_id":"96","name":"None of the above","is_correct":"1","created_at":"2026-02-02 17:25:08","updated_at":"2026-02-02 17:25:08","deleted_at":null,"name_tamil":"மேலே எதுவும் இல்லை"}
+{"id":"385","question_id":"97","name":"Nine and half hour's","is_correct":"0","created_at":"2026-02-02 17:32:57","updated_at":"2026-02-02 17:32:57","deleted_at":null,"name_tamil":"ஒன்பதரை மணி நேரம்"}
+{"id":"386","question_id":"97","name":"More than Nine hour's","is_correct":"0","created_at":"2026-02-02 17:32:57","updated_at":"2026-02-02 17:32:57","deleted_at":null,"name_tamil":"ஒன்பது மணி நேரத்திற்கு மேல்"}
+{"id":"387","question_id":"97","name":"Nine hour's","is_correct":"1","created_at":"2026-02-02 17:32:57","updated_at":"2026-02-02 17:32:57","deleted_at":null,"name_tamil":"ஒன்பது மணி"}
+{"id":"388","question_id":"97","name":"Less than Nine hour's","is_correct":"0","created_at":"2026-02-02 17:32:57","updated_at":"2026-02-02 17:32:57","deleted_at":null,"name_tamil":"ஒன்பது மணி நேரத்திற்கும் குறைவானது"}
+{"id":"389","question_id":"98","name":"Can Sleep","is_correct":"0","created_at":"2026-02-02 17:49:00","updated_at":"2026-02-02 17:49:00","deleted_at":null,"name_tamil":"தூங்க முடியும்"}
+{"id":"390","question_id":"98","name":"Ant Sleep's","is_correct":"0","created_at":"2026-02-02 17:49:00","updated_at":"2026-02-02 17:49:00","deleted_at":null,"name_tamil":"எறும்பு தூக்கம்"}
+{"id":"391","question_id":"98","name":"Ain't Sleep","is_correct":"0","created_at":"2026-02-02 17:49:00","updated_at":"2026-02-02 17:49:00","deleted_at":null,"name_tamil":"தூக்கம் இல்லை"}
+{"id":"392","question_id":"98","name":"Can't Sleep","is_correct":"1","created_at":"2026-02-02 17:49:00","updated_at":"2026-02-02 17:49:00","deleted_at":null,"name_tamil":"தூங்க முடியாது"}
+{"id":"393","question_id":"99","name":"09:58","is_correct":"1","created_at":"2026-02-02 17:54:51","updated_at":"2026-02-02 17:54:51","deleted_at":null,"name_tamil":"09:58"}
+{"id":"394","question_id":"99","name":"10:00","is_correct":"0","created_at":"2026-02-02 17:54:51","updated_at":"2026-02-02 17:54:51","deleted_at":null,"name_tamil":"10:00"}
+{"id":"395","question_id":"99","name":"10:03","is_correct":"0","created_at":"2026-02-02 17:54:51","updated_at":"2026-02-02 17:54:51","deleted_at":null,"name_tamil":"10:03"}
+{"id":"396","question_id":"99","name":"11:50","is_correct":"0","created_at":"2026-02-02 17:54:51","updated_at":"2026-02-02 17:54:51","deleted_at":null,"name_tamil":"11:50"}
+{"id":"397","question_id":"100","name":"Apr 16","is_correct":"0","created_at":"2026-02-02 18:05:58","updated_at":"2026-02-02 18:05:58","deleted_at":null,"name_tamil":"ஏப். 16"}
+{"id":"398","question_id":"100","name":"Feb 14","is_correct":"0","created_at":"2026-02-02 18:05:58","updated_at":"2026-02-02 18:05:58","deleted_at":null,"name_tamil":"பிப்ரவரி 14"}
+{"id":"399","question_id":"100","name":"Jan 15","is_correct":"0","created_at":"2026-02-02 18:05:58","updated_at":"2026-02-02 18:05:58","deleted_at":null,"name_tamil":"ஜனவரி 15"}
+{"id":"400","question_id":"100","name":"None of the above","is_correct":"1","created_at":"2026-02-02 18:05:58","updated_at":"2026-02-02 18:05:58","deleted_at":null,"name_tamil":"மேலே எதுவும் இல்லை"}
+{"id":"401","question_id":"101","name":"Pot with white flower","is_correct":"1","created_at":"2026-02-02 18:14:12","updated_at":"2026-02-02 18:14:12","deleted_at":null,"name_tamil":"வெள்ளை பூ கொண்ட பானை"}
+{"id":"402","question_id":"101","name":"Pot with Green Plant","is_correct":"0","created_at":"2026-02-02 18:14:12","updated_at":"2026-02-02 18:14:12","deleted_at":null,"name_tamil":"பச்சை தாவரத்துடன் பானை"}
+{"id":"403","question_id":"101","name":"Pot with No flower","is_correct":"0","created_at":"2026-02-02 18:14:12","updated_at":"2026-02-02 18:14:12","deleted_at":null,"name_tamil":"பூ இல்லாத பானை"}
+{"id":"404","question_id":"101","name":"None of the above","is_correct":"0","created_at":"2026-02-02 18:14:12","updated_at":"2026-02-02 18:14:12","deleted_at":null,"name_tamil":"மேலே எதுவும் இல்லை"}
+{"id":"405","question_id":"102","name":"Through Hari","is_correct":"0","created_at":"2026-02-02 18:18:47","updated_at":"2026-02-02 18:18:47","deleted_at":null,"name_tamil":"ஹரி மூலம்"}
+{"id":"406","question_id":"102","name":"Through Bodyguard","is_correct":"0","created_at":"2026-02-02 18:18:47","updated_at":"2026-02-02 18:18:47","deleted_at":null,"name_tamil":"மெய்க்காப்பாளர் மூலம்"}
+{"id":"407","question_id":"102","name":"Through Inspector","is_correct":"0","created_at":"2026-02-02 18:18:47","updated_at":"2026-02-02 18:18:47","deleted_at":null,"name_tamil":"இன்ஸ்பெக்டர் மூலம்"}
+{"id":"408","question_id":"102","name":"Through Constable","is_correct":"1","created_at":"2026-02-02 18:18:47","updated_at":"2026-02-02 18:18:47","deleted_at":null,"name_tamil":"கான்ஸ்டபிள் மூலம்"}
+{"id":"409","question_id":"103","name":"Sleeping Buddha","is_correct":"0","created_at":"2026-02-02 18:25:05","updated_at":"2026-02-02 18:25:05","deleted_at":null,"name_tamil":"தூங்கும் புத்தர்"}
+{"id":"410","question_id":"103","name":"Green Buddha","is_correct":"1","created_at":"2026-02-02 18:25:05","updated_at":"2026-02-02 18:25:05","deleted_at":null,"name_tamil":"பச்சை புத்தர்"}
+{"id":"411","question_id":"103","name":"Green Stone","is_correct":"0","created_at":"2026-02-02 18:25:05","updated_at":"2026-02-02 18:25:05","deleted_at":null,"name_tamil":"பச்சை கல்"}
+{"id":"412","question_id":"103","name":"Green Mask face","is_correct":"0","created_at":"2026-02-02 18:25:05","updated_at":"2026-02-02 18:25:05","deleted_at":null,"name_tamil":"பச்சை முகமூடி முகம்"}
+{"id":"413","question_id":"104","name":"Constable","is_correct":"0","created_at":"2026-02-02 18:32:16","updated_at":"2026-02-02 18:32:16","deleted_at":null,"name_tamil":"கான்ஸ்டபிள்"}
+{"id":"414","question_id":"104","name":"Raja","is_correct":"1","created_at":"2026-02-02 18:32:16","updated_at":"2026-02-02 18:32:16","deleted_at":null,"name_tamil":"ராஜா"}
+{"id":"415","question_id":"104","name":"Vairavel's Driver","is_correct":"0","created_at":"2026-02-02 18:32:16","updated_at":"2026-02-02 18:32:16","deleted_at":null,"name_tamil":"வைரவேலின் டிரைவர்"}
+{"id":"416","question_id":"104","name":"Minister's Bodyguard","is_correct":"0","created_at":"2026-02-02 18:32:16","updated_at":"2026-02-02 18:32:16","deleted_at":null,"name_tamil":"அமைச்சரின் மெய்க்காப்பாளர்"}
+{"id":"417","question_id":"105","name":"Bharathiraja","is_correct":"0","created_at":"2026-02-02 18:35:45","updated_at":"2026-02-02 18:35:45","deleted_at":null,"name_tamil":"பாரதிராஜா"}
+{"id":"418","question_id":"105","name":"Rajan","is_correct":"0","created_at":"2026-02-02 18:35:45","updated_at":"2026-02-02 18:35:45","deleted_at":null,"name_tamil":"ராஜன்"}
+{"id":"419","question_id":"105","name":"Raja","is_correct":"1","created_at":"2026-02-02 18:35:45","updated_at":"2026-02-02 18:35:45","deleted_at":null,"name_tamil":"ராஜா"}
+{"id":"420","question_id":"105","name":"Ruban","is_correct":"0","created_at":"2026-02-02 18:35:45","updated_at":"2026-02-02 18:35:45","deleted_at":null,"name_tamil":"ரூபன்"}
+{"id":"421","question_id":"106","name":"30","is_correct":"0","created_at":"2026-02-02 18:37:50","updated_at":"2026-02-02 18:37:50","deleted_at":null,"name_tamil":"30"}
+{"id":"422","question_id":"106","name":"10","is_correct":"0","created_at":"2026-02-02 18:37:50","updated_at":"2026-02-02 18:37:50","deleted_at":null,"name_tamil":"10"}
+{"id":"423","question_id":"106","name":"7","is_correct":"0","created_at":"2026-02-02 18:37:50","updated_at":"2026-02-02 18:38:07","deleted_at":null,"name_tamil":"7"}
+{"id":"424","question_id":"106","name":"20","is_correct":"1","created_at":"2026-02-02 18:37:50","updated_at":"2026-02-02 18:37:50","deleted_at":null,"name_tamil":"20"}
+{"id":"425","question_id":"107","name":"06:40 am","is_correct":"0","created_at":"2026-02-02 18:42:40","updated_at":"2026-02-02 18:42:40","deleted_at":null,"name_tamil":"காலை 06:40 மணி"}
+{"id":"426","question_id":"107","name":"09:35 am","is_correct":"0","created_at":"2026-02-02 18:42:40","updated_at":"2026-02-02 18:42:40","deleted_at":null,"name_tamil":"காலை 09:35"}
+{"id":"427","question_id":"107","name":"06:45 am","is_correct":"1","created_at":"2026-02-02 18:42:40","updated_at":"2026-02-02 18:42:40","deleted_at":null,"name_tamil":"காலை 06:45"}
+{"id":"428","question_id":"107","name":"07:45 am","is_correct":"0","created_at":"2026-02-02 18:42:40","updated_at":"2026-02-02 18:42:40","deleted_at":null,"name_tamil":"காலை 07:45"}
+{"id":"429","question_id":"108","name":"3","is_correct":"1","created_at":"2026-02-02 18:45:26","updated_at":"2026-02-02 18:45:26","deleted_at":null,"name_tamil":"3"}
+{"id":"430","question_id":"108","name":"4","is_correct":"0","created_at":"2026-02-02 18:45:26","updated_at":"2026-02-02 18:45:26","deleted_at":null,"name_tamil":"4"}
+{"id":"431","question_id":"108","name":"5","is_correct":"0","created_at":"2026-02-02 18:45:26","updated_at":"2026-02-02 18:45:26","deleted_at":null,"name_tamil":"5"}
+{"id":"432","question_id":"108","name":"6","is_correct":"0","created_at":"2026-02-02 18:45:26","updated_at":"2026-02-02 18:45:26","deleted_at":null,"name_tamil":"6"}
+{"id":"433","question_id":"109","name":"To get rabies","is_correct":"0","created_at":"2026-02-02 18:53:48","updated_at":"2026-02-02 18:56:23","deleted_at":null,"name_tamil":"ரேபிஸ் வருவதற்கு"}
+{"id":"434","question_id":"109","name":"Rajadurai debond both","is_correct":"0","created_at":"2026-02-02 18:53:48","updated_at":"2026-02-02 18:56:23","deleted_at":null,"name_tamil":"ராஜதுரை இருவரையும் விலக்கினார்"}
+{"id":"435","question_id":"109","name":"Vairavelu debond both","is_correct":"1","created_at":"2026-02-02 18:53:48","updated_at":"2026-02-02 18:56:23","deleted_at":null,"name_tamil":"வைரவேலு இருவரையும் பிரிக்கிறார்"}
+{"id":"436","question_id":"109","name":"Hari asked to care","is_correct":"0","created_at":"2026-02-02 18:53:48","updated_at":"2026-02-02 18:56:23","deleted_at":null,"name_tamil":"ஹரி அக்கறையுடன் கேட்டான்"}
+{"id":"437","question_id":"110","name":"மெய்வருத்தக் கூலி","is_correct":"1","created_at":"2026-02-02 19:05:16","updated_at":"2026-02-02 19:05:16","deleted_at":null,"name_tamil":"மெய்வருத்தக் கூலி"}
+{"id":"438","question_id":"110","name":"மொய்வருத்தக் கூளி","is_correct":"0","created_at":"2026-02-02 19:05:16","updated_at":"2026-02-02 19:05:16","deleted_at":null,"name_tamil":"மொய்வருத்தக் கூளி"}
+{"id":"439","question_id":"110","name":"மொய்வருத்தக் கூலி","is_correct":"0","created_at":"2026-02-02 19:05:16","updated_at":"2026-02-02 19:05:16","deleted_at":null,"name_tamil":"மொய்வருத்தக் கூலி"}
+{"id":"440","question_id":"110","name":"மெய்வருத்தக் கூளி","is_correct":"0","created_at":"2026-02-02 19:05:16","updated_at":"2026-02-02 19:05:16","deleted_at":null,"name_tamil":"மெய்வருத்தக் கூளி"}
+{"id":"441","question_id":"111","name":"Medical Client","is_correct":"0","created_at":"2026-02-02 19:09:20","updated_at":"2026-02-02 19:09:20","deleted_at":null,"name_tamil":"மருத்துவ வாடிக்கையாளர்"}
+{"id":"442","question_id":"111","name":"Medical Rep","is_correct":"1","created_at":"2026-02-02 19:09:20","updated_at":"2026-02-02 19:09:20","deleted_at":null,"name_tamil":"மருத்துவ பிரதிநிதி"}
+{"id":"443","question_id":"111","name":"Medical Doctor","is_correct":"0","created_at":"2026-02-02 19:09:20","updated_at":"2026-02-02 19:09:20","deleted_at":null,"name_tamil":"மருத்துவ மருத்துவர்"}
+{"id":"444","question_id":"111","name":"None of the above","is_correct":"0","created_at":"2026-02-02 19:09:20","updated_at":"2026-02-02 19:09:20","deleted_at":null,"name_tamil":"மேலே எதுவும் இல்லை"}
+{"id":"445","question_id":"112","name":"Red","is_correct":"1","created_at":"2026-02-02 19:14:00","updated_at":"2026-02-02 19:14:00","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"446","question_id":"112","name":"Green","is_correct":"0","created_at":"2026-02-02 19:14:00","updated_at":"2026-02-02 19:14:00","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"447","question_id":"112","name":"white","is_correct":"0","created_at":"2026-02-02 19:14:00","updated_at":"2026-02-02 19:14:00","deleted_at":null,"name_tamil":"வெள்ளை"}
+{"id":"448","question_id":"112","name":"None","is_correct":"0","created_at":"2026-02-02 19:14:00","updated_at":"2026-02-02 19:14:00","deleted_at":null,"name_tamil":"இல்லை"}
+{"id":"857","question_id":"215","name":"Nine","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"ஒன்பது"}
+{"id":"858","question_id":"215","name":"Three","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"மூன்று"}
+{"id":"859","question_id":"215","name":"Five","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"ஐந்து"}
+{"id":"860","question_id":"215","name":"Seven","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"ஏழு"}
+{"id":"861","question_id":"216","name":"Green","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:22:03","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"862","question_id":"216","name":"Red","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:20:07","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"863","question_id":"216","name":"Brown","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:20:07","deleted_at":null,"name_tamil":"பழுப்பு"}
+{"id":"864","question_id":"216","name":"Black","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:20:07","deleted_at":null,"name_tamil":"கருப்பு"}
+{"id":"865","question_id":"217","name":"2","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:09:28","deleted_at":null,"name_tamil":"2"}
+{"id":"866","question_id":"217","name":"3","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:09:28","deleted_at":null,"name_tamil":"3"}
+{"id":"867","question_id":"217","name":"4","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:09:28","deleted_at":null,"name_tamil":"4"}
+{"id":"868","question_id":"217","name":"1","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-05-12 10:09:28","deleted_at":null,"name_tamil":"1"}
+{"id":"873","question_id":"219","name":"Lion","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"சிங்கம்"}
+{"id":"874","question_id":"219","name":"Bear","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"கரடி"}
+{"id":"875","question_id":"219","name":"Elephant","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"யானை"}
+{"id":"876","question_id":"219","name":"Rabbit","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"முயல்"}
+{"id":"881","question_id":"221","name":"Two","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"இரண்டு"}
+{"id":"882","question_id":"221","name":"One","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"ஒன்று"}
+{"id":"883","question_id":"221","name":"Three","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"மூன்று"}
+{"id":"884","question_id":"221","name":"None","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"இல்லை"}
+{"id":"885","question_id":"222","name":"Mountain","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"மலை"}
+{"id":"886","question_id":"222","name":"Arrow","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"அம்பு"}
+{"id":"887","question_id":"222","name":"Winged B","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"சிறகு பி"}
+{"id":"888","question_id":"222","name":"Circle S","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"வட்டம் எஸ்"}
+{"id":"889","question_id":"223","name":"Blue","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"நீலம்"}
+{"id":"890","question_id":"223","name":"Silver","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"வெள்ளி"}
+{"id":"891","question_id":"223","name":"Gold","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"தங்கம்"}
+{"id":"892","question_id":"223","name":"Purple","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"ஊதா"}
+{"id":"901","question_id":"226","name":"Red","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"902","question_id":"226","name":"Green","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"903","question_id":"226","name":"Black","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"கருப்பு"}
+{"id":"904","question_id":"226","name":"Blue","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"நீலம்"}
+{"id":"905","question_id":"227","name":"WELCOME","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"வரவேற்கிறோம்"}
+{"id":"906","question_id":"227","name":"OPEN","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"திறந்த"}
+{"id":"907","question_id":"227","name":"COFFEE","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"காபி"}
+{"id":"908","question_id":"227","name":"CLOSED","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"மூடப்பட்டது"}
+{"id":"921","question_id":"231","name":"Wave","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"அலை"}
+{"id":"922","question_id":"231","name":"Leaf","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"இலை"}
+{"id":"923","question_id":"231","name":"Globe","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"பூகோளம்"}
+{"id":"924","question_id":"231","name":"Star","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"நட்சத்திரம்"}
+{"id":"925","question_id":"232","name":"5","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"5"}
+{"id":"926","question_id":"232","name":"4","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"4"}
+{"id":"927","question_id":"232","name":"6","is_correct":"1","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"6"}
+{"id":"928","question_id":"232","name":"7","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"7"}
+{"id":"929","question_id":"233","name":"Purple","is_correct":"0","created_at":"2026-03-12 10:09:01","updated_at":"2026-03-12 10:09:01","deleted_at":null,"name_tamil":"ஊதா"}
+{"id":"930","question_id":"233","name":"Beige","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"பழுப்பு நிறம்"}
+{"id":"931","question_id":"233","name":"Grey","is_correct":"1","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"சாம்பல்"}
+{"id":"932","question_id":"233","name":"Brown","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"பழுப்பு"}
+{"id":"937","question_id":"235","name":"30","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"30"}
+{"id":"938","question_id":"235","name":"26","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"26"}
+{"id":"939","question_id":"235","name":"16","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"16"}
+{"id":"940","question_id":"235","name":"22","is_correct":"1","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"22"}
+{"id":"949","question_id":"238","name":"2","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"2"}
+{"id":"950","question_id":"238","name":"4","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"4"}
+{"id":"951","question_id":"238","name":"3","is_correct":"1","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"3"}
+{"id":"952","question_id":"238","name":"1","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"1"}
+{"id":"957","question_id":"240","name":"Red","is_correct":"1","created_at":"2026-03-12 10:09:02","updated_at":"2026-05-12 10:21:11","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"958","question_id":"240","name":"Brown","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-05-12 10:22:21","deleted_at":null,"name_tamil":"பழுப்பு"}
+{"id":"959","question_id":"240","name":"Black","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"கருப்பு"}
+{"id":"960","question_id":"240","name":"Green","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"961","question_id":"241","name":"1845","is_correct":"1","created_at":"2026-03-12 10:09:02","updated_at":"2026-05-21 13:02:48","deleted_at":null,"name_tamil":"1845"}
+{"id":"962","question_id":"241","name":"2371","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"2371"}
+{"id":"963","question_id":"241","name":"7401","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"7401"}
+{"id":"964","question_id":"241","name":"1298","is_correct":"0","created_at":"2026-03-12 10:09:02","updated_at":"2026-03-12 10:09:02","deleted_at":null,"name_tamil":"1298"}
+{"id":"969","question_id":"243","name":"TN 10 ET 8684","is_correct":"0","created_at":"2026-05-11 10:30:50","updated_at":"2026-05-11 10:35:00","deleted_at":null,"name_tamil":"TN 10 ET 8684"}
+{"id":"970","question_id":"243","name":"TN 10 ED 8634","is_correct":"0","created_at":"2026-05-11 10:30:50","updated_at":"2026-05-11 10:35:00","deleted_at":null,"name_tamil":"TN 10 ED 8634"}
+{"id":"971","question_id":"243","name":"TN 10 DT 8684","is_correct":"0","created_at":"2026-05-11 10:30:50","updated_at":"2026-05-11 10:30:50","deleted_at":null,"name_tamil":"TN 10 DT 8684"}
+{"id":"972","question_id":"243","name":"TN 10 BT 8634","is_correct":"1","created_at":"2026-05-11 10:30:50","updated_at":"2026-05-11 10:30:50","deleted_at":null,"name_tamil":"TN 10 BT 8634"}
+{"id":"973","question_id":"244","name":"Observational Astronomy","is_correct":"0","created_at":"2026-05-11 10:53:26","updated_at":"2026-05-11 10:53:26","deleted_at":null,"name_tamil":"கண்காணிப்பு வானியல்"}
+{"id":"974","question_id":"244","name":"Astronomy & Observation","is_correct":"1","created_at":"2026-05-11 10:53:26","updated_at":"2026-05-11 10:53:26","deleted_at":null,"name_tamil":"வானியல் & கவனிப்பு"}
+{"id":"975","question_id":"244","name":"Astrophysics Simulation","is_correct":"0","created_at":"2026-05-11 10:53:26","updated_at":"2026-05-11 10:53:26","deleted_at":null,"name_tamil":"வானியற்பியல் உருவகப்படுத்துதல்"}
+{"id":"976","question_id":"244","name":"Astronomical Techniques","is_correct":"0","created_at":"2026-05-11 10:53:26","updated_at":"2026-05-11 10:53:26","deleted_at":null,"name_tamil":"வானியல் நுட்பங்கள்"}
+{"id":"977","question_id":"245","name":"4","is_correct":"1","created_at":"2026-05-11 11:33:07","updated_at":"2026-05-11 11:33:07","deleted_at":null,"name_tamil":"4"}
+{"id":"978","question_id":"245","name":"2","is_correct":"0","created_at":"2026-05-11 11:33:07","updated_at":"2026-05-11 11:33:07","deleted_at":null,"name_tamil":"2"}
+{"id":"979","question_id":"245","name":"3","is_correct":"0","created_at":"2026-05-11 11:33:07","updated_at":"2026-05-11 11:33:07","deleted_at":null,"name_tamil":"3"}
+{"id":"980","question_id":"245","name":"1","is_correct":"0","created_at":"2026-05-11 11:33:07","updated_at":"2026-05-11 11:33:07","deleted_at":null,"name_tamil":"1"}
+{"id":"981","question_id":"246","name":"6","is_correct":"0","created_at":"2026-05-12 10:32:40","updated_at":"2026-05-12 10:32:40","deleted_at":null,"name_tamil":"6"}
+{"id":"982","question_id":"246","name":"5","is_correct":"1","created_at":"2026-05-12 10:32:40","updated_at":"2026-05-12 10:32:40","deleted_at":null,"name_tamil":"5"}
+{"id":"983","question_id":"246","name":"7","is_correct":"0","created_at":"2026-05-12 10:32:40","updated_at":"2026-05-12 10:32:40","deleted_at":null,"name_tamil":"7"}
+{"id":"984","question_id":"246","name":"4","is_correct":"0","created_at":"2026-05-12 10:32:40","updated_at":"2026-05-12 10:32:40","deleted_at":null,"name_tamil":"4"}
+{"id":"985","question_id":"247","name":"4","is_correct":"1","created_at":"2026-05-12 10:38:15","updated_at":"2026-05-12 10:38:15","deleted_at":null,"name_tamil":"4"}
+{"id":"986","question_id":"247","name":"3","is_correct":"0","created_at":"2026-05-12 10:38:15","updated_at":"2026-05-12 10:38:15","deleted_at":null,"name_tamil":"3"}
+{"id":"987","question_id":"247","name":"2","is_correct":"0","created_at":"2026-05-12 10:38:15","updated_at":"2026-05-12 10:38:15","deleted_at":null,"name_tamil":"2"}
+{"id":"988","question_id":"247","name":"1","is_correct":"0","created_at":"2026-05-12 10:38:15","updated_at":"2026-05-12 10:38:15","deleted_at":null,"name_tamil":"1"}
+{"id":"989","question_id":"248","name":"NS. VISHNU","is_correct":"0","created_at":"2026-05-16 16:16:11","updated_at":"2026-05-16 16:16:11","deleted_at":null,"name_tamil":"என்.எஸ். "}
+{"id":"990","question_id":"248","name":"MS. VISNU","is_correct":"0","created_at":"2026-05-16 16:16:11","updated_at":"2026-05-16 16:16:11","deleted_at":null,"name_tamil":"எம்.எஸ். "}
+{"id":"991","question_id":"248","name":"MS. VISHNU","is_correct":"1","created_at":"2026-05-16 16:16:11","updated_at":"2026-05-16 16:16:11","deleted_at":null,"name_tamil":"எம்.எஸ். "}
+{"id":"992","question_id":"248","name":"NS. JISHNU","is_correct":"0","created_at":"2026-05-16 16:16:11","updated_at":"2026-05-16 16:16:11","deleted_at":null,"name_tamil":"என்.எஸ். "}
+{"id":"993","question_id":"249","name":"8","is_correct":"0","created_at":"2026-05-19 10:27:46","updated_at":"2026-05-19 10:27:46","deleted_at":null,"name_tamil":"8"}
+{"id":"994","question_id":"249","name":"7","is_correct":"1","created_at":"2026-05-19 10:27:46","updated_at":"2026-05-19 10:27:46","deleted_at":null,"name_tamil":"7"}
+{"id":"995","question_id":"249","name":"6","is_correct":"0","created_at":"2026-05-19 10:27:46","updated_at":"2026-05-19 10:27:46","deleted_at":null,"name_tamil":"6"}
+{"id":"996","question_id":"249","name":"5","is_correct":"0","created_at":"2026-05-19 10:27:46","updated_at":"2026-05-19 10:27:46","deleted_at":null,"name_tamil":"5"}
+{"id":"997","question_id":"250","name":"To visit USS","is_correct":"0","created_at":"2026-05-19 10:57:19","updated_at":"2026-05-19 10:57:19","deleted_at":null,"name_tamil":"USS ஐப் பார்வையிட"}
+{"id":"998","question_id":"250","name":"To visit USA","is_correct":"0","created_at":"2026-05-19 10:57:19","updated_at":"2026-05-19 10:57:19","deleted_at":null,"name_tamil":"அமெரிக்காவுக்குச் செல்ல"}
+{"id":"999","question_id":"250","name":"To Visit INASA","is_correct":"0","created_at":"2026-05-19 10:57:19","updated_at":"2026-05-19 10:57:19","deleted_at":null,"name_tamil":"ஐநாசாவைப் பார்வையிட"}
+{"id":"1000","question_id":"250","name":"To visit NASA","is_correct":"1","created_at":"2026-05-19 10:57:19","updated_at":"2026-05-19 10:57:19","deleted_at":null,"name_tamil":"நாசாவைப் பார்வையிட"}
+{"id":"1001","question_id":"251","name":"To notify Gopal's 5 Crore corruption","is_correct":"0","created_at":"2026-05-19 11:19:35","updated_at":"2026-05-19 11:19:35","deleted_at":null,"name_tamil":"கோபாலின் 5 கோடி ஊழல் குறித்து அறிவிக்க வேண்டும்"}
+{"id":"1002","question_id":"251","name":"To praise about his Daughter","is_correct":"0","created_at":"2026-05-19 11:19:35","updated_at":"2026-05-19 11:19:35","deleted_at":null,"name_tamil":"அவரது மகளைப் பற்றி பாராட்ட வேண்டும்"}
+{"id":"1003","question_id":"251","name":"To discuss a marriage proposal","is_correct":"1","created_at":"2026-05-19 11:19:35","updated_at":"2026-05-19 11:19:35","deleted_at":null,"name_tamil":"ஒரு திருமண திட்டத்தை விவாதிக்க"}
+{"id":"1004","question_id":"251","name":"To discuss about the MLA Seat","is_correct":"0","created_at":"2026-05-19 11:19:35","updated_at":"2026-05-19 11:33:46","deleted_at":null,"name_tamil":"எம்எல்ஏ சீட் பற்றி விவாதிக்க"}
+{"id":"1005","question_id":"252","name":"Underwear","is_correct":"0","created_at":"2026-05-19 12:30:19","updated_at":"2026-05-19 12:30:19","deleted_at":null,"name_tamil":"உள்ளாடை"}
+{"id":"1006","question_id":"252","name":"Antique Telescope","is_correct":"0","created_at":"2026-05-19 12:30:19","updated_at":"2026-05-19 12:30:19","deleted_at":null,"name_tamil":"பழங்கால தொலைநோக்கி"}
+{"id":"1007","question_id":"252","name":"Ordinary Telescope","is_correct":"0","created_at":"2026-05-19 12:30:19","updated_at":"2026-05-19 12:30:19","deleted_at":null,"name_tamil":"சாதாரண தொலைநோக்கி"}
+{"id":"1008","question_id":"252","name":"None of the above","is_correct":"1","created_at":"2026-05-19 12:30:19","updated_at":"2026-05-19 12:30:19","deleted_at":null,"name_tamil":"மேலே எதுவும் இல்லை"}
+{"id":"1009","question_id":"253","name":"Three Books & Mini TV","is_correct":"0","created_at":"2026-05-19 15:16:22","updated_at":"2026-05-19 15:18:24","deleted_at":null,"name_tamil":"மூன்று புத்தகங்கள் & மினி டிவி"}
+{"id":"1010","question_id":"253","name":"Four Books & Radio","is_correct":"1","created_at":"2026-05-19 15:16:22","updated_at":"2026-05-19 15:16:22","deleted_at":null,"name_tamil":"நான்கு புத்தகங்கள் & வானொலி"}
+{"id":"1011","question_id":"253","name":"Three Books & Kit Box","is_correct":"0","created_at":"2026-05-19 15:16:22","updated_at":"2026-05-19 15:18:24","deleted_at":null,"name_tamil":"மூன்று புத்தகங்கள் & கிட் பாக்ஸ்"}
+{"id":"1012","question_id":"253","name":"Four Books & Laptop","is_correct":"0","created_at":"2026-05-19 15:16:22","updated_at":"2026-05-19 15:16:22","deleted_at":null,"name_tamil":"நான்கு புத்தகங்கள் & மடிக்கணினி"}
+{"id":"1013","question_id":"254","name":"Heroine's Birthday","is_correct":"0","created_at":"2026-05-19 17:05:59","updated_at":"2026-05-19 17:05:59","deleted_at":null,"name_tamil":"கதாநாயகியின் பிறந்தநாள்"}
+{"id":"1014","question_id":"254","name":"Heroine’s Mother Birthday","is_correct":"1","created_at":"2026-05-19 17:05:59","updated_at":"2026-05-19 17:05:59","deleted_at":null,"name_tamil":"கதாநாயகியின் தாய் பிறந்தநாள்"}
+{"id":"1015","question_id":"254","name":"Heroine's Father Birthday","is_correct":"0","created_at":"2026-05-19 17:05:59","updated_at":"2026-05-19 17:05:59","deleted_at":null,"name_tamil":"கதாநாயகியின் தந்தையின் பிறந்தநாள்"}
+{"id":"1016","question_id":"254","name":"None of the above","is_correct":"0","created_at":"2026-05-19 17:05:59","updated_at":"2026-05-19 17:05:59","deleted_at":null,"name_tamil":"மேலே எதுவும் இல்லை"}
+{"id":"1017","question_id":"255","name":"Black","is_correct":"0","created_at":"2026-05-19 17:08:29","updated_at":"2026-05-19 17:08:29","deleted_at":null,"name_tamil":"கருப்பு"}
+{"id":"1018","question_id":"255","name":"White","is_correct":"0","created_at":"2026-05-19 17:08:29","updated_at":"2026-05-19 17:08:29","deleted_at":null,"name_tamil":"வெள்ளை"}
+{"id":"1019","question_id":"255","name":"Black & White","is_correct":"1","created_at":"2026-05-19 17:08:29","updated_at":"2026-05-19 17:08:29","deleted_at":null,"name_tamil":"கருப்பு & வெள்ளை"}
+{"id":"1020","question_id":"255","name":"Blue & White","is_correct":"0","created_at":"2026-05-19 17:08:29","updated_at":"2026-05-19 17:08:29","deleted_at":null,"name_tamil":"நீலம் & வெள்ளை"}
+{"id":"1021","question_id":"256","name":"Play Ground","is_correct":"0","created_at":"2026-05-19 18:17:35","updated_at":"2026-05-19 18:17:35","deleted_at":null,"name_tamil":"விளையாட்டு மைதானம்"}
+{"id":"1022","question_id":"256","name":"Sports Ground","is_correct":"0","created_at":"2026-05-19 18:17:35","updated_at":"2026-05-19 18:17:35","deleted_at":null,"name_tamil":"விளையாட்டு மைதானம்"}
+{"id":"1023","question_id":"256","name":"Police Station","is_correct":"1","created_at":"2026-05-19 18:17:35","updated_at":"2026-05-19 18:17:35","deleted_at":null,"name_tamil":"காவல் நிலையம்"}
+{"id":"1024","question_id":"256","name":"Outside Complex","is_correct":"0","created_at":"2026-05-19 18:17:35","updated_at":"2026-05-19 18:17:35","deleted_at":null,"name_tamil":"வளாகத்திற்கு வெளியே"}
+{"id":"1025","question_id":"257","name":"Lipstick Mark in Telescope","is_correct":"1","created_at":"2026-05-19 18:24:55","updated_at":"2026-05-19 18:26:30","deleted_at":null,"name_tamil":"தொலைநோக்கியில் லிப்ஸ்டிக் மார்க்"}
+{"id":"1026","question_id":"257","name":"Smile when she leave","is_correct":"0","created_at":"2026-05-19 18:24:55","updated_at":"2026-05-19 18:26:30","deleted_at":null,"name_tamil":"அவள் போகும் போது புன்னகை"}
+{"id":"1027","question_id":"257","name":"Expressing Braveness","is_correct":"0","created_at":"2026-05-19 18:24:55","updated_at":"2026-05-19 18:26:30","deleted_at":null,"name_tamil":"துணிச்சலை வெளிப்படுத்துதல்"}
+{"id":"1028","question_id":"257","name":"By arriving Police station","is_correct":"0","created_at":"2026-05-19 18:24:55","updated_at":"2026-05-19 18:24:55","deleted_at":null,"name_tamil":"காவல் நிலையத்திற்கு வருவதன் மூலம்"}
+{"id":"1029","question_id":"258","name":"Malaysia Vasudevan","is_correct":"0","created_at":"2026-05-19 18:39:37","updated_at":"2026-05-19 18:39:37","deleted_at":null,"name_tamil":"மலேசியா வாசுதேவன்"}
+{"id":"1030","question_id":"258","name":"Ilaiyaraaja","is_correct":"0","created_at":"2026-05-19 18:39:37","updated_at":"2026-05-19 18:39:37","deleted_at":null,"name_tamil":"இளையராஜா"}
+{"id":"1031","question_id":"258","name":"SPB","is_correct":"1","created_at":"2026-05-19 18:39:37","updated_at":"2026-05-19 18:39:37","deleted_at":null,"name_tamil":"எஸ்.பி.பி"}
+{"id":"1032","question_id":"258","name":"Hariharan","is_correct":"0","created_at":"2026-05-19 18:39:37","updated_at":"2026-05-19 18:39:37","deleted_at":null,"name_tamil":"ஹரிஹரன்"}
+{"id":"1033","question_id":"259","name":"Neck","is_correct":"1","created_at":"2026-05-20 10:31:17","updated_at":"2026-05-20 10:31:17","deleted_at":null,"name_tamil":"கழுத்து"}
+{"id":"1034","question_id":"259","name":"Chin","is_correct":"0","created_at":"2026-05-20 10:31:17","updated_at":"2026-05-20 10:31:17","deleted_at":null,"name_tamil":"கன்னம்"}
+{"id":"1035","question_id":"259","name":"Face","is_correct":"0","created_at":"2026-05-20 10:31:17","updated_at":"2026-05-20 10:31:17","deleted_at":null,"name_tamil":"முகம்"}
+{"id":"1036","question_id":"259","name":"Cheek","is_correct":"0","created_at":"2026-05-20 10:31:17","updated_at":"2026-05-20 10:31:17","deleted_at":null,"name_tamil":"கன்னத்தில்"}
+{"id":"1037","question_id":"260","name":"Galileo Galilei","is_correct":"0","created_at":"2026-05-20 10:46:42","updated_at":"2026-05-20 10:46:42","deleted_at":null,"name_tamil":"கலிலியோ கலிலி"}
+{"id":"1038","question_id":"260","name":"Albert Einstein","is_correct":"1","created_at":"2026-05-20 10:46:42","updated_at":"2026-05-20 10:46:42","deleted_at":null,"name_tamil":"ஆல்பர்ட் ஐன்ஸ்டீன்"}
+{"id":"1039","question_id":"260","name":"Isaac Newton","is_correct":"0","created_at":"2026-05-20 10:46:42","updated_at":"2026-05-20 10:46:42","deleted_at":null,"name_tamil":"ஐசக் நியூட்டன்"}
+{"id":"1040","question_id":"260","name":"Stephen Hawking","is_correct":"0","created_at":"2026-05-20 10:46:42","updated_at":"2026-05-20 10:46:42","deleted_at":null,"name_tamil":"ஸ்டீபன் ஹாக்கிங்"}
+{"id":"1041","question_id":"261","name":"6","is_correct":"0","created_at":"2026-05-20 10:51:21","updated_at":"2026-05-20 10:51:21","deleted_at":null,"name_tamil":"6"}
+{"id":"1042","question_id":"261","name":"8","is_correct":"0","created_at":"2026-05-20 10:51:21","updated_at":"2026-05-20 10:51:21","deleted_at":null,"name_tamil":"8"}
+{"id":"1043","question_id":"261","name":"5","is_correct":"0","created_at":"2026-05-20 10:51:21","updated_at":"2026-05-20 10:51:21","deleted_at":null,"name_tamil":"5"}
+{"id":"1044","question_id":"261","name":"7","is_correct":"1","created_at":"2026-05-20 10:51:21","updated_at":"2026-05-20 10:51:21","deleted_at":null,"name_tamil":"7"}
+{"id":"1045","question_id":"262","name":"Yamaha MT","is_correct":"0","created_at":"2026-05-20 11:03:54","updated_at":"2026-05-20 11:03:54","deleted_at":null,"name_tamil":"யமஹா எம்டி"}
+{"id":"1046","question_id":"262","name":"Hero Xtreme","is_correct":"0","created_at":"2026-05-20 11:03:54","updated_at":"2026-05-20 11:03:54","deleted_at":null,"name_tamil":"ஹீரோ எக்ஸ்ட்ரீம்"}
+{"id":"1047","question_id":"262","name":"Bajaj Pulsar","is_correct":"0","created_at":"2026-05-20 11:03:54","updated_at":"2026-05-20 11:03:54","deleted_at":null,"name_tamil":"பஜாஜ் பல்சர்"}
+{"id":"1048","question_id":"262","name":"KTM Duke","is_correct":"1","created_at":"2026-05-20 11:03:54","updated_at":"2026-05-20 11:03:54","deleted_at":null,"name_tamil":"கேடிஎம் டியூக்"}
+{"id":"1049","question_id":"263","name":"Pink","is_correct":"1","created_at":"2026-05-20 11:05:06","updated_at":"2026-05-20 11:05:06","deleted_at":null,"name_tamil":"இளஞ்சிவப்பு"}
+{"id":"1050","question_id":"263","name":"Green","is_correct":"0","created_at":"2026-05-20 11:05:06","updated_at":"2026-05-20 11:05:06","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"1051","question_id":"263","name":"Red","is_correct":"0","created_at":"2026-05-20 11:05:06","updated_at":"2026-05-20 11:05:06","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"1052","question_id":"263","name":"Blue","is_correct":"0","created_at":"2026-05-20 11:05:06","updated_at":"2026-05-20 11:05:06","deleted_at":null,"name_tamil":"நீலம்"}
+{"id":"1053","question_id":"264","name":"10","is_correct":"0","created_at":"2026-05-21 11:50:38","updated_at":"2026-05-21 11:50:38","deleted_at":null,"name_tamil":"10"}
+{"id":"1054","question_id":"264","name":"8","is_correct":"1","created_at":"2026-05-21 11:50:38","updated_at":"2026-05-21 11:50:38","deleted_at":null,"name_tamil":"8"}
+{"id":"1055","question_id":"264","name":"6","is_correct":"0","created_at":"2026-05-21 11:50:38","updated_at":"2026-05-21 11:50:38","deleted_at":null,"name_tamil":"6"}
+{"id":"1056","question_id":"264","name":"None","is_correct":"0","created_at":"2026-05-21 11:50:38","updated_at":"2026-05-21 11:50:38","deleted_at":null,"name_tamil":"இல்லை"}
+{"id":"1057","question_id":"265","name":"Yamaha","is_correct":"0","created_at":"2026-05-21 12:54:08","updated_at":"2026-05-21 12:54:08","deleted_at":null,"name_tamil":"யமஹா"}
+{"id":"1058","question_id":"265","name":"Steelbird","is_correct":"0","created_at":"2026-05-21 12:54:08","updated_at":"2026-05-21 12:54:08","deleted_at":null,"name_tamil":"எஃகு பறவை"}
+{"id":"1059","question_id":"265","name":"Studds","is_correct":"0","created_at":"2026-05-21 12:54:08","updated_at":"2026-05-21 12:54:08","deleted_at":null,"name_tamil":"ஸ்டுட்ஸ்"}
+{"id":"1060","question_id":"265","name":"Vega","is_correct":"1","created_at":"2026-05-21 12:54:08","updated_at":"2026-05-21 12:54:08","deleted_at":null,"name_tamil":"வேகா"}
+{"id":"1061","question_id":"266","name":"Tiny Telescope","is_correct":"1","created_at":"2026-05-21 14:40:57","updated_at":"2026-05-21 14:40:57","deleted_at":null,"name_tamil":"சிறிய தொலைநோக்கி"}
+{"id":"1062","question_id":"266","name":"Flask","is_correct":"0","created_at":"2026-05-21 14:40:57","updated_at":"2026-05-21 14:40:57","deleted_at":null,"name_tamil":"குடுவை"}
+{"id":"1063","question_id":"266","name":"Wallet","is_correct":"0","created_at":"2026-05-21 14:40:57","updated_at":"2026-05-21 14:40:57","deleted_at":null,"name_tamil":"பணப்பை"}
+{"id":"1064","question_id":"266","name":"Big Telescope","is_correct":"0","created_at":"2026-05-21 14:40:57","updated_at":"2026-05-21 14:40:57","deleted_at":null,"name_tamil":"பெரிய தொலைநோக்கி"}
+{"id":"1065","question_id":"267","name":"Police Station","is_correct":"0","created_at":"2026-05-21 15:16:50","updated_at":"2026-05-21 15:16:50","deleted_at":null,"name_tamil":"காவல் நிலையம்"}
+{"id":"1066","question_id":"267","name":"House Terrace","is_correct":"1","created_at":"2026-05-21 15:16:50","updated_at":"2026-05-21 15:16:50","deleted_at":null,"name_tamil":"வீட்டு மொட்டை மாடி"}
+{"id":"1067","question_id":"267","name":"Workshop","is_correct":"0","created_at":"2026-05-21 15:16:50","updated_at":"2026-05-21 15:16:50","deleted_at":null,"name_tamil":"பட்டறை"}
+{"id":"1068","question_id":"267","name":"Court","is_correct":"0","created_at":"2026-05-21 15:16:50","updated_at":"2026-05-21 15:16:50","deleted_at":null,"name_tamil":"நீதிமன்றம்"}
+{"id":"1069","question_id":"268","name":"NASA","is_correct":"0","created_at":"2026-05-22 09:56:14","updated_at":"2026-05-22 09:56:14","deleted_at":null,"name_tamil":"நாசா"}
+{"id":"1070","question_id":"268","name":"ISRO","is_correct":"0","created_at":"2026-05-22 09:56:14","updated_at":"2026-05-22 09:56:14","deleted_at":null,"name_tamil":"இஸ்ரோ"}
+{"id":"1071","question_id":"268","name":"Birla Planetarium","is_correct":"1","created_at":"2026-05-22 09:56:14","updated_at":"2026-05-22 09:56:14","deleted_at":null,"name_tamil":"பிர்லா கோளரங்கம்"}
+{"id":"1072","question_id":"268","name":"NIT","is_correct":"0","created_at":"2026-05-22 09:56:14","updated_at":"2026-05-22 09:56:14","deleted_at":null,"name_tamil":"என்ஐடி"}
+{"id":"1073","question_id":"269","name":"Dr. A.P.J. Abdul Kalam","is_correct":"0","created_at":"2026-05-22 10:03:42","updated_at":"2026-05-22 10:03:42","deleted_at":null,"name_tamil":"டாக்டர் ஏ.பி.ஜே. "}
+{"id":"1074","question_id":"269","name":"Dr. B.R. Ambedkar","is_correct":"1","created_at":"2026-05-22 10:03:42","updated_at":"2026-05-22 10:03:42","deleted_at":null,"name_tamil":"டாக்டர் பி.ஆர். "}
+{"id":"1075","question_id":"269","name":"Dr. Rajendra Prasad","is_correct":"0","created_at":"2026-05-22 10:03:42","updated_at":"2026-05-22 10:03:42","deleted_at":null,"name_tamil":"டாக்டர் ராஜேந்திர பிரசாத்"}
+{"id":"1076","question_id":"269","name":"Dr. Rabindranath Tagore","is_correct":"0","created_at":"2026-05-22 10:03:42","updated_at":"2026-05-22 10:03:42","deleted_at":null,"name_tamil":"டாக்டர் ரவீந்திரநாத் தாகூர்"}
+{"id":"1077","question_id":"270","name":"Lunar Eclipse","is_correct":"0","created_at":"2026-05-22 10:16:32","updated_at":"2026-05-22 10:16:45","deleted_at":null,"name_tamil":"சந்திர கிரகணம்"}
+{"id":"1078","question_id":"270","name":"Solar Physics","is_correct":"0","created_at":"2026-05-22 10:16:32","updated_at":"2026-05-22 10:16:32","deleted_at":null,"name_tamil":"சூரிய இயற்பியல்"}
+{"id":"1079","question_id":"270","name":"Solar Eclipse","is_correct":"1","created_at":"2026-05-22 10:16:32","updated_at":"2026-05-22 10:16:45","deleted_at":null,"name_tamil":"சூரிய கிரகணம்"}
+{"id":"1080","question_id":"270","name":"Selenography","is_correct":"0","created_at":"2026-05-22 10:16:32","updated_at":"2026-05-22 10:16:32","deleted_at":null,"name_tamil":"செலினோகிராபி"}
+{"id":"1081","question_id":"271","name":"Space Expeditions","is_correct":"0","created_at":"2026-05-22 10:20:42","updated_at":"2026-05-22 10:20:42","deleted_at":null,"name_tamil":"விண்வெளி பயணங்கள்"}
+{"id":"1082","question_id":"271","name":"Space Exploitation","is_correct":"0","created_at":"2026-05-22 10:20:42","updated_at":"2026-05-22 10:20:42","deleted_at":null,"name_tamil":"விண்வெளி சுரண்டல்"}
+{"id":"1083","question_id":"271","name":"Space Explanation","is_correct":"0","created_at":"2026-05-22 10:20:42","updated_at":"2026-05-22 10:20:42","deleted_at":null,"name_tamil":"விண்வெளி விளக்கம்"}
+{"id":"1084","question_id":"271","name":"Space Exploration","is_correct":"1","created_at":"2026-05-22 10:20:42","updated_at":"2026-05-22 10:20:42","deleted_at":null,"name_tamil":"விண்வெளி ஆய்வு"}
+{"id":"1085","question_id":"272","name":"Old Telescope","is_correct":"1","created_at":"2026-05-22 10:38:25","updated_at":"2026-05-22 10:38:25","deleted_at":null,"name_tamil":"பழைய தொலைநோக்கி"}
+{"id":"1086","question_id":"272","name":"Radio Telescope","is_correct":"0","created_at":"2026-05-22 10:38:25","updated_at":"2026-05-22 10:38:25","deleted_at":null,"name_tamil":"ரேடியோ தொலைநோக்கி"}
+{"id":"1087","question_id":"272","name":"Infrared Telescopes","is_correct":"0","created_at":"2026-05-22 10:38:25","updated_at":"2026-05-22 10:38:25","deleted_at":null,"name_tamil":"அகச்சிவப்பு தொலைநோக்கிகள்"}
+{"id":"1088","question_id":"272","name":"Solar Telescopes","is_correct":"0","created_at":"2026-05-22 10:38:25","updated_at":"2026-05-22 10:38:25","deleted_at":null,"name_tamil":"சூரிய தொலைநோக்கிகள்"}
+{"id":"1089","question_id":"273","name":"Future Vision","is_correct":"0","created_at":"2026-05-22 11:18:53","updated_at":"2026-05-22 11:18:53","deleted_at":null,"name_tamil":"எதிர்கால பார்வை"}
+{"id":"1090","question_id":"273","name":"X-Ray Vision","is_correct":"0","created_at":"2026-05-22 11:18:53","updated_at":"2026-05-22 11:18:53","deleted_at":null,"name_tamil":"எக்ஸ்-ரே பார்வை"}
+{"id":"1091","question_id":"273","name":"Telescopic Vision","is_correct":"0","created_at":"2026-05-22 11:18:53","updated_at":"2026-05-22 11:18:53","deleted_at":null,"name_tamil":"தொலைநோக்கி பார்வை"}
+{"id":"1092","question_id":"273","name":"Lifespan Prediction","is_correct":"1","created_at":"2026-05-22 11:18:53","updated_at":"2026-05-22 11:18:53","deleted_at":null,"name_tamil":"ஆயுட்காலம் கணிப்பு"}
+{"id":"1093","question_id":"274","name":"V","is_correct":"0","created_at":"2026-05-22 11:22:05","updated_at":"2026-05-22 11:22:05","deleted_at":null,"name_tamil":"வி"}
+{"id":"1094","question_id":"274","name":"I","is_correct":"0","created_at":"2026-05-22 11:22:05","updated_at":"2026-05-22 11:22:05","deleted_at":null,"name_tamil":"ஐ"}
+{"id":"1095","question_id":"274","name":"VI","is_correct":"1","created_at":"2026-05-22 11:22:05","updated_at":"2026-05-22 11:22:05","deleted_at":null,"name_tamil":"VI"}
+{"id":"1096","question_id":"274","name":"VN","is_correct":"0","created_at":"2026-05-22 11:22:05","updated_at":"2026-05-22 11:22:28","deleted_at":null,"name_tamil":"வி.என்"}
+{"id":"1097","question_id":"275","name":"நிலா","is_correct":"0","created_at":"2026-05-22 11:25:44","updated_at":"2026-05-22 11:25:44","deleted_at":null,"name_tamil":"நிலா"}
+{"id":"1098","question_id":"275","name":"நட்சத்திரம்","is_correct":"0","created_at":"2026-05-22 11:25:44","updated_at":"2026-05-22 11:25:44","deleted_at":null,"name_tamil":"நட்சத்திரம்"}
+{"id":"1099","question_id":"275","name":"சூரியன்","is_correct":"1","created_at":"2026-05-22 11:25:44","updated_at":"2026-05-22 11:25:44","deleted_at":null,"name_tamil":"சூரியன்"}
+{"id":"1100","question_id":"275","name":"சக்கரம்","is_correct":"0","created_at":"2026-05-22 11:25:44","updated_at":"2026-05-22 11:25:44","deleted_at":null,"name_tamil":"சக்கரம்"}
+{"id":"1105","question_id":"277","name":"புதன்","is_correct":"0","created_at":"2026-05-22 11:28:34","updated_at":"2026-05-22 11:28:34","deleted_at":null,"name_tamil":"புதன்"}
+{"id":"1106","question_id":"277","name":"வியாழன்","is_correct":"0","created_at":"2026-05-22 11:28:34","updated_at":"2026-05-22 11:28:34","deleted_at":null,"name_tamil":"வியாழன்"}
+{"id":"1107","question_id":"277","name":"வெள்ளி","is_correct":"0","created_at":"2026-05-22 11:28:34","updated_at":"2026-05-22 11:28:34","deleted_at":null,"name_tamil":"வெள்ளி"}
+{"id":"1108","question_id":"277","name":"சனி","is_correct":"1","created_at":"2026-05-22 11:28:34","updated_at":"2026-05-22 11:28:34","deleted_at":null,"name_tamil":"சனி"}
+{"id":"1109","question_id":"278","name":"Dog","is_correct":"1","created_at":"2026-05-22 12:42:43","updated_at":"2026-05-22 12:42:43","deleted_at":null,"name_tamil":"நாய்"}
+{"id":"1110","question_id":"278","name":"Dog Owner","is_correct":"0","created_at":"2026-05-22 12:42:43","updated_at":"2026-05-22 12:42:43","deleted_at":null,"name_tamil":"நாய் உரிமையாளர்"}
+{"id":"1111","question_id":"278","name":"Hari","is_correct":"0","created_at":"2026-05-22 12:42:43","updated_at":"2026-05-22 12:42:43","deleted_at":null,"name_tamil":"ஹரி"}
+{"id":"1112","question_id":"278","name":"Old Man","is_correct":"0","created_at":"2026-05-22 12:42:43","updated_at":"2026-05-22 12:42:43","deleted_at":null,"name_tamil":"முதியவர்"}
+{"id":"1113","question_id":"279","name":"A sudden dust storm","is_correct":"0","created_at":"2026-05-22 12:51:25","updated_at":"2026-05-22 12:51:25","deleted_at":null,"name_tamil":"திடீர் புழுதிப் புயல்"}
+{"id":"1114","question_id":"279","name":"Watching a solar eclipse","is_correct":"1","created_at":"2026-05-22 12:51:25","updated_at":"2026-05-22 12:51:25","deleted_at":null,"name_tamil":"சூரிய கிரகணத்தைப் பார்ப்பது"}
+{"id":"1115","question_id":"279","name":"Looking at a bright flashlight","is_correct":"0","created_at":"2026-05-22 12:51:25","updated_at":"2026-05-22 12:51:25","deleted_at":null,"name_tamil":"பிரகாசமான ஒளிரும் விளக்கைப் பார்க்கிறது"}
+{"id":"1116","question_id":"279","name":"A chemical allergy","is_correct":"0","created_at":"2026-05-22 12:51:25","updated_at":"2026-05-22 12:51:25","deleted_at":null,"name_tamil":"ஒரு இரசாயன ஒவ்வாமை"}
+{"id":"1121","question_id":"281","name":"Paternal Grandfather","is_correct":"0","created_at":"2026-05-22 15:25:54","updated_at":"2026-05-22 15:25:54","deleted_at":null,"name_tamil":"தந்தைவழி தாத்தா"}
+{"id":"1122","question_id":"281","name":"Maternal Grandfather","is_correct":"1","created_at":"2026-05-22 15:25:54","updated_at":"2026-05-22 15:25:54","deleted_at":null,"name_tamil":"தாய்வழி தாத்தா"}
+{"id":"1123","question_id":"281","name":"Grandfather","is_correct":"0","created_at":"2026-05-22 15:25:54","updated_at":"2026-05-22 15:25:54","deleted_at":null,"name_tamil":"தாத்தா"}
+{"id":"1124","question_id":"281","name":"None of these","is_correct":"0","created_at":"2026-05-22 15:25:54","updated_at":"2026-05-22 15:25:54","deleted_at":null,"name_tamil":"இவை எதுவும் இல்லை"}
+{"id":"1125","question_id":"282","name":"Wooden Stick","is_correct":"0","created_at":"2026-05-22 15:29:30","updated_at":"2026-05-22 15:29:30","deleted_at":null,"name_tamil":"மரக் குச்சி"}
+{"id":"1126","question_id":"282","name":"Statue","is_correct":"0","created_at":"2026-05-22 15:29:30","updated_at":"2026-05-22 15:29:30","deleted_at":null,"name_tamil":"சிலை"}
+{"id":"1127","question_id":"282","name":"Lamp","is_correct":"0","created_at":"2026-05-22 15:29:30","updated_at":"2026-05-22 15:29:30","deleted_at":null,"name_tamil":"விளக்கு"}
+{"id":"1128","question_id":"282","name":"Telescope","is_correct":"1","created_at":"2026-05-22 15:29:30","updated_at":"2026-05-22 15:29:30","deleted_at":null,"name_tamil":"தொலைநோக்கி"}
+{"id":"1129","question_id":"283","name":"My best friend","is_correct":"0","created_at":"2026-05-22 15:34:33","updated_at":"2026-05-22 15:34:33","deleted_at":null,"name_tamil":"எனது சிறந்த நண்பர்"}
+{"id":"1130","question_id":"283","name":"The girl I’m going to marry","is_correct":"1","created_at":"2026-05-22 15:34:33","updated_at":"2026-05-22 15:34:33","deleted_at":null,"name_tamil":"நான் திருமணம் செய்து கொள்ளப் போகும் பெண்"}
+{"id":"1131","question_id":"283","name":"My younger sister","is_correct":"0","created_at":"2026-05-22 15:34:33","updated_at":"2026-05-22 15:34:33","deleted_at":null,"name_tamil":"என் தங்கை"}
+{"id":"1132","question_id":"283","name":"My cousin","is_correct":"0","created_at":"2026-05-22 15:34:33","updated_at":"2026-05-22 15:34:33","deleted_at":null,"name_tamil":"என் உறவினர்"}
+{"id":"1133","question_id":"284","name":"Within a Week","is_correct":"0","created_at":"2026-05-22 15:42:20","updated_at":"2026-05-22 15:42:20","deleted_at":null,"name_tamil":"ஒரு வாரத்திற்குள்"}
+{"id":"1134","question_id":"284","name":"Anytime","is_correct":"1","created_at":"2026-05-22 15:42:20","updated_at":"2026-05-22 15:42:20","deleted_at":null,"name_tamil":"எப்போது வேண்டுமானாலும்"}
+{"id":"1135","question_id":"284","name":"In two days","is_correct":"0","created_at":"2026-05-22 15:42:20","updated_at":"2026-05-22 15:42:20","deleted_at":null,"name_tamil":"இரண்டு நாட்களில்"}
+{"id":"1136","question_id":"284","name":"Within a day","is_correct":"0","created_at":"2026-05-22 15:42:20","updated_at":"2026-05-22 15:42:20","deleted_at":null,"name_tamil":"ஒரு நாளுக்குள்"}
+{"id":"1137","question_id":"285","name":"Grandmother’s son","is_correct":"1","created_at":"2026-05-22 15:46:50","updated_at":"2026-05-22 15:46:50","deleted_at":null,"name_tamil":"பாட்டியின் மகன்"}
+{"id":"1138","question_id":"285","name":"Brother in law","is_correct":"0","created_at":"2026-05-22 15:46:50","updated_at":"2026-05-22 15:46:50","deleted_at":null,"name_tamil":"அண்ணி"}
+{"id":"1139","question_id":"285","name":"Father in law","is_correct":"0","created_at":"2026-05-22 15:46:50","updated_at":"2026-05-22 15:46:50","deleted_at":null,"name_tamil":"மாமனார்"}
+{"id":"1140","question_id":"285","name":"Grandmother","is_correct":"0","created_at":"2026-05-22 15:46:50","updated_at":"2026-05-22 15:46:50","deleted_at":null,"name_tamil":"பாட்டி"}
+{"id":"1141","question_id":"286","name":"Fathers Uncle","is_correct":"0","created_at":"2026-05-22 15:50:12","updated_at":"2026-05-22 15:50:12","deleted_at":null,"name_tamil":"அப்பாக்கள் மாமா"}
+{"id":"1142","question_id":"286","name":"Grand Uncle","is_correct":"0","created_at":"2026-05-22 15:50:12","updated_at":"2026-05-22 15:50:12","deleted_at":null,"name_tamil":"பெரிய மாமா"}
+{"id":"1143","question_id":"286","name":"Uncle","is_correct":"1","created_at":"2026-05-22 15:50:12","updated_at":"2026-05-22 15:50:12","deleted_at":null,"name_tamil":"மாமா"}
+{"id":"1144","question_id":"286","name":"Grandpa","is_correct":"0","created_at":"2026-05-22 15:50:12","updated_at":"2026-05-22 15:50:12","deleted_at":null,"name_tamil":"தாத்தா"}
+{"id":"1145","question_id":"287","name":"Hyperopia","is_correct":"0","created_at":"2026-05-22 15:52:20","updated_at":"2026-05-22 15:52:20","deleted_at":null,"name_tamil":"ஹைபரோபியா"}
+{"id":"1146","question_id":"287","name":"No eye problem","is_correct":"1","created_at":"2026-05-22 15:52:20","updated_at":"2026-05-22 15:52:20","deleted_at":null,"name_tamil":"கண் பிரச்சனை இல்லை"}
+{"id":"1147","question_id":"287","name":"Myopia","is_correct":"0","created_at":"2026-05-22 15:52:20","updated_at":"2026-05-22 15:52:20","deleted_at":null,"name_tamil":"கிட்டப்பார்வை"}
+{"id":"1148","question_id":"287","name":"Retinal Detachment","is_correct":"0","created_at":"2026-05-22 15:52:20","updated_at":"2026-05-22 15:52:20","deleted_at":null,"name_tamil":"விழித்திரைப் பற்றின்மை"}
+{"id":"1149","question_id":"288","name":"Kattoor","is_correct":"0","created_at":"2026-05-22 15:57:35","updated_at":"2026-05-22 15:57:35","deleted_at":null,"name_tamil":"காட்டூர்"}
+{"id":"1150","question_id":"288","name":"Kolathur","is_correct":"0","created_at":"2026-05-22 15:57:35","updated_at":"2026-05-22 15:57:35","deleted_at":null,"name_tamil":"கொளத்தூர்"}
+{"id":"1151","question_id":"288","name":"Kanthur","is_correct":"0","created_at":"2026-05-22 15:57:35","updated_at":"2026-05-22 15:57:35","deleted_at":null,"name_tamil":"கந்தூர்"}
+{"id":"1152","question_id":"288","name":"Korattur","is_correct":"1","created_at":"2026-05-22 15:57:35","updated_at":"2026-05-22 15:57:35","deleted_at":null,"name_tamil":"கொரட்டூர்"}
+{"id":"1153","question_id":"289","name":"M.H.P Transport","is_correct":"0","created_at":"2026-05-22 15:58:55","updated_at":"2026-05-22 15:58:55","deleted_at":null,"name_tamil":"M.H.P போக்குவரத்து"}
+{"id":"1154","question_id":"289","name":"M.P.H Transport","is_correct":"0","created_at":"2026-05-22 15:58:55","updated_at":"2026-05-22 15:58:55","deleted_at":null,"name_tamil":"M.P.H போக்குவரத்து"}
+{"id":"1155","question_id":"289","name":"M.H.D Transport","is_correct":"1","created_at":"2026-05-22 15:58:55","updated_at":"2026-05-22 15:58:55","deleted_at":null,"name_tamil":"M.H.D போக்குவரத்து"}
+{"id":"1156","question_id":"289","name":"M.D.H Transport","is_correct":"0","created_at":"2026-05-22 15:58:55","updated_at":"2026-05-22 15:58:55","deleted_at":null,"name_tamil":"M.D.H போக்குவரத்து"}
+{"id":"1157","question_id":"290","name":"Kamadhenu","is_correct":"1","created_at":"2026-05-22 16:08:19","updated_at":"2026-05-22 16:08:19","deleted_at":null,"name_tamil":"காமதேனு"}
+{"id":"1158","question_id":"290","name":"Kamadhen","is_correct":"0","created_at":"2026-05-22 16:08:19","updated_at":"2026-05-22 16:08:19","deleted_at":null,"name_tamil":"காமதென்"}
+{"id":"1159","question_id":"290","name":"Kamadheni","is_correct":"0","created_at":"2026-05-22 16:08:19","updated_at":"2026-05-22 16:08:19","deleted_at":null,"name_tamil":"காமதேனி"}
+{"id":"1160","question_id":"290","name":"Kamaraj","is_correct":"0","created_at":"2026-05-22 16:08:19","updated_at":"2026-05-22 16:08:19","deleted_at":null,"name_tamil":"காமராஜ்"}
+{"id":"1161","question_id":"291","name":"My Heart","is_correct":"0","created_at":"2026-05-22 16:10:30","updated_at":"2026-05-22 16:10:30","deleted_at":null,"name_tamil":"என் இதயம்"}
+{"id":"1162","question_id":"291","name":"Nila","is_correct":"1","created_at":"2026-05-22 16:10:30","updated_at":"2026-05-22 16:10:30","deleted_at":null,"name_tamil":"நிலா"}
+{"id":"1163","question_id":"291","name":"Love","is_correct":"0","created_at":"2026-05-22 16:10:30","updated_at":"2026-05-22 16:10:30","deleted_at":null,"name_tamil":"அன்பு"}
+{"id":"1164","question_id":"291","name":"Wife","is_correct":"0","created_at":"2026-05-22 16:10:30","updated_at":"2026-05-22 16:10:30","deleted_at":null,"name_tamil":"மனைவி"}
+{"id":"1165","question_id":"292","name":"Kamarajar","is_correct":"0","created_at":"2026-05-22 16:25:00","updated_at":"2026-05-22 16:25:00","deleted_at":null,"name_tamil":"காமராஜர்"}
+{"id":"1166","question_id":"292","name":"Dr. Ambedkar","is_correct":"1","created_at":"2026-05-22 16:25:00","updated_at":"2026-05-22 16:25:00","deleted_at":null,"name_tamil":"டாக்டர் அம்பேத்கர்"}
+{"id":"1167","question_id":"292","name":"Gandhi","is_correct":"0","created_at":"2026-05-22 16:25:00","updated_at":"2026-05-22 16:25:00","deleted_at":null,"name_tamil":"காந்தி"}
+{"id":"1168","question_id":"292","name":"Jawaharlal Nehru","is_correct":"0","created_at":"2026-05-22 16:25:00","updated_at":"2026-05-22 16:25:00","deleted_at":null,"name_tamil":"ஜவஹர்லால் நேரு"}
+{"id":"1169","question_id":"293","name":"Peach","is_correct":"0","created_at":"2026-05-22 16:28:24","updated_at":"2026-05-22 16:28:24","deleted_at":null,"name_tamil":"பீச்"}
+{"id":"1170","question_id":"293","name":"Orange","is_correct":"0","created_at":"2026-05-22 16:28:24","updated_at":"2026-05-22 16:28:24","deleted_at":null,"name_tamil":"ஆரஞ்சு"}
+{"id":"1171","question_id":"293","name":"Turmeric","is_correct":"1","created_at":"2026-05-22 16:28:24","updated_at":"2026-05-22 16:28:24","deleted_at":null,"name_tamil":"மஞ்சள்"}
+{"id":"1172","question_id":"293","name":"None of these","is_correct":"0","created_at":"2026-05-22 16:28:24","updated_at":"2026-05-22 16:28:24","deleted_at":null,"name_tamil":"இவை எதுவும் இல்லை"}
+{"id":"1173","question_id":"294","name":"Maroon","is_correct":"1","created_at":"2026-05-22 16:29:03","updated_at":"2026-05-22 16:29:03","deleted_at":null,"name_tamil":"மெரூன்"}
+{"id":"1174","question_id":"294","name":"Orange","is_correct":"0","created_at":"2026-05-22 16:29:03","updated_at":"2026-05-22 16:29:03","deleted_at":null,"name_tamil":"ஆரஞ்சு"}
+{"id":"1175","question_id":"294","name":"Blue","is_correct":"0","created_at":"2026-05-22 16:29:03","updated_at":"2026-05-22 16:29:03","deleted_at":null,"name_tamil":"நீலம்"}
+{"id":"1176","question_id":"294","name":"Green","is_correct":"0","created_at":"2026-05-22 16:29:03","updated_at":"2026-05-22 16:29:03","deleted_at":null,"name_tamil":"பச்சை"}
+{"id":"1177","question_id":"295","name":"Women of freedom","is_correct":"0","created_at":"2026-05-22 16:30:27","updated_at":"2026-05-22 16:30:27","deleted_at":null,"name_tamil":"சுதந்திர பெண்கள்"}
+{"id":"1178","question_id":"295","name":"Women of Joy","is_correct":"0","created_at":"2026-05-22 16:30:27","updated_at":"2026-05-22 16:30:27","deleted_at":null,"name_tamil":"மகிழ்ச்சியின் பெண்கள்"}
+{"id":"1179","question_id":"295","name":"Wisdom Lady","is_correct":"0","created_at":"2026-05-22 16:30:27","updated_at":"2026-05-22 16:30:27","deleted_at":null,"name_tamil":"விஸ்டம் லேடி"}
+{"id":"1180","question_id":"295","name":"Lady Justice","is_correct":"1","created_at":"2026-05-22 16:30:27","updated_at":"2026-05-22 16:30:27","deleted_at":null,"name_tamil":"பெண் நீதியரசர்"}
+{"id":"1181","question_id":"296","name":"Broken","is_correct":"0","created_at":"2026-05-22 16:33:31","updated_at":"2026-05-22 16:33:31","deleted_at":null,"name_tamil":"உடைந்தது"}
+{"id":"1182","question_id":"296","name":"Sold it","is_correct":"1","created_at":"2026-05-22 16:33:31","updated_at":"2026-05-22 16:33:31","deleted_at":null,"name_tamil":"அதை விற்றார்"}
+{"id":"1183","question_id":"296","name":"Throw","is_correct":"0","created_at":"2026-05-22 16:33:31","updated_at":"2026-05-22 16:33:31","deleted_at":null,"name_tamil":"எறியுங்கள்"}
+{"id":"1184","question_id":"296","name":"Burried","is_correct":"0","created_at":"2026-05-22 16:33:31","updated_at":"2026-05-22 16:33:31","deleted_at":null,"name_tamil":"புதைக்கப்பட்டது"}
+{"id":"1185","question_id":"297","name":"Hero House","is_correct":"0","created_at":"2026-05-22 16:34:34","updated_at":"2026-05-22 16:34:34","deleted_at":null,"name_tamil":"ஹீரோ ஹவுஸ்"}
+{"id":"1186","question_id":"297","name":"Coffee Shop","is_correct":"0","created_at":"2026-05-22 16:34:34","updated_at":"2026-05-22 16:34:34","deleted_at":null,"name_tamil":"காபி கடை"}
+{"id":"1187","question_id":"297","name":"Birla Planetarium","is_correct":"1","created_at":"2026-05-22 16:34:34","updated_at":"2026-05-22 16:34:34","deleted_at":null,"name_tamil":"பிர்லா கோளரங்கம்"}
+{"id":"1188","question_id":"297","name":"Park","is_correct":"0","created_at":"2026-05-22 16:34:34","updated_at":"2026-05-22 16:34:34","deleted_at":null,"name_tamil":"பூங்கா"}
+{"id":"1189","question_id":"298","name":"9.00am","is_correct":"1","created_at":"2026-05-22 16:36:07","updated_at":"2026-05-22 16:36:07","deleted_at":null,"name_tamil":"காலை 9.00 மணி"}
+{"id":"1190","question_id":"298","name":"9.15am","is_correct":"0","created_at":"2026-05-22 16:36:07","updated_at":"2026-05-22 16:36:07","deleted_at":null,"name_tamil":"காலை 9.15 மணி"}
+{"id":"1191","question_id":"298","name":"9.30am","is_correct":"0","created_at":"2026-05-22 16:36:07","updated_at":"2026-05-22 16:36:07","deleted_at":null,"name_tamil":"காலை 9.30 மணி"}
+{"id":"1192","question_id":"298","name":"9.10am","is_correct":"0","created_at":"2026-05-22 16:36:07","updated_at":"2026-05-22 16:36:07","deleted_at":null,"name_tamil":"காலை 9.10 மணி"}
+{"id":"1193","question_id":"299","name":"Mood","is_correct":"0","created_at":"2026-05-22 16:36:59","updated_at":"2026-05-22 16:36:59","deleted_at":null,"name_tamil":"மனநிலை"}
+{"id":"1194","question_id":"299","name":"Cloud","is_correct":"0","created_at":"2026-05-22 16:36:59","updated_at":"2026-05-22 16:36:59","deleted_at":null,"name_tamil":"மேகம்"}
+{"id":"1195","question_id":"299","name":"Loid","is_correct":"0","created_at":"2026-05-22 16:36:59","updated_at":"2026-05-22 16:36:59","deleted_at":null,"name_tamil":"லோயிட்"}
+{"id":"1196","question_id":"299","name":"Void","is_correct":"1","created_at":"2026-05-22 16:36:59","updated_at":"2026-05-22 16:36:59","deleted_at":null,"name_tamil":"வெற்றிடமானது"}
+{"id":"1197","question_id":"300","name":"Appa","is_correct":"1","created_at":"2026-05-22 16:37:55","updated_at":"2026-05-22 16:37:55","deleted_at":null,"name_tamil":"அப்பா"}
+{"id":"1198","question_id":"300","name":"Daddy","is_correct":"0","created_at":"2026-05-22 16:37:55","updated_at":"2026-05-22 16:37:55","deleted_at":null,"name_tamil":"அப்பா"}
+{"id":"1199","question_id":"300","name":"Dad","is_correct":"0","created_at":"2026-05-22 16:37:55","updated_at":"2026-05-22 16:37:55","deleted_at":null,"name_tamil":"அப்பா"}
+{"id":"1200","question_id":"300","name":"Papa","is_correct":"0","created_at":"2026-05-22 16:37:55","updated_at":"2026-05-22 16:37:55","deleted_at":null,"name_tamil":"அப்பா"}
+{"id":"1201","question_id":"301","name":"Virat Kholi","is_correct":"0","created_at":"2026-05-22 16:39:09","updated_at":"2026-05-22 16:39:09","deleted_at":null,"name_tamil":"விராட் கோலி"}
+{"id":"1202","question_id":"301","name":"Dhoni","is_correct":"1","created_at":"2026-05-22 16:39:09","updated_at":"2026-05-22 16:39:09","deleted_at":null,"name_tamil":"தோனி"}
+{"id":"1203","question_id":"301","name":"Sachin","is_correct":"0","created_at":"2026-05-22 16:39:09","updated_at":"2026-05-22 16:39:09","deleted_at":null,"name_tamil":"சச்சின்"}
+{"id":"1204","question_id":"301","name":"Rohit Sharma","is_correct":"0","created_at":"2026-05-22 16:39:09","updated_at":"2026-05-22 16:39:09","deleted_at":null,"name_tamil":"ரோஹித் சர்மா"}
+{"id":"1205","question_id":"302","name":"TN 01 AT 9245","is_correct":"1","created_at":"2026-05-22 16:40:56","updated_at":"2026-05-22 16:40:56","deleted_at":null,"name_tamil":"TN 01 AT 9245"}
+{"id":"1206","question_id":"302","name":"TN 02 TA 9245","is_correct":"0","created_at":"2026-05-22 16:40:56","updated_at":"2026-05-22 16:40:56","deleted_at":null,"name_tamil":"TN 02 TA 9245"}
+{"id":"1207","question_id":"302","name":"TN 01 AT 9254","is_correct":"0","created_at":"2026-05-22 16:40:56","updated_at":"2026-05-22 16:40:56","deleted_at":null,"name_tamil":"TN 01 AT 9254"}
+{"id":"1208","question_id":"302","name":"TN 02 TA 9254","is_correct":"0","created_at":"2026-05-22 16:40:56","updated_at":"2026-05-22 16:40:56","deleted_at":null,"name_tamil":"TN 02 TA 9254"}
+{"id":"1209","question_id":"303","name":"TN 02 XA 1542","is_correct":"0","created_at":"2026-05-22 16:42:25","updated_at":"2026-05-22 16:42:25","deleted_at":null,"name_tamil":"TN 02 XA 1542"}
+{"id":"1210","question_id":"303","name":"TN 01 AX 1542","is_correct":"0","created_at":"2026-05-22 16:42:25","updated_at":"2026-05-22 16:42:25","deleted_at":null,"name_tamil":"TN 01 AX 1542"}
+{"id":"1211","question_id":"303","name":"TN 10 XA 1524","is_correct":"0","created_at":"2026-05-22 16:42:25","updated_at":"2026-05-22 16:42:25","deleted_at":null,"name_tamil":"TN 10 XA 1524"}
+{"id":"1212","question_id":"303","name":"TN 10 AX 1524","is_correct":"1","created_at":"2026-05-22 16:42:25","updated_at":"2026-05-22 16:42:25","deleted_at":null,"name_tamil":"TN 10 AX 1524"}
+{"id":"1213","question_id":"304","name":"Murugan","is_correct":"0","created_at":"2026-05-22 16:43:10","updated_at":"2026-05-22 16:43:10","deleted_at":null,"name_tamil":"முருகன்"}
+{"id":"1214","question_id":"304","name":"Venkatachalapathy","is_correct":"1","created_at":"2026-05-22 16:43:10","updated_at":"2026-05-22 16:43:10","deleted_at":null,"name_tamil":"வெங்கடாசலபதி"}
+{"id":"1215","question_id":"304","name":"Vinayagar","is_correct":"0","created_at":"2026-05-22 16:43:10","updated_at":"2026-05-22 16:43:10","deleted_at":null,"name_tamil":"விநாயகர்"}
+{"id":"1216","question_id":"304","name":"Lakshmi","is_correct":"0","created_at":"2026-05-22 16:43:10","updated_at":"2026-05-22 16:43:10","deleted_at":null,"name_tamil":"லட்சுமி"}
+{"id":"1217","question_id":"305","name":"Leader","is_correct":"0","created_at":"2026-05-22 16:44:09","updated_at":"2026-05-22 16:44:09","deleted_at":null,"name_tamil":"தலைவர்"}
+{"id":"1218","question_id":"305","name":"CM","is_correct":"1","created_at":"2026-05-22 16:44:09","updated_at":"2026-05-22 16:44:09","deleted_at":null,"name_tamil":"முதல்வர்"}
+{"id":"1219","question_id":"305","name":"Minister","is_correct":"0","created_at":"2026-05-22 16:44:09","updated_at":"2026-05-22 16:44:09","deleted_at":null,"name_tamil":"அமைச்சர்"}
+{"id":"1220","question_id":"305","name":"PM","is_correct":"0","created_at":"2026-05-22 16:44:09","updated_at":"2026-05-22 16:44:09","deleted_at":null,"name_tamil":"பி.எம்"}
+{"id":"1221","question_id":"306","name":"Railway Station","is_correct":"0","created_at":"2026-05-22 16:46:06","updated_at":"2026-05-22 16:46:06","deleted_at":null,"name_tamil":"ரயில் நிலையம்"}
+{"id":"1222","question_id":"306","name":"Bus Stop","is_correct":"0","created_at":"2026-05-22 16:46:06","updated_at":"2026-05-22 16:46:06","deleted_at":null,"name_tamil":"பேருந்து நிறுத்தம்"}
+{"id":"1223","question_id":"306","name":"Bus Stand","is_correct":"0","created_at":"2026-05-22 16:46:06","updated_at":"2026-05-22 16:46:06","deleted_at":null,"name_tamil":"பேருந்து நிலையம்"}
+{"id":"1224","question_id":"306","name":"Tollgate","is_correct":"1","created_at":"2026-05-22 16:46:06","updated_at":"2026-05-22 16:46:06","deleted_at":null,"name_tamil":"டோல்கேட்"}
+{"id":"1225","question_id":"307","name":"1 day","is_correct":"0","created_at":"2026-05-22 16:46:51","updated_at":"2026-05-22 16:46:51","deleted_at":null,"name_tamil":"1 நாள்"}
+{"id":"1226","question_id":"307","name":"5 days","is_correct":"1","created_at":"2026-05-22 16:46:51","updated_at":"2026-05-22 16:46:51","deleted_at":null,"name_tamil":"5 நாட்கள்"}
+{"id":"1227","question_id":"307","name":"4 days","is_correct":"0","created_at":"2026-05-22 16:46:51","updated_at":"2026-05-22 16:46:51","deleted_at":null,"name_tamil":"4 நாட்கள்"}
+{"id":"1228","question_id":"307","name":"7 days","is_correct":"0","created_at":"2026-05-22 16:46:51","updated_at":"2026-05-22 16:46:51","deleted_at":null,"name_tamil":"7 நாட்கள்"}
+{"id":"1229","question_id":"308","name":"Weather Research Center","is_correct":"1","created_at":"2026-05-25 10:57:24","updated_at":"2026-05-25 10:57:24","deleted_at":null,"name_tamil":"வானிலை ஆராய்ச்சி மையம்"}
+{"id":"1230","question_id":"308","name":"Police Station","is_correct":"0","created_at":"2026-05-25 10:57:24","updated_at":"2026-05-25 10:57:24","deleted_at":null,"name_tamil":"காவல் நிலையம்"}
+{"id":"1231","question_id":"308","name":"Hotel Reception","is_correct":"0","created_at":"2026-05-25 10:57:24","updated_at":"2026-05-25 10:57:24","deleted_at":null,"name_tamil":"ஹோட்டல் வரவேற்பு"}
+{"id":"1232","question_id":"308","name":"His friend","is_correct":"0","created_at":"2026-05-25 10:57:24","updated_at":"2026-05-25 10:57:24","deleted_at":null,"name_tamil":"அவனுடைய நண்பன்"}
+{"id":"1233","question_id":"309","name":"Laziness","is_correct":"0","created_at":"2026-05-25 11:06:58","updated_at":"2026-05-25 11:06:58","deleted_at":null,"name_tamil":"சோம்பல்"}
+{"id":"1234","question_id":"309","name":"Betrayal of trust","is_correct":"1","created_at":"2026-05-25 11:06:58","updated_at":"2026-05-25 11:06:58","deleted_at":null,"name_tamil":"நம்பிக்கை துரோகம்"}
+{"id":"1235","question_id":"309","name":"Lies","is_correct":"0","created_at":"2026-05-25 11:06:58","updated_at":"2026-05-25 11:06:58","deleted_at":null,"name_tamil":"பொய்"}
+{"id":"1236","question_id":"309","name":"Anger","is_correct":"0","created_at":"2026-05-25 11:06:58","updated_at":"2026-05-25 11:06:58","deleted_at":null,"name_tamil":"கோபம்"}
+{"id":"1237","question_id":"310","name":"Passport","is_correct":"0","created_at":"2026-05-25 11:11:57","updated_at":"2026-05-25 11:11:57","deleted_at":null,"name_tamil":"பாஸ்போர்ட்"}
+{"id":"1238","question_id":"310","name":"Flight ticket","is_correct":"0","created_at":"2026-05-25 11:11:57","updated_at":"2026-05-25 11:11:57","deleted_at":null,"name_tamil":"விமான டிக்கெட்"}
+{"id":"1239","question_id":"310","name":"NASA Visiting Selection Letter","is_correct":"1","created_at":"2026-05-25 11:11:57","updated_at":"2026-05-25 11:11:57","deleted_at":null,"name_tamil":"நாசா வருகை தேர்வு கடிதம்"}
+{"id":"1240","question_id":"310","name":"Research File","is_correct":"0","created_at":"2026-05-25 11:11:57","updated_at":"2026-05-25 11:11:57","deleted_at":null,"name_tamil":"ஆராய்ச்சி கோப்பு"}
+{"id":"1241","question_id":"311","name":"NASA","is_correct":"0","created_at":"2026-05-25 11:13:43","updated_at":"2026-05-25 11:13:43","deleted_at":null,"name_tamil":"நாசா"}
+{"id":"1242","question_id":"311","name":"ISRO","is_correct":"1","created_at":"2026-05-25 11:13:43","updated_at":"2026-05-25 11:13:43","deleted_at":null,"name_tamil":"இஸ்ரோ"}
+{"id":"1243","question_id":"311","name":"Chennai","is_correct":"0","created_at":"2026-05-25 11:13:43","updated_at":"2026-05-25 11:13:43","deleted_at":null,"name_tamil":"சென்னை"}
+{"id":"1244","question_id":"311","name":"Delhi","is_correct":"0","created_at":"2026-05-25 11:13:43","updated_at":"2026-05-25 11:13:43","deleted_at":null,"name_tamil":"டெல்லி"}
+{"id":"1245","question_id":"312","name":"Sister","is_correct":"0","created_at":"2026-05-25 11:15:07","updated_at":"2026-05-25 11:15:07","deleted_at":null,"name_tamil":"சகோதரி"}
+{"id":"1246","question_id":"312","name":"wife","is_correct":"0","created_at":"2026-05-25 11:15:07","updated_at":"2026-05-25 11:15:07","deleted_at":null,"name_tamil":"மனைவி"}
+{"id":"1247","question_id":"312","name":"Daughter","is_correct":"1","created_at":"2026-05-25 11:15:07","updated_at":"2026-05-25 11:15:07","deleted_at":null,"name_tamil":"மகள்"}
+{"id":"1248","question_id":"312","name":"Cousin","is_correct":"0","created_at":"2026-05-25 11:15:07","updated_at":"2026-05-25 11:15:07","deleted_at":null,"name_tamil":"உறவினர்"}
+{"id":"1249","question_id":"313","name":"4 days","is_correct":"0","created_at":"2026-05-25 11:29:49","updated_at":"2026-05-25 11:29:49","deleted_at":null,"name_tamil":"4 நாட்கள்"}
+{"id":"1250","question_id":"313","name":"2 days","is_correct":"0","created_at":"2026-05-25 11:29:49","updated_at":"2026-05-25 11:29:49","deleted_at":null,"name_tamil":"2 நாட்கள்"}
+{"id":"1251","question_id":"313","name":"1 week","is_correct":"0","created_at":"2026-05-25 11:29:49","updated_at":"2026-05-25 11:29:49","deleted_at":null,"name_tamil":"1 வாரம்"}
+{"id":"1252","question_id":"313","name":"3 days","is_correct":"1","created_at":"2026-05-25 11:29:49","updated_at":"2026-05-25 11:29:49","deleted_at":null,"name_tamil":"3 நாட்கள்"}
+{"id":"1253","question_id":"314","name":"At a wedding","is_correct":"0","created_at":"2026-05-25 11:32:49","updated_at":"2026-05-25 11:32:49","deleted_at":null,"name_tamil":"ஒரு திருமணத்தில்"}
+{"id":"1254","question_id":"314","name":"On her birthday","is_correct":"1","created_at":"2026-05-25 11:32:49","updated_at":"2026-05-25 11:32:49","deleted_at":null,"name_tamil":"அவள் பிறந்த நாளில்"}
+{"id":"1255","question_id":"314","name":"During a festival","is_correct":"0","created_at":"2026-05-25 11:32:49","updated_at":"2026-05-25 11:32:49","deleted_at":null,"name_tamil":"ஒரு திருவிழாவின் போது"}
+{"id":"1256","question_id":"314","name":"At a family dinner","is_correct":"0","created_at":"2026-05-25 11:32:49","updated_at":"2026-05-25 11:32:49","deleted_at":null,"name_tamil":"ஒரு குடும்ப விருந்தில்"}
+{"id":"1257","question_id":"315","name":"Not to commit suicide","is_correct":"1","created_at":"2026-05-25 11:34:49","updated_at":"2026-05-25 11:34:49","deleted_at":null,"name_tamil":"தற்கொலை செய்ய அல்ல"}
+{"id":"1258","question_id":"315","name":"Study well","is_correct":"0","created_at":"2026-05-25 11:34:49","updated_at":"2026-05-25 11:34:49","deleted_at":null,"name_tamil":"நன்றாகப் படிக்கவும்"}
+{"id":"1259","question_id":"315","name":"Never leave him","is_correct":"0","created_at":"2026-05-25 11:34:49","updated_at":"2026-05-25 11:34:49","deleted_at":null,"name_tamil":"அவரை ஒருபோதும் விட்டுவிடாதீர்கள்"}
+{"id":"1260","question_id":"315","name":"Tell the truth always","is_correct":"0","created_at":"2026-05-25 11:34:49","updated_at":"2026-05-25 11:34:49","deleted_at":null,"name_tamil":"எப்போதும் உண்மையைச் சொல்லுங்கள்"}
+{"id":"1261","question_id":"316","name":"Tail","is_correct":"0","created_at":"2026-05-25 11:36:25","updated_at":"2026-05-25 11:36:25","deleted_at":null,"name_tamil":"வால்"}
+{"id":"1262","question_id":"316","name":"Edge","is_correct":"0","created_at":"2026-05-25 11:36:25","updated_at":"2026-05-25 11:36:25","deleted_at":null,"name_tamil":"விளிம்பு"}
+{"id":"1263","question_id":"316","name":"Head","is_correct":"1","created_at":"2026-05-25 11:36:25","updated_at":"2026-05-25 11:36:25","deleted_at":null,"name_tamil":"தலை"}
+{"id":"1264","question_id":"316","name":"Number side","is_correct":"0","created_at":"2026-05-25 11:36:25","updated_at":"2026-05-25 11:36:25","deleted_at":null,"name_tamil":"எண் பக்கம்"}
+{"id":"1265","question_id":"317","name":"Right leg","is_correct":"0","created_at":"2026-05-25 11:39:29","updated_at":"2026-05-25 11:39:29","deleted_at":null,"name_tamil":"வலது கால்"}
+{"id":"1266","question_id":"317","name":"Left leg","is_correct":"1","created_at":"2026-05-25 11:39:29","updated_at":"2026-05-25 11:39:29","deleted_at":null,"name_tamil":"இடது கால்"}
+{"id":"1267","question_id":"317","name":"Left Hand","is_correct":"0","created_at":"2026-05-25 11:39:29","updated_at":"2026-05-25 11:39:29","deleted_at":null,"name_tamil":"இடது கை"}
+{"id":"1268","question_id":"317","name":"Right Hand","is_correct":"0","created_at":"2026-05-25 11:39:29","updated_at":"2026-05-25 11:39:29","deleted_at":null,"name_tamil":"வலது கை"}
+{"id":"1269","question_id":"318","name":"Black","is_correct":"1","created_at":"2026-05-25 11:50:02","updated_at":"2026-05-25 11:50:02","deleted_at":null,"name_tamil":"கருப்பு"}
+{"id":"1270","question_id":"318","name":"Red","is_correct":"0","created_at":"2026-05-25 11:50:02","updated_at":"2026-05-25 11:50:02","deleted_at":null,"name_tamil":"சிவப்பு"}
+{"id":"1271","question_id":"318","name":"Yellow","is_correct":"0","created_at":"2026-05-25 11:50:02","updated_at":"2026-05-25 11:50:02","deleted_at":null,"name_tamil":"மஞ்சள்"}
+{"id":"1272","question_id":"318","name":"white","is_correct":"0","created_at":"2026-05-25 11:50:02","updated_at":"2026-05-25 11:50:02","deleted_at":null,"name_tamil":"வெள்ளை"}
+{"id":"1273","question_id":"319","name":"One","is_correct":"1","created_at":"2026-05-25 11:51:25","updated_at":"2026-05-25 11:51:25","deleted_at":null,"name_tamil":"ஒன்று"}
+{"id":"1274","question_id":"319","name":"Two","is_correct":"0","created_at":"2026-05-25 11:51:25","updated_at":"2026-05-25 11:51:25","deleted_at":null,"name_tamil":"இரண்டு"}
+{"id":"1275","question_id":"319","name":"Three","is_correct":"0","created_at":"2026-05-25 11:51:25","updated_at":"2026-05-25 11:51:25","deleted_at":null,"name_tamil":"மூன்று"}
+{"id":"1276","question_id":"319","name":"Four","is_correct":"0","created_at":"2026-05-25 11:51:25","updated_at":"2026-05-25 11:51:25","deleted_at":null,"name_tamil":"நான்கு"}
+{"id":"1277","question_id":"320","name":"7th day","is_correct":"0","created_at":"2026-05-25 11:53:20","updated_at":"2026-05-25 11:53:20","deleted_at":null,"name_tamil":"7வது நாள்"}
+{"id":"1278","question_id":"320","name":"5th day","is_correct":"1","created_at":"2026-05-25 11:53:20","updated_at":"2026-05-25 11:53:20","deleted_at":null,"name_tamil":"5வது நாள்"}
+{"id":"1279","question_id":"320","name":"3rd day","is_correct":"0","created_at":"2026-05-25 11:53:20","updated_at":"2026-05-25 11:53:20","deleted_at":null,"name_tamil":"3வது நாள்"}
+{"id":"1280","question_id":"320","name":"10th day","is_correct":"0","created_at":"2026-05-25 11:53:20","updated_at":"2026-05-25 11:53:20","deleted_at":null,"name_tamil":"10வது நாள்"}
+{"id":"1281","question_id":"321","name":"The Doctor","is_correct":"0","created_at":"2026-05-25 11:54:53","updated_at":"2026-05-25 11:54:53","deleted_at":null,"name_tamil":"டாக்டர்"}
+{"id":"1282","question_id":"321","name":"The Sun","is_correct":"1","created_at":"2026-05-25 11:54:53","updated_at":"2026-05-25 11:54:53","deleted_at":null,"name_tamil":"சூரியன்"}
+{"id":"1283","question_id":"321","name":"The Villain","is_correct":"0","created_at":"2026-05-25 11:54:54","updated_at":"2026-05-25 11:54:54","deleted_at":null,"name_tamil":"வில்லன்"}
+{"id":"1284","question_id":"321","name":"The Driver","is_correct":"0","created_at":"2026-05-25 11:54:54","updated_at":"2026-05-25 11:54:54","deleted_at":null,"name_tamil":"டிரைவர்"}
+{"id":"1285","question_id":"322","name":"Kodai Medicals","is_correct":"1","created_at":"2026-05-25 11:57:35","updated_at":"2026-05-25 11:57:35","deleted_at":null,"name_tamil":"கோதை மெடிக்கல்ஸ்"}
+{"id":"1286","question_id":"322","name":"City Medicals","is_correct":"0","created_at":"2026-05-25 11:57:35","updated_at":"2026-05-25 11:57:35","deleted_at":null,"name_tamil":"சிட்டி மெடிக்கல்ஸ்"}
+{"id":"1287","question_id":"322","name":"Hill Pharmacy","is_correct":"0","created_at":"2026-05-25 11:57:35","updated_at":"2026-05-25 11:57:35","deleted_at":null,"name_tamil":"ஹில் பார்மசி"}
+{"id":"1288","question_id":"322","name":"Green Medicals","is_correct":"0","created_at":"2026-05-25 11:57:35","updated_at":"2026-05-25 11:57:35","deleted_at":null,"name_tamil":"பசுமை மருத்துவம்"}
+{"id":"1289","question_id":"323","name":"10:15","is_correct":"1","created_at":"2026-05-25 12:00:57","updated_at":"2026-05-25 12:00:57","deleted_at":null,"name_tamil":"10:15"}
+{"id":"1290","question_id":"323","name":"9:45","is_correct":"0","created_at":"2026-05-25 12:00:57","updated_at":"2026-05-25 12:00:57","deleted_at":null,"name_tamil":"9:45"}
+{"id":"1291","question_id":"323","name":"11:30","is_correct":"0","created_at":"2026-05-25 12:00:57","updated_at":"2026-05-25 12:00:57","deleted_at":null,"name_tamil":"11:30"}
+{"id":"1292","question_id":"323","name":"12:00","is_correct":"0","created_at":"2026-05-25 12:00:57","updated_at":"2026-05-25 12:00:57","deleted_at":null,"name_tamil":"12:00"}
+{"id":"1293","question_id":"324","name":"His ID card","is_correct":"0","created_at":"2026-05-25 12:07:26","updated_at":"2026-05-25 12:07:26","deleted_at":null,"name_tamil":"அவரது அடையாள அட்டை"}
+{"id":"1294","question_id":"324","name":"His bike number","is_correct":"0","created_at":"2026-05-25 12:07:26","updated_at":"2026-05-25 12:07:26","deleted_at":null,"name_tamil":"அவரது பைக் எண்"}
+{"id":"1295","question_id":"324","name":"The heroine’s photo","is_correct":"1","created_at":"2026-05-25 12:07:26","updated_at":"2026-05-25 12:07:26","deleted_at":null,"name_tamil":"கதாநாயகியின் புகைப்படம்"}
+{"id":"1296","question_id":"324","name":"His wallet","is_correct":"0","created_at":"2026-05-25 12:07:26","updated_at":"2026-05-25 12:07:26","deleted_at":null,"name_tamil":"அவரது பணப்பை"}
+{"id":"1297","question_id":"325","name":"Church","is_correct":"1","created_at":"2026-05-25 12:08:35","updated_at":"2026-05-25 12:08:35","deleted_at":null,"name_tamil":"தேவாலயம்"}
+{"id":"1298","question_id":"325","name":"Bus Stand","is_correct":"0","created_at":"2026-05-25 12:08:35","updated_at":"2026-05-25 12:08:35","deleted_at":null,"name_tamil":"பேருந்து நிலையம்"}
+{"id":"1299","question_id":"325","name":"Hospital","is_correct":"0","created_at":"2026-05-25 12:08:35","updated_at":"2026-05-25 12:08:35","deleted_at":null,"name_tamil":"மருத்துவமனை"}
+{"id":"1300","question_id":"325","name":"Market","is_correct":"0","created_at":"2026-05-25 12:08:35","updated_at":"2026-05-25 12:08:35","deleted_at":null,"name_tamil":"சந்தை"}
+{"id":"1301","question_id":"326","name":"Minister","is_correct":"0","created_at":"2026-05-25 12:09:42","updated_at":"2026-05-25 12:09:42","deleted_at":null,"name_tamil":"அமைச்சர்"}
+{"id":"1302","question_id":"326","name":"Doctor","is_correct":"0","created_at":"2026-05-25 12:09:42","updated_at":"2026-05-25 12:09:42","deleted_at":null,"name_tamil":"டாக்டர்"}
+{"id":"1303","question_id":"326","name":"Police","is_correct":"1","created_at":"2026-05-25 12:09:42","updated_at":"2026-05-25 12:09:42","deleted_at":null,"name_tamil":"போலீஸ்"}
+{"id":"1304","question_id":"326","name":"Reporter","is_correct":"0","created_at":"2026-05-25 12:09:42","updated_at":"2026-05-25 12:09:42","deleted_at":null,"name_tamil":"நிருபர்"}
+{"id":"1305","question_id":"327","name":"Covaxin","is_correct":"0","created_at":"2026-05-25 12:10:54","updated_at":"2026-05-25 12:10:54","deleted_at":null,"name_tamil":"கோவாக்சின்"}
+{"id":"1306","question_id":"327","name":"Rabivax-S","is_correct":"1","created_at":"2026-05-25 12:10:54","updated_at":"2026-05-25 12:10:54","deleted_at":null,"name_tamil":"ரபிவாக்ஸ்-எஸ்"}
+{"id":"1307","question_id":"327","name":"Medivax","is_correct":"0","created_at":"2026-05-25 12:10:54","updated_at":"2026-05-25 12:10:54","deleted_at":null,"name_tamil":"மெடிவாக்ஸ்"}
+{"id":"1308","question_id":"327","name":"Rabicure**","is_correct":"0","created_at":"2026-05-25 12:10:54","updated_at":"2026-05-25 12:10:54","deleted_at":null,"name_tamil":"ராபிகியூர்**"}
+{"id":"1309","question_id":"328","name":"Hydrophobia","is_correct":"1","created_at":"2026-05-25 12:31:14","updated_at":"2026-05-25 12:31:14","deleted_at":null,"name_tamil":"ஹைட்ரோபோபியா"}
+{"id":"1310","question_id":"328","name":"Acrophobia","is_correct":"0","created_at":"2026-05-25 12:31:14","updated_at":"2026-05-25 12:31:14","deleted_at":null,"name_tamil":"அக்ரோபோபியா"}
+{"id":"1311","question_id":"328","name":"Claustrophobia","is_correct":"0","created_at":"2026-05-25 12:31:14","updated_at":"2026-05-25 12:31:14","deleted_at":null,"name_tamil":"கிளாஸ்ட்ரோஃபோபியா"}
+{"id":"1312","question_id":"328","name":"Hemophobia","is_correct":"0","created_at":"2026-05-25 12:31:14","updated_at":"2026-05-25 12:31:14","deleted_at":null,"name_tamil":"ஹீமோஃபோபியா"}
+{"id":"1313","question_id":"329","name":"Monkey","is_correct":"0","created_at":"2026-05-25 12:33:49","updated_at":"2026-05-25 12:33:49","deleted_at":null,"name_tamil":"குரங்கு"}
+{"id":"1314","question_id":"329","name":"Cat","is_correct":"0","created_at":"2026-05-25 12:33:49","updated_at":"2026-05-25 12:33:49","deleted_at":null,"name_tamil":"பூனை"}
+{"id":"1315","question_id":"329","name":"Dog","is_correct":"1","created_at":"2026-05-25 12:33:49","updated_at":"2026-05-25 12:33:49","deleted_at":null,"name_tamil":"நாய்"}
+{"id":"1316","question_id":"329","name":"Wolf","is_correct":"0","created_at":"2026-05-25 12:33:49","updated_at":"2026-05-25 12:33:49","deleted_at":null,"name_tamil":"ஓநாய்"}
+{"id":"1317","question_id":"330","name":"Kochi","is_correct":"0","created_at":"2026-05-25 12:34:59","updated_at":"2026-05-25 12:34:59","deleted_at":null,"name_tamil":"கொச்சி"}
+{"id":"1318","question_id":"330","name":"Thrissur","is_correct":"0","created_at":"2026-05-25 12:34:59","updated_at":"2026-05-25 12:34:59","deleted_at":null,"name_tamil":"திருச்சூர்"}
+{"id":"1319","question_id":"330","name":"Kottayam","is_correct":"1","created_at":"2026-05-25 12:34:59","updated_at":"2026-05-25 12:34:59","deleted_at":null,"name_tamil":"கோட்டயம்"}
+{"id":"1320","question_id":"330","name":"Kannur","is_correct":"0","created_at":"2026-05-25 12:34:59","updated_at":"2026-05-25 12:34:59","deleted_at":null,"name_tamil":"கண்ணூர்"}
+{"id":"1321","question_id":"331","name":"Tamil Nadu","is_correct":"0","created_at":"2026-05-25 13:37:42","updated_at":"2026-05-25 13:37:42","deleted_at":null,"name_tamil":"தமிழ்நாடு"}
+{"id":"1322","question_id":"331","name":"Karnataka","is_correct":"0","created_at":"2026-05-25 13:37:42","updated_at":"2026-05-25 13:37:42","deleted_at":null,"name_tamil":"கர்நாடகா"}
+{"id":"1323","question_id":"331","name":"Andhra Pradesh","is_correct":"0","created_at":"2026-05-25 13:37:42","updated_at":"2026-05-25 13:37:42","deleted_at":null,"name_tamil":"ஆந்திரப் பிரதேசம்"}
+{"id":"1324","question_id":"331","name":"Kerala","is_correct":"1","created_at":"2026-05-25 13:37:42","updated_at":"2026-05-25 13:37:42","deleted_at":null,"name_tamil":"கேரளா"}
+{"id":"1325","question_id":"332","name":"It cannot be cured","is_correct":"1","created_at":"2026-05-25 13:39:20","updated_at":"2026-05-25 13:39:20","deleted_at":null,"name_tamil":"அதை குணப்படுத்த முடியாது"}
+{"id":"1326","question_id":"332","name":"It can be cured completely","is_correct":"0","created_at":"2026-05-25 13:39:20","updated_at":"2026-05-25 13:39:20","deleted_at":null,"name_tamil":"அதை முழுமையாக குணப்படுத்த முடியும்"}
+{"id":"1327","question_id":"332","name":"It takes one year to cure","is_correct":"0","created_at":"2026-05-25 13:39:20","updated_at":"2026-05-25 13:39:20","deleted_at":null,"name_tamil":"குணமடைய ஒரு வருடம் ஆகும்"}
+{"id":"1328","question_id":"332","name":"Surgery is required","is_correct":"0","created_at":"2026-05-25 13:39:20","updated_at":"2026-05-25 13:39:20","deleted_at":null,"name_tamil":"அறுவை சிகிச்சை தேவை"}
+{"id":"1329","question_id":"333","name":"Homeopathy","is_correct":"0","created_at":"2026-05-25 13:40:33","updated_at":"2026-05-25 13:40:33","deleted_at":null,"name_tamil":"ஹோமியோபதி"}
+{"id":"1330","question_id":"333","name":"Allopathy","is_correct":"0","created_at":"2026-05-25 13:40:33","updated_at":"2026-05-25 13:40:33","deleted_at":null,"name_tamil":"அலோபதி"}
+{"id":"1331","question_id":"333","name":"Ayurveda","is_correct":"1","created_at":"2026-05-25 13:40:33","updated_at":"2026-05-25 13:40:33","deleted_at":null,"name_tamil":"ஆயுர்வேதம்"}
+{"id":"1332","question_id":"333","name":"Siddha","is_correct":"0","created_at":"2026-05-25 13:40:33","updated_at":"2026-05-25 13:40:33","deleted_at":null,"name_tamil":"சித்தா"}
+{"id":"1333","question_id":"334","name":"Kottayam","is_correct":"0","created_at":"2026-05-25 13:41:37","updated_at":"2026-05-25 13:41:37","deleted_at":null,"name_tamil":"கோட்டயம்"}
+{"id":"1334","question_id":"334","name":"Madurai","is_correct":"0","created_at":"2026-05-25 13:41:37","updated_at":"2026-05-25 13:41:37","deleted_at":null,"name_tamil":"மதுரை"}
+{"id":"1335","question_id":"334","name":"Palakkad","is_correct":"0","created_at":"2026-05-25 13:41:37","updated_at":"2026-05-25 13:41:37","deleted_at":null,"name_tamil":"பாலக்காடு"}
+{"id":"1336","question_id":"334","name":"Maduvangarai","is_correct":"1","created_at":"2026-05-25 13:41:37","updated_at":"2026-05-25 13:41:37","deleted_at":null,"name_tamil":"மடுவாங்கரை"}
+{"id":"1337","question_id":"335","name":"Gurupeyiravan","is_correct":"0","created_at":"2026-05-25 13:43:16","updated_at":"2026-05-25 13:43:16","deleted_at":null,"name_tamil":"குருபெயிறவன்"}
+{"id":"1338","question_id":"335","name":"Kumar Doctor","is_correct":"0","created_at":"2026-05-25 13:43:16","updated_at":"2026-05-25 13:43:16","deleted_at":null,"name_tamil":"குமார் டாக்டர்"}
+{"id":"1339","question_id":"335","name":"Nataraj Vaithiyar","is_correct":"1","created_at":"2026-05-25 13:43:16","updated_at":"2026-05-25 13:43:16","deleted_at":null,"name_tamil":"நடராஜ் வைத்தியர்"}
+{"id":"1340","question_id":"335","name":"Ravi Vaithiyar","is_correct":"0","created_at":"2026-05-25 13:43:16","updated_at":"2026-05-25 13:43:16","deleted_at":null,"name_tamil":"ரவி வைத்தியர்"}
+{"id":"1341","question_id":"336","name":"14","is_correct":"1","created_at":"2026-05-25 13:44:20","updated_at":"2026-05-25 13:44:20","deleted_at":null,"name_tamil":"14"}
+{"id":"1342","question_id":"336","name":"10","is_correct":"0","created_at":"2026-05-25 13:44:20","updated_at":"2026-05-25 13:44:20","deleted_at":null,"name_tamil":"10"}
+{"id":"1343","question_id":"336","name":"20","is_correct":"0","created_at":"2026-05-25 13:44:20","updated_at":"2026-05-25 13:44:20","deleted_at":null,"name_tamil":"20"}
+{"id":"1344","question_id":"336","name":"7","is_correct":"0","created_at":"2026-05-25 13:44:20","updated_at":"2026-05-25 13:44:20","deleted_at":null,"name_tamil":"7"}
+{"id":"1345","question_id":"337","name":"15 minutes","is_correct":"1","created_at":"2026-05-25 13:45:22","updated_at":"2026-05-25 13:45:22","deleted_at":null,"name_tamil":"15 நிமிடங்கள்"}
+{"id":"1346","question_id":"337","name":"5 minutes","is_correct":"0","created_at":"2026-05-25 13:45:22","updated_at":"2026-05-25 13:45:22","deleted_at":null,"name_tamil":"5 நிமிடங்கள்"}
+{"id":"1347","question_id":"337","name":"30 minutes","is_correct":"0","created_at":"2026-05-25 13:45:22","updated_at":"2026-05-25 13:45:22","deleted_at":null,"name_tamil":"30 நிமிடங்கள்"}
+{"id":"1348","question_id":"337","name":"1 hour","is_correct":"0","created_at":"2026-05-25 13:45:22","updated_at":"2026-05-25 13:45:22","deleted_at":null,"name_tamil":"1 மணிநேரம்"}
+{"id":"1349","question_id":"338","name":"More than three hours","is_correct":"1","created_at":"2026-05-25 13:54:17","updated_at":"2026-05-25 13:54:17","deleted_at":null,"name_tamil":"மூன்று மணி நேரத்திற்கு மேல்"}
+{"id":"1350","question_id":"338","name":"One hour","is_correct":"0","created_at":"2026-05-25 13:54:17","updated_at":"2026-05-25 13:54:17","deleted_at":null,"name_tamil":"ஒரு மணி நேரம்"}
+{"id":"1351","question_id":"338","name":"Thirty minutes","is_correct":"0","created_at":"2026-05-25 13:54:17","updated_at":"2026-05-25 13:54:17","deleted_at":null,"name_tamil":"முப்பது நிமிடங்கள்"}
+{"id":"1352","question_id":"338","name":"Six hours","is_correct":"0","created_at":"2026-05-25 13:54:17","updated_at":"2026-05-25 13:54:17","deleted_at":null,"name_tamil":"ஆறு மணி நேரம்"}
+{"id":"1353","question_id":"339","name":"Midnight","is_correct":"0","created_at":"2026-05-25 13:55:45","updated_at":"2026-05-25 13:55:45","deleted_at":null,"name_tamil":"நள்ளிரவு"}
+{"id":"1354","question_id":"339","name":"10 PM","is_correct":"1","created_at":"2026-05-25 13:55:45","updated_at":"2026-05-25 13:55:45","deleted_at":null,"name_tamil":"இரவு 10 மணி"}
+{"id":"1355","question_id":"339","name":"8 PM","is_correct":"0","created_at":"2026-05-25 13:55:45","updated_at":"2026-05-25 13:55:45","deleted_at":null,"name_tamil":"இரவு 8 மணி"}
+{"id":"1356","question_id":"339","name":"6 PM","is_correct":"0","created_at":"2026-05-25 13:55:45","updated_at":"2026-05-25 13:55:45","deleted_at":null,"name_tamil":"மாலை 6 மணி"}
+{"id":"1357","question_id":"340","name":"Cat","is_correct":"0","created_at":"2026-05-25 13:57:26","updated_at":"2026-05-25 13:57:26","deleted_at":null,"name_tamil":"பூனை"}
+{"id":"1358","question_id":"340","name":"Horse","is_correct":"0","created_at":"2026-05-25 13:57:26","updated_at":"2026-05-25 13:57:26","deleted_at":null,"name_tamil":"குதிரை"}
+{"id":"1359","question_id":"340","name":"Dog","is_correct":"1","created_at":"2026-05-25 13:57:26","updated_at":"2026-05-25 13:57:26","deleted_at":null,"name_tamil":"நாய்"}
+{"id":"1360","question_id":"340","name":"Elephant","is_correct":"0","created_at":"2026-05-25 13:57:26","updated_at":"2026-05-25 13:57:26","deleted_at":null,"name_tamil":"யானை"}
+{"id":"1361","question_id":"341","name":"King’s Restaurant","is_correct":"0","created_at":"2026-05-25 13:58:44","updated_at":"2026-05-25 13:58:44","deleted_at":null,"name_tamil":"கிங்ஸ் உணவகம்"}
+{"id":"1362","question_id":"341","name":"Tamilnadu Mess","is_correct":"0","created_at":"2026-05-25 13:58:44","updated_at":"2026-05-25 13:58:44","deleted_at":null,"name_tamil":"தமிழ்நாடு மெஸ்"}
+{"id":"1363","question_id":"341","name":"Hotel Saravana","is_correct":"0","created_at":"2026-05-25 13:58:44","updated_at":"2026-05-25 13:58:44","deleted_at":null,"name_tamil":"ஓட்டல் சரவணா"}
+{"id":"1364","question_id":"341","name":"Hotel Pandian","is_correct":"1","created_at":"2026-05-25 13:58:44","updated_at":"2026-05-25 13:58:44","deleted_at":null,"name_tamil":"ஹோட்டல் பாண்டியன்"}
+{"id":"1365","question_id":"342","name":"Tambaram Bypass","is_correct":"1","created_at":"2026-05-25 13:59:46","updated_at":"2026-05-25 13:59:46","deleted_at":null,"name_tamil":"தாம்பரம் புறவழிச்சாலை"}
+{"id":"1366","question_id":"342","name":"Koyambedu","is_correct":"0","created_at":"2026-05-25 13:59:46","updated_at":"2026-05-25 13:59:46","deleted_at":null,"name_tamil":"கோயம்பேடு"}
+{"id":"1367","question_id":"342","name":"Guindy","is_correct":"0","created_at":"2026-05-25 13:59:46","updated_at":"2026-05-25 13:59:46","deleted_at":null,"name_tamil":"கிண்டி"}
+{"id":"1368","question_id":"342","name":"Velachery","is_correct":"0","created_at":"2026-05-25 13:59:46","updated_at":"2026-05-25 13:59:46","deleted_at":null,"name_tamil":"வேளச்சேரி"}
+{"id":"1369","question_id":"343","name":"By checking his fever","is_correct":"0","created_at":"2026-05-25 14:01:03","updated_at":"2026-05-25 14:01:03","deleted_at":null,"name_tamil":"அவரது காய்ச்சலை பரிசோதிப்பதன் மூலம்"}
+{"id":"1370","question_id":"343","name":"By seeing him drink water","is_correct":"1","created_at":"2026-05-25 14:01:03","updated_at":"2026-05-25 14:01:03","deleted_at":null,"name_tamil":"அவன் தண்ணீர் குடிப்பதைப் பார்த்து"}
+{"id":"1371","question_id":"343","name":"By his behavior","is_correct":"0","created_at":"2026-05-25 14:01:03","updated_at":"2026-05-25 14:01:03","deleted_at":null,"name_tamil":"அவரது நடத்தை மூலம்"}
+{"id":"1372","question_id":"343","name":"By a doctor’s report","is_correct":"0","created_at":"2026-05-25 14:01:03","updated_at":"2026-05-25 14:01:03","deleted_at":null,"name_tamil":"மருத்துவரின் அறிக்கை மூலம்"}
+{"id":"1373","question_id":"344","name":"5","is_correct":"0","created_at":"2026-05-25 14:02:15","updated_at":"2026-05-25 14:02:15","deleted_at":null,"name_tamil":"5"}
+{"id":"1374","question_id":"344","name":"4","is_correct":"0","created_at":"2026-05-25 14:02:15","updated_at":"2026-05-25 14:02:15","deleted_at":null,"name_tamil":"4"}
+{"id":"1375","question_id":"344","name":"3","is_correct":"1","created_at":"2026-05-25 14:02:15","updated_at":"2026-05-25 14:02:15","deleted_at":null,"name_tamil":"3"}
+{"id":"1376","question_id":"344","name":"2","is_correct":"0","created_at":"2026-05-25 14:02:15","updated_at":"2026-05-25 14:02:15","deleted_at":null,"name_tamil":"2"}
+{"id":"1377","question_id":"345","name":"Kumar","is_correct":"0","created_at":"2026-05-25 14:03:23","updated_at":"2026-05-25 14:03:23","deleted_at":null,"name_tamil":"குமார்"}
+{"id":"1378","question_id":"345","name":"Mani","is_correct":"0","created_at":"2026-05-25 14:03:23","updated_at":"2026-05-25 14:03:23","deleted_at":null,"name_tamil":"மணி"}
+{"id":"1379","question_id":"345","name":"Selvam","is_correct":"0","created_at":"2026-05-25 14:03:23","updated_at":"2026-05-25 14:03:23","deleted_at":null,"name_tamil":"செல்வம்"}
+{"id":"1380","question_id":"345","name":"Raja","is_correct":"1","created_at":"2026-05-25 14:03:24","updated_at":"2026-05-25 14:03:24","deleted_at":null,"name_tamil":"ராஜா"}
+{"id":"1381","question_id":"346","name":"M","is_correct":"0","created_at":"2026-05-25 14:05:39","updated_at":"2026-05-25 14:05:39","deleted_at":null,"name_tamil":"எம்"}
+{"id":"1382","question_id":"346","name":"V","is_correct":"0","created_at":"2026-05-25 14:05:39","updated_at":"2026-05-25 14:05:39","deleted_at":null,"name_tamil":"வி"}
+{"id":"1383","question_id":"346","name":"R","is_correct":"1","created_at":"2026-05-25 14:05:39","updated_at":"2026-05-25 14:05:39","deleted_at":null,"name_tamil":"ஆர்"}
+{"id":"1384","question_id":"346","name":"K","is_correct":"0","created_at":"2026-05-25 14:05:39","updated_at":"2026-05-25 14:05:39","deleted_at":null,"name_tamil":"கே"}
+{"id":"1385","question_id":"347","name":"Delhi","is_correct":"0","created_at":"2026-05-25 14:06:44","updated_at":"2026-05-25 14:06:44","deleted_at":null,"name_tamil":"டெல்லி"}
+{"id":"1386","question_id":"347","name":"ISRO","is_correct":"0","created_at":"2026-05-25 14:06:44","updated_at":"2026-05-25 14:06:44","deleted_at":null,"name_tamil":"இஸ்ரோ"}
+{"id":"1387","question_id":"347","name":"Chennai","is_correct":"0","created_at":"2026-05-25 14:06:44","updated_at":"2026-05-25 14:06:44","deleted_at":null,"name_tamil":"சென்னை"}
+{"id":"1388","question_id":"347","name":"Airport","is_correct":"1","created_at":"2026-05-25 14:06:44","updated_at":"2026-05-25 14:06:44","deleted_at":null,"name_tamil":"விமான நிலையம்"}
+{"id":"1389","question_id":"348","name":"6:45 AM","is_correct":"1","created_at":"2026-05-25 14:08:43","updated_at":"2026-05-25 14:08:43","deleted_at":null,"name_tamil":"காலை 6:45 மணி"}
+{"id":"1390","question_id":"348","name":"5:30 AM","is_correct":"0","created_at":"2026-05-25 14:08:43","updated_at":"2026-05-25 14:08:43","deleted_at":null,"name_tamil":"காலை 5:30 மணி"}
+{"id":"1391","question_id":"348","name":"7:15 AM","is_correct":"0","created_at":"2026-05-25 14:08:43","updated_at":"2026-05-25 14:08:43","deleted_at":null,"name_tamil":"காலை 7:15 மணி"}
+{"id":"1392","question_id":"348","name":"8:00 AM","is_correct":"0","created_at":"2026-05-25 14:08:43","updated_at":"2026-05-25 14:08:43","deleted_at":null,"name_tamil":"காலை 8:00 மணி"}
+{"id":"1393","question_id":"349","name":"3","is_correct":"0","created_at":"2026-05-25 14:09:53","updated_at":"2026-05-25 14:09:53","deleted_at":null,"name_tamil":"3"}
+{"id":"1394","question_id":"349","name":"5","is_correct":"1","created_at":"2026-05-25 14:09:53","updated_at":"2026-05-25 14:09:53","deleted_at":null,"name_tamil":"5"}
+{"id":"1395","question_id":"349","name":"4","is_correct":"0","created_at":"2026-05-25 14:09:53","updated_at":"2026-05-25 14:09:53","deleted_at":null,"name_tamil":"4"}
+{"id":"1396","question_id":"349","name":"6","is_correct":"0","created_at":"2026-05-25 14:09:53","updated_at":"2026-05-25 14:09:53","deleted_at":null,"name_tamil":"6"}
+{"id":"1397","question_id":"350","name":"“Agara Mudhala...”","is_correct":"0","created_at":"2026-05-25 14:11:49","updated_at":"2026-05-25 14:11:49","deleted_at":null,"name_tamil":"“அகர முதலா...”"}
+{"id":"1398","question_id":"350","name":"“Deivathaan Aaga...”","is_correct":"1","created_at":"2026-05-25 14:11:49","updated_at":"2026-05-25 14:11:49","deleted_at":null,"name_tamil":"“தெய்வத்தான் ஆக...”"}
+{"id":"1399","question_id":"350","name":"“Anbudaiyar...”","is_correct":"0","created_at":"2026-05-25 14:11:49","updated_at":"2026-05-25 14:11:49","deleted_at":null,"name_tamil":"\"அன்புடையார்...\""}
+{"id":"1400","question_id":"350","name":"“Karka Kasadara...”","is_correct":"0","created_at":"2026-05-25 14:11:49","updated_at":"2026-05-25 14:11:49","deleted_at":null,"name_tamil":"“கற்க கசடரா...”"}
+{"id":"1401","question_id":"351","name":"Friendship","is_correct":"0","created_at":"2026-05-25 14:13:07","updated_at":"2026-05-25 14:13:07","deleted_at":null,"name_tamil":"நட்பு"}
+{"id":"1402","question_id":"351","name":"Guilt \/ Atonement","is_correct":"1","created_at":"2026-05-25 14:13:07","updated_at":"2026-05-25 14:13:07","deleted_at":null,"name_tamil":"குற்ற உணர்வு \/ பரிகாரம்"}
+{"id":"1403","question_id":"351","name":"Money","is_correct":"0","created_at":"2026-05-25 14:13:07","updated_at":"2026-05-25 14:13:07","deleted_at":null,"name_tamil":"பணம்"}
+{"id":"1404","question_id":"351","name":"Doctor’s order","is_correct":"0","created_at":"2026-05-25 14:13:07","updated_at":"2026-05-25 14:13:07","deleted_at":null,"name_tamil":"மருத்துவரின் உத்தரவு"}
+{"id":"1405","question_id":"352","name":"Heroine","is_correct":"0","created_at":"2026-05-25 14:14:07","updated_at":"2026-05-25 14:14:07","deleted_at":null,"name_tamil":"கதாநாயகி"}
+{"id":"1406","question_id":"352","name":"Doctor","is_correct":"0","created_at":"2026-05-25 14:14:07","updated_at":"2026-05-25 14:14:07","deleted_at":null,"name_tamil":"டாக்டர்"}
+{"id":"1407","question_id":"352","name":"Kuyili","is_correct":"1","created_at":"2026-05-25 14:14:07","updated_at":"2026-05-25 14:14:07","deleted_at":null,"name_tamil":"குயிலி"}
+{"id":"1408","question_id":"352","name":"Minister","is_correct":"0","created_at":"2026-05-25 14:14:07","updated_at":"2026-05-25 14:14:07","deleted_at":null,"name_tamil":"அமைச்சர்"}

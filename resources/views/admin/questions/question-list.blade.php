@@ -7,12 +7,25 @@
 
     <h2 class="pb-3 border-bottom">
         Questions
+        <a href="{{ route('admin.movies.edit', ['id' => $movieId]) }}" class="btn btn-secondary float-right addnewbtn">Back</a>
         <a href="{{ route('admin.questions.createQuestion', ['movieId' => $movieId]) }}" class="btn btn-secondary float-right addnewbtn">+ Add New Question</a>
+        
     </h2>
     <form method="POST" action="{{ route('admin.questions.bulkDelete', $movieId) }}">
     <input type="hidden" name="page" value="{{ request()->page }}">
     @csrf
 
+    <div class="mb-3">
+
+        <span class="badge badge-primary">
+            English Questions: {{ $englishCount }}
+        </span>
+
+        <span class="badge badge-success">
+            Tamil Questions: {{ $tamilCount }}
+        </span>
+
+    </div>
     <div class="mb-2">
         <button type="submit" class="btn btn-danger btn-sm"
             onclick="return confirm('Delete selected questions?')">

@@ -25,9 +25,41 @@ class QuestionController extends Controller
         $this->QuestionModel = $QuestionModel;
     }
 
-    public function list(int $movieId){
+    /*public function list(int $movieId){
         $questions = $this->QuestionModel->getQuestions($movieId); 
         return view('admin.questions.question-list', compact('questions', 'movieId'));
+    }*/
+
+    public function list(int $movieId)
+    {
+        $questions = $this->QuestionModel->getQuestions($movieId);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Language Counts
+        |--------------------------------------------------------------------------
+        */
+
+        $languageCounts = \DB::table('questions')
+            ->select('language', \DB::raw('count(*) as total'))
+            ->where('movie_id', $movieId)
+            ->whereNull('deleted_at')
+            ->groupBy('language')
+            ->pluck('total', 'language');
+
+        $englishCount = $languageCounts['english'] ?? 0;
+
+        $tamilCount = $languageCounts['tamil'] ?? 0;
+
+        return view(
+            'admin.questions.question-list',
+            compact(
+                'questions',
+                'movieId',
+                'englishCount',
+                'tamilCount'
+            )
+        );
     }
 
     public function create(Request $request, $movieId){
