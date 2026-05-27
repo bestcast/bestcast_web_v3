@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\QuestionOptions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class QuestionModel extends Model
 {
@@ -30,11 +31,32 @@ class QuestionModel extends Model
      * Integer $movieId
      * @return Array
      */
-    public function getQuestions(int $movieId):LengthAwarePaginator{
+    /*public function getQuestions(int $movieId):LengthAwarePaginator{
         return $this->question
             ->where('movie_id', $movieId)
             ->orderBy('show_question_time', 'asc')
             ->orderBy('id')
+            ->paginate(25);
+    }*/
+    public function getQuestions(int $movieId): LengthAwarePaginator
+    {
+        return DB::table('questions')
+            ->where('movie_id', $movieId)
+            ->whereNull('deleted_at')
+
+            ->orderBy('show_time_hour')
+            ->orderBy('show_time_min')
+            ->orderBy('show_time_sec')
+
+            // English first, Tamil second
+            ->orderByRaw("
+                CASE
+                    WHEN language = 'english' THEN 1
+                    WHEN language = 'tamil' THEN 2
+                    ELSE 3
+                END
+            ")
+
             ->paginate(25);
     }
     /**
