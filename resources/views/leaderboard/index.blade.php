@@ -113,7 +113,7 @@
                                 </td>
 
                                 <td>{{ $row->user->name }}</td>
-                                <td>{{ $row->score }}/9</td>
+                                <td>{{ $row->score }}/18</td>
                                 <td>{{ $row->total_answered_seconds }}</td>
                             </tr>
                         @empty

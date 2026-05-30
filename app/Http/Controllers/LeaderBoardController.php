@@ -14,7 +14,7 @@ class LeaderBoardController extends Controller
 
         // Base leaderboard query
         $leaderboardQuery = QuizAttempts::with('user')
-            ->where('total_attended_questions', 9)
+            ->where('total_attended_questions', 18)
             ->whereNotNull('ended_at');
 
         // Filter by movie if clicked
@@ -27,7 +27,7 @@ class LeaderBoardController extends Controller
             ->whereIn('id', function ($q) use ($movieId) {
                 $q->selectRaw('MAX(id)')
                   ->from('quiz_attempts')
-                  ->where('total_attended_questions', 9)
+                  ->where('total_attended_questions', 18)
                   ->whereNotNull('ended_at')
                   ->when($movieId, function ($qq) use ($movieId) {
                       $qq->where('movie_id', $movieId);

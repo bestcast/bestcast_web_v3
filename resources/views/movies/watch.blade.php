@@ -659,6 +659,9 @@
                                 <option value="english">English</option>
                                 <option value="tamil">Tamil</option>
                             </select>
+                            <div id="language_error"
+                                 style="display:none;color:red;font-size:15px;margin-top:5px;margin-left:5px;text-align:left;">
+                            </div>
                         </div>
 
                         <div class="terms-row">
@@ -694,8 +697,17 @@
         // PLAY button action
         $(document).on("click", "#playBtn", function () {
             const selectedLanguage = $("#quiz_language").val();
+            // Clear old errors
+            $("#language_error").hide().text("");
             if (selectedLanguage === '') {
-                Swal.showValidationMessage("Please select language");
+                $("#language_error")
+                    .html(`
+                        <span style="display:flex;align-items:center;gap:5px;">
+                            <img src="{{ asset('img/icon/quiz_application/alert.png') }}" width="18" height="18">
+                            Please select language
+                        </span>
+                    `)
+                    .show();
                 return;
             }
             if (!$("#terms_ok").is(":checked")) {
@@ -704,7 +716,7 @@
             }
             // SAVE LANGUAGE
             localStorage.setItem("quiz_language", selectedLanguage);
-            console.log("Saved Language:", selectedLanguage);
+            //console.log("Saved Language:", selectedLanguage);
             Swal.close();
             // LOGIC INSERTED HERE
             setCookie("quiz_popup_{{ $movie->id }}", 1, 3); // store for 3 hours
@@ -738,7 +750,7 @@
     function initQuiz(movieId) {
         //console.log("initQuiz Started. movieId =", movieId);
         const quizLanguage = localStorage.getItem("quiz_language");
-        console.log(quizLanguage);
+        //console.log(quizLanguage);
         resetQuizState(movieId);
         videoElement = document.querySelector("#wrapper video");
         const encryptedPayload = encryptRequest({
