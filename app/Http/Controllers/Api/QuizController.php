@@ -88,13 +88,18 @@ class QuizController extends Controller
         $attemptId = $attempt->id;
 
         // Get ALL shown questions (answered + unanswered)
-        $shownQuestionIds = QuizAttemptAnswer::whereHas('attempt', function ($q) use ($userId, $movieId) {
+        /*$shownQuestionIds = QuizAttemptAnswer::whereHas('attempt', function ($q) use ($userId, $movieId) {
                 $q->where('user_id', $userId)
                   ->where('movie_id', $movieId);
             })
             ->pluck('quiz_question_id')
             ->unique()
-            ->toArray();
+            ->toArray();*/
+        $shownQuestionIds = QuizAttemptAnswer::where('user_id', $userId)
+                            ->where('movie_id', $movieId)
+                            ->pluck('quiz_question_id')
+                            ->unique()
+                            ->toArray();                                                                            
 
         // Total questions
         $totalQuestions = Question::where('movie_id', $movieId)
@@ -134,7 +139,8 @@ class QuizController extends Controller
 
             // ALWAYS pick earliest in that interval
             $selected->push(
-                $filtered->sortBy('show_question_time')->first()
+                //$filtered->sortBy('show_question_time')->first()
+                 $filtered->random()
             );
         }
 
@@ -147,7 +153,8 @@ class QuizController extends Controller
                 ->where('language', $language)
                 ->whereNotIn('id', array_merge($shownQuestionIds, $alreadySelectedIds))
                 ->with('options')
-                ->orderBy('show_question_time') // IMPORTANT
+                //->orderBy('show_question_time') // IMPORTANT
+                ->inRandomOrder() 
                 ->get();
 
             $needed = $maxRequired - $selected->count();
