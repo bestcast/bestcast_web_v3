@@ -89,47 +89,67 @@
                     @endforeach
                 </ul>
             </div>
-            @if($movieId)
-                <div class="leaderboard-title"><img src="{{ asset('img/icon/quiz_application/trophy.png') }}" width="24" alt="winner"> Leaderboard - {{ $movie->title }}</div>
-                <table>
-                    <thead>
+            <div class="leaderboard-title">
+                <img src="{{ asset('img/icon/quiz_application/trophy.png') }}"
+                     width="24"
+                     alt="winner">
+
+                @if($selectedMovie)
+                    {{ $selectedMovie->title }} Movie Leaderboard
+                @else
+                    Overall Leaderboard
+                @endif
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+
+                        @if(empty($movieId))
+                            <th>Movie</th>
+                        @endif
+
+                        <th>Score</th>
+                        <th>Time (sec)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse($leaderboard as $row)
                         <tr>
-                            <th>Rank</th>
-                            <th>User</th>
-                            <th>Score</th>
-                            <th>Time (sec)</th>
+                            <td class="{{
+                                $loop->iteration == 1 ? 'gold' :
+                                ($loop->iteration == 2 ? 'silver' :
+                                ($loop->iteration == 3 ? 'bronze' : ''))
+                            }}">
+                                {{ $loop->iteration }}
+                            </td>
+
+                            <td>{{ $row->user->name }}</td>
+
+                            @if(empty($movieId))
+                                <td>{{ $row->movie->title ?? '-' }}</td>
+                            @endif
+
+                            <td>{{ $row->score }}/18
+                                @if($row->score == 18)
+                                    <span style="color:#facc15;">🏆 Winner</span>
+                                @endif
+                            </td>
+                            <td>{{ $row->total_answered_seconds }}</td>
                         </tr>
-                    </thead>
-
-                    <tbody>
-                        @forelse($leaderboard as $row)
-                            <tr>
-                                <td class="{{ 
-                                    $loop->iteration == 1 ? 'gold' : 
-                                    ($loop->iteration == 2 ? 'silver' : 
-                                    ($loop->iteration == 3 ? 'bronze' : '')) 
-                                }}">
-                                    {{ $loop->iteration }}
-                                </td>
-
-                                <td>{{ $row->user->name }}</td>
-                                <td>{{ $row->score }}/18</td>
-                                <td>{{ $row->total_answered_seconds }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" style="color:#facc15;">
-                                    No quiz attempts yet for this movie
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            @else
-                <div style="text-align:center; color:#aaa; margin-top:40px;">
-                    👆 Select a movie above to view its leaderboard
-                </div>
-            @endif
+                    @empty
+                        <tr>
+                            <td colspan="{{ empty($movieId) ? 5 : 4 }}"
+                                style="color:#facc15;">
+                                No quiz attempts found
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
 
 
         </div>

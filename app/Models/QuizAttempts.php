@@ -41,6 +41,6 @@ class QuizAttempts extends Model
 
     public function movie()
     {
-        return $this->belongsTo(Movie::class, 'movie_id');
+        return $this->belongsTo(Movies::class, 'movie_id');
     }
 }

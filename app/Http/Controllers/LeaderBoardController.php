@@ -13,7 +13,10 @@ class LeaderBoardController extends Controller
         $movieId = $request->get('movie_id');
 
         // Base leaderboard query
-        $leaderboardQuery = QuizAttempts::with('user')
+        /*$leaderboardQuery = QuizAttempts::with('user')
+            ->where('total_attended_questions', 18)
+            ->whereNotNull('ended_at');*/
+        $leaderboardQuery = QuizAttempts::with(['user', 'movie'])
             ->where('total_attended_questions', 18)
             ->whereNotNull('ended_at');
 
@@ -21,9 +24,29 @@ class LeaderBoardController extends Controller
         if ($movieId) {
             $leaderboardQuery->where('movie_id', $movieId);
         }
-
+        $selectedMovie = null;
+        if ($movieId) {
+            $selectedMovie = Movies::find($movieId);
+        }
         // Best attempt per user
+        /*$leaderboard = $leaderboardQuery
+            ->whereIn('id', function ($q) use ($movieId) {
+                $q->selectRaw('MAX(id)')
+                  ->from('quiz_attempts')
+                  ->where('total_attended_questions', 18)
+                  ->whereNotNull('ended_at')
+                  ->when($movieId, function ($qq) use ($movieId) {
+                      $qq->where('movie_id', $movieId);
+                  })
+                  ->groupBy('participant_id');
+            })
+            ->orderByDesc('score')
+            ->orderBy('total_answered_seconds')
+            ->orderBy('ended_at')
+            ->limit(50)
+            ->get();*/
         $leaderboard = $leaderboardQuery
+            ->with(['user', 'movie'])
             ->whereIn('id', function ($q) use ($movieId) {
                 $q->selectRaw('MAX(id)')
                   ->from('quiz_attempts')
@@ -48,6 +71,6 @@ class LeaderBoardController extends Controller
             ->orderBy('title')
             ->get();
 
-        return view('leaderboard.index', compact('leaderboard', 'movies', 'movieId'));
+        return view('leaderboard.index', compact('leaderboard', 'movies', 'movieId', 'selectedMovie'));
     }
 }
