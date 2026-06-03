@@ -17,6 +17,7 @@ use App\Helpers\QuizCryptoHelper;
 use App\Models\UsersDevice;
 use App\Http\Controllers\Traits\DecryptsQuizPayload;
 use App\Models\UsersMovies;
+use App\Models\Movies;
 
 class QuizController extends Controller
 {
@@ -44,6 +45,9 @@ class QuizController extends Controller
         $maxRequired = 18;
         $interval = 5;
         $language = strtolower($payload['language'] ?? 'english');
+        $movie = Movies::find($movieId);
+        $movieDuration = $movie->duration;
+        $movieDurationInMin = (int) floor($movieDuration / 60);
         // Device Validation
         $activeQuiz = UsersDevice::where('user_id', $userId)
             ->where('is_quiz_active', 1)
@@ -170,7 +174,7 @@ class QuizController extends Controller
 
         foreach ($selected as $q) {
 
-            $buffer = ($q->show_question_time >= 20) ? 3 : 6;
+            /*$buffer = ($q->show_question_time >= 20) ? 3 : 6;
             $popupTime = $q->show_question_time + $buffer;
 
             while (in_array($popupTime, $usedPopupTimes)) {
@@ -186,6 +190,33 @@ class QuizController extends Controller
                 'popup_time' => $popupTime,
                 'options' => $q->options,
                 'language' => $q->language
+            ];*/
+            $buffer = ($q->show_question_time >= 20) ? 3 : 6;
+            $popupTime = $q->show_question_time + $buffer;
+
+            // Cap to movie duration (in minutes)
+            if ($popupTime > $movieDurationInMin) {
+                $popupTime = $movieDurationInMin;
+            }
+
+            while (in_array($popupTime, $usedPopupTimes)) {
+                $popupTime -= 1; // go backward to stay within duration
+            }
+
+            // Safety clamp
+            if ($popupTime <= $q->show_question_time) {
+                $popupTime = $q->show_question_time + 1;
+            }
+
+            $usedPopupTimes[] = $popupTime;
+
+            $final[] = [
+                'id'                 => $q->id,
+                'question'           => $q->question_name,
+                'show_question_time' => $q->show_question_time,
+                'popup_time'         => $popupTime,
+                'options'            => $q->options,
+                'language'           => $q->language
             ];
         }
 

@@ -278,6 +278,8 @@
 
                             case "Space": // Play / Pause
                                 e.preventDefault(); // stop scroll
+                                // Block play/pause when quiz popup is open
+                                if (typeof Swal !== "undefined" && Swal.isVisible()) return;
                                 if (video.paused) {
                                     video.play();
                                 } else {
@@ -528,6 +530,7 @@
                 pointerEvents: 'none',
                 opacity: 0.35
             });
+        $('.vpl-seekbar').css('display', 'none');
     };
 
     window.enableSeekControls = function () {
@@ -538,6 +541,7 @@
                 pointerEvents: '',
                 opacity: ''
             });
+        $('.vpl-seekbar').css('display', 'block');
     };
     function startQuizPolling(movieId) {
         if (quizPollingStarted || quizPollingStopped) return;
@@ -863,6 +867,14 @@
             target: fullscreenContainer, // Works in both fullscreen and normal
             allowEscapeKey: false,
             didOpen: () => {
+                const blockSpace = function(e) {
+                    if (e.code === "Space" || e.key === " ") {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                    }
+                };
+                document.addEventListener("keydown", blockSpace, true);
+                window._quizSpaceBlocker = blockSpace;
                 // Show options after 5 seconds
                 setTimeout(() => {
                     document.getElementById("options-container").style.display = "grid";
@@ -938,6 +950,10 @@
 
             willClose: () => {
                 clearInterval(quizTimer);
+                if (window._quizSpaceBlocker) {
+                    document.removeEventListener("keydown", window._quizSpaceBlocker, true);
+                    window._quizSpaceBlocker = null;
+                }
                 if (videoElement) videoElement.play();
                 $('.vpl-lightbox-wrap').css('display','block');
             }
