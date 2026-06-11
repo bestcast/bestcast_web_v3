@@ -239,6 +239,7 @@ class MobileAppQuizController extends Controller
             'attempt_id'=> $attempt->id,
             'movie_quiz_status' => 1,
             'question_available' => 1,
+            'language' => $language,
             'total' => $final->count(),
             'questions' => $final
         ]);
