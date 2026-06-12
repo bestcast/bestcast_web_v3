@@ -12,7 +12,7 @@ class SeasonResource extends JsonResource
         return [
             'id' => (string)$this->id,
             'title' => $this->title,
-
+            'season_number' => $this->season_number,
             'episodes' => !empty($this->episodes)
                 ? EpisodeResource::collection($this->episodes)
                 : []

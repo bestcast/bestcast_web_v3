@@ -115,6 +115,7 @@ class WebseriesWatchResource extends JsonResource
         return [
             'id' => (string)$this->id,
             'title' => $this->title,
+            'content' => $this->content,
             'image'  => $episode ? (empty($episode->image) ? '' : $episode->image->urlkey) : '',
             'trailer'=> $this->trailer_url ?? '',       // ← JS reads data.movies.trailer
             'seasons' => !empty($this->seasons)

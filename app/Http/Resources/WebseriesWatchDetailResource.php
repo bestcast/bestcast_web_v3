@@ -32,12 +32,14 @@ class WebseriesWatchDetailResource extends JsonResource
                 return [
                     'id'       => (string) $season->id,
                     'title'    => $season->title,
+                    'season_number' => $season->season_number,
                     'episodes' => $season->episodes->map(function ($ep) {
                         $epUser = $ep->episode_users->first();
                         return [
                             'id'              => (string) $ep->id,
                             'title'           => $ep->title,
                             'urlkey'          => $ep->urlkey,
+                            'content'         => $ep->content,
                             'image'           => empty($ep->image) ? '' : $ep->image->urlkey,
                             'medium'          => empty($ep->medium) ? '' : $ep->medium->urlkey,
                             'thumbnail'       => empty($ep->thumbnail) ? '' : $ep->thumbnail->urlkey,

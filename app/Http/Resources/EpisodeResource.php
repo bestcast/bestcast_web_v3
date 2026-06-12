@@ -51,13 +51,19 @@ class EpisodeResource extends JsonResource
             'subtitle' => (!empty($this->subtitle) && count($this->subtitle))?EpisodeSubtitleResource::collection($this->subtitle):'',
             'genres' => (!empty($this->genres) && count($this->genres))?EpisodeGenresResource::collection($this->genres):'',
             'languages' => (!empty($this->languages) && count($this->languages))?EpisodeLanguagesResource::collection($this->languages):'',
-            'casts' => (!empty($this->users) && count($this->users))?EpisodeUsersResource::collection($this->users):'',
+            /*'casts' => (!empty($this->users) && count($this->users))?EpisodeUsersResource::collection($this->users):'',*/
+            'casts' => (!empty($this->users) && count($this->users)) ? EpisodeUsersResource::collection( collect($this->users)->where('group', '!=', 3)): '',
             'related' => (!empty($this->related) && count($this->related))?EpisodeRelatedResource::collection($this->related):'',
             /*'usermovies' => $usermoviesdetails*/
             //'episode_user' => $episodeUserDetails
-            'episode_user' => [
+            /*'episode_user' => [
                 'watch_time' => optional($this->episode_users->first())->watch_time ?? "0"
-            ]
+            ]*/
+            // In EpisodeResource::toArray() — replace the episode_user block at the bottom:
+            'episode_user' => [
+                'watch_time'      => optional($this->episode_users->first())->watch_time ?? "0",
+                'watched_percent' => optional($this->episode_users->first())->watched_percent ?? 0,
+            ],
         ];
     }
 }

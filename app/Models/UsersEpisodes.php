@@ -100,7 +100,7 @@ class UsersEpisodes extends Model
         return $this->belongsTo('App\Models\UsersProfile','profile_id','id');
     }
 
-    public function episodes()
+    public function episode()
     {
         return $this->belongsTo('App\Models\Episode','episode_id','id');
     }

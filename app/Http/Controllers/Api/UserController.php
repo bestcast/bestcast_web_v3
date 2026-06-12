@@ -36,6 +36,7 @@ use App\Models\UserMovieWatchLog;
 use App\Models\UserMovieWatched;
 use App\Models\UsersEpisodes;
 use App\Http\Resources\EpisodeListResource;
+use App\Http\Resources\EpisodeResource;
 
 use Laravel\Sanctum\PersonalAccessToken;
 class UserController extends Controller

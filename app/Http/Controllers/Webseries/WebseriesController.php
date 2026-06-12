@@ -212,4 +212,167 @@ class WebseriesController extends Controller
 
         return new WebseriesWatchDetailResource($webseries);
     }
+    public function getwebseriesdetail($webseriesId, Request $request)
+    {
+        $user      = Auth::user();
+        $profileId = $request->profile_id ?? 0;
+     
+        // ── Load webseries with image + genres ───────────────────────────
+        $webseries = \App\Models\Webseries::with([
+            'image',
+            'thumbnail',
+            'medium',
+            'genres',
+            'languages',
+        ])->find($webseriesId);
+     
+        if (!$webseries) {
+            return response()->json(['data' => null, 'message' => 'Not found'], 404);
+        }
+
+        // Get unique cast members for this webseries (group 3-7 = crew/cast)
+        $castGroups = [
+            //3 => 'Producer',
+            4 => 'Director', 
+            5 => 'Actor',
+            6 => 'Actress',
+            7 => 'Music Director',
+        ];
+
+        // Get episode IDs for this webseries
+        $wsEpisodeIds = \App\Models\Episode::whereHas('season', function($q) use ($webseriesId) {
+            $q->where('webseries_id', $webseriesId);
+        })->pluck('id');
+
+        // Get cast from episode_users where group is 3-7
+        $castMembers = \App\Models\EpisodeUsers::whereIn('episode_id', $wsEpisodeIds)
+            ->whereIn('group', array_keys($castGroups))
+            ->with('user') // load the user relation
+            ->get()
+            ->unique('user_id') // deduplicate by person
+            ->map(function($eu) use ($castGroups) {
+                return [
+                    'name'       => optional($eu->user)->name ?? '',
+                    //'photo'      => optional($eu->user)->profile_photo ?? '',
+                    'group'      => $eu->group,
+                    'group_name' => $castGroups[$eu->group] ?? '',
+                ];
+            })
+            ->values();
+        // ── Find last watched episode (resume logic) ──────────────────────
+        $resumeEpisodeId    = null;
+        $resumeDate         = null;
+        $firstEpisodeId     = null;
+     
+        if ($user) {
+            // Get all episode IDs that belong to this webseries
+            $episodeIds = \App\Models\Episode::whereHas('season', function ($q) use ($webseriesId) {
+                $q->where('webseries_id', $webseriesId);
+            })->pluck('id');
+     
+            $lastWatched = \App\Models\EpisodeUsers::where('user_id', $user->id)
+                //->where('profile_id', $profileId)
+                ->whereIn('episode_id', $episodeIds)
+                //->orderBy('updated_at', 'desc')
+                ->first();
+     
+            if ($lastWatched) {
+                $resumeEpisodeId = $lastWatched->episode_id;
+                $resumeDate      = optional($lastWatched->updated_at)->format('j M');
+            }
+            // Find episode number within its season for display
+            $episodeNumber = null;
+            if ($resumeEpisodeId) {
+                $resumeEp = \App\Models\Episode::find($resumeEpisodeId);
+                if ($resumeEp) {
+                    $episodeNumber = \App\Models\Episode::where('season_id', $resumeEp->season_id)
+                        ->where('id', '<=', $resumeEpisodeId)
+                        ->count();
+                }
+            }
+        }
+     
+        // ── First episode of first season (fallback) ──────────────────────
+        $firstSeason = \App\Models\Season::where('webseries_id', $webseriesId)
+            ->orderBy('id', 'asc')->first();
+     
+        if ($firstSeason) {
+            $firstEpisode   = \App\Models\Episode::where('season_id', $firstSeason->id)
+                ->orderBy('id', 'asc')->first();
+            $firstEpisodeId = optional($firstEpisode)->id;
+        }
+     
+        // ── Build seasons + episodes with watch progress ──────────────────
+        $seasons = \App\Models\Season::where('webseries_id', $webseriesId)
+            ->orderBy('id', 'asc')
+            ->with(['episodes' => function ($q) {
+                $q->orderBy('id', 'asc')
+                  ->with(['thumbnail', 'image']);
+            }])
+            ->get()
+            ->map(function ($season) use ($user, $profileId) {
+                return [
+                    'id'       => $season->id,
+                    'title'    => $season->title,
+                    'episodes' => $season->episodes->map(function ($ep) use ($user, $profileId) {
+     
+                        $watchedPct = 0;
+                        if ($user) {
+                            $userEp = \App\Models\UsersEpisodes::where('user_id', $user->id)
+                                ->where('profile_id', $profileId)
+                                ->where('episode_id', $ep->id)
+                                ->first();
+                            $watchedPct = $userEp ? ($userEp->watched_percent ?? 0) : 0;
+                        }
+     
+                        return [
+                            'id'              => $ep->id,
+                            'title'           => $ep->title,
+                            'content'         => strip_tags($ep->content ?? ''),
+                            'duration_text'   => \Lib::formatSecondsToHoursMinutes($ep->duration),
+                            'duration'        => $ep->duration,
+                            'release_date'    => $ep->release_date,
+                            // thumbnail path: the JS prepends _homeUrl + '/'
+                            'thumbnail'       => optional($ep->thumbnail)->urlkey
+                                             ?? optional($ep->image)->urlkey
+                                             ?? '',
+                            'watched_percent' => $watchedPct,
+                        ];
+                    })->values(),
+                ];
+            });
+     
+        // ── Webseries-level info (for banner hero section) ────────────────
+        // tag_text comes from genres, published_date = year
+        $tagText = $webseries->genres->pluck('title')->implode(', ');
+     
+        return response()->json([
+            'data' => [
+                // Webseries info (for hero/banner)
+                'id'                   => $webseries->id,
+                'title'                => $webseries->title,
+                'content'              => strip_tags($webseries->content ?? ''),
+                'published_date'       => optional($webseries->published_date)->format('Y') ?? '',
+                'certificate'          => $webseries->certificate ?? '',
+                'tag_text'             => $tagText,
+                // Image paths (JS prepends _homeUrl + '/')
+                'thumbnail'            => optional($webseries->thumbnail)->urlkey
+                                       ?? optional($webseries->medium)->urlkey
+                                       ?? optional($webseries->image)->urlkey
+                                       ?? '',
+                'image'                => optional($webseries->image)->urlkey ?? '',
+     
+                // Resume / play
+                'resume_episode_id'    => $resumeEpisodeId,
+                'resume_date'          => $resumeDate,
+                'first_episode_id'     => $firstEpisodeId,
+     
+                // Seasons + episodes
+                'seasons'              => $seasons,
+                'episode_number' => $episodeNumber,
+                'casts' => $castMembers,
+            ]
+        ]);
+    }
+
 }
