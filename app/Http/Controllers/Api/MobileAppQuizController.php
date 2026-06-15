@@ -16,6 +16,7 @@ use App\User;
 use Auth;
 use App\Models\RewardClaim;
 use App\Models\Movies;
+use Log;
 
 class MobileAppQuizController extends Controller
 {
@@ -57,7 +58,7 @@ class MobileAppQuizController extends Controller
             ], 403);
         }
         //Movie Quiz Status Check
-        $movie = Movies::select('id', 'movie_quiz_status')
+        $movie = Movies::select('id', 'movie_quiz_status', 'duration')
             ->where('id', $movieId)
             ->first();
 
@@ -77,7 +78,7 @@ class MobileAppQuizController extends Controller
             ], 403);
         }
 
-
+        $movieDurationInMin = (int) floor($movie->duration / 60);
         //Question Availability Check
         $question_available = Question::where('movie_id', $movieId)->exists() ? 1 : 0;
 
@@ -135,13 +136,11 @@ class MobileAppQuizController extends Controller
 
         $attemptId = $attempt->id;
         // Get ALL shown questions (answered + unanswered)
-        $shownQuestionIds = QuizAttemptAnswer::whereHas('attempt', function ($q) use ($userId, $movieId) {
-                $q->where('user_id', $userId)
-                  ->where('movie_id', $movieId);
-            })
-            ->pluck('quiz_question_id')
-            ->unique()
-            ->toArray();
+        $shownQuestionIds = QuizAttemptAnswer::where('user_id', $userId)
+                        ->where('movie_id', $movieId)
+                        ->pluck('quiz_question_id')
+                        ->unique()
+                        ->toArray();
 
         // Total questions
         $totalQuestions = Question::where('movie_id', $movieId)
@@ -178,11 +177,7 @@ class MobileAppQuizController extends Controller
             if ($filtered->isEmpty()) {
                 continue;
             }
-
-            // ALWAYS pick earliest in that interval
-            $selected->push(
-                $filtered->sortBy('show_question_time')->first()
-            );
+            $selected->push($filtered->random()); 
         }
 
         // FILL REMAINING QUESTIONS (if less than 9)
@@ -194,14 +189,11 @@ class MobileAppQuizController extends Controller
                 ->where('language', $language)
                 ->whereNotIn('id', array_merge($shownQuestionIds, $alreadySelectedIds))
                 ->with('options')
-                ->orderBy('show_question_time') // IMPORTANT
+                ->inRandomOrder() 
                 ->get();
 
             $needed = $maxRequired - $selected->count();
-
-            $selected = $selected->merge(
-                $remaining->take($needed)
-            );
+            $selected = $selected->merge($remaining->take($needed));
         }
 
         $final = [];
@@ -209,13 +201,17 @@ class MobileAppQuizController extends Controller
         foreach ($selected as $q) {
 
             $buffer = ($q->show_question_time >= 20) ? 3 : 6;
-
             $popupTime = $q->show_question_time + $buffer;
+            if ($popupTime > $movieDurationInMin) {
+                $popupTime = $movieDurationInMin;
+            }
             // Ensure popup_time is unique
             while (in_array($popupTime, $usedPopupTimes)) {
-                $popupTime += 1; // shift by 1 second
+                $popupTime -= 1; // shift by 1 second
             }
-
+            if ($popupTime <= $q->show_question_time) {
+                $popupTime = $q->show_question_time + 1;
+            }
             $usedPopupTimes[] = $popupTime;
             $final[] = [
                 'id' => $q->id,
@@ -226,13 +222,21 @@ class MobileAppQuizController extends Controller
                 'language' => $q->language
             ];
         }
-
-
         $final = collect($final)
             ->sortBy('popup_time')
             ->values();
 
+        $logText = "";
+        $counter = 1;
+        foreach ($final as $item) {
+            $logText .=
+                "{$counter}. Question: {$item['question']} | " .
+                "Show Time: " . gmdate('H:i:s', $item['show_question_time']) . " | " .
+                "Popup Time: " . gmdate('H:i:s', $item['popup_time']) . "\n";
 
+            $counter++;
+        }
+        \Log::info("\n" . $logText);
         //Final Response
         return response()->json([
             'status' => 'success',
