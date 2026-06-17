@@ -771,7 +771,10 @@ function _0x3858() {
                     _0x3ee783 = _0x1c41df == 0x1 ? _0x63da64(0x1ea) : _0x63da64(0x2ae),
                     _0x194c15 = '';
                 _0x422c58 != 0x0 && (_0x194c15 += '<div\x20class=\x22percent\x20out\x22><div\x20class=\x22in\x22\x20style=\x22width:' + _0x422c58 + _0x63da64(0x394));
-                _0x194c15 += _0x63da64(0x34d) + _0x5dc40d + _0x63da64(0x36b) + _0x2bd5e8 + '\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22ppIc\x20ppLike\x20IClike\x20' + _0x3ee783 + _0x63da64(0x2ac) + _0x5ea36f + _0x63da64(0x36c) + _0x7c480 + '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20' + _0x344bff + _0x63da64(0x2a1) + _0x12277b + _0x63da64(0x290) + _0x451196 + '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20', _0x30393a('.previewMovie\x20.modal\x20.ppCont')[_0x63da64(0x314)](_0x194c15), _0x30393a(_0x63da64(0x268))[_0x63da64(0x2b2)](_0x63da64(0x29e));
+               _0x194c15 += _0x63da64(0x34d) + _0x5dc40d + _0x63da64(0x36b) + _0x2bd5e8 + '\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22ppIc\x20ppLike\x20IClike\x20' + _0x3ee783 + _0x63da64(0x2ac) + _0x5ea36f + _0x63da64(0x36c) + _0x7c480 + '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20' + _0x344bff + _0x63da64(0x2a1) + _0x12277b + _0x63da64(0x290) + _0x451196 + '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';
+                _0x30393a('.previewMovie\x20.modal\x20.ppCont')[_0x63da64(0x314)](_0x194c15);
+                _0x30393a('.previewMovie\x20.modal\x20.ppCont').find('.ppLike').after('<div class="ppIc ppShare ICshare" data-id="' + _0x5ea36f + '"></div>');
+                _0x30393a(_0x63da64(0x268))[_0x63da64(0x2b2)](_0x63da64(0x29e));
                 _0x30393a(_0x63da64(0x241))['attr'](_0x63da64(0x280)) == 0x0 && (_0x587f7e = '');
                 if (_0x587f7e) {
                     let _0x1dba9f = checkVideoFormat(_0x587f7e),
@@ -836,7 +839,23 @@ function _0x3858() {
                 }), _0x30393a(_0x63da64(0x268))[_0x63da64(0x329)](_0x63da64(0x2eb))['on'](_0x63da64(0x2ff), function() {
                     const _0x7cf200 = _0x63da64;
                     _0x1e82c8[_0x7cf200(0x225)](_0x30393a(this), _0x5ea36f, _0x1c41df);
-                }), _0x30393a('.previewMovie')[_0x63da64(0x329)](_0x63da64(0x2c0))['on'](_0x63da64(0x2ff), function() {
+                }),_0x30393a(_0x63da64(0x268)).find('.ppShare').on('click', function() {
+                    var shareUrl = window.location.origin + '/watch/' + _0x5ea36f;
+                    var shareTitle = document.title;
+                    if (navigator.share) {
+                        navigator.share({ title: shareTitle, url: shareUrl }).catch(function(){});
+                    } else {
+                        var whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(shareTitle + ' ' + shareUrl);
+                        var smsUrl = 'sms:?body=' + encodeURIComponent(shareTitle + ' ' + shareUrl);
+                        var popup = '<div id="sharePopup" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:99999;display:flex;gap:12px;align-items:center;">'
+                            + '<a href="' + whatsappUrl + '" target="_blank" style="background:#25D366;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:bold;">WhatsApp</a>'
+                            + '<button onclick="navigator.clipboard.writeText(\'' + shareUrl + '\');document.getElementById(\'sharePopup\').remove();" style="background:#666;color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:bold;">Copy Link</button>'
+                            + '<button onclick="document.getElementById(\'sharePopup\').remove();" style="background:#eee;color:#333;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;">✕</button>'
+                            + '</div>';
+                        jQuery('#sharePopup').remove();
+                        jQuery('body').append(popup);
+                    }
+                }),_0x30393a('.previewMovie')[_0x63da64(0x329)](_0x63da64(0x2c0))['on'](_0x63da64(0x2ff), function() {
                     const _0x19a8e3 = _0x63da64;
                     _0x30393a(this)['parent']()[_0x19a8e3(0x329)]('.spinner')[_0x19a8e3(0x2b2)](_0x19a8e3(0x1e4));
                     var _0x4e7a49 = _0x30393a(this)[_0x19a8e3(0x347)]('data-id');

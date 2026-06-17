@@ -51,6 +51,9 @@ body > footer{flex-shrink: 0;}
 .ICplay{background-image:url('../../img/icon/website/play-white.png');}
 .ICplay.dark{background-image:url('../../img/icon/website/play-black.png');}
 .ICplay.active,.ICplay:hover{background-image:url('../../img/icon/website/play.png');}
+.ICshare{background-image:url('../../img/icon/website/share-white.png');}
+.ICshare.dark{background-image:url('../../img/icon/website/share-black.png');}
+.ICshare.active,.ICshare:hover{background-image:url('../../img/icon/website/share.png');}
 .IClike{background-image:url('../../img/icon/website/like-white.png');}
 .IClike.active,.IClike:hover{background-image:url('../../img/icon/website/like.png');}
 .ICliked{background-image:url('../../img/icon/website/liked-white.png');}
@@ -68,7 +71,10 @@ body > footer{flex-shrink: 0;}
 .ICBell{background-image:url('../../img/icon/style/notification-white.png');}
 .ICBell.active,.ICBell:hover{background-image:url('../../img/icon/style/notification-white.png');}
 
-
+.ppShare {
+    display: inline-block;
+    float: left;
+}
 
 /* ----------------------- Grid ----------------------------------------*/
 .hLTGrid{max-width: 1210px;margin: auto;padding:15px 20px;padding-bottom: 12px}
