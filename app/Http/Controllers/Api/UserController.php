@@ -32,6 +32,11 @@ use App\Http\Requests\LoginOtpUserRequest;
 use Email;
 use Otp;
 use Cache;
+use App\Models\UserMovieWatchLog;
+use App\Models\UserMovieWatched;
+use App\Models\UsersEpisodes;
+use App\Http\Resources\EpisodeListResource;
+use App\Http\Resources\EpisodeResource;
 
 use Laravel\Sanctum\PersonalAccessToken;
 class UserController extends Controller
@@ -370,6 +375,7 @@ class UserController extends Controller
         if(empty($user->id) || empty($request->profile_id))
             return $this->error('', "No Records Found!", 200);
 
+        $movieDuration = $request->input('movieDuration'); 
         $usersMovies=UsersMovies::getUsersMovies($user->id,$request->profile_id,$movieid);
         if(empty($usersMovies)){
             $usersMovies=new UsersMovies();
@@ -395,9 +401,199 @@ class UserController extends Controller
         $usersMovies->viewed=isset($request->viewed)?$request->viewed:$usersMovies->viewed;
         $usersMovies->save();
         
+        $this->trackMovieWatch($user->id, $movieid, 'web', $movieDuration);
+
         $usersMovies=UsersMovies::getMovie($user->id,$request->profile_id,$movieid);
-        return new MoviesListResource($usersMovies);
+        //return new MoviesListResource($usersMovies);
+        $response = new MoviesListResource($usersMovies);
+        $response->additional(['movieDuration' => $movieDuration]); // send it back without saving
+        return $response;
         //return new UsermoviesResource($usersMovies);
+    }
+    public function getuserepisode($episodeid,Request $request)
+    {
+        //Force user to buy plan start
+        // $plan=Subscription::getPlan();
+        // if(empty($plan))
+        //     return $this->error('', "Plan expired", 200);
+        //Force user to buy plan end
+
+        $user=Auth::user();
+        if(empty($user->id) || empty($episodeid) || empty($request->profile_id))
+            return $this->error('', "No Records Found!", 200);
+
+        $data=UsersEpisodes::getEpisode($user->id,$request->profile_id,$episodeid);
+        if(empty($data)){
+            $usersEpisodes=new UsersEpisodes();
+            $usersEpisodes->user_id=$user->id;
+            $usersEpisodes->profile_id=$request->profile_id;
+            $usersEpisodes->episode_id=$episodeid;
+            $usersEpisodes->viewed=1;
+            $usersEpisodes->save();
+            $data=UsersEpisodes::getEpisode($user->id,$request->profile_id,$episodeid);
+        }
+        if(empty($data))
+            return $this->error('', "No Records Found!", 200);
+
+        return new EpisodeResource($data);
+        //return new UsermoviesResource($data);
+    }
+    public function setuserepisode($episodeid, Request $request)
+    {
+        $user = Auth::user();
+        if (empty($user->id) || empty($request->profile_id))
+            return $this->error('', "No Records Found!", 200);
+
+        $movieDuration = $request->input('movieDuration');
+
+        $usersEpisodes = UsersEpisodes::getUsersEpisodes($user->id, $request->profile_id, $episodeid);
+        if (empty($usersEpisodes)) {
+            $usersEpisodes = new UsersEpisodes();
+            $usersEpisodes->user_id          = $user->id;
+            $usersEpisodes->profile_id       = $request->profile_id;
+            $usersEpisodes->episode_id       = $episodeid;
+            $usersEpisodes->mylist           = 0;
+            $usersEpisodes->likes            = 0;
+            $usersEpisodes->watch_time       = 0;
+            $usersEpisodes->watching         = 0;
+            $usersEpisodes->watched_percent  = 0;
+            $usersEpisodes->watched          = 0;
+            $usersEpisodes->viewed           = 0;
+        }
+
+        $usersEpisodes->mylist          = isset($request->mylist)          ? $request->mylist          : $usersEpisodes->mylist;
+        $usersEpisodes->likes           = isset($request->likes)           ? $request->likes           : $usersEpisodes->likes;
+        $usersEpisodes->watch_time      = isset($request->watch_time)      ? $request->watch_time      : $usersEpisodes->watch_time;
+        $usersEpisodes->watching        = isset($request->watching)        ? $request->watching        : $usersEpisodes->watching;
+        $usersEpisodes->watched_percent = isset($request->watched_percent) ? $request->watched_percent : $usersEpisodes->watched_percent;
+        $usersEpisodes->watched         = isset($request->watched)         ? $request->watched         : $usersEpisodes->watched;
+        $usersEpisodes->viewed          = isset($request->viewed)          ? $request->viewed          : $usersEpisodes->viewed;
+        $usersEpisodes->save();
+
+        // Return episode user data directly — not EpisodeListResource
+        return response()->json([
+            'data' => [
+                'usermovies' => [  // JS reads data.usermovies.watch_time etc
+                    'id'              => $usersEpisodes->id,
+                    'episode_id'      => $usersEpisodes->episode_id,
+                    'mylist'          => $usersEpisodes->mylist,
+                    'likes'           => $usersEpisodes->likes,
+                    'watch_time'      => $usersEpisodes->watch_time,
+                    'watching'        => $usersEpisodes->watching,
+                    'watched_percent' => $usersEpisodes->watched_percent,
+                    'watched'         => $usersEpisodes->watched,
+                    'viewed'          => $usersEpisodes->viewed,
+                ],
+                'movieDuration' => $movieDuration,
+            ]
+        ]);
+    }
+    public function trackMovieWatch($userId, $movieId, $platform = 'web', $movieDurationFromRequest = null)
+    {
+        $movie = Movies::select('video_url', 'duration')->find($movieId);
+        if (!$movie) {
+            return;
+        }
+
+        $watchType = stripos($movie->video_url, 'trailer') !== false ? 'trailer' : 'movie';
+        $movieDuration = max(1, $movieDurationFromRequest ?? $movie->duration);
+
+        $userMovie = UsersMovies::firstOrNew([
+            'user_id'  => $userId,
+            'movie_id' => $movieId,
+        ]);
+
+        // Calculate watched percent
+        if ($userMovie->watch_time && $movieDuration > 0) {
+            $userMovie->watched_percent = round(($userMovie->watch_time / $movieDuration) * 100, 2);
+        }
+
+        $watchTime = $userMovie->watch_time ?? 0;
+        $watchedPercent = $userMovie->watched_percent ?? 0;
+
+        // Check today's latest watch log
+        $todayLog = UserMovieWatchLog::where('user_id', $userId)
+            ->where('movie_id', $movieId)
+            ->where('platform', $platform)
+            ->whereDate('watched_at', today())
+            ->orderByDesc('id')
+            ->first();
+
+        $shouldAddLog = false;
+
+        /*CASE 1: First time today — reached 1 hour*/
+         
+        if (!$todayLog && $watchTime >= 3600) {
+            $shouldAddLog = true;
+            Cache::put("user_{$userId}_movie_{$movieId}_first_hour_reached", true, now()->endOfDay());
+        }
+
+        /* CASE 2: Already has a log today (maybe completed 100%)
+         * If they start again (watchTime small) and again reach 1 hour → add count
+         */
+        $firstHourReached = Cache::get("user_{$userId}_movie_{$movieId}_first_hour_reached");
+        $previousWatchTime = Cache::get("user_{$userId}_movie_{$movieId}_last_watch_time", 0);
+
+        // Keep track of how many hourly logs were added today
+        $hourlyLogCount = Cache::get("user_{$userId}_movie_{$movieId}_hourly_count", 0);
+
+        // Detect restart (user dropped from high to near 0)
+        if ($firstHourReached && $previousWatchTime > 1000 && $watchTime < 300) {
+            // Reset restart and second-hour flags
+            Cache::put("user_{$userId}_movie_{$movieId}_restart_started", true, now()->endOfDay());
+            Cache::forget("user_{$userId}_movie_{$movieId}_second_hour_added");
+        }
+
+        // After restart, if again crosses 1 hour, add once more
+        if (
+            Cache::get("user_{$userId}_movie_{$movieId}_restart_started") &&
+            $watchTime >= 3600 &&
+            !Cache::get("user_{$userId}_movie_{$movieId}_second_hour_added")
+        ) {
+            $shouldAddLog = true;
+            Cache::put("user_{$userId}_movie_{$movieId}_second_hour_added", true, now()->endOfDay());
+            Cache::increment("user_{$userId}_movie_{$movieId}_hourly_count");
+        }
+
+        // Always keep last watch time updated
+        Cache::put("user_{$userId}_movie_{$movieId}_last_watch_time", $watchTime, now()->endOfDay());
+
+        // Add the log if conditions met
+        if ($shouldAddLog) {
+            UserMovieWatchLog::create([
+                'user_id'    => $userId,
+                'movie_id'   => $movieId,
+                'watched_at' => now(),
+                'platform'   => $platform,
+                'watch_type' => $watchType,
+            ]);
+
+            // Update summary count
+            $record = UserMovieWatched::firstOrNew([
+                'user_id'  => $userId,
+                'movie_id' => $movieId,
+            ]);
+
+            if (!$record->exists) {
+                $record->first_watched_at = now();
+                $record->watch_count = 1;
+            } else {
+                $record->watch_count += 1;
+            }
+
+            $record->last_watched_at = now();
+            $record->save();
+        }
+
+        /*\Log::info("trackMovieWatch => movieId: $movieId | Duration Used: $movieDuration | watchTime: $watchTime | watchedPercent: $watchedPercent | Added: " . ($shouldAddLog ? 'YES' : 'NO'));
+
+        \Log::info('CACHE DEBUG', [
+            'first_hour_reached' => Cache::get("user_{$userId}_movie_{$movieId}_first_hour_reached"),
+            'restart_started' => Cache::get("user_{$userId}_movie_{$movieId}_restart_started"),
+            'second_hour_added' => Cache::get("user_{$userId}_movie_{$movieId}_second_hour_added"),
+            'hourly_count' => Cache::get("user_{$userId}_movie_{$movieId}_hourly_count"),
+            'last_watch_time' => Cache::get("user_{$userId}_movie_{$movieId}_last_watch_time"),
+        ]);*/
     }
 
     public function getusermovietime($movieid,Request $request)
@@ -529,7 +725,10 @@ class UserController extends Controller
         $user = User::find($user->id);
         $otp=$user->otp=rand(1000,9999);
         $user->save();
-        Otp::otpverify($user->phone,$otp,$request->otp_message_type);
+
+        // country code from request → user DB → fallback +91
+        $country_code = $request->country_code ?? $user->country_code ?? '+91';
+        Otp::otpverify($user->phone,$otp,$request->otp_message_type,$country_code);
         return $this->success($user);
     }
 
@@ -559,13 +758,15 @@ class UserController extends Controller
             //set a session variable as message type.
             $type = $user->otp_message_type;
             session()->put('otp_message_type', $type);
+            $dial_code = $user->country_code;
+            session()->put('country_code', $dial_code);
             if (!Cache::has($user->id)) { 
                 Cache::put($user->id, true, 10);
                 $user = User::find($user->id);
                 $otp=$user->otp=rand(1000,9999);
                 $user->save();
                 if(isset($_GET['phone'])){
-                    Otp::otpverify($user->phone,$otp,$user->otp_message_type);
+                    Otp::otpverify($user->phone,$otp,$user->otp_message_type,$user->country_code);
                     sleep(1);
                     return redirect()->route('otp.verification', ['phone' => 1]);
                 }else{
@@ -629,4 +830,3 @@ class UserController extends Controller
     }
 
 }
-

@@ -51,6 +51,7 @@ class Banner extends Database implements RoleHasRelationsContract
         'title',
         'type',
         'movies_id',
+        'webseries_id',
         'shows_id',
         'page_id',
         'sortorder',
@@ -75,6 +76,7 @@ class Banner extends Database implements RoleHasRelationsContract
         'title'             => 'string',
         'type'              => 'integer',
         'movies_id'         => 'integer',
+        'webseries_id'      => 'integer',
         'shows_id'          => 'integer',
         'page_id'           => 'integer',
         'sortorder'         => 'integer',
@@ -162,6 +164,11 @@ class Banner extends Database implements RoleHasRelationsContract
         return $this->belongsTo('App\Models\Movies','movies_id','id');
     }
 
+    public function webseries()
+    {
+        return $this->belongsTo('App\Models\Webseries','webseries_id','id');
+    }
+
     public function shows()
     {
         return $this->belongsTo('App\Models\Shows','shows_id','id');
@@ -234,7 +241,7 @@ class Banner extends Database implements RoleHasRelationsContract
         $data = $data->where('status',1)->where('movies_id','!=',0)->latest();
 
 
-//$sql = $data->toSql();dd($sql);
+        //$sql = $data->toSql();dd($sql);
         //dd($data->get());
 
         $list=app('request')->input('list');
@@ -247,6 +254,76 @@ class Banner extends Database implements RoleHasRelationsContract
             return $data;   
         }
 
+    }
+
+    public static function getWebseriesApiList($user_id)
+    {        
+        $data = Banner::with([
+            'webseries' => function ($q) {
+                $q->where('status',1);
+            },
+            'webseries.firstSeason.firstEpisode', // CORRECT FLOW
+            // THIS IS THE IMPORTANT CHANGE
+            'webseries.firstSeason.firstEpisode.episode_users' => function ($query) use ($user_id){
+                $query->where('user_id', $user_id);
+
+                $profile_id = app('request')->input('profile_id') ?? 0;
+                $query->where('profile_id', $profile_id);
+            },
+            'genres',
+            'languages'
+        ]);
+
+        $genre_id=app('request')->input('genre_id');if(!empty($genre_id)){ //filter by genre
+            $data = $data->whereHas('genres', function ($q) use ($genre_id) {
+                $q->where('genre_id',$genre_id);
+            });
+        }
+
+        $genre_id=app('request')->input('language_id');if(!empty($genre_id)){ //filter by language
+            $data = $data->whereHas('languages', function ($q) use ($genre_id) {
+                $q->where('language_id',$genre_id);
+            });
+        }
+
+        $getpageid=app('request')->input('page_id');if(!empty($getpageid)){ //filter by page
+            $data =$data->where('page_id',$getpageid);
+        }
+
+        $data = $data->where('status',1)->where('webseries_id','!=',0)->latest();
+
+
+        //$sql = $data->toSql();dd($sql);
+        //dd($data->get());
+
+        $list=app('request')->input('list');
+        if($list){
+            $data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
+            $data =$data->paginate(20);
+            return $data;
+        }else{  
+            $data =$data->inRandomOrder()->first();
+            return $data;   
+        }
+
+    }
+    public static function getWebseriesWatchApiList($user_id, $webseries_id)
+    {
+        return Banner::with([
+            'webseries' => function ($q) use ($webseries_id) {
+                $q->where('id', $webseries_id)->where('status', 1);
+            },
+            'webseries.seasons' => function ($q) {
+                $q->orderBy('id', 'desc'); // latest season first
+            },
+            'webseries.seasons.episodes' => function ($q) {
+                $q->orderBy('id', 'desc'); // latest episode first
+            },
+        ])
+        ->where('webseries_id', $webseries_id)
+        ->where('status', 1)
+        ->latest()
+        ->first();
     }
 }
 

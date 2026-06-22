@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Genres;
 use App\Models\Languages;
 use App\User;
+use App\Models\Banner;
+use App\Models\Season;
+use App\Models\Episode;
+use App\Models\Webseries;
 
 class HomeController extends Controller
 {
@@ -136,6 +140,52 @@ class HomeController extends Controller
                     }else{
                         return view('movies.public', ['post'=>$post,'meta'=>$meta,'urlkey'=>$urlkey,'genre'=>$genre,'language'=>$language]);       
                     }
+                } else if ($post->template == 2) {
+                    // post->id = banner id → get webseries_id from banner
+                    //$banner = Banner::find($post->id);
+                    $banner = Banner::where('status', 1)
+                        ->whereNotNull('webseries_id')
+                        ->latest()
+                        ->first();
+                        
+                    if (!$banner || !$banner->webseries_id) {
+                        $post = Post::where('urlkey', 'page-not-found')->first();
+                        $meta = $post->meta->pluck('value', 'path');
+                        return view('errors.lost', ['post' => $post, 'meta' => $meta]);
+                    }
+
+                    // Get latest season of this webseries
+                    $latestSeason = Season::where('webseries_id', $banner->webseries_id)
+                        ->orderBy('id', 'desc')
+                        ->first();
+
+                    // Get latest episode of that season
+                    $latestEpisode = Episode::where('season_id', $latestSeason->id)
+                        ->orderBy('id', 'desc')
+                        ->first();
+
+                    // Get webseries with all seasons+episodes for the listing
+                    $webseries = Webseries::with([
+                        'seasons' => function ($q) { $q->orderBy('id', 'desc'); },
+                        'seasons.episodes' => function ($q) { $q->orderBy('id', 'desc'); }
+                    ])->find($banner->webseries_id);
+
+                    if (!$webseries) {
+                        $post = Post::where('urlkey', 'page-not-found')->first();
+                        $meta = $post->meta->pluck('value', 'path');
+                        return view('errors.lost', ['post' => $post, 'meta' => $meta]);
+                    }
+                    /*dd($webseries);exit;*/
+                    return view('webseries.index', [
+                        'post'          => $post,
+                        'meta'          => $meta,
+                        'urlkey'        => $latestEpisode->urlkey ?? $urlkey, // latest episode urlkey
+                        'genre'         => $genre,
+                        'language'      => $language,
+                        'webseries'     => $webseries, // now passed
+                    ]);
+                }else{
+                    
                 }
             //}
             //Movies end

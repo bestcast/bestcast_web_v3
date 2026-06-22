@@ -138,7 +138,10 @@ class Blocks extends Database implements RoleHasRelationsContract
     {
         return $this->hasMany('App\Models\BlocksMovies','blocks_id','id');
     }
-
+    public function webseries()
+    {
+        return $this->hasMany('App\Models\BlocksWebseries','blocks_id','id');
+    }
     public function shows()
     {
         return $this->hasMany('App\Models\BlocksShows','blocks_id','id');
@@ -231,4 +234,67 @@ class Blocks extends Database implements RoleHasRelationsContract
         //$data =$data->paginate(5);
         return $data;
     }
+    
+    public static function getwebseriesApiList($user_id)
+    {
+        $data = Blocks::with([
+            'webseries.webseries' => function ($q) {
+                $q->where('status', 1);
+                $child = app('request')->input('child');
+                if (!empty($child)) {
+                    $q->where('age_restriction', '>=', 13);
+                }
+            },
+            // All seasons + episodes ordered latest first
+            'webseries.webseries.seasons' => function ($q) {
+                $q->orderBy('id', 'desc');
+            },
+            'webseries.webseries.seasons.episodes' => function ($q) {
+                $q->orderBy('id', 'desc');
+            },
+            'webseries.webseries.seasons.episodes.image',
+            'webseries.webseries.seasons.episodes.medium',
+            'webseries.webseries.seasons.episodes.thumbnail',
+            'webseries.webseries.seasons.episodes.episode_users' => function ($q) use ($user_id) {
+                $q->where('user_id', $user_id);
+            },
+            'genres',
+            'languages'
+        ]);
+
+        $data = $data->where('status', 1)->latest();
+
+        if ($genre_id = request('genre_id')) {
+            $data->whereHas('genres', fn($q) => $q->where('genre_id', $genre_id));
+        }
+        if ($lang_id = request('language_id')) {
+            $data->whereHas('languages', fn($q) => $q->where('language_id', $lang_id));
+        }
+        if ($page_id = request('page_id')) {
+            $data->where('page_id', $page_id);
+        }
+
+        return $data->orderBy('sortorder', 'asc')
+                    ->orderBy('title', 'asc')
+                    ->paginate(request('paginate', 5));
+    }
+    /*public static function getWebseriesWatchApiList($user_id, $webseries_id)
+    {
+        return Banner::with([
+            'webseries' => function ($q) use ($webseries_id) {
+                $q->where('id', $webseries_id)->where('status', 1);
+            },
+
+            // ADD this
+            'webseries.seasons.episodes',
+
+            'webseries.seasons.episodes.episode_users' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            }
+        ])
+        ->where('webseries_id', $webseries_id)
+        ->where('status', 1)
+        ->latest()
+        ->first();
+    }*/
 }

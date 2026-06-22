@@ -145,8 +145,6 @@ class AuthController extends Controller
     public function login(LoginUserRequest $request)
     {
 
-
-
         try {
             // if(!empty($request->email))
             //     Session::put('formEmail', $request->email);
@@ -231,11 +229,35 @@ class AuthController extends Controller
             // if(!empty($request->email))
             //     Session::put('formEmail', $request->email);
 
+            $country_code_value = $request->country_code ?? '+91';
+
             $request->validated($request->only(['email']),$request->otp_message_type);
+	           
+
+	        if (empty($country_code_value)) {
+                $country_code_value = '+91';
+            }
+
+            /* ----- Hardcoded number for Google Play Console (START 1) ----- */
+            // if ($request->email === '9345299927') {
+                // Don’t hit DB or WhatsApp/SMS API
+            //     return $this->success('', 'Otp sent to associated Email or Phone. (Hardcoded user)');
+            // }
+            /* ----- Hardcoded number for Google Play Console (END 1) ----- */
 
             //Verify user 
             if(is_numeric($request->email)){
-                $user = User::where('phone',$request->email)->first();
+                // Fallback to +91 if not provided
+                $finalCode = $request->country_code ?: '+91';
+
+                //$user = User::where('phone',$request->email)->first();
+                $user = User::where('country_code', $request->country_code)
+                        ->where('phone', $request->email)
+                        ->first();
+                
+                if (empty($user)) {
+                    return $this->error('', "User with {$country_code_value} {$request->email} not found. Please create a new account.", 200);
+                }
             }else{
                 $user = User::where('email', $request->email)->first();
             }
@@ -255,9 +277,12 @@ class AuthController extends Controller
                 $type = $request->otp_message_type;
                 session()->put('otp_message_type', $type);
 
+                $dial_code = $request->country_code;
+                session()->put('country_code', $dial_code);
+
                 if(is_numeric($request->email)){
                     //send otp via message
-                    Otp::otpverify($request->email,$otp,$request->otp_message_type);
+                    Otp::otpverify($request->email,$otp,$request->otp_message_type,$country_code_value);
                 }else{
 
                     //Email::otp(array('mailbody'=>'','user'=>$user,'otp'=>$otp));
@@ -292,6 +317,26 @@ class AuthController extends Controller
             //     Session::put('formEmail', $request->email);
 
             $request->validated($request->only(['email', 'otp']));
+
+            /* ----- Hardcoded number for Google Play Console (START 2) ----- */
+            // if (
+            //     $request->email === '9345299927'
+            //     && $request->otp === '7277'
+            // ) {
+                // Either fetch an existing user or create a fake one
+            //     $user = User::firstOrCreate(
+            //         ['phone' => '9345299927'],
+            //         [
+            //             'name'       => 'Demo User',
+            //             'email'      => 'demo@example.com',
+            //             'password'   => bcrypt('secret'),
+            //             'phone_verified_at' => now(),
+            //         ]
+            //     );
+            //     Auth::login($user);
+            //     return $this->success(User::userRequestLoginToken($user, $request));
+            // }
+            /* ----- Hardcoded number for Google Play Console (END 2) ----- */
 
 
             //Verify user 
@@ -354,10 +399,20 @@ class AuthController extends Controller
             //     Session::put('formEmail', $request->email);
 
 
-            $rule['name']=['required', 'min:5', 'regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'];
-            $rule['phone']='digits_between:10,10|unique:users,phone';
+            //$rule['name']=['required', 'min:5', 'regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'];
+            //$rule['phone']='digits_between:10,10|unique:users,phone';
+            //$rule['phone']= ['required', 'regex:/^\+[1-9]\d{6,14}$/'];
             //$rule['email']=['required', 'email', 'max:255', 'unique:users,email'];
             //$rule['password']=['required', 'min:8'];
+
+            $rule = [
+                'name' => ['required','min:5','regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'],
+                'phone' => [
+                    'required',
+                    'digits_between:6,15',
+                    'unique:users,phone',
+                ],
+            ];
 
             $messages = [
                 'name' => 'Please enter a valid name.',
@@ -365,9 +420,9 @@ class AuthController extends Controller
                 'password.min' => 'Password required atleast 8 character.',
                 'email' => 'Please enter a valid email address.',
                 'email.unique' => 'Email address is already linked to another account.',
-                'phone' => 'Please enter a valid mobile number.',
-                'phone.unique' => 'Mobile number is already linked to another account.',
-                'phone.digits_between' => 'Please enter the 10 digit mobile number.'
+                'phone.required' => 'Please enter a valid mobile number.',
+                'phone.digits_between' => 'Mobile number should be between 6 to 15 digits.',
+                'phone.unique' => 'Mobile number is already linked to another account.'
             ];
 
             $request->validate($rule,$messages);
@@ -378,9 +433,11 @@ class AuthController extends Controller
                 'name' => empty($request->name)?'User':$request->name,
                 'firstname' => empty($request->name)?'':$request->name,
                 'email' => $request->phone."_".date("YmdHis")."@bestcast.co",//$request->email,
+                'country_code' => $request->country_code ?? '+91',
                 'phone' => empty($request->phone)?'':$request->phone,
                 'password' => Hash::make( Str::random(20)),//Hash::make($request->password),
                 'otp_message_type' => $request->otp_message_type,
+                // 'otp_message_type' => 'sms',
             ]);
 
             if(!empty($request->refferer) && (strlen($request->refferer)<=15)){
@@ -401,6 +458,7 @@ class AuthController extends Controller
             //Request Token
             $response=User::userRequestLoginToken($user,$request);
             $response['otp_message_type'] = $request->otp_message_type;
+            $response['country_code'] = $request->country_code ?? '+91';
 
             if(!empty($request->device)){
                 if($request->device=='mobile' || $request->device=='tv' || $request->device=='postman'){
@@ -408,7 +466,7 @@ class AuthController extends Controller
                     $user->updated_at=date("Y-m-d H:i:s");
                     $user->save();
                     if(is_numeric($user->phone)){
-                        Otp::otpverify($request->phone,$otp,$request->otp_message_type);
+                        Otp::otpverify($request->phone,$otp,$request->otp_message_type,$request->country_code ?? '+91');
                     }
                 }
             }
@@ -503,20 +561,3 @@ class AuthController extends Controller
     }
 
 }
-
-
-
-        //$createToken=$user->createToken('frontend:user')->plainTextToken;
-        // return $this->success([
-        //     'user' => $user,
-        //     'token' => $createToken
-        // ]);
-
-        //Authendicate
-        //Auth::login($user);
-
-
-
-        // return $this->success([
-        //     'message' => Auth::user()
-        // ]);

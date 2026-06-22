@@ -27,6 +27,15 @@
          </div>
       </div>
    </div>
-
-
+   
+<script>
+   document.body.addEventListener("click", function (e) {
+       let playBtn = e.target.closest(".playBtn");
+       if (playBtn) {
+           e.preventDefault();
+           let movieId = playBtn.getAttribute("data-id");
+           window.location.href = `/trailer/${movieId}`;
+       }
+   });
+</script>
 @endsection

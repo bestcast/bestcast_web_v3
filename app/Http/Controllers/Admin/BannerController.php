@@ -78,6 +78,10 @@ class BannerController extends Controller
             $requestData['status']=empty($requestData['status'])?0:1;
             $model->fill($requestData);
             $model->movies_id = empty($model->type)?$model->movies_id:0;
+            $model->webseries_id = empty($model->type)?$model->webseries_id:0;
+            //$model->page_id = !empty($model->type)?$model->page_id:0;
+            $model->page_id = $model->page_id ?? [];
+
             $model->shows_id = !empty($model->type)?$model->shows_id:0;
             $model->updated_by = Auth::user()->id;
             $model->save();

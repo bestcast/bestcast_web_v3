@@ -9,27 +9,84 @@
     <h2 class="pb-3 border-bottom">
         Transaction
     </h2>
-
     @if(!empty($data->total()))
             <div class="txtcard image">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">
+                        <span class="text-dark">Total Subscribers: {{ \App\Models\Transaction::getSubscribersCount() }}</span>
+
+                        @if(request('status_filter') == 'active')
+                            <span class="text-success"> | Active Subscribers: {{ \App\Models\Transaction::getSubscribersCount('active') }}</span>
+                        @endif
+
+                        @if(request('status_filter') == 'inactive')
+                            <span class="text-danger"> | Inactive Subscribers: {{ \App\Models\Transaction::getSubscribersCount('inactive') }}</span>
+                        @endif
+                    </h4>
+                    <form method="GET" action="" id="searchForm" class="mb-3">
+                        <div class="d-flex justify-content-end">
+                            <div style="width: 300px;">
+                                <input 
+                                    type="text" 
+                                    name="search" 
+                                    id="searchInput"
+                                    class="form-control" 
+                                    placeholder="Search by name, phone, title..." 
+                                    value="{{ request('search') }}"
+                                >
+                            </div>&nbsp;&nbsp;
+                            <!-- Status Filter -->
+                            <div style="width: 180px;">
+                                <select name="status_filter" class="form-control" onchange="this.form.submit()">
+                                    <option value="">All Status</option>
+                                    <option value="active" {{ request('status_filter') == 'active' ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ request('status_filter') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <form id="filterForm" method="GET">
+                    <input type="hidden" name="status_filter" id="statusFilterInput" value="{{ request('status_filter') }}">
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                </form>
                 <div class="row"><div class="col-12">
                 <table  class="table">
                   <tr class="header">
+                    <td>S.No</td>
                     <td>Title</td>
                     <td>Status</td>
+                    <td>Name</td>
+                    <td>Phone Number</td>
+                    <td>Transaction On</td>
+                    <td>Expiry Date</td>
                     <td>Razorpay ID</td>
                     <td>Price</td>
                     <!-- <td>Counts</td> -->
                     <td>Action</td>
+                    <td>Status</td>
                   </tr>
                     @foreach($data->items() as $item)
                       <tr>
+                        <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                         <td>{{ $item->title }}</td>
                         <td>{{ App\Models\Transaction::status($item->status) }}</td>
+                        <td>{{ $item->user->name ?? 'N/A' }} </td>
+                        <td>{{ $item->user->phone ?? 'N/A' }} </td>
+                        <td>{{ $item->created_at }}</td>
+                        <td>{{ $item->user->plan_expiry ?? 'N/A' }} </td>
                         <td>{{ empty($item->razorpay_subscription_id)?$item->razorpay_order_id:$item->razorpay_subscription_id }}</td>
                         <td>{{ $item->price }}</td>
                         <!-- <td>{{ $item->counts }}</td> -->
                         <td><a href="{{ route('admin.user.edit',$item->user_id) }}" class="btn btn-primary btn-sm">User Details</a> <a href="{{ route('admin.subscription.edit',$item->subscription_id) }}" class="btn btn-primary btn-sm">Plan</a></td>
+                        <td>
+                            @if(optional($item->user)->plan_expiry && \Carbon\Carbon::parse($item->user->plan_expiry)->isFuture())
+                                <span style="background:green;color:white;padding:4px 8px;border-radius:5px;">Active</span>
+                            @else
+                                <span style="background:red;color:white;padding:4px 8px;border-radius:5px;">Inactive</span>
+                            @endif
+                        </td>
+                        
                       </tr>
                     @endforeach
                 </table>
@@ -42,8 +99,21 @@
             </div>
     @endif
 
+<script>
+    let timer = null;
+
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        clearTimeout(timer);
+
+        timer = setTimeout(function () {
+            document.getElementById('searchForm').submit();
+        }, 400); //Delay (400ms) to avoid too many requests
+    });
+    function handleToggle(el) {
+        let value = el.checked ? 'active' : '';
+        document.getElementById('statusFilterInput').value = value;
+        document.getElementById('filterForm').submit();
+    }
+</script>
 
 @endsection
-
-
-

@@ -25,5 +25,8 @@
     </div>
   </main>
 @include('admin.layouts.media')
+
+{{-- Scripts pushed from child views --}}
+@stack('scripts')
 </body>
 </html>

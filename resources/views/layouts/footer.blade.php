@@ -100,7 +100,7 @@
                     @endif
                     <div class="d-flex justify-content-center justify-content-md-start">
                         <div class="px-2 mb-2 mb-md-0">
-                            <a href="https://play.google.com/store/apps/details?id=com.bestcast.bestcaststudios">
+                            <a href="https://play.google.com/store/apps/details?id=com.bestcast.bestcastott">
                                 <img class="img-fluid logo-light" src="{{ Lib::publicUrl($core['android_logo']) }}" alt="Android Logo" style="max-height: 80px;">
                             </a>
                         </div>

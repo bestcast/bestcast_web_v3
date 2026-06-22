@@ -4,11 +4,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Api\QuizController;
+use App\Http\Controllers\Api\MobileAppQuizController;
 
 use App\Http\Controllers\Movies\BrowseController;
 use App\Http\Controllers\Movies\GuestController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Api\RewardController;
+use App\Http\Controllers\Webseries\WebseriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +69,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/blockslist', [BrowseController::class, 'blockslist'])->name('blockslist');
     Route::get('/latestlist', [BrowseController::class, 'latestlist'])->name('latestlist');
 
+    Route::get('/webseriesblockslist', [WebseriesController::class, 'webseriesblockslist'])->name('webseriesblockslist');
+    Route::get('/seasonepisodebannerlist/{webseries_id}', [WebseriesController::class, 'seasonepisodebannerlist'])->name('seasonepisodebannerlist');
+    Route::get('/webserieswatchdetail/{webseries_id}', [WebseriesController::class, 'webserieswatchdetail'])->name('webserieswatchdetail');
 
+    Route::get('getwebseriesdetail/{id}', [WebseriesController::class, 'getwebseriesdetail']);
     Route::get('/paymentgatewayinfo', [PaymentController::class, 'paymentgatewayinfo'])->name('paymentgatewayinfo');
     Route::get('/subscriptionlist', [PaymentController::class, 'subscriptionlist'])->name('subscriptionlist');
     Route::post('/createsubscription/{id}', [PaymentController::class, 'createsubscription'])->name('createsubscription');
@@ -98,6 +105,29 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/setusermovie/{movieid}', [UserController::class, 'setusermovie'])->name('setusermovie');
     Route::get('/appnotifylist/{id}', [UserController::class, 'appnotifylist'])->name('appnotifylist');
     Route::get('/deleteuser', [UserController::class, 'deleteuser'])->name('deleteuser');
-});
 
+    Route::post('/quiz', [QuizController::class, 'getMovieQuiz']);
+    Route::post('/submit-quiz', [QuizController::class, 'quizsubmit']);
+    Route::post('/quiz-result', [QuizController::class, 'quizresult']);
+    Route::post('/quiz-status', [QuizController::class, 'quizStatus']);
+    Route::post('/quiz-prompt-shown', [QuizController::class, 'quizPromptShown']);
+    Route::post('/quiz-prompt-skipped', [QuizController::class, 'quizPromptSkipped']);
+
+    Route::post('/reward-claim', [RewardController::class, 'store']);
+    Route::put('/reward-claim/{id}', [RewardController::class, 'update']);
+
+
+    /* Mobile API*/
+    Route::post('/moviequiz', [MobileAppQuizController::class, 'getMovieQuizMobile']);
+    Route::post('/mobilesubmitquiz', [MobileAppQuizController::class, 'quizsubmitmobile']);
+    Route::post('/mobilequizresult', [MobileAppQuizController::class, 'quizresultmobile']);
+    Route::post('/mobilequizstatus', [MobileAppQuizController::class, 'mobilequizStatus']);
+    Route::post('/mobilequizpromptshown', [MobileAppQuizController::class, 'mobilequizPromptShown']);
+    Route::post('/mobilequizPromptSkipped', [MobileAppQuizController::class, 'mobilequizPromptSkipped']);
+    Route::post('/reward-claim',[MobileAppQuizController::class, 'submitRewardClaim']);
+    Route::put('/reward-claim/{id}',[MobileAppQuizController::class, 'update']);
+    
+    Route::get('/getuserepisode/{episodeid}', [UserController::class, 'getuserepisode'])->name('getuserepisode');
+    Route::post('/setuserepisode/{episodeid}', [UserController::class, 'setuserepisode'])->name('setuserepisode');
+});
 //Route::get('/data', [YourController::class, 'noAuthRequired']);

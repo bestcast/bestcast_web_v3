@@ -52,10 +52,12 @@ class UsersMovies extends Database implements RoleHasRelationsContract
         'mylist',
         'likes',
         'watch_time',
+        'duration_seconds',
         'watching',
         'watched_percent',
         'watched', //for producer account count when user watch movie 20min atleast
-        'viewed'
+        'viewed',
+        'quiz_prompt_shown'
     ];
 
     /**
@@ -71,10 +73,12 @@ class UsersMovies extends Database implements RoleHasRelationsContract
         'mylist'            => 'integer',
         'likes'             => 'integer',
         'watch_time'        => 'string',
+        'duration_seconds'  => 'integer',
         'watching'          => 'integer',
         'watched_percent'   => 'integer',
         'watched'           => 'integer',
         'viewed'            => 'integer',
+        'quiz_prompt_shown' => 'integer',
         'created_at'        => 'datetime',
         'updated_at'        => 'datetime',
     ];
@@ -189,14 +193,54 @@ class UsersMovies extends Database implements RoleHasRelationsContract
     }
 
 
-    public static function getProducerMovieCount($movieid)
+    /*public static function getProducerMovieCount($movieid)
     {       
         if(empty($movieid))
             return 0;
 
-        $data = UsersMovies::where('movie_id',$movieid)->where('watched','>=',1200)->count(); //20mins
+        $data = UsersMovies::where('movie_id',$movieid)->where('watched','>=',3600)->count(); //1 hour
         return $data;  
+    }*/    
+    public static function getProducerMovieCount($movieid)
+    {
+        // Get movie duration in seconds
+        $duration = DB::table('movies')
+            ->where('id', $movieid)
+            ->value(DB::raw('CAST(duration AS UNSIGNED)'));
+
+        if (!$duration) {
+            return [
+                'watch_minutes' => 0,
+                'views_count'   => 0
+            ];
+        }
+
+        // Per view seconds rule
+        //$perViewSeconds = ($duration >= 3600) ? 3600 : $duration;
+        $perViewSeconds = ($duration >= 3600) ? 3600 : ($duration * 0.9); // 90% for short movies
+        // Get total eligible watch seconds
+        $totalSeconds = DB::table('users_movies')
+            ->where('movie_id', $movieid)
+            ->selectRaw("
+                SUM(
+                    CASE
+                        WHEN {$duration} >= 3600
+                             AND CAST(watch_time AS UNSIGNED) >= 3600
+                        THEN 3600
+
+                        WHEN {$duration} < 3600
+                             AND CAST(watch_time AS UNSIGNED) >= ({$duration} * 0.9)
+                        THEN ({$duration} * 0.9)
+
+                        ELSE 0
+                    END
+                ) as total_seconds
+            ")
+            ->value('total_seconds') ?? 0;
+
+        return [
+            'watch_minutes' => floor($totalSeconds / 60),
+            'views_count'   => floor($totalSeconds / $perViewSeconds)
+        ];
     }
-
 }
-

@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
     {
         return $this->shouldReturnJson($request, $exception)
                     ? response()->json(['status' =>'error','message' => $exception->getMessage()], 201)
-                    : redirect()->guest($exception->redirectTo() ?? route('login'));
+                    : redirect()->guest($exception->redirectTo($request) ?? route('login'));
     }
 
 

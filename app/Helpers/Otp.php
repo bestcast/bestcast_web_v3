@@ -38,14 +38,14 @@ class Otp {
 
 	}
 
-	public static function otpverify($phone,$otpnumber,$otp_message_type) {
+	public static function otpverify($phone,$otpnumber,$otp_message_type,$country_code) {
 		if(empty($phone) || empty($phone)){
 			return null;
 		}
 		if($otp_message_type == "whatsapp"){
 			$postData = ['messaging_product' => 'whatsapp',
 							"recipient_type" => "individual",
-							'to' => '+91'.$phone,
+							'to' => $country_code.$phone,
 							'type' => 'template',
 							'template' => ['name' => 'login',
 			    				'language' => ['code' => 'en'],

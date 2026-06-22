@@ -104,10 +104,10 @@ class MoviesResource extends JsonResource
             'subtitle' => (!empty($this->subtitle) && count($this->subtitle))?MoviesSubtitleResource::collection($this->subtitle):'',
             'genres' => (!empty($this->genres) && count($this->genres))?MoviesGenresResource::collection($this->genres):'',
             'languages' => (!empty($this->languages) && count($this->languages))?MoviesLanguagesResource::collection($this->languages):'',
-            'casts' => (!empty($this->users) && count($this->users))?MoviesUsersResource::collection($this->users):'',
+            //'casts' => (!empty($this->users) && count($this->users))?MoviesUsersResource::collection($this->users):'',
+            'casts' => (!empty($this->users) && count($this->users)) ? MoviesUsersResource::collection( collect($this->users)->where('group', '!=', 3)): '',
             'related' => (!empty($this->related) && count($this->related))?MoviesRelatedResource::collection($this->related):'',
             'usermovies' => $usermoviesdetails
         ];
     }
 }
-

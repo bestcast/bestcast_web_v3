@@ -8,6 +8,7 @@ use App\Models\Genres;
 use App\Models\Movies;
 use App\Models\Blocks;
 use App\Models\BlocksMovies;
+use App\Models\BlocksWebseries;
 use App\Models\BlocksShows;
 use App\Models\BlocksGenres;
 use App\Models\BlocksLanguages;
@@ -91,6 +92,18 @@ class BlocksController extends Controller
                         $BlocksMovies->movies_id = $itm_id;
                         $BlocksMovies->blocks_id = $id;
                         $BlocksMovies->save();
+                    }
+                }
+            }
+
+            $BlocksWebseries = BlocksWebseries::where('blocks_id',$id)->delete();
+            if(empty($model->type) && !empty($requestData['webseries_id']) && count($requestData['webseries_id'])){
+                foreach($requestData['webseries_id'] as $key=>$itm_id){
+                    if($itm_id){
+                        $BlocksWebseries = new BlocksWebseries();
+                        $BlocksWebseries->webseries_id = $itm_id;
+                        $BlocksWebseries->blocks_id = $id;
+                        $BlocksWebseries->save();
                     }
                 }
             }

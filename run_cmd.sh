@@ -9,7 +9,12 @@ fi
 echo "Running Laravel database migration and clearing caches..."
 
 # Navigate to Laravel project directory
-cd /var/www/bestcast_web || { echo "Directory not found"; exit 1; }
+cd /var/www/bestcast_web_v5 || { echo "Directory not found"; exit 1; }
+
+
+sudo chown -R www-data:www-data /var/www/bestcast_web_v5
+sudo chmod -R 777 /var/www/bestcast_web_v5
+sudo chmod -R 777 /var/www/bestcast_web_v5/storage /var/www/bestcast_web_v5/bootstrap/cache
 
 # Run Laravel Artisan commands
 php artisan migrate
@@ -23,7 +28,6 @@ php artisan optimize:clear
 
 # Restart Apache server
 echo "Restarting Apache..."
-systemctl restart apache2
+sudo systemctl restart apache2
 
 echo "Done."
-

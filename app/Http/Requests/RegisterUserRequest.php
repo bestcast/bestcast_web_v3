@@ -40,10 +40,29 @@ class RegisterUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5|regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u',
-            'phone' => 'digits_between:10,10|unique:users,phone',
-            //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            //'password' => ['required',  Rules\Password::defaults()], //'confirmed',
+            'name' => ['required','min:5','regex:/^(?!test)(?!demo)(?!use)[\pL\s]+$/u'],
+            //'country_code' => ['required'],
+            'phone' => [
+                'required',
+                'digits_between:6,15',
+                'unique:users,phone',
+            ],
+        ];
+    }
+
+    /**
+     * Get the custom error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'name' => 'Please enter a valid name.',
+            'name.regex' => 'The name field not allowed special characters.',
+            'phone.required' => 'Please enter a valid mobile number.',
+            'phone.digits_between' => 'Mobile number should be between 6 to 15 digits.',
+            'phone.unique' => 'Mobile number is already linked to another account.',
         ];
     }
 }

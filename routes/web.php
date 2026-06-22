@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TrailerController;
+
+use App\Http\Controllers\GeoTestController;
+
+Route::get('/geo-test', [GeoTestController::class, 'index']);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +33,8 @@ Route::get('/login-with-otp', 'App\Http\Controllers\Auth\LoginController@loginWi
 Route::get('/verifyemail', 'App\Http\Controllers\Api\AuthController@verifyemail')->name('verifyemail');
 
 Route::get('/accountlogin/{token}', 'App\Http\Controllers\Api\AuthController@accountlogin')->name('accountlogin');
+
+Route::get('/trailer/{id}', [TrailerController::class, 'showTrailer'])->name('movies.trailer');
 
 Route::group(['middleware' => ['auth']], function () {
     // Route::get('/accountlogin/{token}', function ($token) {
@@ -90,6 +98,10 @@ Route::group([
     'namespace'     => 'App\Http\Controllers',
 ], function () {
    Route::get('/account/producer', 'MyaccountController@producer')->name('user.myaccount.producer');
+   Route::get('/producer/movie-report/{movie}', 'MyaccountController@movieReport')->name('producer.movie.report');
+   Route::get('/producer/movie-report-download/{movieId}', 'MyaccountController@downloadReport');
+
+   //Route::get('/producer/movie-report/{movie}', [ProducerController::class, 'movieReport']);
 });
 
 
@@ -216,6 +228,26 @@ Route::group([
     Route::get('/admin/movies/searchbytitle/{key}', 'MoviesController@searchbytitle')->name('admin.movies.searchbytitle.key');
 
 
+    Route::get('/admin/webseries', 'WebSeriesController@index')->name('admin.webseries.index');
+    Route::get('/admin/webseries/searchbytitle', 'WebSeriesController@searchbytitle')->name('admin.webseries.searchbytitle');
+    Route::get('/admin/webseries/create', 'WebSeriesController@create')->name('admin.webseries.create');
+    Route::post('/admin/webseries/createsave', 'WebSeriesController@createsave')->name('admin.webseries.createsave');
+    Route::get('/admin/webseries/edit/{id}', 'WebSeriesController@edit')->name('admin.webseries.edit');
+    Route::post('/admin/webseries/editsave/{id}', 'WebSeriesController@editsave')->name('admin.webseries.editsave');
+    Route::get('/admin/webseries/delete/{id}', 'WebSeriesController@delete')->name('admin.webseries.delete');
+    //Route::get('admin/webseries/{webseries}/season/auto-create',[SeasonController::class, 'autoCreate'])->name('admin.seasons.autoCreate');
+    Route::get('admin/webseries/{webseries}/seasons', 'SeasonController@index')->name('admin.seasons.index');
+    Route::get('admin/webseries/{webseries}/season/auto-create', 'SeasonController@autoCreate')->name('admin.seasons.autoCreate');
+    Route::get('admin/webseries/{webseries}/seasons/{season}/delete', 'SeasonController@delete')->name('admin.seasons.delete');
+
+    Route::get('admin/seasons/{season}/episodes', 'EpisodeController@index')->name('admin.episodes.index');
+    Route::get('admin/seasons/{season}/episodes/auto-create', 'EpisodeController@autoCreate')->name('admin.episodes.autoCreate');
+    Route::get('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/edit', 
+        'EpisodeController@edit')->name('admin.episodes.edit');
+    Route::post('admin/webseries/{webseries}/seasons/{season}/episodes/{episode}/editsave',
+        'EpisodeController@editsave')->name('admin.episodes.editsave');
+    Route::get('/admin/episodes/searchbytitle','EpisodeController@searchbytitle')->name('admin.episodes.searchbytitle');
+    Route::get('admin/seasons/{season}/episodes/{episode}/delete', 'EpisodeController@delete')->name('admin.episodes.delete');
 
     Route::get('/admin/shows', 'ShowsController@index')->name('admin.shows.index');
     Route::get('/admin/shows/list', 'ShowsController@list')->name('admin.shows.list');
@@ -355,8 +387,19 @@ Route::group([
     Route::get('/admin/user/searchcastbyname', 'UserController@searchcastbyname')->name('admin.user.searchcastbyname');
     Route::get('/admin/user/searchcastbyname/{key}', 'UserController@searchcastbyname')->name('admin.user.searchcastbyname.key');
 
+    Route::get('/admin/viewsreport','ViewsReportController@index')->name('admin.viewsreport.index');
+    Route::get('/admin/viewsreport/data','ViewsReportController@getViewsData')->name('admin.viewsreport.data');
 
+    Route::get('/admin/trailerviews','TrailerViewsReportController@index')->name('admin.trailerviews.index');
+    Route::get('/admin/trailerviews/data','TrailerViewsReportController@getViewsData')->name('admin.trailerviews.data');
 
+    Route::get('/admin/questions/list/{movieId}', 'QuestionController@list')->name('admin.questions.list');
+    Route::get('/admin/questions/create/{movieId}', 'QuestionController@create')->name('admin.questions.createQuestion');
+    Route::post('/admin/questions/saveQuestion', 'QuestionController@saveQuestion')->name('admin.questions.saveQuestion');
+    Route::get('/admin/questions/edit/{movieId}/{questionId}', 'QuestionController@edit')->name('admin.questions.editQuestion');
+    Route::post('/admin/questions/updateQuestion', 'QuestionController@updateQuestion')->name('admin.questions.updateQuestion');
+    Route::get('/admin/questions/deleteQuestion/{movieId}/{questionId}', 'QuestionController@deleteQuestion')->name('admin.questions.deleteQuestion');
+    Route::post('/admin/questions/bulk-delete/{movieId}', 'QuestionController@bulkDeleteQuestion')->name('admin.questions.bulkDelete');
 });
 
 
@@ -398,6 +441,11 @@ Route::group([
     Route::get('/{urlkey}/{model}/{id}', 'Movies\BrowseController@urlkey')->name('movies.genre');
     #Route::get('/{urlkey}', 'Movies\BrowseController@urlkey')->name('urlkey');
     #Route::get('/deleteuser', 'App\Http\Controllers\Api\UserController@deleteuser')->name('deleteuser');
+
+    Route::get('/rewards/{user_id}', 'RewardController@reward')->name('rewards.claim');
+    Route::post('/reward-claim', 'RewardController@store')->name('rewards.store');
+    Route::put('/reward-claim/{id}', 'RewardController@update')->name('rewards.update');
+    Route::get('/leaderboard', 'LeaderBoardController@index')->name('leaderboard.index');
 });
 
 
@@ -411,7 +459,12 @@ Route::group([
 ##Route::post('/contact', [App\Http\Controllers\FormController::class, 'contact'])->name('form.contact');
 ##Route::post('/newsletter', [App\Http\Controllers\FormController::class, 'newsletter'])->name('form.newsletter');
 
+Route::get('/webserieswatchepisode/{episode_id}', 'App\Http\Controllers\Webseries\WebseriesController@episodewebserieswatch')
+    ->middleware(['role:admin,subadmin,user,producer'])
+    ->name('episodewebserieswatch');
+Route::get('/webserieswatch/{id}', 'App\Http\Controllers\Webseries\WebseriesController@webserieswatch')
+    ->middleware(['role:admin,subadmin,user,producer'])
+    ->name('webserieswatch');
+
 Route::get('/refer/{id}', 'App\Http\Controllers\HomeController@refer')->name('refer');
 Route::get('/{urlkey}', 'App\Http\Controllers\HomeController@urlkey')->name('urlkey');
-
-

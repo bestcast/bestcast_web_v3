@@ -30,6 +30,16 @@ class OtpUserRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        // Automatically default to +91 if country_code is missing
+        if (!$this->has('country_code') || empty($this->country_code)) {
+            $this->merge([
+                'country_code' => '+91',
+            ]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -38,14 +48,16 @@ class OtpUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required',new EmailOrPhone]
+            'email' => ['required',new EmailOrPhone],
+            // 'country_code' => ['required']
         ];
     }
     
     public function messages()
     {
         return [
-            'email' => 'Please enter a valid email address or mobile number.'
+            'email' => 'Please enter a valid mobile number.',
+            // 'country_code.required' => 'Please select your country code.'
         ];
     }
 }

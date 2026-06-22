@@ -1,7 +1,5 @@
 
 /vendor
-/database_dump
 .env
 .env.example
-
-
+/Extra

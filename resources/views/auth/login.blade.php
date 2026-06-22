@@ -1,8 +1,10 @@
 @extends('layouts.frontend')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
 
 @section('header-script')
 <script src="{{ asset('js/auth/tokenexist.js') }}?v=1" defer></script>
 <script src="{{ asset('js/auth/send-otp.js') }}?v=1" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 @endsection
 
 @section('content')
@@ -21,21 +23,23 @@
                                     <span><h6>Choose any one to receive an OTP message.</h6></span>
                                 </div>
                                 <div class="form-check form-check-inline mb--30">
+                                  <input class="form-check-input" type="radio" name="otp_message_type" id="whatsapp" value="whatsapp" checked>
+                                  <label class="form-check-label" for="whatsapp">WhatsApp</label>
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-check form-check-inline mb--30">
                                   <input class="form-check-input" type="radio" name="otp_message_type" id="sms" value="sms">
                                   <label class="form-check-label" for="sms">SMS</label>
-                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <div class="form-check form-check-inline mb--30">
-                                  <input class="form-check-input" type="radio" name="otp_message_type" id="whatsapp" value="whatsapp" checked>
-                                  <label class="form-check-label" for="whatsapp">Whatsapp</label>
                                 </div>
                                 <div class="fieldtab dnn">
                                     <div class="fieldtab-phone active">Mobile</div> | <div class="fieldtab-email">Email</div>
                                 </div>
                                 <div class="input-box fieldtab-action phone mb--30">
-                                    <div class="icon-phone"> +91 | </div>
-                                    <div class="icon-email"> | </div>
-                                    <input id="email" type="number" class="input-text fieldtab-field formemail_disable" name="email" placeholder="Enter mobile number" autocomplete="off" autofocus>
+                                    <input id="email" type="tel" class="input-text fieldtab-field formemail_disable w-100" name="email"
+                                           placeholder="Enter mobile number" autocomplete="off" autofocus>
+                                    <input type="hidden" name="country_code" id="country_code"> 
+                                    <!-- hidden field -->
                                 </div>
+
                                 <button class="rn-btn edu-btn w-100 mb--30 loginbtn" type="submit">
                                     <span>Next</span>
                                 </button>
@@ -52,3 +56,141 @@
             </div>
         </div>
 @endsection
+@section('footer-script')
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.querySelector("#email");
+    if (!input) return;
+
+    const hiddenInput = document.querySelector("#country_code");
+    let iti; // we will assign later
+
+    // Initialize intl-tel-input based on otp message type
+    function initIntlTelInput(type) {
+        if (iti) iti.destroy(); // destroy previous instance
+
+        if (type === 'sms') {
+            iti = window.intlTelInput(input, {
+                initialCountry: "in",
+                allowDropdown: false,
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+            });
+        } else {
+            iti = window.intlTelInput(input, {
+                initialCountry: "auto",
+                geoIpLookup: function(callback) {
+                    fetch("https://ipapi.co/json/")
+                        .then(res => res.json())
+                        .then(data => callback(data.country_code ? data.country_code.toLowerCase() : "in"))
+                        .catch(() => callback("in"));
+                },
+                preferredCountries: ["in", "us", "gb", "ae", "sg"],
+                allowDropdown: true,
+                separateDialCode: true,
+                dropdownContainer: document.body,
+                customPlaceholder: () => "Enter mobile number",
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+            });
+
+            // Ensure default +91 flag is always shown (even if geo lookup fails)
+            setTimeout(() => {
+                if (!iti.getSelectedCountryData().iso2) {
+                    iti.setCountry("in");
+                }
+                updateCountryCode();
+            }, 500);
+
+            // Add search input dynamically when dropdown opens (your existing code)
+            input.addEventListener("open:countrydropdown", function() {
+                setTimeout(() => {
+                    const dropdown = document.querySelector(".iti__country-list");
+                    if (dropdown && !document.querySelector(".custom-iti-search")) {
+                        const searchInput = document.createElement("input");
+                        searchInput.className = "custom-iti-search";
+                        searchInput.type = "text";
+                        searchInput.placeholder = "Search...";
+                        dropdown.prepend(searchInput);
+
+                        Object.assign(searchInput.style, {
+                            position: "sticky",
+                            top: "0",
+                            zIndex: "9999",
+                            background: "#111",
+                            padding: "6px 10px",
+                            marginBottom: "5px",
+                            border: "1px solid #444",
+                            borderRadius: "5px",
+                            width: "90%",
+                            color: "#fff",
+                        });
+
+                        ["mousedown", "click", "touchstart"].forEach(evt => {
+                            searchInput.addEventListener(evt, e => e.stopPropagation());
+                        });
+
+                        searchInput.addEventListener("keydown", e => e.stopPropagation());
+
+                        searchInput.addEventListener("input", function() {
+                            const search = this.value.replace("+", "").trim();
+                            let firstVisible = null;
+                            document.querySelectorAll(".iti__country").forEach(country => {
+                                const dialCode = country.querySelector(".iti__dial-code")?.innerText.replace("+", "") || "";
+                                const visible = dialCode.includes(search);
+                                country.style.display = visible ? "" : "none";
+                                if (visible && !firstVisible) firstVisible = country;
+                            });
+                            if (firstVisible) {
+                                const countryCode = firstVisible.getAttribute("data-country-code");
+                                iti.setCountry(countryCode);
+                                updateCountryCode();
+                            }
+                        });
+                    }
+                }, 100);
+            });
+        }
+
+        // Update hidden field whenever country changes
+        function updateCountryCode() {
+            hiddenInput.value = "+" + iti.getSelectedCountryData().dialCode;
+        }
+
+        input.addEventListener("countrychange", updateCountryCode);
+        updateCountryCode();
+    }
+
+    // Initialize with the default checked radio
+    const defaultType = document.querySelector('input[name="otp_message_type"]:checked')?.value || 'whatsapp';
+    initIntlTelInput(defaultType);
+
+    //Handle radio button change between SMS / WhatsApp cleanly
+    document.querySelectorAll('input[name="otp_message_type"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const input = document.querySelector("#email");
+
+            // Step 1: clean current number
+            let cleanValue = input.value.replace(/\s+/g, '');
+            if (window.iti && typeof iti.getNumber === 'function') {
+                cleanValue = iti.getNumber().replace(/\s+/g, '');
+            }
+
+            // Step 2: reinitialize plugin
+            initIntlTelInput(this.value);
+
+            // Step 3: reapply cleaned number
+            setTimeout(() => {
+                input.value = cleanValue.replace(/\s+/g, '');
+            }, 200);
+        });
+    });
+
+    //Clean number before form submit
+    document.querySelector('.ajx-sendotp-form')?.addEventListener('submit', function(e) {
+        const input = document.querySelector("#email");
+        if (input) input.value = input.value.replace(/\s+/g, ''); // remove spaces
+    });
+});
+</script>
+@endsection
+

@@ -135,8 +135,12 @@ class Transaction extends Database implements RoleHasRelationsContract
     }
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-    public static function getList()
+    /*public static function getList()
     {
         $data = Transaction::latest()->where('status','!=',0);
         if(!empty($_GET['user_id'])){
@@ -145,6 +149,52 @@ class Transaction extends Database implements RoleHasRelationsContract
         $data =$data->orderBy('created_at','desc');
         $data =$data->paginate(20);
         return $data;
+    }*/
+
+    public static function getList()
+    {
+        $data = Transaction::with('user')   // load user details
+                ->where('status', '!=', 0)
+                ->whereHas('user');
+
+        if (!empty($_GET['user_id'])) {
+            $data->where('user_id', $_GET['user_id']);
+        }
+        // Search filter
+        if (!empty($_GET['search'])) {
+            $search = $_GET['search'];
+
+            $data->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%$search%")
+                  ->orWhere('razorpay_order_id', 'LIKE', "%$search%")
+                  ->orWhere('razorpay_subscription_id', 'LIKE', "%$search%")
+                  ->orWhereHas('user', function ($uq) use ($search) {
+                        $uq->where('name', 'LIKE', "%$search%")
+                           ->orWhere('phone', 'LIKE', "%$search%");
+                  });
+            });
+        }
+        // Status Filter (NEW)
+        if (!empty($_GET['status_filter'])) {
+
+            if ($_GET['status_filter'] == 'active') {
+                $data->whereHas('user', function ($q) {
+                    $q->whereNotNull('plan_expiry')
+                      ->where('plan_expiry', '>', now());
+                });
+            }
+
+            if ($_GET['status_filter'] == 'inactive') {
+                $data->whereHas('user', function ($q) {
+                    $q->where(function ($q2) {
+                        $q2->whereNull('plan_expiry')
+                           ->orWhere('plan_expiry', '<=', now());
+                    });
+                });
+            }
+        }
+        return $data->orderBy('created_at', 'desc')
+                    ->paginate(20)->appends($_GET);
     }
 
     public static function getPending($user,$planid)
@@ -274,5 +324,30 @@ class Transaction extends Database implements RoleHasRelationsContract
           $data=Transaction::latest()->where('user_id',$user->id)->where('status',1)->first();  
         }
         return $data;
+    }
+    public static function getSubscribersCount($status = null)
+    {
+        $query = Transaction::where('status', '!=', 0)
+            ->whereHas('user'); // ensure valid users only
+
+        // Active
+        if ($status == 'active') {
+            $query->whereHas('user', function ($q) {
+                $q->whereNotNull('plan_expiry')
+                  ->where('plan_expiry', '>', now());
+            });
+        }
+
+        // Inactive
+        elseif ($status == 'inactive') {
+            $query->whereHas('user', function ($q) {
+                $q->where(function ($q2) {
+                    $q2->whereNull('plan_expiry')
+                       ->orWhere('plan_expiry', '<=', now());
+                });
+            });
+        }
+
+        return $query->count();
     }
 }

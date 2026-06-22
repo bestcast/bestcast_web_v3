@@ -28,6 +28,13 @@
         </a>
       </li>
     @endif
+    @if (Route::has('admin.webseries.index'))
+      <li class="icon-movie {{ request()->is('admin/webseries') || request()->is('admin/webseries/*') ? 'active' : '' }}">
+        <a href="{{ route('admin.webseries.index') }}" class="nav-link link-dark">          
+          Webseries
+        </a>
+      </li>
+    @endif
     @if (Route::has('admin.shows.index')) <!--Tv Shows Extend-->
       <li class="icon-tvshows dnn {{ request()->is('admin/shows') || request()->is('admin/shows/*') || request()->is('admin/sessions') || request()->is('admin/sessions/*') || request()->is('admin/episodes') || request()->is('admin/episodes/*') ? 'active' : '' }}">
         <a href="{{ route('admin.shows.index') }}" class="nav-link link-dark">          
@@ -144,5 +151,19 @@
         </li>
       @endif
     @endrole
+    @if (Route::has('admin.viewsreport.index'))
+        <li class="icon-view  {{ request()->is('admin/viewsreport') || request()->is('admin/viewsreport/*')  || request()->is('admin/trailerviews') ||  request()->is('admin/trailerviews/*') ? 'active' : '' }}">
+          <a href="{{ route('admin.viewsreport.index') }}" class="nav-link link-dark">          
+            Views Report
+              <span class="arrow icon-arrow-right">&nbsp;</span>
+            </a>
+            <ul class="subnavpills"  style="{{ request()->is('admin/viewsreport') || request()->is('admin/viewsreport/*')  || request()->is('admin/trailerviews') ||  request()->is('admin/trailerviews/*') ? 'display:block' : '' }}">
+              <li class="icon-arrow-double-right {{ request()->is('admin/viewsreport') ? 'active' : '' }}">
+                <a href="{{ route('admin.viewsreport.index') }}">Movie Views Report</a></li>
+              <li class="icon-arrow-double-right {{ request()->is('admin/trailerviews') ? 'active' : '' }}">
+                <a href="{{ route('admin.trailerviews.index') }}">Guest Trailer Views</a></li>
+            </ul>
+          </li>
+      @endif
   </ul>
 </div>

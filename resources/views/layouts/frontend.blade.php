@@ -48,7 +48,16 @@ $movieid=empty($movie->id)?'':$movie->id;
    <meta name='robots' content="{{ $core['global_seo_robots'] }}" />
    <title>{{ $pagetitle }}</title>
    <meta name="description" content="{{ strip_tags($seodesc) }}" />
+   <!-- Open Graph -->
+   <meta property="og:title" content="{{ $pagetitle }}" />
+   <meta property="og:description" content="{{ strip_tags($seodesc) }}" />
+   <meta property="og:url" content="{{ $currentUrl }}" />
+   <meta property="og:type" content="{{ $ogtype ?? 'website' }}" />
 
+   <!-- Twitter -->
+   <meta name="twitter:card" content="summary" />
+   <meta name="twitter:title" content="{{ $pagetitle }}" />
+   <meta name="twitter:description" content="{{ strip_tags($seodesc) }}" />
    @include('layouts.assets')
 
    @yield('header-script')
