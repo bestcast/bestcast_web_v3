@@ -38,16 +38,20 @@ class QuestionModel extends Model
             ->orderBy('id')
             ->paginate(25);
     }*/
-    public function getQuestions(int $movieId): LengthAwarePaginator
+    public function getQuestions(int $movieId, ?string $language = null): LengthAwarePaginator
     {
-        return DB::table('questions')
+        $query = DB::table('questions')
             ->where('movie_id', $movieId)
-            ->whereNull('deleted_at')
+            ->whereNull('deleted_at');
 
+        if (!empty($language)) {
+            $query->where('language', $language);
+        }
+
+        return $query
             ->orderBy('show_time_hour')
             ->orderBy('show_time_min')
             ->orderBy('show_time_sec')
-
             // English first, Tamil second
             ->orderByRaw("
                 CASE
@@ -56,8 +60,8 @@ class QuestionModel extends Model
                     ELSE 3
                 END
             ")
-
-            ->paginate(25);
+            ->paginate(25)
+            ->withQueryString();
     }
     /**
      * Create a new question and options.

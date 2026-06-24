@@ -30,15 +30,10 @@ class QuestionController extends Controller
         return view('admin.questions.question-list', compact('questions', 'movieId'));
     }*/
 
-    public function list(int $movieId)
+    public function list(Request $request, int $movieId)
     {
-        $questions = $this->QuestionModel->getQuestions($movieId);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Language Counts
-        |--------------------------------------------------------------------------
-        */
+        $language = $request->language;
+        $questions = $this->QuestionModel->getQuestions($movieId, $language);
 
         $languageCounts = \DB::table('questions')
             ->select('language', \DB::raw('count(*) as total'))
@@ -46,9 +41,7 @@ class QuestionController extends Controller
             ->whereNull('deleted_at')
             ->groupBy('language')
             ->pluck('total', 'language');
-
         $englishCount = $languageCounts['english'] ?? 0;
-
         $tamilCount = $languageCounts['tamil'] ?? 0;
 
         return view(
@@ -57,7 +50,8 @@ class QuestionController extends Controller
                 'questions',
                 'movieId',
                 'englishCount',
-                'tamilCount'
+                'tamilCount',
+                'language'
             )
         );
     }
@@ -83,7 +77,8 @@ class QuestionController extends Controller
     public function edit(Request $request,int $movieId, int $questionId){
         $questionDetail = $this->QuestionModel->getQuestionOptionsById($questionId);
         $page = $request->page;
-        return view('admin.questions.question-form', ['movieId' => $movieId,'questionDetail' => $questionDetail,'page' => $page]);
+        $language = $request->language;
+        return view('admin.questions.question-form', ['movieId' => $movieId,'questionDetail' => $questionDetail,'page' => $page, 'language' => $language]);
     }
     public function updateQuestion(editQuestionRequest $request){
         $validated = $request->validated();

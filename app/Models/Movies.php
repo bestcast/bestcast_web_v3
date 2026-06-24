@@ -54,6 +54,7 @@ class Movies extends Database implements RoleHasRelationsContract
         'content',
         'published_date',
         'release_date',
+        'release_time',
         'thumbnail_id',
         'medium_id',
         'image_id',
@@ -93,6 +94,7 @@ class Movies extends Database implements RoleHasRelationsContract
         'content'           => 'string',
         'published_date'    => 'datetime',
         'release_date'      => 'date',
+        'release_time'      => 'string',
         'thumbnail_id'      => 'integer',
         'medium_id'         => 'integer',
         'image_id'          => 'integer',
@@ -140,6 +142,7 @@ class Movies extends Database implements RoleHasRelationsContract
         'urlkey' => 'required|max:1000|unique:movies,urlkey',
         'video_url'=>'required',
         'release_date'=>'required',
+        'release_time'=>'required|date_format:H:i',
         'duration'=>'required|numeric'
     ];
 
@@ -148,6 +151,8 @@ class Movies extends Database implements RoleHasRelationsContract
         'title.required' => 'Title is required.',
         'video_url.required' => 'Video URL is required.',
         'release_date.required' => 'Release Date is required.',
+        'release_time.required' => 'Release Time is required.',
+        'release_time.date_format' => 'Release Time must be in HH:MM format.',
         'urlkey.required' => 'URL Key is required.',
         'urlkey.unique' => 'URL Key already exists.',
         'duration.required' => 'Duration is required. Must be in seconds',
@@ -339,6 +344,17 @@ class Movies extends Database implements RoleHasRelationsContract
         $sortorder=app('request')->input('sortorder');
         $data =$data->orderBy('title','asc')->limit(100)->get();
         return $data;
+    }
+    public function isUpcoming(): bool
+    {
+        if (empty($this->release_date)) {
+            return false;
+        }
+
+        $time = empty($this->release_time) ? '00:00:00' : $this->release_time;
+        $releaseDateTime = \Carbon\Carbon::parse($this->release_date->format('Y-m-d') . ' ' . $time);
+
+        return $releaseDateTime->isFuture();
     }
 
 }

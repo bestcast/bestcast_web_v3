@@ -389,18 +389,22 @@
                   </div>
 
                   <div class="form-row">
-                      <label class="form-label" for="name">Published Date</label>
+                      <label class="form-label" for="name">Movie Published Date</label>
                       <?php
                       $pubdate=empty($model->published_date)?'':date("Y-m-d",strtotime($model->published_date));
                       ?>
                       <input type="text" class="form-control datepicker_system" id="published_date" name="published_date" value="{{ old('published_date',$pubdate) }}" >
                   </div>
                   <div class="form-row">
-                      <label class="form-label" for="name">Release Date <em>*</em></label>
+                      <label class="form-label" for="name">OTT Release Date <em>*</em></label>
                       <?php
                       $pubdate=empty($model->release_date)?'':date("Y-m-d",strtotime($model->release_date));
+                      $pubtime=empty($model->release_time)?'':date("H:i",strtotime($model->release_time));
                       ?>
-                      <input type="text" class="form-control datepicker_system" id="release_date" name="release_date" value="{{ old('release_date',$pubdate) }}" >
+                      <div style="display:flex; gap:10px;">
+                          <input type="text" class="form-control datepicker_system" id="release_date" name="release_date" value="{{ old('release_date',$pubdate) }}" style="flex:1;">
+                          <input type="time" class="form-control" id="release_time" name="release_time" value="{{ old('release_time',$pubtime) }}" style="flex:1;">
+                      </div>
                   </div>
                   <div class="form-row">
                       <label class="form-label" for="urlkey">URL Key</label>
