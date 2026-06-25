@@ -51,6 +51,15 @@ body > footer{flex-shrink: 0;}
 .ICplay{background-image:url('../../img/icon/website/play-white.png');}
 .ICplay.dark{background-image:url('../../img/icon/website/play-black.png');}
 .ICplay.active,.ICplay:hover{background-image:url('../../img/icon/website/play.png');}
+
+/*.ICshare{background-image:url('../../img/icon/website/share-white.png');}
+.ICshare.dark{background-image:url('../../img/icon/website/share-black.png');}
+.ICshare.active,.ICshare:hover{background-image:url('../../img/icon/website/share.png');}*/
+
+.ppIc { display:inline-block; width:32px; height:32px; cursor:pointer; background-size:contain; background-repeat:no-repeat; background-position:center; }
+.ICshare{background-image:url('../../img/icon/website/share-white.png');}
+.ICshare.dark{background-image:url('../../img/icon/website/share-black.png');}
+.ICshare.active,..ICshare:hover { background-image:url('../../img/icon/website/share.png'); }
 .IClike{background-image:url('../../img/icon/website/like-white.png');}
 .IClike.active,.IClike:hover{background-image:url('../../img/icon/website/like.png');}
 .ICliked{background-image:url('../../img/icon/website/liked-white.png');}
@@ -560,7 +569,7 @@ button .spinner,.error-msg .spinner{margin:auto;}
 .ppTag i{display: inline-block; vertical-align: middle; width: 6px; height: 6px; background: #4d4848; border-radius: 100px; margin: 5px 8px;}
 .ppAct .spinner{float: left;margin-top: 5px;margin-left: 10px;display: none;}
 .ppAct .spinner.show{display: block;}
-
+.ppUpcoming {position: absolute; top: 10px; right: 10px; background: #f0ad4e; color: #000; font-weight: bold; font-size: 12px; padding: 4px 10px; border-radius: 4px; z-index: 2;}
 .miniPopBxIn .percent.out,
 .thumbdiv .percent.out{display: block; width: 100%; height: 3px; background: rgb(0 0 0 / 64%); position: relative; margin-top: -2px; border-radius: var(--radius);margin-bottom: -1px;}
 .miniPopBxIn .percent.out{width: 103%;margin-left: -5px;margin-right: -5px;}

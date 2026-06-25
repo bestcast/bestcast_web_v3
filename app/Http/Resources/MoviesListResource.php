@@ -21,6 +21,7 @@ class MoviesListResource extends JsonResource
             'movie_access' => $this->movie_access,
             'title' => $this->title,
             'topten' => $this->topten,
+            'is_upcoming_release' => $this->isUpcoming() ? 1 : 0,
             'trailer' => empty($this->trailer_url_480p)?$this->trailer_url:$this->trailer_url_480p,
             'certificate' => $this->certificate,
             'duration' => Lib::formatSecondsToHoursMinutes($this->duration),
