@@ -32,7 +32,9 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="card-image" style="background-image: url({{ !empty($item->thumbnail)?Lib::publicImgSrc($item->thumbnail->urlkey):0 }});"><div class="d-flex">                        
-                            @if($item->status)
+                            @if($item->isUpcoming())
+                                <span class="badge bg-warning text-dark">Upcoming</span>
+                            @elseif($item->status)
                                 <span class="badge bg-success">Active</span>
                             @else
                                 <span class="badge bg-danger">Disabled</span>
@@ -63,6 +65,3 @@
 
 
 @endsection
-
-
-

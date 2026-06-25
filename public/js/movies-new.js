@@ -681,7 +681,7 @@ function _0x3858() {
                 let _0xdf8ae0 = _0x536401[_0x567130(0x296)] && _0x536401[_0x567130(0x296)]['likes'] ? 0x1 : 0x0,
                     _0x440e19 = _0x536401[_0x567130(0x296)] && _0x536401['usermovies'][_0x567130(0x26c)] ? 0x1 : 0x0,
                     _0x109a41 = _0x536401[_0x567130(0x296)] && _0x536401[_0x567130(0x296)][_0x567130(0x2cd)] ? _0x536401[_0x567130(0x296)][_0x567130(0x2cd)] : 0x0;
-                _0x290fdc += '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22edu-event\x20event-grid-1\x20bg-shade\x20moviesThumb\x20moviesThumb-' + _0x536401['id'] + _0x567130(0x36f) + _0x536401['id'] + _0x567130(0x387) + _0x536401['id'] + _0x567130(0x27a) + this['_homeUrl'] + '/' + _0x536401[_0x567130(0x2f3)] + '\x27);width:100%;\x22\x20alt=\x22' + _0x536401[_0x567130(0x1de)] + _0x567130(0x2f4) + _0x536401['id'] + _0x567130(0x20b) + _0x536401[_0x567130(0x326)] + _0x567130(0x344) + _0x536401[_0x567130(0x23b)] + _0x567130(0x39b) + _0x536401[_0x567130(0x2f2)] + _0x567130(0x284) + _0x440e19 + '\x22\x20data-userlike=\x22' + _0xdf8ae0 + _0x567130(0x23d) + _0x536401['trailer'] + _0x567130(0x39e) + this[_0x567130(0x370)] + '/' + _0x536401[_0x567130(0x2f3)] + _0x567130(0x2fa) + _0x536401['topten'] + _0x567130(0x315) + _0x109a41 + _0x567130(0x303), _0x109a41 && (_0x290fdc += _0x567130(0x2ef) + _0x109a41 + '%\x22></div></div>'), _0x290fdc += _0x567130(0x2c2), _0x1e82c8[_0x567130(0x2a4)](_0x536401) && (_0x290fdc += _0x567130(0x2bd)), _0x536401[_0x567130(0x2a0)] && (_0x290fdc += _0x567130(0x340)), _0x536401['topten'] && (_0x290fdc += _0x567130(0x22b)), _0x290fdc += _0x567130(0x2cf), _0x290fdc += '</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';
+                _0x290fdc += '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22edu-event\x20event-grid-1\x20bg-shade\x20moviesThumb\x20moviesThumb-' + _0x536401['id'] + _0x567130(0x36f) + _0x536401['id'] + _0x567130(0x387) + _0x536401['id'] + _0x567130(0x27a) + this['_homeUrl'] + '/' + _0x536401[_0x567130(0x2f3)] + '\x27);width:100%;\x22\x20alt=\x22' + _0x536401[_0x567130(0x1de)] + _0x567130(0x2f4) + _0x536401['id'] + _0x567130(0x20b) + _0x536401[_0x567130(0x326)] + _0x567130(0x344) + _0x536401[_0x567130(0x23b)] + _0x567130(0x39b) + _0x536401[_0x567130(0x2f2)] + _0x567130(0x284) + _0x440e19 + '\x22\x20data-userlike=\x22' + _0xdf8ae0 + _0x567130(0x23d) + _0x536401['trailer'] + _0x567130(0x39e) + this[_0x567130(0x370)] + '/' + _0x536401[_0x567130(0x2f3)] + _0x567130(0x2fa) + _0x536401['topten'] + _0x567130(0x315) + _0x109a41 + _0x567130(0x303), _0x109a41 && (_0x290fdc += _0x567130(0x2ef) + _0x109a41 + '%\x22></div></div>'), _0x290fdc += _0x567130(0x2c2), _0x1e82c8[_0x567130(0x2a4)](_0x536401) && (_0x290fdc += _0x567130(0x2bd)), _0x536401[_0x567130(0x2a0)] && (_0x290fdc += _0x567130(0x340)), _0x536401['topten'] && (_0x290fdc += _0x567130(0x22b)), _0x536401['is_upcoming_release'] && (_0x290fdc += '<div\x20class=\x22ppUpcoming\x22>Upcoming</div>'), _0x290fdc += _0x567130(0x2cf), _0x290fdc += '</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';
             }
             return _0x290fdc;
         },
@@ -847,14 +847,14 @@ function _0x3858() {
                     var shareTextEscaped = shareText.replace(/\n/g, '\\n').replace(/'/g, "\\'");
 
                     if (navigator.share) {
-                        navigator.share({ title: shareTitle, url: shareUrl }).catch(function(){});
+                        navigator.share({ title: shareTitle, url: shareUrl }).catch(function () { });
                     } else {
                         var whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
                         var popup = '<div id="sharePopup" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:99999;display:flex;gap:12px;align-items:center;">'
-                                    + '<a href="' + whatsappUrl + '" target="_blank" style="background:#25D366;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:bold;">WhatsApp</a>'
-                                    + '<button onclick="copyShareLink(\'' + shareTextEscaped + '\')" style="background:#666;color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:bold;">Copy Link</button>'
-                                    + '<button onclick="document.getElementById(\'sharePopup\').remove();" style="background:#eee;color:#333;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;">✕</button>'
-                                    + '</div>';
+                            + '<a href="' + whatsappUrl + '" target="_blank" style="background:#25D366;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:bold;">WhatsApp</a>'
+                            + '<button onclick="copyShareLink(\'' + shareTextEscaped + '\')" style="background:#666;color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:bold;">Copy Link</button>'
+                            + '<button onclick="document.getElementById(\'sharePopup\').remove();" style="background:#eee;color:#333;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;">✕</button>'
+                            + '</div>';
                         jQuery('#sharePopup').remove();
                         jQuery('body').append(popup);
                     }
@@ -1099,7 +1099,7 @@ function _0x3858() {
                         'playerType': _0x52c591(0x2a8),
                         'media': [{
                             'type': _0x52c591(0x306),
-                            'path': _0x4ee85f[_0x52c591(0x218)]
+                            'path': _0x4ee85f[_0x52c591(0x218)] || _0x4ee85f['trailer']
                         }]
                     };
                     fetch(this[_0x52c591(0x370)] + _0x52c591(0x20f))['then'](_0x5a69fe => _0x5a69fe['text']())[_0x52c591(0x287)](_0x56e15b => {
@@ -1238,10 +1238,10 @@ function _0x3858() {
 }(window, document, jQuery));
 function copyShareLink(url) {
     if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(url).then(function() {
+        navigator.clipboard.writeText(url).then(function () {
             var popup = document.getElementById('sharePopup');
             if (popup) popup.remove();
-        }).catch(function() {
+        }).catch(function () {
             fallbackCopyShareLink(url);
         });
     } else {

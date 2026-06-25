@@ -14,6 +14,7 @@
         <h2 class="pb-2 border-bottom a-center">Create New Question</h2>
         <input type="hidden" name="movie_id" value="{{$movieId}}"/>
         <input type="hidden" name="page" value="{{ $page }}">
+        <input type="hidden" name="language" value="{{ $language }}">
         <div class="form-row">
             <label for="language">Question Language</label>
 
@@ -140,7 +141,7 @@
         <div class="form-row a-center">
             <input type="submit" class="btn btn-primary btn-lg" value="Continue"/> 
             &nbsp; 
-            <a href="{{ route('admin.questions.list', ['movieId' => $movieId, 'page' => $page]) }}" class="btn btn-secondary btn-lg backbtn">Back</a>
+            <a href="{{ route('admin.questions.list', ['movieId' => $movieId, 'page' => $page, 'language' => $language]) }}" class="btn btn-secondary btn-lg backbtn">Back</a>
         </div>
     </div>
 {{ Form::close() }}

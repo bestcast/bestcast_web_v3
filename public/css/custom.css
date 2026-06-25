@@ -90,7 +90,21 @@ html {
 .ICplay:hover {
   background-image: url('../../img/icon/website/play.png');
 }
-.ppIc { display:inline-block; width:32px; height:32px; cursor:pointer; background-size:contain; background-repeat:no-repeat; background-position:center; }
+
+/*.ICshare{background-image:url('../../img/icon/website/share-white.png');}
+.ICshare.dark{background-image:url('../../img/icon/website/share-black.png');}
+.ICshare.active,.ICshare:hover{background-image:url('../../img/icon/website/share.png');}*/
+
+.ppIc {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .ICshare {
   background-image: url('../../img/icon/website/share-white.png');
 }
@@ -3815,6 +3829,19 @@ button .spinner,
 
 .ppAct .spinner.show {
   display: block;
+}
+
+.ppUpcoming {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f0ad4e;
+  color: #000;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 2;
 }
 
 .miniPopBxIn .percent.out,

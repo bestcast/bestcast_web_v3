@@ -73,11 +73,16 @@
       }
   }
   $video_url=empty($video_url)?$movie->video_url:$video_url;
+  $isUpcoming = $movie->isUpcoming();
+    if ($isUpcoming) {
+        $video_url = empty($movie->trailer_url_480p) ? $movie->trailer_url : $movie->trailer_url_480p;
+    }
   ?>
 
 
   <script type="text/javascript">
     let movieId = document.getElementById('movieId').value;
+    let isUpcoming = {{ $isUpcoming ? 'true' : 'false' }};
          var player;  
          document.addEventListener("DOMContentLoaded", function(event) { 
 
@@ -182,7 +187,13 @@
                   wrapper.innerHTML = content; 
                   player = new vpl(wrapper, settings);
 
-
+                  @if($isUpcoming)
+                    var upcomingNotice = document.createElement('div');
+                    upcomingNotice.className = 'upcoming-notice-inplayer';
+                    upcomingNotice.style.cssText = 'position:absolute; top:10px; left:0; width:100%; text-align:center; padding:12px; background:rgba(0,0,0,0.8); color:#fff; z-index:99999; font-size:14px;';
+                    upcomingNotice.innerHTML = '<strong>{{ $movie->title }}</strong> releases on {{ \Carbon\Carbon::parse($movie->release_date->format("Y-m-d") . " " . $movie->release_time)->format("M d, Y \a\t h:i A") }}. You\'re watching the trailer.';
+                    wrapper.appendChild(upcomingNotice);
+                    @endif
                   if(player){
                     let quizShown = false; // NEW FLAG
                     let movie_quiz_status = {{ $movie_quiz_status }};
@@ -204,6 +215,9 @@
                       });
                       player.addEventListener("mediaPlay", function(data){
                         isPaused=0;
+                        if (isUpcoming) {
+                            return; // Don't run any quiz logic while watching the trailer
+                        }
                         if (!quizPollingStarted) {
                             startQuizPolling(movieId);
                         }
@@ -336,6 +350,9 @@
                       }, true);
                       /* End */
                       player.addEventListener("mediaEnd", function() {
+                        if (isUpcoming) {
+                            return; // No quiz result for trailer playback
+                        }
                         const cookieName = "quiz_popup_{{ $movie->id }}";
                         const popupValue = getCookie(cookieName);
 

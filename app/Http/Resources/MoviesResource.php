@@ -42,6 +42,7 @@ class MoviesResource extends JsonResource
         $video_url_720p=empty($this->video_url_720p)?$video_url_1080p:$this->video_url_720p;
         $video_url_480p=empty($this->video_url_480p)?$video_url_720p:$this->video_url_480p;
 
+        $isUpcoming = $this->isUpcoming();
 
         $arrayData=(object)[];
         $jsonData = '{
@@ -71,11 +72,21 @@ class MoviesResource extends JsonResource
             }
         }
 
+        // Gate playback if movie hasn't released yet — force trailer-only
+        if ($isUpcoming) {
+            $video_url='';
+            $moviesource='';
+            $video_url_480p='';
+            $video_url_720p='';
+            $video_url_1080p='';
+        }
+
         return [
             'id' => (string)$this->id,
             'urlkey' => $this->urlkey,
             'title' => $this->title,
             'movie_access' => $this->movie_access,
+            'is_upcoming_release' => $isUpcoming ? 1 : 0,
             'content' => $this->content,
             'content_plain' => strip_tags($this->content),
             'published_date' => $this->published_date,
@@ -93,7 +104,6 @@ class MoviesResource extends JsonResource
             'topten' => $this->topten,
             'trailer' => $this->trailer_url,
             'trailer_480p' => $this->trailer_url_480p,
-            'trailer' => $this->trailer_url,
             'video_url' => $video_url,
             'moviesource' => $moviesource,
             'video_url_480p' => $video_url_480p,
@@ -104,8 +114,7 @@ class MoviesResource extends JsonResource
             'subtitle' => (!empty($this->subtitle) && count($this->subtitle))?MoviesSubtitleResource::collection($this->subtitle):'',
             'genres' => (!empty($this->genres) && count($this->genres))?MoviesGenresResource::collection($this->genres):'',
             'languages' => (!empty($this->languages) && count($this->languages))?MoviesLanguagesResource::collection($this->languages):'',
-            //'casts' => (!empty($this->users) && count($this->users))?MoviesUsersResource::collection($this->users):'',
-            'casts' => (!empty($this->users) && count($this->users)) ? MoviesUsersResource::collection( collect($this->users)->where('group', '!=', 3)): '',
+            'casts' => (!empty($this->users) && count($this->users))?MoviesUsersResource::collection($this->users):'',
             'related' => (!empty($this->related) && count($this->related))?MoviesRelatedResource::collection($this->related):'',
             'usermovies' => $usermoviesdetails
         ];

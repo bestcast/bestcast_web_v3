@@ -38,16 +38,20 @@ class QuestionModel extends Model
             ->orderBy('id')
             ->paginate(25);
     }*/
-    public function getQuestions(int $movieId): LengthAwarePaginator
+    public function getQuestions(int $movieId, ?string $language = null): LengthAwarePaginator
     {
-        return DB::table('questions')
+        $query = DB::table('questions')
             ->where('movie_id', $movieId)
-            ->whereNull('deleted_at')
+            ->whereNull('deleted_at');
 
+        if (!empty($language)) {
+            $query->where('language', $language);
+        }
+
+        return $query
             ->orderBy('show_time_hour')
             ->orderBy('show_time_min')
             ->orderBy('show_time_sec')
-
             // English first, Tamil second
             ->orderByRaw("
                 CASE
@@ -56,8 +60,8 @@ class QuestionModel extends Model
                     ELSE 3
                 END
             ")
-
-            ->paginate(25);
+            ->paginate(25)
+            ->withQueryString();
     }
     /**
      * Create a new question and options.
@@ -65,22 +69,21 @@ class QuestionModel extends Model
      * Array $requestData
      * @return redirectResponse
      */
-    public function createQuestion(array $requestData): RedirectResponse
-    {
+    public function createQuestion(Array $requestData):RedirectResponse{
         $this->question->fill($requestData);
         $this->question->save();
 
         //if(isset($requestData))
 
         $questionId = $this->question->id;
-        foreach ($requestData['options'] as $index => $optionText) {
+        foreach($requestData['options'] as $index => $optionText){
             $isCorrect = $index == $requestData['correct_option'] ? 1 : 0;
             $this->question->options()->create([
                 'name' => $optionText,
                 'is_correct' => $isCorrect,
             ]);
         }
-        return to_route('admin.questions.createQuestion', $requestData['movie_id'])->with('success', 'Question Created Successfully');
+        return to_route('admin.questions.createQuestion',$requestData['movie_id'])->with('success', 'Question Created Successfully');
     }
     /**
      * Create a new question and options.
@@ -88,9 +91,8 @@ class QuestionModel extends Model
      * Int $questionId
      * @return Array
      */
-    public function getQuestionOptionsById(int $questionId): object
-    {
-        return $this->question->with('options')->where('id', $questionId)->first();
+    public function getQuestionOptionsById(int $questionId):object{
+        return $this->question->with('options')->where('id',$questionId)->first();
     }
 
     /**
@@ -99,8 +101,7 @@ class QuestionModel extends Model
      * Array $requestData
      * @return redirectResponse
      */
-    public function updateQuestion(array $requestData): RedirectResponse
-    {
+    public function updateQuestion(Array $requestData):RedirectResponse{
         $question = $this->question->findOrFail($requestData['question_id']);
         $question->question_name = $requestData['question_name'];
         $question->show_time_hour = $requestData['show_time_hour'];
@@ -117,7 +118,7 @@ class QuestionModel extends Model
         //if(isset($requestData))
 
         $questionId = $question->id;
-        foreach ($requestData['options'] as $index => $optionText) {
+        foreach($requestData['options'] as $index => $optionText){
             $isCorrect = $index == $requestData['correct_option'] ? 1 : 0;
             if (!empty($existingOptionIds[$index])) {
                 // UPDATE
@@ -133,16 +134,16 @@ class QuestionModel extends Model
                 $new = $this->questionOptions->create([
                     'question_id' => $question->id,
                     'name' => $optionText,
-                    'is_correct' => $isCorrect
+                    'is_correct'=>$isCorrect
                 ]);
                 $submittedOptionIds[] = $new->id;
             }
         }
         // DELETE removed options
         $this->questionOptions->where('question_id', $question->id)
-            ->whereNotIn('id', $submittedOptionIds)
-            ->delete();
-        return to_route('admin.questions.editQuestion', ['movieId' => $requestData['movie_id'], 'questionId' => $requestData['question_id'], 'page' => $requestData['page']])->with('success', 'Updated Successfully');
+        ->whereNotIn('id', $submittedOptionIds)
+        ->delete();
+        return to_route('admin.questions.editQuestion',['movieId'=>$requestData['movie_id'],'questionId' => $requestData['question_id'],'page' => $requestData['page']])->with('success', 'Updated Successfully');
     }
     /**
      * Delete question by id
@@ -150,9 +151,8 @@ class QuestionModel extends Model
      * Integer $questionId
      * @return Array
      */
-    public function deleteQuestion(int $questionId): int
-    {
-        return $this->question->where('id', $questionId)->delete();
+    public function deleteQuestion(int $questionId):int{
+        return $this->question->where('id',$questionId)->delete();
     }
     public function bulkDeleteQuestion(array $questionIds): int
     {
