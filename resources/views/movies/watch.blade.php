@@ -26,6 +26,7 @@
 
 @section('content') 
   <div class="ajxProfile"></div>
+  
   <div id="wrapper" class="vpl-skin-aviva vpl-customized"></div>
   <input type="hidden" id="movieId" value="{{ $movie->id }}">
   <style type="text/css">
@@ -38,7 +39,7 @@
   $usermovie=(empty($movie->usermovies[0]))?'':$movie->usermovies[0];
 
   $subtitles=[];$issetActive=0;
-  if(!empty($movie->subtitle)){
+  if(!empty($movie->subtitle_status) && !empty($movie->subtitle)){
     foreach($movie->subtitle as $item){
       $list=array();
       $list['label']=$item->label;

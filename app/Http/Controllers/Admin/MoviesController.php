@@ -59,7 +59,7 @@ class MoviesController extends Controller
     {
         $request['urlkey']=Lib::slug($request['title']."-".time());
         $rules=Movies::$rules;unset($rules['video_url']);unset($rules['release_date']);
-        unset($rules['duration']);
+        unset($rules['duration']);unset($rules['release_time']);  
         $validatedData = $request->validate($rules,Movies::$messages);
         
         $requestData = $request->all();
@@ -173,19 +173,16 @@ class MoviesController extends Controller
                     }
                 }
             }
-
-            $MoviesSubtitle = MoviesSubtitle::where('movie_id',$id)->delete();
+            MoviesSubtitle::where('movie_id',$id)->delete();
             if(!empty($requestData['subtitle']) && count($requestData['subtitle'])){
-                $i=0;foreach($requestData['subtitle'] as $key=>$itm_id){$i++;
-                    if($itm_id){
-                        if(!empty($requestData['subtitle_label'][$key]) && !empty($requestData['subtitle_url'][$key])){
-                            $MoviesSubtitle = new MoviesSubtitle();
-                            $MoviesSubtitle->movie_id = $id;
-                            $MoviesSubtitle->is_active = empty($requestData['subtitle_is_active'][$key])?0:1;
-                            $MoviesSubtitle->label = $requestData['subtitle_label'][$key];
-                            $MoviesSubtitle->url = $requestData['subtitle_url'][$key];
-                            $MoviesSubtitle->save();
-                        }
+                foreach($requestData['subtitle'] as $key=>$itm_id){
+                    if(!empty($requestData['subtitle_label'][$key]) && !empty($requestData['subtitle_url'][$key])){
+                        $newSubtitle = new MoviesSubtitle();
+                        $newSubtitle->movie_id = $id;
+                        $newSubtitle->is_active = empty($requestData['subtitle_is_active'][$key])?0:1;
+                        $newSubtitle->label = $requestData['subtitle_label'][$key];
+                        $newSubtitle->url = $requestData['subtitle_url'][$key];
+                        $newSubtitle->save();
                     }
                 }
             }
