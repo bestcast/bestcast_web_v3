@@ -39,7 +39,7 @@
   $usermovie=(empty($movie->usermovies[0]))?'':$movie->usermovies[0];
 
   $subtitles=[];$issetActive=0;
-  if(!empty($movie->subtitle)){
+  if(!empty($movie->subtitle_status) && !empty($movie->subtitle)){
     foreach($movie->subtitle as $item){
       $list=array();
       $list['label']=$item->label;
