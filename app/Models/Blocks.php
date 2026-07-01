@@ -186,7 +186,7 @@ class Blocks extends Database implements RoleHasRelationsContract
                     $child=app('request')->input('child');if(!empty($child)){ 
                         $q->where('age_restriction','>=',13); 
                     }              
-                });
+                })->orderBy('id', 'desc');
             },
             'movies.movies',
             'movies.movies.image',

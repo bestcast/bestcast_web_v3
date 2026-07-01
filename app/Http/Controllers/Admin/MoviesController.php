@@ -96,7 +96,7 @@ class MoviesController extends Controller
             $requestData['movie_access']=empty($requestData['movie_access'])?0:1;
             $requestData['movie_quiz_status']=empty($requestData['movie_quiz_status'])?0:1;
             $requestData['subtitle_status']=empty($requestData['subtitle_status'])?0:1;
-            $requestData['is_upcoming']=empty($requestData['is_upcoming'])?0:1;
+            //$requestData['is_upcoming']=empty($requestData['is_upcoming'])?0:1;
             $requestData['topten']=empty($requestData['topten'])?0:1;
             $model->fill($requestData);
             $model->updated_by = Auth::user()->id;

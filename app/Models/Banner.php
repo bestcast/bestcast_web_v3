@@ -107,14 +107,16 @@ class Banner extends Database implements RoleHasRelationsContract
      */
     public static $rules = [
         'title' => 'required|max:1000',
-        'urlkey' => 'required|max:1000|unique:banner,urlkey'
+        'urlkey' => 'required|max:1000|unique:banner,urlkey',
+        'page_id' => 'required'
     ];
 
 
     public static $messages = [
         'title.required' => 'Title is required.',
         'urlkey.required' => 'URL Key is required.',
-        'urlkey.unique' => 'URL Key already exists.'
+        'urlkey.unique' => 'URL Key already exists.',
+        'page_id.required' => 'Page to Display is required.'
     ];
 
 

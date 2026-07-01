@@ -255,15 +255,6 @@
             </div>
             <div class="col-sm-2">
               <div class="form-row">
-                  <label class="form-label" for="name">Is Upcoming</label>
-                  <div class="mb-3 form-check form-switch">
-                    {{Form::hidden('is_upcoming',0)}}
-                    <input class="form-check-input" type="checkbox" name="is_upcoming" role="switch" @if(old('is_upcoming' ,(empty($model->is_upcoming)?0:1))) checked="" @endif />
-                  </div>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <div class="form-row">
                   <label class="form-label" for="name">Top Ten</label>
                   <div class="mb-3 form-check form-switch">
                     {{Form::hidden('topten',0)}}

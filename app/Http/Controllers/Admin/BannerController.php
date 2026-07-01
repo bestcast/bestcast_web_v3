@@ -45,7 +45,8 @@ class BannerController extends Controller
     public function createsave(Request $request)
     {
         $request['urlkey']=Lib::slug($request['title']."-".time());
-        $validatedData = $request->validate(Banner::$rules,Banner::$messages);
+        $rules = Banner::$rules;unset($rules['page_id']);
+        $validatedData = $request->validate($rules,Banner::$messages);
         
         $requestData = $request->all();
         $model = new Banner();
@@ -80,7 +81,7 @@ class BannerController extends Controller
             $model->movies_id = empty($model->type)?$model->movies_id:0;
             $model->webseries_id = empty($model->type)?$model->webseries_id:0;
             //$model->page_id = !empty($model->type)?$model->page_id:0;
-            $model->page_id = $model->page_id ?? [];
+            //$model->page_id = $model->page_id ?? [];
 
             $model->shows_id = !empty($model->type)?$model->shows_id:0;
             $model->updated_by = Auth::user()->id;

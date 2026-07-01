@@ -121,7 +121,7 @@
 
 
           <div class="form-row form-select2"  id="tvshows_dropdown">
-            <label class="form-label">Page to Display (optional)</label>
+            <label class="form-label">Page to Display</label>
             @php ($selectedValue=empty($model->page_id)?[]:[$model->page_id=>$model->page->title])
             {{ Form::select('page_id', $selectedValue,old('page_id',$model->page_id), array('id'=>'page_id','class' => 'form-select')); }}
             <!-- <select id="show_ids" name="show_ids[]" class="form-control" multiple></select> -->
