@@ -177,61 +177,153 @@ class Blocks extends Database implements RoleHasRelationsContract
     }
 
     public static function getApiList($user_id)
-    {        
-
+    {
         $data = Blocks::with([
             'movies' => function ($query) {
                 $query->whereHas('movies', function ($q) {
-                    $q->where('status',1);      
-                    $child=app('request')->input('child');if(!empty($child)){ 
-                        $q->where('age_restriction','>=',13); 
-                    }              
+                    $q->where('status', 1);
+                    $child = app('request')->input('child');
+                    if (!empty($child)) {
+                        $q->where('age_restriction', '>=', 13);
+                    }
                 })->orderBy('id', 'desc');
             },
             'movies.movies',
             'movies.movies.image',
             'movies.movies.thumbnail',
-            'movies.movies.usermovies'=> function ($query) use ($user_id){
-                    $query->where('user_id', $user_id);
-
-                    $profile_id=app('request')->input('profile_id');if(empty($profile_id)){ $profile_id=0; }
-                    $query->where('profile_id',$profile_id);
-                },
-            'genres' ,
-            'languages' 
+            'movies.movies.usermovies' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+                $profile_id = app('request')->input('profile_id');
+                if (empty($profile_id)) { $profile_id = 0; }
+                $query->where('profile_id', $profile_id);
+            },
+            'genres',
+            'languages'
         ]);
 
+        $data = $data->where('status', 1)->where('type', 0)->latest();
 
-        //type 0 is movies, type 1 is tv shows
-        $data = $data->where('status',1)->where('type',0)->latest();//with('genres','languages')->
-        
-
-        $genre_id=app('request')->input('genre_id');if(!empty($genre_id)){ //filter by genre
+        $genre_id = app('request')->input('genre_id');
+        if (!empty($genre_id)) {
             $data = $data->whereHas('genres', function ($q) use ($genre_id) {
-                $q->where('genre_id',$genre_id);
+                $q->where('genre_id', $genre_id);
             });
         }
 
-        $genre_id=app('request')->input('language_id');if(!empty($genre_id)){ //filter by language
-            $data = $data->whereHas('languages', function ($q) use ($genre_id) {
-                $q->where('language_id',$genre_id);
+        $language_id = app('request')->input('language_id');
+        if (!empty($language_id)) {
+            $data = $data->whereHas('languages', function ($q) use ($language_id) {
+                $q->where('language_id', $language_id);
             });
         }
 
-        $getpageid=app('request')->input('page_id');if(!empty($getpageid)){ //filter by page
-            $data =$data->where('page_id',$getpageid);
+        $getpageid = app('request')->input('page_id');
+        if (!empty($getpageid)) {
+            $data = $data->where('page_id', $getpageid);
         }
 
-        $data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
-        //dd($data->first()->movies->first()->movies->title);
-        //dd($data->first()->movies);
+        $data = $data->orderBy('sortorder', 'asc')->orderBy('title', 'asc');
 
-        $paginate=app('request')->input('paginate');
-        $paginate=empty($paginate)?5:$paginate;
+        $paginate = app('request')->input('paginate');
+        $paginate = empty($paginate) ? 5 : $paginate;
+        $data = $data->paginate($paginate);
 
-        $data =$data->paginate($paginate);
+        foreach ($data as $block) {
+            $blockTitle = strtolower($block->title ?? '');
 
-        //$data =$data->paginate(5);
+            $isUpcomingBlock   = str_contains($blockTitle, 'upcoming');
+            $isNewReleaseBlock = str_contains($blockTitle, 'new releases') || str_contains($blockTitle, 'new release');
+
+            if (!$isUpcomingBlock && !$isNewReleaseBlock) {
+                continue;
+            }
+
+            if ($isUpcomingBlock) {
+                $allMovies = \App\Models\Movies::with([
+                    'image',
+                    'thumbnail',
+                    'usermovies' => function ($query) use ($user_id) {
+                        $query->where('user_id', $user_id);
+                        $profile_id = app('request')->input('profile_id');
+                        if (empty($profile_id)) { $profile_id = 0; }
+                        $query->where('profile_id', $profile_id);
+                    }
+                ])->where('status', 1)
+                  ->whereNotNull('release_date')
+                  ->get()
+                  ->filter(function ($movie) {
+                      $releaseDate = $movie->release_date;
+                      if (empty($releaseDate)) return false;
+
+                      $datePart = \Carbon\Carbon::parse($releaseDate)->toDateString();
+                      $releaseTime = $movie->release_time;
+
+                      if (empty($releaseTime) || $releaseTime === '00:00:00') {
+                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->endOfDay();
+                      } else {
+                          $releaseDateTime = \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
+                      }
+
+                      return $releaseDateTime->isFuture();
+                  })
+                  ->sortBy(function ($movie) {
+                      return \Carbon\Carbon::parse($movie->release_date)->toDateString();
+                  });
+
+                $wrappedMovies = $allMovies->map(function ($movie) {
+                    $blockMovie = new \App\Models\BlocksMovies();
+                    $blockMovie->setRelation('movies', $movie);
+                    return $blockMovie;
+                });
+
+                $block->setRelation('movies', $wrappedMovies->values());
+            }
+
+            if ($isNewReleaseBlock) {
+                $twoWeeksAgo = \Carbon\Carbon::now()->subDays(14)->startOfDay();
+                $nowTime     = \Carbon\Carbon::now();
+
+                $newReleaseMovies = \App\Models\Movies::with([
+                    'image',
+                    'thumbnail',
+                    'usermovies' => function ($query) use ($user_id) {
+                        $query->where('user_id', $user_id);
+                        $profile_id = app('request')->input('profile_id');
+                        if (empty($profile_id)) { $profile_id = 0; }
+                        $query->where('profile_id', $profile_id);
+                    }
+                ])->where('status', 1)
+                  ->whereNotNull('release_date')
+                  ->get()
+                  ->filter(function ($movie) use ($twoWeeksAgo, $nowTime) {
+                      $releaseDate = $movie->release_date;
+                      if (empty($releaseDate)) return false;
+
+                      $datePart = \Carbon\Carbon::parse($releaseDate)->toDateString();
+                      $releaseTime = $movie->release_time;
+
+                      if (empty($releaseTime) || $releaseTime === '00:00:00') {
+                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->endOfDay();
+                      } else {
+                          $releaseDateTime = \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
+                      }
+
+                      return $releaseDateTime->between($twoWeeksAgo, $nowTime);
+                  })
+                  ->sortByDesc(function ($movie) {
+                      return \Carbon\Carbon::parse($movie->release_date)->toDateString();
+                  });
+
+                $wrappedMovies = $newReleaseMovies->map(function ($movie) {
+                    $blockMovie = new \App\Models\BlocksMovies();
+                    $blockMovie->setRelation('movies', $movie);
+                    return $blockMovie;
+                });
+
+                $block->setRelation('movies', $wrappedMovies->values());
+            }
+        }
+
         return $data;
     }
     

@@ -345,7 +345,19 @@ class Movies extends Database implements RoleHasRelationsContract
         $data =$data->orderBy('title','asc')->limit(100)->get();
         return $data;
     }
-    public function isUpcoming(): bool
+    public function isUpcoming()
+    {
+        if (empty($this->release_date)) return false;
+
+        $datePart = \Carbon\Carbon::parse($this->release_date)->toDateString();
+
+        $releaseDateTime = !empty($this->release_time)
+            ? \Carbon\Carbon::parse($datePart . ' ' . $this->release_time)
+            : \Carbon\Carbon::parse($datePart);
+
+        return $releaseDateTime->isFuture();
+    }
+    /*public function isUpcoming(): bool
     {
         if (empty($this->release_date)) {
             return false;
@@ -355,6 +367,6 @@ class Movies extends Database implements RoleHasRelationsContract
         $releaseDateTime = \Carbon\Carbon::parse($this->release_date->format('Y-m-d') . ' ' . $time);
 
         return $releaseDateTime->isFuture();
-    }
+    }*/
 
 }
