@@ -24,4 +24,10 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+    protected $middlewareGroups = [
+        'web' => [
+            // ...existing middleware
+            \App\Http\Middleware\CaptureReferralCode::class,
+        ],
+    ];
 }

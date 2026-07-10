@@ -81,7 +81,20 @@
 	    </div>
 	@endif
 </div>
+<script src="{{ asset('js/referral-capture.js') }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const refCode = typeof getStoredReferralCode === "function" ? getStoredReferralCode() : null;
 
+  if (refCode) {
+    document.querySelectorAll("a.edu-btn").forEach(function (link) {
+      const url = new URL(link.href, window.location.origin);
+      url.searchParams.set("ref", refCode);
+      link.href = url.toString();
+    });
+  }
+});
+</script>
 <?php
 $user=auth()->user();
 //check payment and update to user plan start

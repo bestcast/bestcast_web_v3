@@ -248,38 +248,57 @@ class Transaction extends Database implements RoleHasRelationsContract
         }  
         return $trans; 
     }
-    public static function updatePlanToUser($user,$sid)
+    public static function updatePlanToUser($user, $sid)
     {
-        $trans=Transaction::getByRazorpaySubscriptionId($user,$sid);
-        $res='';
-        if(!empty($trans)){
-            if($trans->razorpay_subscription_id==$sid){
-                try{
-                    $api=Paymentgateway::razorpay();
-                    // if(empty($api->subscription)){
-                    //     return $res; 
-                    // }
-                    $res=$api->subscription->fetch($trans->razorpay_subscription_id);
-                    if(!empty($res->status) && $res->status=='active'){
-                        if(!empty($res->current_end)){
-                            if(strtotime($user->plan_expiry)<$res->current_end){
-                                $user->plan_expiry=date("Y-m-d h:i:s",$res->current_end);
+        $trans = Transaction::getByRazorpaySubscriptionId($user, $sid);
+        $res = '';
+        if (!empty($trans)) {
+            if ($trans->razorpay_subscription_id == $sid) {
+                try {
+                    $api = Paymentgateway::razorpay();
+                    $res = $api->subscription->fetch($trans->razorpay_subscription_id);
+                    if (!empty($res->status) && $res->status == 'active') {
+                        if (!empty($res->current_end)) {
+                            if (strtotime($user->plan_expiry) < $res->current_end) {
+                                $user->plan_expiry = date("Y-m-d h:i:s", $res->current_end);
                             }
-                            $user->plan=$trans->subscription_id;
+                            $user->plan = $trans->subscription_id;
                             $user->save();
-
-                            $trans->counts=$res->total_count-$res->remaining_count;
+                            $trans->counts = $res->total_count - $res->remaining_count;
                             $trans->save();
+
+                            // --- BMP: fire events, only once per transaction ---
+                            if (empty($trans->bmp_paid_event_sent)) {
+                                \App\Services\BmpEventService::sendEvent('subscription_paid', [
+                                    'referralCode' => $trans->referral_code,
+                                    'subscriberName' => $user->name,
+                                    'subscriberMobile' => $user->phone,
+                                    'subscriberEmail' => $user->email,
+                                    'city' => $user->city ?? null,
+                                    'planName' => $trans->title,
+                                    'planAmount' => $trans->price,
+                                    'paymentId' => $res->id ?? null,
+                                    'subscriptionId' => $trans->razorpay_subscription_id,
+                                ]);
+
+                                \App\Services\BmpEventService::sendEvent('subscription_active', [
+                                    'referralCode' => $trans->referral_code,
+                                    'subscriberMobile' => $user->phone,
+                                    'paymentId' => $res->id ?? null,
+                                    'subscriptionId' => $trans->razorpay_subscription_id,
+                                ]);
+
+                                $trans->bmp_paid_event_sent = true;
+                                $trans->save();
+                            }
                         }
                     }
-                }catch (\Razorpay\Api\Errors\BadRequestError $e) {
-                }catch(Exception $error){
-
+                } catch (\Razorpay\Api\Errors\BadRequestError $e) {
+                } catch (Exception $error) {
                 }
-                //dd(date("Y-m-d h:i:s",$x->current_end));
             }
-        }  
-        return $res; 
+        }
+        return $res;
     }
     public static function updateOrderToUser($user,$oid)
     {

@@ -115,106 +115,104 @@ class PaymentController extends Controller
     }
 
 
-    public function buyplan($id,Request $request)
+    public function buyplan($id, Request $request)
     {
-        $user=Auth::user();
-        if(empty($user->id))
-            return redirect(url('/register'));
+        // --- Referral capture: check query param first, else fall back to session ---
+        if ($request->has('ref') && !empty($request->ref)) {
+            session(['referral_code' => trim($request->ref)]);
+        }
+        $referralCode = session('referral_code'); // will be null if never set
 
-        $plan=Subscription::getById($id);
-        if(empty($plan->id))
+        $user = Auth::user();
+        if (empty($user->id)) {
+            // Preserve ref code through register redirect
+            $registerUrl = url('/register');
+            if (!empty($referralCode)) {
+                $registerUrl .= '?ref=' . urlencode($referralCode);
+            }
+            return redirect($registerUrl);
+        }
+
+        $plan = Subscription::getById($id);
+        if (empty($plan->id))
             return redirect(url('/pricing'));
 
-
-        if(empty($plan->razorpay_id)){ //Order
-
-        }else{ //Subscription
-            $activeSubscrtion=(Subscription::getPlan());
-            if(!empty($activeSubscrtion)){
-                $trans=Transaction::getActive($user);
-                if(!empty($trans->status)){
+        if (empty($plan->razorpay_id)) { //Order
+        } else { //Subscription
+            $activeSubscrtion = (Subscription::getPlan());
+            if (!empty($activeSubscrtion)) {
+                $trans = Transaction::getActive($user);
+                if (!empty($trans->status)) {
                     return redirect(url('/my-account'));
                 }
             }
         }
 
-
-
-
-        $razorpay = Paymentgateway::razorpay();$api_plan='';
-        if(!empty($razorpay)){
-
-            if(empty($plan->razorpay_id)){ //Order
-
-                Transaction::latest()->where('user_id',$user->id)->where('subscription_id',$id)->where('status',0)->delete();
-
-                $trans=new Transaction();
-                $trans->user_id=$user->id;
-                $trans->subscription_id=$id;
-                $trans->status=0;
-                $trans->title=$plan->title;
-                $trans->price=$plan->price;
+        $razorpay = Paymentgateway::razorpay(); $api_plan = '';
+        if (!empty($razorpay)) {
+            if (empty($plan->razorpay_id)) { //Order
+                Transaction::latest()->where('user_id', $user->id)->where('subscription_id', $id)->where('status', 0)->delete();
+                $trans = new Transaction();
+                $trans->user_id = $user->id;
+                $trans->subscription_id = $id;
+                $trans->status = 0;
+                $trans->title = $plan->title;
+                $trans->price = $plan->price;
+                $trans->referral_code = $referralCode; // <-- persist here
                 $trans->save();
 
-                $api=$razorpay->order->create(
+                $api = $razorpay->order->create(
                     array(
-                        'receipt' => 'BESTCAST'.($trans->id+1000000000), 
-                        'amount' => $plan->price*100,
-                        'currency' => 'INR', 
-                        'notes'=> array('transaction'=>$trans->id)
+                        'receipt' => 'BESTCAST' . ($trans->id + 1000000000),
+                        'amount' => $plan->price * 100,
+                        'currency' => 'INR',
+                        'notes' => array('transaction' => $trans->id)
                     )
                 );
-                if(!empty($api->id)){
-                    $trans->razorpay_order_id=$api->id;
-                    $trans->razorpay_receipt=$api->receipt;
-                    $trans->razorpay_currency=$api->currency;
-                    $trans->razorpay_entity=$api->entity;
-                    $trans->price=$api->amount/100;
-                    //$trans->razorpay_data=json_decode($api);
+                if (!empty($api->id)) {
+                    $trans->razorpay_order_id = $api->id;
+                    $trans->razorpay_receipt = $api->receipt;
+                    $trans->razorpay_currency = $api->currency;
+                    $trans->razorpay_entity = $api->entity;
+                    $trans->price = $api->amount / 100;
                     $trans->save();
                 }
-
-
-            }else{ //Subscription
-
-                $trans=Transaction::getPending($user,$id);
-                if(empty($trans)):
-                    $trans=new Transaction();
-                    $trans->user_id=$user->id;
-                    $trans->subscription_id=$id;
-                    $trans->status=0;
-                    $trans->title=$plan->title;
-                    $trans->razorpay_plan_id=$plan->razorpay_id;
-                    $trans->price=$plan->price;
+            } else { //Subscription
+                $trans = Transaction::getPending($user, $id);
+                if (empty($trans)):
+                    $trans = new Transaction();
+                    $trans->user_id = $user->id;
+                    $trans->subscription_id = $id;
+                    $trans->status = 0;
+                    $trans->title = $plan->title;
+                    $trans->razorpay_plan_id = $plan->razorpay_id;
+                    $trans->price = $plan->price;
+                    $trans->referral_code = $referralCode; // <-- persist here too
                     $trans->save();
 
-                    if(!empty($trans->id)){
-
-                        $total_count=Subscription::getPlanTotalCount($plan);
-                        $api=$razorpay->subscription->create(
+                    if (!empty($trans->id)) {
+                        $total_count = Subscription::getPlanTotalCount($plan);
+                        $api = $razorpay->subscription->create(
                             array(
-                                'plan_id' => $plan->razorpay_id, 
-                                'customer_notify' => 1,'quantity'=>1,'total_count' =>$total_count,
-                                'notes'=> array('transaction'=>$trans->id)
+                                'plan_id' => $plan->razorpay_id,
+                                'customer_notify' => 1, 'quantity' => 1, 'total_count' => $total_count,
+                                'notes' => array('transaction' => $trans->id)
                             )
                         );
-                        if(!empty($api->id)){
-                            $trans->razorpay_subscription_id=$api->id;
+                        if (!empty($api->id)) {
+                            $trans->razorpay_subscription_id = $api->id;
                             $trans->save();
                         }
                     }
                 endif;
             } //Subscription end
         }
-        $trans=Transaction::getPending($user,$id);
 
-
-               //dd(Subscription::getPlanTotalCount($plan));
-
-        if(empty($trans->id))
+        $trans = Transaction::getPending($user, $id);
+        if (empty($trans->id))
             return redirect(url('/pricing?invalid'));
 
-        return view('page.buyplan',['plan'=>$plan,'trans'=>$trans]);;
+        return view('page.buyplan', ['plan' => $plan, 'trans' => $trans]);
     }
 
 

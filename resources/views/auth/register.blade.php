@@ -24,6 +24,7 @@
                                 <div class="mb--30">
                                     <span><h6>Choose any one to receive an OTP message.</h6></span>
                                 </div>
+                                <input type="hidden" name="ref" value="{{ request('ref') }}">
                                 <div class="form-check form-check-inline mb--30">
                                   <input id="whatsapp" type="radio" class="form-check-input" name="otp_message_type" autocomplete="off" value="whatsapp" checked>
                                   <label class="form-check-label" for="whatsapp">WhatsApp</label>

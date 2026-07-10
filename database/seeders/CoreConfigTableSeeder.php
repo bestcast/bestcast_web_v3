@@ -104,6 +104,7 @@ class CoreConfigTableSeeder extends Seeder
              'value'=>'<ul>
                      <li><a href="'.env('APP_URL').'/">Home</a></li>
                      <li><a href="'.env('APP_URL').'/pricing">Pricing</a></li>
+                     <li><a href="https://bmp.bestcast.co" target="_blank" rel="noopener">BMP</a></li>
                      <li><a href="'.env('APP_URL').'/careers">Careers</a></li>
                   </ul>');
         $data[]=array('path'=>'general_footer_section4title','label'=>'Title','type'=>'input',
@@ -266,27 +267,29 @@ class CoreConfigTableSeeder extends Seeder
              'group'=>'Footer','subgroup'=>'Footer Bar','sort'=>0,
              'value'=>'For better experience,download the BESTCAST app now');
 
-        foreach($data as $val){
-            $newItem = CoreConfig::create([
-                'path'          => $val['path'],
-                'value'         => $val['value']       
-            ]);
-        }
+          foreach($data as $val){
+              $newItem = CoreConfig::updateOrCreate(
+                  ['path' => $val['path']],
+                  ['value' => $val['value']]
+              );
+          }
 
         foreach($data as $val){
-            $newItem = CoreConfigField::create([
-                'path'          => $val['path'],
-                'label'         => $val['label'],
-                'type'          => $val['type'],
-                'placeholder'   => empty($val['placeholder'])?'':$val['placeholder'],
-                'comment'       => empty($val['comment'])?'':$val['comment'],
-                'classname'     => empty($val['classname'])?'':$val['classname'],
-                'errormessage'  => empty($val['errormessage'])?'':$val['errormessage'],
-                'option'        => empty($val['option'])?'':$val['option'],
-                'group'         => empty($val['group'])?'':$val['group'],
-                'subgroup'      => empty($val['subgroup'])?'':$val['subgroup'],
-                'sort'          => empty($val['sort'])?0:$val['sort']
-            ]);
-        }
+              $newItem = CoreConfigField::updateOrCreate(
+                  ['path' => $val['path']], // match condition
+                  [
+                      'label'         => $val['label'],
+                      'type'          => $val['type'],
+                      'placeholder'   => empty($val['placeholder']) ? '' : $val['placeholder'],
+                      'comment'       => empty($val['comment']) ? '' : $val['comment'],
+                      'classname'     => empty($val['classname']) ? '' : $val['classname'],
+                      'errormessage'  => empty($val['errormessage']) ? '' : $val['errormessage'],
+                      'option'        => empty($val['option']) ? '' : $val['option'],
+                      'group'         => empty($val['group']) ? '' : $val['group'],
+                      'subgroup'      => empty($val['subgroup']) ? '' : $val['subgroup'],
+                      'sort'          => empty($val['sort']) ? 0 : $val['sort']
+                  ]
+              );
+          }
     }
 }

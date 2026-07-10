@@ -226,6 +226,7 @@ class UserController extends Controller
         $user->dob=Lib::dateFormat($requestData['dob'],'d/m/Y','Y-m-d');
         $user->gender=$requestData['gender'];
         $user->phone=$requestData['phone'];
+        $user->country_code=$requestData['country_code'] ?? null;
         $user->refferer=$requestData['refferer'];
         $user->referal_code=empty($requestData['referal_code'])?User::getReferralCode($user->id):$requestData['referal_code'];
         $user->credits_used=empty($requestData['credits_used'])?0:$requestData['credits_used'];

@@ -1,5 +1,8 @@
 @extends('admin.layouts.master')
 
+@section('style-theme')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
+@endsection
 
 @section('content')
 
@@ -209,7 +212,8 @@
                     </div>
                     <div class="form-row">
                         <label class="form-label" for="phone">Phone<em>*</em></label>
-                        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone',$model->phone) }}" >
+                        <input type="tel" class="form-control" id="phone" name="phone" value="{{ old('phone',$model->phone) }}" autocomplete="off">
+                        <input type="hidden" name="country_code" id="country_code" value="{{ old('country_code',$model->country_code) }}">
                     </div>
                     <div class="form-row">
                         <label class="form-label" for="password">Password</label>
@@ -356,6 +360,48 @@
 
 {{ Form::close() }}
 @endsection
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.querySelector("#phone");
+    const hiddenInput = document.querySelector("#country_code");
+    if (!input || !hiddenInput) return;
 
+    const existingCode = "{{ $model->country_code }}";
 
+    const iti = window.intlTelInput(input, {
+        initialCountry: existingCode ? "" : "in",
+        separateDialCode: true,
+        allowDropdown: true,
+        dropdownContainer: document.body,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    });
+
+    function updateHiddenField() {
+        hiddenInput.value = "+" + iti.getSelectedCountryData().dialCode;
+    }
+
+    if (existingCode) {
+        const dialCode = existingCode.replace('+', '');
+        const countryData = window.intlTelInputGlobals.getCountryData();
+        const match = countryData.find(c => c.dialCode === dialCode);
+        if (match) {
+            iti.setCountry(match.iso2);
+        }
+    }
+
+    input.addEventListener("countrychange", updateHiddenField);
+    updateHiddenField();
+
+    // Strip spaces before the form is actually submitted
+    const form = input.closest('form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            input.value = input.value.replace(/\s+/g, '');
+        });
+    }
+});
+</script>
+@endpush
 

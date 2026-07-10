@@ -394,6 +394,9 @@ class AuthController extends Controller
 
     public function register(RegisterUserRequest $request)
     {
+        /*if ($request->filled('ref')) {
+            session(['referral_code' => trim($request->ref)]);
+        }*/
         try {
             // if(!empty($request->email))
             //     Session::put('formEmail', $request->email);
@@ -443,8 +446,25 @@ class AuthController extends Controller
             if(!empty($request->refferer) && (strlen($request->refferer)<=15)){
                 $user->refferer=$request->refferer;
             }
+            // BMP partner referral code
+            $refCode = session('referral_code');
+            if (!empty($refCode) && strlen($refCode) <= 20) {
+                $user->bmp_referral_code = $refCode;
+            }
             $user->referal_code=User::getReferralCode($user->id);
             $user->save();
+
+            // --- BMP: fire lead_created event ---
+            $referralCode = session('referral_code');
+            if (!empty($referralCode)) {
+                \App\Services\BmpEventService::sendEvent('lead_created', [
+                    'referralCode' => $referralCode,
+                    'subscriberName' => $user->name,
+                    'subscriberMobile' => $user->phone,
+                    'subscriberEmail' => $user->email,
+                    'city' => $user->city ?? null,
+                ]);
+            }
 
             if(empty($user->id))
                 return $this->error('', 'Email or phone not exist!', 200);

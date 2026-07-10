@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'bmp' => [
+        'api_url' => env('BMP_API_URL'),
+        'api_key' => env('BMP_API_KEY'),
+    ],
+
 ];
