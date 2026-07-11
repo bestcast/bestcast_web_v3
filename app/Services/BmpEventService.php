@@ -7,12 +7,22 @@ use Illuminate\Support\Facades\Log;
 
 class BmpEventService
 {
+    protected static $refCodePattern = '/^[A-Za-z0-9]{6,20}$/';
+
     public static function sendEvent(string $eventType, array $data)
     {
         $referralCode = $data['referralCode'] ?? null;
 
         // No referral code means this subscriber didn't come via a partner — skip silently
         if (empty($referralCode)) {
+            return null;
+        }
+
+        if (!preg_match(self::$refCodePattern, $referralCode)) {
+            Log::warning('BMP event blocked — invalid referral code format', [
+                'eventType' => $eventType,
+                'referralCode' => $referralCode,
+            ]);
             return null;
         }
 
