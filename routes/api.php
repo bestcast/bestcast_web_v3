@@ -12,7 +12,7 @@ use App\Http\Controllers\Movies\GuestController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Api\RewardController;
 use App\Http\Controllers\Webseries\WebseriesController;
-
+use App\Http\Controllers\BmpReferralController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,7 +40,7 @@ Route::post('/emailverify', [AuthController::class, 'emailverify'])->name('api.e
 Route::post('/tokenexist', [AuthController::class, 'tokenexist'])->name('api.tokenexist');
 Route::get('/mobileapp/{id}', [AuthController::class, 'mobileapp'])->name('api.mobileapp');
 Route::get('/getversion', [AuthController::class, 'getversion'])->name('api.getversion');
-
+Route::post('/bmp/referral-interest', [BmpReferralController::class, 'store']);
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/guest/menulist', [GuestController::class, 'menulist'])->name('menulist');

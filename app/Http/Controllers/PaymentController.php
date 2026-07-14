@@ -121,9 +121,12 @@ class PaymentController extends Controller
         if ($request->has('ref') && !empty($request->ref)) {
             session(['referral_code' => trim($request->ref)]);
         }
-        $referralCode = session('referral_code'); // will be null if never set
+        //$referralCode = session('referral_code'); // will be null if never set
 
         $user = Auth::user();
+        $referralCode = (!empty($user) && !empty($user->bmp_referral_code))
+            ? $user->bmp_referral_code
+            : session('referral_code');
         if (empty($user->id)) {
             // Preserve ref code through register redirect
             $registerUrl = url('/register');

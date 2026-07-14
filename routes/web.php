@@ -289,7 +289,7 @@ Route::group([
     Route::get('/admin/refer','ReferController@index')->name('admin.refer.index');
     Route::post('/admin/refer/save/{id}','ReferController@save')->name('admin.refer.save');
     Route::get('/admin/transactions','TransactionController@index')->name('admin.transactions.index');
-
+    Route::get('/admin/transactions/referrals','TransactionController@referrals')->name('admin.transactions.referrals');
 
     Route::get('/admin/blocks', 'BlocksController@index')->name('admin.blocks.index');
     Route::get('/admin/blocks/list', 'BlocksController@list')->name('admin.blocks.list');

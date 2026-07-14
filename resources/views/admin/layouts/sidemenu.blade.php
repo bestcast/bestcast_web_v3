@@ -104,9 +104,20 @@
       @endif
       @if (Route::has('admin.transactions.index'))
         <li class="icon-transactions {{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
-          <a href="{{ route('admin.transactions.index') }}" class="nav-link link-dark">          
+          <a href="{{ route('admin.transactions.index') }}" class="nav-link link-dark">
             Transactions
+            <span class="arrow icon-arrow-right">&nbsp;</span>
           </a>
+          <ul class="subnavpills" style="{{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'display:block' : '' }}">
+            <li class="icon-arrow-double-right {{ request()->is('admin/transactions') ? 'active' : '' }}">
+              <a href="{{ route('admin.transactions.index') }}">All Transactions</a>
+            </li>
+            @if (Route::has('admin.transactions.referrals'))
+            <li class="icon-arrow-double-right {{ request()->is('admin/transactions/referrals') ? 'active' : '' }}">
+              <a href="{{ route('admin.transactions.referrals') }}">BMP Referrals</a>
+            </li>
+            @endif
+          </ul>
         </li>
       @endif
       @if (Route::has('admin.user.index'))

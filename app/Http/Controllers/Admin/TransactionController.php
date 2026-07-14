@@ -30,4 +30,11 @@ class TransactionController extends Controller
         $data = Transaction::getList();
         return view('admin.transaction.index', ['data'=>$data]);
     }
+
+    public function referrals()
+    {
+        $data = Transaction::getReferralList();
+        $paidCount = Transaction::getReferralPaidCount();
+        return view('admin.transaction.referrals', ['data'=>$data, 'paidCount'=>$paidCount]);
+    }
 }

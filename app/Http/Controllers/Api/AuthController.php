@@ -174,7 +174,20 @@ class AuthController extends Controller
 
             //Authendicate
             Auth::login($user);
+            // --- BMP: first-touch referral attribution ---
+            $refCode = session('referral_code');
+            if (!empty($refCode)) {
+                $hasEverSubscribed = \App\Models\Transaction::where('user_id', $user->id)
+                    ->where('bmp_paid_event_sent', true)
+                    ->exists();
 
+                if (!$hasEverSubscribed) {
+                    // Not yet converted — safe to update/overwrite with latest referral code
+                    $user->bmp_referral_code = $refCode;
+                    $user->save(); // or defer save if another save() follows shortly after, like in loginWithOtp()
+                }
+                // If already subscribed once, do nothing — code stays locked permanently
+            }
             //Request Token
             $response=User::userRequestLoginToken($user,$request);
             
@@ -358,6 +371,20 @@ class AuthController extends Controller
             //Authendicate
             Auth::login($user);
             
+            // --- BMP: first-touch referral attribution ---
+            $refCode = session('referral_code');
+            if (!empty($refCode)) {
+                $hasEverSubscribed = \App\Models\Transaction::where('user_id', $user->id)
+                    ->where('bmp_paid_event_sent', true)
+                    ->exists();
+
+                if (!$hasEverSubscribed) {
+                    $user->bmp_referral_code = $refCode;
+                    $user->save();
+                }
+                // If already subscribed once, do nothing — code stays locked permanently
+            }
+
             //Reset OTP to null
             $user->otp=null;
             if(is_numeric($request->email)){

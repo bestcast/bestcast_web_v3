@@ -84,6 +84,7 @@ class Transaction extends Database implements RoleHasRelationsContract
         'notified'                  => 'integer',
         'created_at'                => 'datetime',
         'updated_at'                => 'datetime',
+        'bmp_event_sent_at'         => 'datetime',
     ];
 
     /**
@@ -289,6 +290,7 @@ class Transaction extends Database implements RoleHasRelationsContract
                                 ]);
 
                                 $trans->bmp_paid_event_sent = true;
+                                $trans->bmp_event_sent_at = now();
                                 $trans->save();
                             }
                         }
@@ -368,5 +370,46 @@ class Transaction extends Database implements RoleHasRelationsContract
         }
 
         return $query->count();
+    }
+
+    public static function getReferralList()
+    {
+        $data = Transaction::with('user')
+                ->whereNotNull('referral_code')
+                ->where('referral_code', '!=', '');
+
+        if (!empty($_GET['search'])) {
+            $search = $_GET['search'];
+            $data->where(function ($q) use ($search) {
+                $q->where('referral_code', 'LIKE', "%$search%")
+                  ->orWhere('title', 'LIKE', "%$search%")
+                  ->orWhereHas('user', function ($uq) use ($search) {
+                        $uq->where('name', 'LIKE', "%$search%")
+                           ->orWhere('phone', 'LIKE', "%$search%");
+                  });
+            });
+        }
+
+        if (!empty($_GET['event_filter'])) {
+            if ($_GET['event_filter'] == 'sent') {
+                $data->where('bmp_paid_event_sent', true);
+            }
+            if ($_GET['event_filter'] == 'pending') {
+                $data->where(function($q){
+                    $q->where('bmp_paid_event_sent', false)
+                      ->orWhereNull('bmp_paid_event_sent');
+                });
+            }
+        }
+
+        return $data->orderBy('created_at', 'desc')
+                    ->paginate(20)->appends($_GET);
+    }
+    public static function getReferralPaidCount()
+    {
+        return Transaction::whereNotNull('referral_code')
+            ->where('referral_code', '!=', '')
+            ->where('bmp_paid_event_sent', true)
+            ->count();
     }
 }
