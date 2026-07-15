@@ -338,6 +338,8 @@ class PaymentController extends Controller
         if(empty($plan->id))
             return $this->error('', "Subscription plan not available! "."#".$id, 200);
 
+        // --- BMP: referral code comes from the user's locked-in code ---
+        $referralCode = $user->bmp_referral_code ?? null;
 
         if(empty($plan->razorpay_id)){ //Order
 
@@ -350,7 +352,6 @@ class PaymentController extends Controller
                 }
             }
         }
-
 
         $razorpay = Paymentgateway::razorpay();$api_plan='';
         if(!empty($razorpay)){
@@ -365,6 +366,7 @@ class PaymentController extends Controller
                 $trans->status=0;
                 $trans->title=$plan->title;
                 $trans->price=$plan->price;
+                $trans->referral_code=$referralCode;
                 $trans->save();
 
                 $api=$razorpay->order->create(
@@ -381,10 +383,8 @@ class PaymentController extends Controller
                     $trans->razorpay_currency=$api->currency;
                     $trans->razorpay_entity=$api->entity;
                     $trans->price=$api->amount/100;
-                    //$trans->razorpay_data=json_decode($api);
                     $trans->save();
                 }
-
 
             }else{ //Subscription
 
@@ -397,10 +397,10 @@ class PaymentController extends Controller
                     $trans->title=$plan->title;
                     $trans->razorpay_plan_id=$plan->razorpay_id;
                     $trans->price=$plan->price;
+                    $trans->referral_code=$referralCode; // <-- added
                     $trans->save();
 
                     if(!empty($trans->id)){
-
                         $total_count=Subscription::getPlanTotalCount($plan);
                         $api=$razorpay->subscription->create(
                             array(
@@ -418,9 +418,6 @@ class PaymentController extends Controller
             } //Subscription end
         }
         $trans=Transaction::getPending($user,$id);
-
-
-               //dd(Subscription::getPlanTotalCount($plan));
 
         if(empty($trans->id))
             return $this->error('', "Invalid transaction. Please try again! ", 200);

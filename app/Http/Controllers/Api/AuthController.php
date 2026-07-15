@@ -175,7 +175,8 @@ class AuthController extends Controller
             //Authendicate
             Auth::login($user);
             // --- BMP: first-touch referral attribution ---
-            $refCode = session('referral_code');
+            //$refCode = session('referral_code');
+            $refCode = $request->filled('ref') ? trim($request->ref) : session('referral_code');
             if (!empty($refCode)) {
                 $hasEverSubscribed = \App\Models\Transaction::where('user_id', $user->id)
                     ->where('bmp_paid_event_sent', true)
@@ -372,7 +373,8 @@ class AuthController extends Controller
             Auth::login($user);
             
             // --- BMP: first-touch referral attribution ---
-            $refCode = session('referral_code');
+            //$refCode = session('referral_code');
+            $refCode = $request->filled('ref') ? trim($request->ref) : session('referral_code');
             if (!empty($refCode)) {
                 $hasEverSubscribed = \App\Models\Transaction::where('user_id', $user->id)
                     ->where('bmp_paid_event_sent', true)
@@ -474,7 +476,8 @@ class AuthController extends Controller
                 $user->refferer=$request->refferer;
             }
             // BMP partner referral code
-            $refCode = session('referral_code');
+            //$refCode = session('referral_code');
+            $refCode = $request->filled('ref') ? trim($request->ref) : session('referral_code');
             if (!empty($refCode) && strlen($refCode) <= 20) {
                 $user->bmp_referral_code = $refCode;
             }
@@ -482,7 +485,7 @@ class AuthController extends Controller
             $user->save();
 
             // --- BMP: fire lead_created event ---
-            $referralCode = session('referral_code');
+            $referralCode = $refCode;
             if (!empty($referralCode)) {
                 \App\Services\BmpEventService::sendEvent('lead_created', [
                     'referralCode' => $referralCode,

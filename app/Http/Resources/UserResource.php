@@ -59,6 +59,7 @@ class UserResource extends JsonResource
             'referal_code' => $this->referal_code,
             'credits_used' => $this->credits_used,
             'refferer' => $this->refferer,
+            'bmp_referral_code' => $this->bmp_referral_code,
             'email_verified_at' => $this->email_verified_at,
             'phone_verified_at' => $this->phone_verified_at,
             'created_at' => $this->created_at,
