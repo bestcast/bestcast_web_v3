@@ -268,30 +268,31 @@ class Transaction extends Database implements RoleHasRelationsContract
                             $trans->counts = $res->total_count - $res->remaining_count;
                             $trans->save();
 
-                            // --- BMP: fire events, only once per transaction ---
+                            // --- BMP: fire subscription_paid event, only once per transaction ---
                             if (empty($trans->bmp_paid_event_sent)) {
-                                \App\Services\BmpEventService::sendEvent('subscription_paid', [
+                                $eventId = 'txn_' . $trans->id . '_paid';
+
+                                $result1 = \App\Services\BmpEventService::sendEvent('subscription_paid', [
                                     'referralCode' => $trans->referral_code,
-                                    'subscriberName' => $user->name,
-                                    'subscriberMobile' => $user->phone,
-                                    'subscriberEmail' => $user->email,
-                                    'city' => $user->city ?? null,
+                                    'customerId' => (string) $user->id,
+                                    'customerName' => $user->name,
+                                    'phone' => $user->phone,
+                                    'email' => $user->email,
                                     'planName' => $trans->title,
-                                    'planAmount' => $trans->price,
-                                    'paymentId' => $res->id ?? null,
+                                    'planAmount' => (float) $trans->price,
+                                    'currency' => 'INR',
+                                    'transactionId' => $trans->razorpay_payment_id ?? $trans->razorpay_subscription_id,
                                     'subscriptionId' => $trans->razorpay_subscription_id,
-                                ]);
+                                    'paymentStatus' => 'paid',
+                                ], $eventId);
 
-                                \App\Services\BmpEventService::sendEvent('subscription_active', [
-                                    'referralCode' => $trans->referral_code,
-                                    'subscriberMobile' => $user->phone,
-                                    'paymentId' => $res->id ?? null,
-                                    'subscriptionId' => $trans->razorpay_subscription_id,
-                                ]);
-
-                                $trans->bmp_paid_event_sent = true;
-                                $trans->bmp_event_sent_at = now();
-                                $trans->save();
+                                // Only mark as sent if the call actually succeeded
+                                if (!empty($result1)) {
+                                    $trans->bmp_paid_event_sent = true;
+                                    $trans->bmp_event_sent_at = now();
+                                    $trans->save();
+                                }
+                                // If failed, flag stays false — the scheduled retry command will pick it up
                             }
                         }
                     }
@@ -310,9 +311,6 @@ class Transaction extends Database implements RoleHasRelationsContract
             if($trans->razorpay_order_id==$oid){
                 try{
                     $api=Paymentgateway::razorpay();
-                    // if(empty($api->order)){
-                    //     return $res; 
-                    // }
                     $res=$api->order->fetch($trans->razorpay_order_id);
                     if(!empty($res->status) && $res->status=='paid'){
 
@@ -324,12 +322,37 @@ class Transaction extends Database implements RoleHasRelationsContract
                         }
                         $user->plan=$trans->subscription_id;
                         $user->save();
+
+                        // --- BMP: fire subscription_paid event, only once per transaction ---
+                        if (empty($trans->bmp_paid_event_sent)) {
+                            $eventId = 'txn_' . $trans->id . '_paid';
+
+                            $result1 = \App\Services\BmpEventService::sendEvent('subscription_paid', [
+                                'referralCode' => $trans->referral_code,
+                                'customerId' => (string) $user->id,
+                                'customerName' => $user->name,
+                                'phone' => $user->phone,
+                                'email' => $user->email,
+                                'planName' => $trans->title,
+                                'planAmount' => (float) $trans->price,
+                                'currency' => 'INR',
+                                'transactionId' => $trans->razorpay_payment_id ?? $trans->razorpay_order_id,
+                                'subscriptionId' => $trans->razorpay_order_id,
+                                'paymentStatus' => 'paid',
+                            ], $eventId);
+
+                            // Only mark as sent if the call actually succeeded
+                            if (!empty($result1)) {
+                                $trans->bmp_paid_event_sent = true;
+                                $trans->bmp_event_sent_at = now();
+                                $trans->save();
+                            }
+                            // If failed, flag stays false — the scheduled retry command will pick it up
+                        }
                     }
                 }catch (\Razorpay\Api\Errors\BadRequestError $e) {
                 }catch(Exception $error){
-
                 }
-                //dd(date("Y-m-d h:i:s",$x->current_end));
             }
         }  
         return $res; 

@@ -487,13 +487,15 @@ class AuthController extends Controller
             // --- BMP: fire lead_created event ---
             $referralCode = $refCode;
             if (!empty($referralCode)) {
+                $eventId = 'lead_' . $user->id;
+
                 \App\Services\BmpEventService::sendEvent('lead_created', [
                     'referralCode' => $referralCode,
-                    'subscriberName' => $user->name,
-                    'subscriberMobile' => $user->phone,
-                    'subscriberEmail' => $user->email,
-                    'city' => $user->city ?? null,
-                ]);
+                    'customerId' => (string) $user->id,
+                    'customerName' => $user->name,
+                    'phone' => $user->phone,
+                    'email' => $user->email,
+                ], $eventId);
             }
 
             if(empty($user->id))
