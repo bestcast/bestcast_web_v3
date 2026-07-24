@@ -175,10 +175,10 @@ class Blocks extends Database implements RoleHasRelationsContract
         $data =$data->paginate(20);
         return $data;
     }
-
+    
     public static function getApiList($user_id)
     {
-        $data = Blocks::with([
+        $baseQuery = Blocks::with([
             'movies' => function ($query) {
                 $query->whereHas('movies', function ($q) {
                     $q->where('status', 1);
@@ -199,34 +199,56 @@ class Blocks extends Database implements RoleHasRelationsContract
             },
             'genres',
             'languages'
-        ]);
-
-        $data = $data->where('status', 1)->where('type', 0)->latest();
+        ])->where('status', 1)->where('type', 0);
 
         $genre_id = app('request')->input('genre_id');
         if (!empty($genre_id)) {
-            $data = $data->whereHas('genres', function ($q) use ($genre_id) {
+            $baseQuery->whereHas('genres', function ($q) use ($genre_id) {
                 $q->where('genre_id', $genre_id);
             });
         }
 
         $language_id = app('request')->input('language_id');
         if (!empty($language_id)) {
-            $data = $data->whereHas('languages', function ($q) use ($language_id) {
+            $baseQuery->whereHas('languages', function ($q) use ($language_id) {
                 $q->where('language_id', $language_id);
             });
         }
 
         $getpageid = app('request')->input('page_id');
         if (!empty($getpageid)) {
-            $data = $data->where('page_id', $getpageid);
+            $baseQuery->where('page_id', $getpageid);
         }
 
-        $data = $data->orderBy('sortorder', 'asc')->orderBy('title', 'asc');
+        // Clone BEFORE pagination so special blocks can be found regardless of sortorder/page size
+        $specialQuery = clone $baseQuery;
 
         $paginate = app('request')->input('paginate');
         $paginate = empty($paginate) ? 5 : $paginate;
-        $data = $data->paginate($paginate);
+
+        $data = $baseQuery->orderBy('sortorder', 'asc')
+                           ->orderBy('title', 'asc')
+                           ->paginate($paginate);
+
+        // Only inject special blocks on page 1, to avoid duplicating them on later pages
+        $currentPage = app('request')->input('page', 1);
+
+        if ($currentPage == 1) {
+            $existingIds = $data->pluck('id')->toArray();
+
+            $specialBlocks = $specialQuery->get()->filter(function ($block) {
+                $t = strtolower($block->title ?? '');
+                return str_contains($t, 'upcoming')
+                    || str_contains($t, 'new releases')
+                    || str_contains($t, 'new release');
+            })->reject(function ($block) use ($existingIds) {
+                return in_array($block->id, $existingIds);
+            });
+
+            foreach ($specialBlocks as $block) {
+                $data->getCollection()->push($block); // append; use prepend() if you want them first
+            }
+        }
 
         foreach ($data as $block) {
             $blockTitle = strtolower($block->title ?? '');
@@ -259,7 +281,7 @@ class Blocks extends Database implements RoleHasRelationsContract
                       $releaseTime = $movie->release_time;
 
                       if (empty($releaseTime) || $releaseTime === '00:00:00') {
-                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->endOfDay();
+                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->startOfDay();
                       } else {
                           $releaseDateTime = \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
                       }
@@ -303,7 +325,7 @@ class Blocks extends Database implements RoleHasRelationsContract
                       $releaseTime = $movie->release_time;
 
                       if (empty($releaseTime) || $releaseTime === '00:00:00') {
-                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->endOfDay();
+                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->startOfDay();
                       } else {
                           $releaseDateTime = \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
                       }
@@ -326,7 +348,6 @@ class Blocks extends Database implements RoleHasRelationsContract
 
         return $data;
     }
-    
     public static function getwebseriesApiList($user_id)
     {
         $data = Blocks::with([
