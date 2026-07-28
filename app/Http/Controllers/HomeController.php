@@ -40,9 +40,9 @@ class HomeController extends Controller
             if($user->hasRole(['admin', 'subadmin'])){
                 return redirect()->route('admin.dashboard.index');
             }
-            if($user->hasRole(['producer'])){
+            /*if($user->hasRole(['producer'])){
                 return redirect()->route('user.myaccount.producer');
-            }
+            }*/
             return redirect()->route('browse');
         }
         return redirect()->route('guestbrowse');//will redirect for guest instead of home
@@ -80,11 +80,12 @@ class HomeController extends Controller
         }
 
 
-        if(!empty($user)){
+        /*if($user->hasRole(['producer']) && (empty($urlkey) || $urlkey=='movies')){*/
+        /*if(!empty($user)){
             if($user->hasRole(['producer'])){
                 return redirect()->route('user.myaccount.producer');
             }
-        }
+        }*/
 
         if(!empty($user)){
             if(empty($user->phone_verified_at)){

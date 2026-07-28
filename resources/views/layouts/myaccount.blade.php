@@ -45,6 +45,7 @@ if(!Session::has('profileToken')){
    <meta name="description" content="{{ strip_tags($seodesc) }}" />
    <style type="text/css">
       .pfMenu .list .item.profile,.pfMenu .list .item.manage{display: none !important;}
+      .pfMenu .list .item.account, .pfMenu .list .item.help{display: flex !important;}
    </style>
 
    @include('layouts.assets')

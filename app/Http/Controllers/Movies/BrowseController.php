@@ -60,9 +60,9 @@ class BrowseController extends Controller
     {
         $user=auth()->user();
 
-        if($user->hasRole(['producer'])){
+        /*if($user->hasRole(['producer'])){
             return redirect()->route('user.myaccount.producer');
-        }
+        }*/
         
         if(empty($user->phone_verified_at)){
             return redirect()->route('otp.verification', ['send' => 1,'phone' => 1]);

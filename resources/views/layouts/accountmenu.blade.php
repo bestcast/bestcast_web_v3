@@ -1,3 +1,4 @@
+<?php $prf = ''; ?>
 @if(Session::has('profileToken'))
   <?php
     $profileid=Session::get('profileToken');
@@ -44,6 +45,9 @@
 
 
                     $prf.='<div class="item account"><a href="'.url('/my-account').'"><div class="icon"></div><div class="text">Account</div></a></div>';
+                    if (auth()->user()->hasRole(['producer'])):
+                        $prf.='<div class="item producerportal"><a href="'.url('/account/producer').'"><div class="icon"></div><div class="text">Producer Portal</div></a></div>';
+                    endif;
                     if (auth()->user()->isAdmin()):
                         $prf.='<div class="item account"><a href="'.url('/backend').'"><div class="icon"></div><div class="text">Backend</div></a></div>';
                     endif;
@@ -66,10 +70,15 @@
 @endif
 <?php
 if(empty($prf)){
-    echo '<form id="logoutForm"><button class="edu-btn btn-small left-icon header-button" type="submit">Logout</button></form>';
-}else{
-    echo $prf;
+    $prf.='<div class="quote-icon pfMenu"><div class="icon"></div><div class="list"><div class="in">';
+        if (auth()->check() && auth()->user()->hasRole(['producer'])):
+            $prf.='<div class="item producerportal"><a href="'.url('/account/producer').'"><div class="icon"></div><div class="text">Producer Portal</div></a></div>';
+        endif;
+        $prf.='<div class="item help"><a href="'.url('/help').'"><div class="icon"></div><div class="text">Help Centre</div></a></div>';
+        $prf.='<div class="item signout"><form id="logoutForm"><button type="submit">Logout</button></form></div>';
+    $prf.='</div></div></div>';
 }
+echo $prf;
 ?>
 
 

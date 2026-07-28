@@ -5326,6 +5326,11 @@ div.vpl-player-loader {
   padding-bottom: 0px;
 }
 
+.pfMenu .list .item.producerportal {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .pfMenu .list .item.help {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -5337,6 +5342,11 @@ div.vpl-player-loader {
 }
 
 .pfMenu .list .item.account .icon {
+  background-image: url('../../img/icon/website/account-white.png');
+  background-size: 19px;
+}
+
+.pfMenu .list .item.producerportal .icon {
   background-image: url('../../img/icon/website/account-white.png');
   background-size: 19px;
 }
