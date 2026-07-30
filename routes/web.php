@@ -309,8 +309,8 @@ Route::group([
     Route::post('/admin/profileicon/editsave/{id}', 'ProfileiconController@editsave')->name('admin.profileicon.editsave');
     Route::get('/admin/profileicon/delete/{id}', 'ProfileiconController@delete')->name('admin.profileicon.delete');
 
-
-
+    Route::get('/admin/settings', 'SettingsController@index')->name('admin.settings.index');
+    Route::post('/admin/settings', 'SettingsController@save')->name('admin.settings.save');
 
     Route::get('/admin/subscription', 'SubscriptionController@index')->name('admin.subscription.index');
     Route::get('/admin/subscription/list', 'SubscriptionController@list')->name('admin.subscription.list');

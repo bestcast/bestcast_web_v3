@@ -60,12 +60,12 @@
         </li>
       @endif
       @if (Route::has('admin.page.index'))
-        <li class="icon-page  {{ request()->is('admin/page') || request()->is('admin/page/*')  || request()->is('admin/banner') ||  request()->is('admin/banner/*') || request()->is('admin/blocks') ||  request()->is('admin/blocks/*') || request()->is('admin/profileicon') ||  request()->is('admin/profileicon/*') || request()->is('admin/appnotify') ||  request()->is('admin/appnotify/*') || request()->is('admin/post/*') ? 'active' : '' }}">
+        <li class="icon-page  {{ request()->is('admin/page') || request()->is('admin/page/*')  || request()->is('admin/banner') ||  request()->is('admin/banner/*') || request()->is('admin/blocks') ||  request()->is('admin/blocks/*') || request()->is('admin/profileicon') ||  request()->is('admin/profileicon/*') || request()->is('admin/appnotify') ||  request()->is('admin/appnotify/*') || request()->is('admin/settings') || request()->is('admin/settings/*')|| request()->is('admin/post/*') ? 'active' : '' }}">
           <a href="{{ route('admin.page.index') }}" class="nav-link link-dark">          
             Content
               <span class="arrow icon-arrow-right">&nbsp;</span>
             </a>
-            <ul class="subnavpills"  style="{{ request()->is('admin/page') || request()->is('admin/page/*')  || request()->is('admin/banner') ||  request()->is('admin/banner/*') || request()->is('admin/blocks') ||  request()->is('admin/blocks/*') || request()->is('admin/profileicon') ||  request()->is('admin/profileicon/*') || request()->is('admin/appnotify') ||  request()->is('admin/appnotify/*') || request()->is('admin/post/*') ? 'display:block' : '' }}">
+            <ul class="subnavpills"  style="{{ request()->is('admin/page') || request()->is('admin/page/*')  || request()->is('admin/banner') ||  request()->is('admin/banner/*') || request()->is('admin/blocks') ||  request()->is('admin/blocks/*') || request()->is('admin/profileicon') ||  request()->is('admin/profileicon/*') || request()->is('admin/appnotify') ||  request()->is('admin/appnotify/*') || request()->is('admin/settings') || request()->is('admin/settings/*') || request()->is('admin/post/*') ? 'display:block' : '' }}">
               <li class="icon-arrow-double-right {{ request()->is('admin/page') || request()->is('admin/page/*')  || request()->is('admin/post/*') ? 'active' : '' }}">
                 <a href="{{ route('admin.page.index') }}">Page</a></li>
               <li class="icon-arrow-double-right {{ request()->is('admin/banner') || request()->is('admin/banner/*') ? 'active' : '' }}">
@@ -76,6 +76,8 @@
                 <a href="{{ route('admin.profileicon.index') }}">Profile Icon</a></li>
               <li class="icon-arrow-double-right {{ request()->is('admin/appnotify') || request()->is('admin/appnotify/*') ? 'active' : '' }}">
                 <a href="{{ route('admin.appnotify.index') }}">App Notify</a></li>
+              <li class="icon-arrow-double-right {{ request()->is('admin/settings') || request()->is('admin/settings/*') ? 'active' : '' }}">
+                <a href="{{ route('admin.settings.index') }}">Site Settings</a></li>
             </ul>
         </li>
       @endif

@@ -302,7 +302,10 @@ class Blocks extends Database implements RoleHasRelationsContract
             }
 
             if ($isNewReleaseBlock) {
-                $twoWeeksAgo = \Carbon\Carbon::now()->subDays(14)->startOfDay();
+                /*$twoWeeksAgo = \Carbon\Carbon::now()->subDays(14)->startOfDay();
+                $nowTime     = \Carbon\Carbon::now();*/
+                $daysLimit = \App\Models\CoreConfig::value('new_release_days_limit') ?? 14;
+                $twoWeeksAgo = \Carbon\Carbon::now()->subDays($daysLimit)->startOfDay();
                 $nowTime     = \Carbon\Carbon::now();
 
                 $newReleaseMovies = \App\Models\Movies::with([
