@@ -30,6 +30,6 @@ class SettingsController extends Controller
         }
         $config->save();
 
-        return redirect()->route('admin.settings.edit')->with('success', 'Settings updated successfully');
+        return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully');
     }
 }

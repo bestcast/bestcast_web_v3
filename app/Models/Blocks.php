@@ -220,43 +220,29 @@ class Blocks extends Database implements RoleHasRelationsContract
             $baseQuery->where('page_id', $getpageid);
         }
 
-        // Clone BEFORE pagination so special blocks can be found regardless of sortorder/page size
-        $specialQuery = clone $baseQuery;
+        $profile_id = app('request')->input('profile_id');
+        if (empty($profile_id)) { $profile_id = 0; }
 
+        // Raised default so all blocks for a given page_id fit on page 1 —
+        // no more special-casing needed to "guarantee" any block shows up.
         $paginate = app('request')->input('paginate');
-        $paginate = empty($paginate) ? 5 : $paginate;
+        $paginate = empty($paginate) ? 20 : $paginate;
 
         $data = $baseQuery->orderBy('sortorder', 'asc')
                            ->orderBy('title', 'asc')
+                           ->distinct()
                            ->paginate($paginate);
-
-        // Only inject special blocks on page 1, to avoid duplicating them on later pages
-        $currentPage = app('request')->input('page', 1);
-
-        if ($currentPage == 1) {
-            $existingIds = $data->pluck('id')->toArray();
-
-            $specialBlocks = $specialQuery->get()->filter(function ($block) {
-                $t = strtolower($block->title ?? '');
-                return str_contains($t, 'upcoming')
-                    || str_contains($t, 'new releases')
-                    || str_contains($t, 'new release');
-            })->reject(function ($block) use ($existingIds) {
-                return in_array($block->id, $existingIds);
-            });
-
-            foreach ($specialBlocks as $block) {
-                $data->getCollection()->push($block); // append; use prepend() if you want them first
-            }
-        }
 
         foreach ($data as $block) {
             $blockTitle = strtolower($block->title ?? '');
 
             $isUpcomingBlock   = str_contains($blockTitle, 'upcoming');
             $isNewReleaseBlock = str_contains($blockTitle, 'new releases') || str_contains($blockTitle, 'new release');
+            $isContinueWatchingBlock = str_contains($blockTitle, 'continue watching');
+            $isWatchItAgainBlock     = str_contains($blockTitle, 'watch it again');
 
-            if (!$isUpcomingBlock && !$isNewReleaseBlock) {
+
+            if (!$isUpcomingBlock && !$isNewReleaseBlock && !$isContinueWatchingBlock && !$isWatchItAgainBlock) {
                 continue;
             }
 
@@ -264,10 +250,8 @@ class Blocks extends Database implements RoleHasRelationsContract
                 $allMovies = \App\Models\Movies::with([
                     'image',
                     'thumbnail',
-                    'usermovies' => function ($query) use ($user_id) {
+                    'usermovies' => function ($query) use ($user_id, $profile_id) {
                         $query->where('user_id', $user_id);
-                        $profile_id = app('request')->input('profile_id');
-                        if (empty($profile_id)) { $profile_id = 0; }
                         $query->where('profile_id', $profile_id);
                     }
                 ])->where('status', 1)
@@ -302,25 +286,21 @@ class Blocks extends Database implements RoleHasRelationsContract
             }
 
             if ($isNewReleaseBlock) {
-                /*$twoWeeksAgo = \Carbon\Carbon::now()->subDays(14)->startOfDay();
-                $nowTime     = \Carbon\Carbon::now();*/
                 $daysLimit = \App\Models\CoreConfig::value('new_release_days_limit') ?? 14;
-                $twoWeeksAgo = \Carbon\Carbon::now()->subDays($daysLimit)->startOfDay();
-                $nowTime     = \Carbon\Carbon::now();
+                $daysAgo   = \Carbon\Carbon::now()->subDays($daysLimit)->startOfDay();
+                $nowTime   = \Carbon\Carbon::now();
 
                 $newReleaseMovies = \App\Models\Movies::with([
                     'image',
                     'thumbnail',
-                    'usermovies' => function ($query) use ($user_id) {
+                    'usermovies' => function ($query) use ($user_id, $profile_id) {
                         $query->where('user_id', $user_id);
-                        $profile_id = app('request')->input('profile_id');
-                        if (empty($profile_id)) { $profile_id = 0; }
                         $query->where('profile_id', $profile_id);
                     }
                 ])->where('status', 1)
                   ->whereNotNull('release_date')
                   ->get()
-                  ->filter(function ($movie) use ($twoWeeksAgo, $nowTime) {
+                  ->filter(function ($movie) use ($daysAgo, $nowTime) {
                       $releaseDate = $movie->release_date;
                       if (empty($releaseDate)) return false;
 
@@ -333,7 +313,7 @@ class Blocks extends Database implements RoleHasRelationsContract
                           $releaseDateTime = \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
                       }
 
-                      return $releaseDateTime->between($twoWeeksAgo, $nowTime);
+                      return $releaseDateTime->between($daysAgo, $nowTime);
                   })
                   ->sortByDesc(function ($movie) {
                       return \Carbon\Carbon::parse($movie->release_date)->toDateString();
@@ -347,7 +327,74 @@ class Blocks extends Database implements RoleHasRelationsContract
 
                 $block->setRelation('movies', $wrappedMovies->values());
             }
+            
+            if ($isContinueWatchingBlock) {
+                $continueWatching = \App\Models\UsersMovies::with([
+                        'movies.image',
+                        'movies.thumbnail',
+                        'movies.usermovies' => function ($q) use ($user_id, $profile_id) {
+                            $q->where('user_id', $user_id)->where('profile_id', $profile_id);
+                        }
+                    ])
+                    ->where('user_id', $user_id)
+                    ->where('profile_id', $profile_id)
+                    ->where('watching', 1)
+                    ->where('watched_percent', '<', 90)
+                    ->whereHas('movies', function ($q) {
+                        $q->where('status', 1);
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->get()
+                    ->pluck('movies')
+                    ->filter()
+                    ->values();
+
+                $wrappedMovies = $continueWatching->map(function ($movie) {
+                    $bm = new \App\Models\BlocksMovies();
+                    $bm->setRelation('movies', $movie);
+                    return $bm;
+                });
+
+                $block->setRelation('movies', $wrappedMovies->values());
+            }
+
+            if ($isWatchItAgainBlock) {
+                $watchItAgain = \App\Models\UsersMovies::with([
+                        'movies.image',
+                        'movies.thumbnail',
+                        'movies.usermovies' => function ($q) use ($user_id, $profile_id) {
+                            $q->where('user_id', $user_id)->where('profile_id', $profile_id);
+                        }
+                    ])
+                    ->where('user_id', $user_id)
+                    ->where('profile_id', $profile_id)
+                    ->where('watched_percent', '>=', 90)
+                    ->whereHas('movies', function ($q) {
+                        $q->where('status', 1);
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->get()
+                    ->pluck('movies')
+                    ->filter()
+                    ->values();
+
+                $wrappedMovies = $watchItAgain->map(function ($movie) {
+                    $bm = new \App\Models\BlocksMovies();
+                    $bm->setRelation('movies', $movie);
+                    return $bm;
+                });
+
+                $block->setRelation('movies', $wrappedMovies->values());
+            }
         }
+        $filtered = $data->getCollection()->reject(function ($block) {
+            $t = strtolower($block->title ?? '');
+            $isCW = str_contains($t, 'continue watching');
+            $isWA = str_contains($t, 'watch it again');
+            return ($isCW || $isWA) && (!$block->relationLoaded('movies') || $block->movies->isEmpty());
+        });
+
+        $data->setCollection($filtered->values());
 
         return $data;
     }
