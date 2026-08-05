@@ -1,19 +1,14 @@
 @extends('admin.layouts.master')
-
-
 @section('content')
-
-
     @include('admin.common.message')
-
     <h2 class="pb-3 border-bottom">
         Blocks <a href="{{ route('admin.blocks.create') }}" class="btn btn-secondary float-right addnewbtn">+ Add New</a>
     </h2>
     
     <div class="row g-2 applyfilter">
-      @include('admin.common.filter.searchlist')
+      @include('admin.common.filter.searchlist', ['searchLabel' => 'Block Name'])
+      @include('admin.common.filter.pagefilter')
     </div>
-
     @if(!empty($model->total()))
     <div class="txtcard image txt-right">
         <div class="row">
@@ -22,17 +17,26 @@
             @php($imgurl=!empty($item->thumbnail)?Lib::publicImgSrc($item->thumbnail->urlkey):Lib::placeholder('movie'))
             <div class="card">
               <div class="card-body">
-                <div class="card-title card-image" style="background-image:url({{ $imgurl  }})"><div class="d-flex overlay justify-content-center "><div class="d-flex align-self-center">
-                    @if($item->status)
-                    <span class="badge bg-success">Active</span>
-                    @else
-                    <span class="badge bg-danger">Disabled</span>
-                    @endif
-                    {{ $item->title }}
-                </div></div></div>
-                <div class="card-act">
-                    <a href="{{ route('admin.blocks.edit',$item->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="{{ route('admin.blocks.delete',$item->id) }}" class="btn btn-outline-danger btn-sm btn-delete-copy-{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete{{ $item->id }}">Delete</a>   
+                <div class="card-title card-image" style="background-image:url({{ $imgurl  }});position:relative;">
+                    <span class="sortorder-tag" style="position:absolute;top:8px;left:8px;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;">Sort order: {{ $item->sortorder }}</span>
+                    <span class="badge {{ $item->status ? 'bg-success' : 'bg-danger' }}" style="position:absolute;top:8px;right:8px;">
+                        {{ $item->status ? 'Active' : 'Disabled' }}
+                    </span>
+                    <div class="d-flex overlay justify-content-center ">
+                        <div class="d-flex align-self-center">
+                            {{ $item->title }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-act d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Page: {{ !empty($item->page) ? $item->page->title : '-' }}</span>
+                    <span>
+                        <a href="{{ route('admin.blocks.edit',$item->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        @php($protectedTitles = ['continue watching', 'watch it again'])
+                        @if(!in_array(strtolower($item->title), $protectedTitles))
+                            <a href="{{ route('admin.blocks.delete',$item->id) }}" class="btn btn-outline-danger btn-sm btn-delete-copy-{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete{{ $item->id }}">Delete</a>
+                        @endif
+                    </span>
                 </div>
                   @php ($delid=$item->id)
                   @php ($delurl=route('admin.blocks.delete',$item->id))
@@ -51,9 +55,4 @@
     @else
         @include('admin.common.noresult')
     @endif
-
-
 @endsection
-
-
-

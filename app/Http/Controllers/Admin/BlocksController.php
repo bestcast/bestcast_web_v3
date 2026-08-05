@@ -34,10 +34,21 @@ class BlocksController extends Controller
         return $data;
     }
 
-    public function index()
+    /*public function index()
     {
         $data = Blocks::getList();
         return view('admin.blocks.index', ['model'=>$data]);
+    }*/
+
+    public function index()
+    {
+        $model = Blocks::getList();
+        $pageList = \App\Models\Post::where('status', 1)
+            ->whereIn('type', ['page', 'blog'])
+            ->orderBy('title', 'asc')
+            ->get(['id', 'title']);
+
+        return view('admin.blocks.index', compact('model', 'pageList'));
     }
 
     public function create()

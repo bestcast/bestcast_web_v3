@@ -1,6 +1,7 @@
 <div class="col-md">
     <div class="form-floating">
           <div class="form-row">
+                <label for="searchlist" class="form-label">{{ $searchLabel ?? 'Search' }}</label>
                 @php($filterUrl=Lib::urlParams(\URL::current(),Request::getQueryString(),'search,page'))
                 <div class="inline-search">
                     <input type="text" class="form-control" id="searchlist" name="searchlist" value="{{ old('searchlist',app('request')->input('search')) }}" placeholder="Search ..." >

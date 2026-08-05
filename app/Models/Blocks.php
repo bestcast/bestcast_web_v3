@@ -162,13 +162,32 @@ class Blocks extends Database implements RoleHasRelationsContract
         return $this->hasMany('App\Models\BlocksLanguages','blocks_id','id');
     }
 
-    public static function getList()
+    /*public static function getList()
     {
         $data = Blocks::latest();
 
         $getSearch=app('request')->input('search');
         if(!empty($getSearch)){
             $data =$data->where('title','like',"%".urldecode($getSearch)."%");
+        }
+        
+        $data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
+        $data =$data->paginate(20);
+        return $data;
+    }*/
+
+    public static function getList()
+    {
+        $data = Blocks::with('page')->latest();
+
+        $getSearch=app('request')->input('search');
+        if(!empty($getSearch)){
+            $data =$data->where('title','like',"%".urldecode($getSearch)."%");
+        }
+
+        $getPageId=app('request')->input('page_id');
+        if(!empty($getPageId)){
+            $data =$data->where('page_id',$getPageId);
         }
         
         $data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
