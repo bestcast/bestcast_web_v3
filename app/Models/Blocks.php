@@ -56,7 +56,8 @@ class Blocks extends Database implements RoleHasRelationsContract
         'thumbnail_id',
         'image_id',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'content_type', 
     ];
 
     /**
