@@ -19,12 +19,41 @@ $bodyclass.=(!empty($loadbox))?' overflow-hidden ':'';
 // dd(Session::get('profileToken'));
 
 $bgimg='';
+$posterBg=[];
 $getRouteName=Route::currentRouteName();
-if(in_array($getRouteName,array('login','send.otp','login.otp','password.request','password.reset')))
-   $bgimg=empty($core['pages_login_bg'])?'':$core['pages_login_bg'];
 
-if(Route::currentRouteName() == 'register')
+$buildPosterGrid = function($cacheKey, $tileCount = 63) {
+    $posters = \Cache::remember($cacheKey.'_raw', now()->addHours(6), function () {
+        return \App\Models\Movies::with('portrait')
+            ->where('status', 1)
+            ->whereNotNull('portrait_id')
+            ->inRandomOrder()
+            ->limit(63)
+            ->get()
+            ->pluck('portrait.urlkey')
+            ->filter()
+            ->values()
+            ->toArray();
+    });
+
+    if (empty($posters)) return [];
+
+    $grid = [];
+    for ($i = 0; $i < $tileCount; $i++) {
+        $grid[] = $posters[$i % count($posters)];
+    }
+    return $grid;
+};
+
+if(in_array($getRouteName,array('login','send.otp','login.otp','password.request','password.reset'))){
+   $bgimg=empty($core['pages_login_bg'])?'':$core['pages_login_bg'];
+   $posterBg = $buildPosterGrid('login_poster_bg');
+}
+
+if(Route::currentRouteName() == 'register'){
    $bgimg=empty($core['pages_register_bg'])?'':$core['pages_register_bg'];
+   $posterBg = $buildPosterGrid('register_poster_bg');
+}
 
 $pagetitle=(request()->is('/') || request()->is('home')) ?env('APP_NAME')." ".$core['global_seo_title']:env('APP_NAME');
 $pagetitle=empty($meta['seo_title'])?$pagetitle:$meta['seo_title'];
@@ -75,10 +104,19 @@ $movieid=empty($movie->id)?'':$movie->id;
 
   gtag('config', 'G-7VVB9LEN3M');
 </script>
-   
 </head>
 
-<body  class="{{ $bodyclass }} @if(!empty($bgimg)) bgimage @endif" @if(!empty($bgimg)) style='background-image:url("{{ Lib::publicImgSrc($bgimg) }}");' @endif>
+<body class="{{ $bodyclass }} @if(!empty($bgimg)) bgimage @endif @if(!empty($posterBg)) poster-bg-page @endif"
+      @if(!empty($bgimg) && empty($posterBg)) style='background-image:url("{{ Lib::publicImgSrc($bgimg) }}");' @endif>
+
+   @if(!empty($posterBg))
+   <div id="poster-grid">
+       @foreach($posterBg as $poster)
+           <img src="{{ Lib::publicImgSrc($poster) }}" alt="" loading="lazy">
+       @endforeach
+   </div>
+   <div id="overlay"></div>
+   @endif
    <div class="current-url" data-page="{{ $postid }}" data-genre="{{ $genreid }}" data-language="{{ $languageid }}" data-movie="{{ $movieid }}" data-url="{{ $currentUrl }}" data-domain="{{ url('/') }}" data-appname="{{ env('APP_NAME') }}" data-search="{{ app('request')->input('search') }}"></div>
    <meta name="csrf-token" content="{{ csrf_token() }}">
    @if(!empty($loadbox)) <div class="loader-box"></div> @endif

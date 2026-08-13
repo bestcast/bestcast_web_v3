@@ -75,6 +75,54 @@ html {
     flex-shrink: 0;
   }
 }
+body.poster-bg-page {
+    position: relative;
+    overflow: hidden;
+}
+#poster-grid{
+    position: absolute;
+    inset: -20% -10%;   /* more overflow to fully cover corners after rotation */
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 6px;
+    transform: rotate(-6deg) scale(1.3);  /* slightly larger scale */
+    z-index: 0;
+}
+#poster-grid img{
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    object-position: center 20%; /* nudge the visible crop upward to protect title text */
+    border-radius: 3px;
+    display: block;
+}
+/* Tablet */
+@media (max-width: 991px){
+    #poster-grid{
+        grid-template-columns: repeat(6, 1fr);
+        inset: -30% -15%;
+        transform: rotate(-6deg) scale(1.5);
+    }
+}
+
+/* Mobile */
+@media (max-width: 575px){
+    #poster-grid{
+        grid-template-columns: repeat(4, 1fr);
+        inset: -60% -20%;
+        transform: rotate(-6deg) scale(2);
+    }
+}
+#overlay{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.92));
+    z-index: 1;
+}
+.main-wrapper{
+    position: relative;
+    z-index: 2;
+}
 
 
 
