@@ -9,6 +9,7 @@ use App\Models\CoreConfig;
 use Auth;
 use Lib;
 use App\Models\Post;
+use App\Models\MediaFolder;
 
 class MediaController extends Controller
 {
@@ -55,7 +56,23 @@ class MediaController extends Controller
         //}
     }
     */
+    // New: show folder grid
+    public function folders()
+    {
+        $folders = MediaFolder::getList();
+        return view('admin.media.folders', ['folders' => $folders]);
+    }
 
+    // New: create a folder
+    public function folderSave(Request $request)
+    {
+        MediaFolder::create([
+            'name' => $request->name,
+            'type' => 'general',
+            'created_by' => Auth::user()->id,
+        ]);
+        return redirect()->route('admin.media.folders')->with('success', 'Folder Created');
+    }
 
     public function index()
     {
@@ -209,7 +226,7 @@ class MediaController extends Controller
                 $model->delete();
             }
         }
-        return redirect()->route('admin.media.index')->with('success', 'Deleted Successfully');
+        return redirect()->route('admin.media.folders')->with('success', 'Deleted Successfully');
     }
 
 }

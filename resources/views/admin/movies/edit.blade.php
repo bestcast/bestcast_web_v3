@@ -9,7 +9,10 @@
         @include('admin.common.message')
           <h2 class="pb-2 border-bottom d-flex justify-content-between align-items-center">
               <span>Edit subscription : {{ $model->title }}</span>
-
+              <a href="{{ route('admin.movies.createfolder', $model->id) }}"
+                 class="btn btn-dark">
+                  @if(!empty($model->mediaFolder)) View Folder @else + Add Folder @endif
+              </a>
               <div class="d-flex align-items-center gap-3">
                   <a href="{{ route('admin.questions.list', ['movieId' => $model->id]) }}"
                      class="btn btn-dark">
@@ -23,6 +26,11 @@
                   </div>
               </div>
           </h2>
+          @if(empty($model->mediaFolder))
+              <div class="alert alert-warning py-2 px-3 mb-3">
+                  No folder created yet for this movie. Click <strong>"+ Add Folder"</strong> above before uploading images, so they get organized correctly.
+              </div>
+          @endif
           <div class="form-row">
               <label class="form-label" for="name">Title <em>*</em></label>
               <input type="text" class="form-control" id="title" name="title" value="{{ old('title',$model->title) }}" >
@@ -30,21 +38,21 @@
 
           <div class="row mt-1 form-img-upload">
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('image_id','Image',$model) !!}
+                {!! Field::mediaUpload('image_id','Image',$model, optional($model->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('medium_id','Medium',$model) !!}
+                {!! Field::mediaUpload('medium_id','Medium',$model, optional($model->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('thumbnail_id','Thumbnail',$model) !!}
+                {!! Field::mediaUpload('thumbnail_id','Thumbnail',$model, optional($model->mediaFolder)->id) !!}
             </div>
           </div>
           <div class="row pt-2 form-img-upload">
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('portraitsmall_id','Portrait Small',$model) !!}
+                {!! Field::mediaUpload('portraitsmall_id','Portrait Small',$model, optional($model->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('portrait_id','Portrait',$model) !!}
+                {!! Field::mediaUpload('portrait_id','Portrait',$model, optional($model->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
                 <p><b>Image</b> (1920X1080)<br><b>Medium</b> (720X405)<br><b>Thumbnail</b> (360X203)<br><b>Portrait Small</b> (400X600)<br><b>Portrait</b> (1000X1500)</p>
@@ -429,7 +437,35 @@
 </div>
 
 {{ Form::close() }}
+<script>
+var mediaPickerChannel = new BroadcastChannel('media_picker_channel');
+mediaPickerChannel.onmessage = function(e){
+    var data = e.data;
+    if (!data || data.type !== 'mediaSelected') return;
 
+    var field = data.field;
+    var id = data.id;
+    var fullurl = data.fullurl;
+
+    var hidden = document.getElementById(field);
+    if (hidden) hidden.value = id;
+
+    var btn = document.querySelector('.um-' + field);
+    if (btn) {
+        var container = btn.parentNode.querySelector('.imgContainer');
+        if (container) {
+            var hLTIn = container.querySelector('.hLTIn');
+            if (hLTIn) {
+                hLTIn.innerHTML = '<div class="hLTImg"><img src="' + fullurl + '" /></div>';
+            }
+            var removeBtn = container.querySelector('.btnremove');
+            if (removeBtn) removeBtn.classList.add('active');
+        }
+        var span = btn.querySelector('span');
+        if (span) span.innerHTML = 'Change';
+    }
+};
+</script>
 @endsection
 
 

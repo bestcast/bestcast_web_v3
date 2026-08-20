@@ -357,6 +357,10 @@ class Movies extends Database implements RoleHasRelationsContract
 
         return $releaseDateTime->isFuture();
     }
+    public function mediaFolder()
+    {
+        return $this->hasOne(\App\Models\MediaFolder::class, 'reference_id')->where('type', 'movie');
+    }
     /*public function isUpcoming(): bool
     {
         if (empty($this->release_date)) {

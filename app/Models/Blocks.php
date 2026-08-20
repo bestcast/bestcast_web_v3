@@ -179,7 +179,7 @@ class Blocks extends Database implements RoleHasRelationsContract
 
     public static function getList()
     {
-        $data = Blocks::with('page')->latest();
+        $data = Blocks::with('page');
 
         $getSearch=app('request')->input('search');
         if(!empty($getSearch)){

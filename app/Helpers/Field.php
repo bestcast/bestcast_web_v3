@@ -480,15 +480,25 @@ class Field {
 
 
   /*
-  use Field;
-  Field::mediaUpload('image_id','Image',$model);
-  --*/
-  public static function mediaUpload($key,$label,$model){$html='';
-    $mediakey=str_replace('_id','',$key); //which is image_id replace to image
-    $html.='<div class="form-row uploadimg"><div class="addnewmedia" data-addnewmedia="'.route('admin.media.create').'"></div>';
-        $html.='<button type="button" class="btn btn-dark upload-media um-'.$key.'" data-div="'.$key.'" data-id="'.$model->$key.'" data-bs-toggle="modal" data-bs-target="#mediaModal"><span>';
-          $html.=empty($model->$key)?'Upload':'Change';
-        $html.='</span> '.$label.'</button>';
+    use Field;
+    Field::mediaUpload('image_id','Image',$model);
+    --*/
+    public static function mediaUpload($key,$label,$model,$folderId=null){$html='';
+        $mediakey=str_replace('_id','',$key);
+
+        $html.='<div class="form-row uploadimg"><div class="addnewmedia" data-addnewmedia="'.route('admin.media.create').'"></div>';
+
+        if(!empty($folderId)){
+            $folderUrl=route('admin.media.index').'?folder_id='.$folderId.'&picker=1&field='.$key;
+            $html.='<a href="'.$folderUrl.'" target="_blank" class="btn btn-dark upload-media um-'.$key.'"><span>';
+              $html.=empty($model->$key)?'Upload':'Change';
+            $html.='</span> '.$label.'</a>';
+        }else{
+            $html.='<button type="button" class="btn btn-dark upload-media um-'.$key.'" data-div="'.$key.'" data-id="'.$model->$key.'" data-bs-toggle="modal" data-bs-target="#mediaModal"><span>';
+              $html.=empty($model->$key)?'Upload':'Change';
+            $html.='</span> '.$label.'</button>';
+        }
+
         $html.='<input type="hidden" class="form-control upload-media-field" id="'.$key.'" name="'.$key.'" value="'.$model->$key.'">';
         $html.='<div class="imgContainer">
           <div class="hLTIn">';
@@ -498,9 +508,40 @@ class Field {
           $html.='</div>';
           $html.='<button type="button" class="btn btn-secondary btn-sm btnremove '.(empty($model->$mediakey->urlkey)?'':'active').'">Remove</button>';
         $html.='</div>';
+        $html.='</div>';
+        return $html;
+    }
+
+  /*public static function mediaUpload($key,$label,$model,$folderId=null){$html='';
+    $mediakey=str_replace('_id','',$key); //which is image_id replace to image
+
+    if(!empty($folderId)){
+        // Folder exists -> redirect straight to that movie's folder view
+        $folderUrl=route('admin.media.index').'?folder_id='.$folderId;
+        $html.='<div class="form-row uploadimg">';
+            $html.='<a href="'.$folderUrl.'" target="_blank" class="btn btn-dark um-'.$key.'">';
+              $html.=empty($model->$key)?'Upload':'Change';
+            $html.='</span> '.$label.'</a>';
+    }else{
+        // No folder yet -> fall back to old popup picker behavior
+        $html.='<div class="form-row uploadimg"><div class="addnewmedia" data-addnewmedia="'.route('admin.media.create').'"></div>';
+        $html.='<button type="button" class="btn btn-dark upload-media um-'.$key.'" data-div="'.$key.'" data-id="'.$model->$key.'" data-bs-toggle="modal" data-bs-target="#mediaModal"><span>';
+          $html.=empty($model->$key)?'Upload':'Change';
+        $html.='</span> '.$label.'</button>';
+    }
+
+    $html.='<input type="hidden" class="form-control upload-media-field" id="'.$key.'" name="'.$key.'" value="'.$model->$key.'">';
+    $html.='<div class="imgContainer">
+      <div class="hLTIn">';
+        if(!empty($model->$mediakey->urlkey)):
+          $html.='<div class="hLTImg"><img src="'.Lib::publicImgSrc($model->$mediakey->urlkey).'" /></div>';
+        endif;
+      $html.='</div>';
+      $html.='<button type="button" class="btn btn-secondary btn-sm btnremove '.(empty($model->$mediakey->urlkey)?'':'active').'">Remove</button>';
+    $html.='</div>';
     $html.='</div>';
     return $html;
-  }
+  }*/
 
 
   /*

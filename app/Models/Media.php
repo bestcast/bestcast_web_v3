@@ -44,6 +44,7 @@ class Media extends Database implements RoleHasRelationsContract
      */
     protected $fillable = [
         'user_id',
+        'folder_id',
         'urlkey',
         'filename',
         'title',
@@ -62,6 +63,7 @@ class Media extends Database implements RoleHasRelationsContract
     protected $casts = [
         'id'                => 'integer',
         'user_id'           => 'integer',
+        'folder_id'         => 'integer',
         'urlkey'            => 'string',
         'filename'          => 'string',
         'title'             => 'string',
@@ -115,12 +117,15 @@ class Media extends Database implements RoleHasRelationsContract
         $data = Media::latest();
 
         $getSearch=app('request')->input('search');
+        $folderId = app('request')->input('folder_id');
         if(!empty($getSearch)){
             $data =$data->where('title','like',"%".urldecode($getSearch)."%")
                         ->orWhere('urlkey','like',"%".urldecode($getSearch)."%")
                         ->orWhere('filename','like',"%".urldecode($getSearch)."%");
         }
-
+        if (!empty($folderId) && is_numeric($folderId)) {
+            $data = $data->where('folder_id', $folderId);
+        }
         $data =$data->orderBy('created_at','desc');
         $data =$data->paginate(20);
         return $data;
@@ -129,6 +134,10 @@ class Media extends Database implements RoleHasRelationsContract
     public function getUrlAttribute()
     {
         return url($this->urlkey);
+    }
+    public function folder()
+    {
+        return $this->belongsTo(MediaFolder::class, 'folder_id');
     }
 
 }

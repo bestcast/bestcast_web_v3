@@ -84,11 +84,18 @@
     @endrole
     @if (Route::has('admin.media.index'))
       <li class="icon-image  {{ request()->is('admin/media') || request()->is('admin/media/*') ? 'active' : '' }}">
-        <a href="{{ route('admin.media.index') }}" class="nav-link link-dark">
+        <a href="{{ route('admin.media.folders') }}" class="nav-link link-dark">
           Media
+          <span class="arrow icon-arrow-right">&nbsp;</span>
         </a>
+        <ul class="subnavpills" style="{{ request()->is('admin/media') || request()->is('admin/media/*') ? 'display:block' : '' }}">
+          <li class="icon-arrow-double-right {{ request()->is('admin/media/folders') || request()->is('admin/media/folders*') ? 'active' : '' }}">
+            <a href="{{ route('admin.media.folders') }}">Folders</a></li>
+          <li class="icon-arrow-double-right {{ (request()->is('admin/media') || (request()->is('admin/media/*') && !request()->is('admin/media/folders*') && !request()->is('admin/media/create*') && !request()->is('admin/media/edit*') && !request()->is('admin/media/view*') && !request()->is('admin/media/delete*') && !request()->is('admin/media/popup*'))) ? 'active' : '' }}">
+            <a href="{{ route('admin.media.index') }}">All Media</a></li>
+        </ul>
       </li>
-    @endif
+  @endif
     @role('admin,subadmin')
       @if (Route::has('admin.subscription.index'))
         <li class="icon-rupee {{ request()->is('admin/subscription') || request()->is('admin/subscription/*') ? 'active' : '' }}">

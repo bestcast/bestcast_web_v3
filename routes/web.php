@@ -226,7 +226,7 @@ Route::group([
     Route::get('/admin/movies/delete/{id}', 'MoviesController@delete')->name('admin.movies.delete');
     Route::get('/admin/movies/searchbytitle', 'MoviesController@searchbytitle')->name('admin.movies.searchbytitle');
     Route::get('/admin/movies/searchbytitle/{key}', 'MoviesController@searchbytitle')->name('admin.movies.searchbytitle.key');
-
+    Route::get('/admin/movies/createfolder/{id}', 'MoviesController@createfolder')->name('admin.movies.createfolder');
 
     Route::get('/admin/webseries', 'WebSeriesController@index')->name('admin.webseries.index');
     Route::get('/admin/webseries/searchbytitle', 'WebSeriesController@searchbytitle')->name('admin.webseries.searchbytitle');
@@ -365,7 +365,8 @@ Route::group([
     Route::post('/admin/media/editsave/{id}', 'MediaController@editsave')->name('admin.media.editsave');
     Route::get('/admin/media/delete/{id}', 'MediaController@delete')->name('admin.media.delete');
     Route::get('/admin/media/popup/list', 'MediaController@popuplist')->name('admin.media.popuplist');
-
+    Route::get('/admin/media/folders', 'MediaController@folders')->name('admin.media.folders');
+    Route::post('/admin/media/folders/save', 'MediaController@folderSave')->name('admin.media.folders.save');
 
 
 

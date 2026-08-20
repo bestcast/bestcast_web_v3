@@ -15,6 +15,7 @@ use App\Models\Meta;
 use Auth;
 use Field;
 use Lib;
+use App\Models\MediaFolder;
 
 class MoviesController extends Controller
 {
@@ -48,6 +49,31 @@ class MoviesController extends Controller
     {
         $data = Movies::getList();
         return view('admin.movies.index', ['model'=>$data]);
+    }
+    public function createfolder($id)
+    {
+        $movie = Movies::find($id); // adjust model name if yours differs
+        if (empty($movie)) {
+            return redirect()->back()->with('error', 'Movie not found');
+        }
+
+        $existing = MediaFolder::where('type', 'movie')
+                        ->where('reference_id', $movie->id)
+                        ->first();
+
+        if (!empty($existing)) {
+            return redirect()->route('admin.media.index', ['folder_id' => $existing->id]);
+        }
+
+        $folder = MediaFolder::create([
+            'name'         => $movie->id . ' - ' . $movie->title,
+            'type'         => 'movie',
+            'reference_id' => $movie->id,
+            'created_by'   => Auth::user()->id,
+        ]);
+
+        return redirect()->route('admin.media.index', ['folder_id' => $folder->id])
+                          ->with('success', 'Folder Created: '.$folder->name);
     }
 
     public function create()

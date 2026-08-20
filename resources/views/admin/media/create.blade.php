@@ -8,9 +8,19 @@
 
 
     {{ Form::model('', ['route' => ['admin.media.createsave'], 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+      <input type="hidden" name="folder_id" value="{{ request('folder_id') }}">
       <div class="form-row">
           <label for="icon">Upload Image</label>
           {!! Field::file('urlkey','') !!}
+      </div>
+      <div class="form-row">
+          <label for="folder_id">Folder</label>
+          <select name="folder_id" class="form-control">
+              <option value="">-- No Folder --</option>
+              @foreach(\App\Models\MediaFolder::orderBy('name')->get() as $f)
+                  <option value="{{ $f->id }}" {{ old('folder_id', request('folder_id')) == $f->id ? 'selected' : '' }}>{{ $f->name }}</option>
+              @endforeach
+          </select>
       </div>
       <div class="form-row">
           <label for="title">Title</label>
