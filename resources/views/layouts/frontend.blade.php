@@ -22,13 +22,29 @@ $bgimg='';
 $posterBg=[];
 $getRouteName=Route::currentRouteName();
 
-$buildPosterGrid = function($cacheKey, $tileCount = 63) {
-    $posters = \Cache::remember($cacheKey.'_raw', now()->addHours(6), function () {
-        return \App\Models\Movies::with('portrait')
+$buildPosterGrid = function($cacheKey, $tileCount = 63) use ($core) {
+    $dateFrom = !empty($core['poster_date_from'])
+       ? \Carbon\Carbon::createFromFormat('Y-m', $core['poster_date_from'])->startOfMonth()->toDateString()
+       : null;
+
+    $dateTo = !empty($core['poster_date_to'])
+       ? \Carbon\Carbon::createFromFormat('Y-m', $core['poster_date_to'])->endOfMonth()->toDateString()
+       : null;
+
+    $posters = \Cache::remember($cacheKey.'_raw_'.$dateFrom.'_'.$dateTo, now()->addHours(6), function () use ($dateFrom, $dateTo) {
+        $query = \App\Models\Movies::with('portrait')
             ->where('status', 1)
-            ->whereNotNull('portrait_id')
-            ->inRandomOrder()
-            ->limit(63)
+            ->whereNotNull('portrait_id');
+
+        if (!empty($dateFrom)) {
+            $query->whereDate('published_date', '>=', $dateFrom);
+        }
+        if (!empty($dateTo)) {
+            $query->whereDate('published_date', '<=', $dateTo);
+        }
+
+        return $query->inRandomOrder()
+            ->limit(20)
             ->get()
             ->pluck('portrait.urlkey')
             ->filter()
@@ -42,7 +58,17 @@ $buildPosterGrid = function($cacheKey, $tileCount = 63) {
     for ($i = 0; $i < $tileCount; $i++) {
         $grid[] = $posters[$i % count($posters)];
     }
+
+    shuffle($grid);
+
     return $grid;
+    if(in_array($getRouteName,array('login','send.otp','login.otp','password.request','password.reset'))){
+      $bgimg=empty($core['pages_login_bg'])?'':$core['pages_login_bg'];
+      $posterBg = $buildPosterGrid('login_poster_bg');
+      // TEMP DEBUG — remove after checking
+      \Log::info('posterBg count: '.count($posterBg));
+      \Log::info('dateFrom/dateTo: '.($core['poster_date_from'] ?? 'null').' / '.($core['poster_date_to'] ?? 'null'));
+   }
 };
 
 if(in_array($getRouteName,array('login','send.otp','login.otp','password.request','password.reset'))){

@@ -17,6 +17,52 @@
             </select>
             <small class="text-muted">Number of days a movie stays in the "New Releases" block after its release date.</small>
         </div>
+        <div class="form-row mt-4">
+            <label class="form-label">Login/Register Poster Background — Release Range</label>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label" for="poster_month_from">From Month</label>
+                    @php ($mFrom = old('poster_month_from', $posterMonthFrom))
+                    <select class="form-select selectbox-default" name="poster_month_from" id="poster_month_from">
+                        <option value="">-- Month --</option>
+                        @foreach(range(1,12) as $m)
+                            <option value="{{ $m }}" @if($mFrom == $m) selected="selected" @endif>{{ date('F', mktime(0,0,0,$m,1)) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="poster_year_from">From Year</label>
+                    @php ($yFrom = old('poster_year_from', $posterYearFrom))
+                    <select class="form-select selectbox-default" name="poster_year_from" id="poster_year_from">
+                        <option value="">-- Year --</option>
+                        @for($y = date('Y'); $y >= 2000; $y--)
+                            <option value="{{ $y }}" @if($yFrom == $y) selected="selected" @endif>{{ $y }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="poster_month_to">To Month</label>
+                    @php ($mTo = old('poster_month_to', $posterMonthTo))
+                    <select class="form-select selectbox-default" name="poster_month_to" id="poster_month_to">
+                        <option value="">-- Month --</option>
+                        @foreach(range(1,12) as $m)
+                            <option value="{{ $m }}" @if($mTo == $m) selected="selected" @endif>{{ date('F', mktime(0,0,0,$m,1)) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="poster_year_to">To Year</label>
+                    @php ($yTo = old('poster_year_to', $posterYearTo))
+                    <select class="form-select selectbox-default" name="poster_year_to" id="poster_year_to">
+                        <option value="">-- Year --</option>
+                        @for($y = date('Y'); $y >= 2000; $y--)
+                            <option value="{{ $y }}" @if($yTo == $y) selected="selected" @endif>{{ $y }}</option>
+                        @endfor
+                    </select>
+                </div>
+            </div>
+            <small class="text-muted">Only movies with a release date in this month/year range are used in the login/register background. Leave blank to include all.</small>
+        </div>
 
         <div class="form-row col-md-12 mt-4">
             <button type="submit" class="btn btn-primary">Update</button>

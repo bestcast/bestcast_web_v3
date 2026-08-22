@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MediaFolder extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'media_folders';
     protected $fillable = ['name', 'type', 'reference_id', 'created_by'];
 
@@ -20,6 +23,6 @@ class MediaFolder extends Model
 
     public static function getList()
     {
-        return self::withCount('media')->orderBy('reference_id', 'desc')->get();
+        return self::withCount('media')->orderByRaw('reference_id IS NULL, reference_id DESC')->get();
     }
 }

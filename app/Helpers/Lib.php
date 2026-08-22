@@ -1041,9 +1041,30 @@ class Lib {
 		return array($device,$browserName);
 	}
 
+	public static function getImageDimensions($urlkey)
+	{
+	    if (empty($urlkey)) return '';
+	    $path = public_path($urlkey); // adjust if your storage path differs
+	    if (!file_exists($path)) return '';
+	    $size = @getimagesize($path);
+	    if (empty($size)) return '';
+	    return $size[0].' x '.$size[1];
+	}
+	public static function getImageTypeLabel($urlkey)
+	{
+	    $dims = self::getImageDimensions($urlkey); // returns e.g. "1920 x 1080"
+	    if (empty($dims)) return '';
 
-	
+	    $map = [
+	        '1920 x 1080' => 'Image',
+	        '720 x 405'   => 'Medium',
+	        '360 x 203'   => 'Thumbnail',
+	        '400 x 600'   => 'Portrait Small',
+	        '1000 x 1500' => 'Portrait',
+	    ];
 
+	    return $map[$dims] ?? $dims; // fallback: show raw dimensions if it doesn't match a known size
+	}
 
 
 }

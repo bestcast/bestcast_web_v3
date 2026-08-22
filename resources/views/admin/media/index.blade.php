@@ -36,6 +36,16 @@
                         </div></div>
                         @endif
                     </div>
+                    <div class="card-meta px-2 py-1">
+                        @php ($dims = Lib::getImageDimensions($item->urlkey))
+                        @php ($typeLabel = Lib::getImageTypeLabel($item->urlkey))
+                        @if(!empty($typeLabel))
+                            <div class="meta-type">{{ $typeLabel }}</div>
+                        @endif
+                        @if(!empty($dims))
+                            <div class="meta-dimensions text-muted">({{ str_replace(' ', '', $dims) }})</div>
+                        @endif
+                    </div>
                   </div>
                 </div>
             </div>
@@ -72,6 +82,9 @@
         .pickercard.selected .pickerCheck { display:block; }
         .card-image { position:relative; }
         .pickerFooter { position:fixed; bottom:0; left:0; right:0; background:#fff; padding:12px 20px; text-align:right; border-top:1px solid #ddd; z-index:999; }
+        .card-meta { font-size: 12px; line-height: 1.4; text-align:center; }
+        .meta-type { font-weight: 600; }
+        .meta-dimensions { font-size: 11px; }
     </style>
 
     <script>

@@ -17,8 +17,17 @@
                         <div class="text-muted">{{ $folder->media_count }} files</div>
                     </div>
                 </a>
+                <div class="card-footer text-center">
+                    <a href="{{ route('admin.media.folders.delete',$folder->id) }}" class="btn btn-danger btn-sm btn-delete-copy-folder-{{ $folder->id }}" data-bs-toggle="modal" data-bs-target="#deletefolder{{ $folder->id }}">Delete</a>
+                </div>
             </div>
         </div>
+        @endforeach
+
+        @foreach($folders as $folder)
+            @php ($delid='folder'.$folder->id)
+            @php ($delurl=route('admin.media.folders.delete',$folder->id))
+            @include('admin.common.modaldelete')
         @endforeach
     </div>
 

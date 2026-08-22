@@ -367,7 +367,7 @@ Route::group([
     Route::get('/admin/media/popup/list', 'MediaController@popuplist')->name('admin.media.popuplist');
     Route::get('/admin/media/folders', 'MediaController@folders')->name('admin.media.folders');
     Route::post('/admin/media/folders/save', 'MediaController@folderSave')->name('admin.media.folders.save');
-
+    Route::get('/admin/media/folders/delete/{id}', 'MediaController@folderDelete')->name('admin.media.folders.delete');
 
 
     Route::get('/admin/user', 'UserController@index')->name('admin.user.index');

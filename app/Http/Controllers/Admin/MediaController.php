@@ -229,4 +229,13 @@ class MediaController extends Controller
         return redirect()->route('admin.media.folders')->with('success', 'Deleted Successfully');
     }
 
+    public function folderDelete($id)
+    {
+        $folder = MediaFolder::find($id);
+        if (!empty($folder)) {
+            $folder->delete(); // soft delete, since SoftDeletes trait is active
+        }
+        return redirect()->route('admin.media.folders')->with('success', 'Folder Deleted Successfully');
+    }
+
 }
