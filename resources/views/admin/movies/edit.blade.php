@@ -386,7 +386,14 @@
                       <input class="form-check-input" type="checkbox" name="movie_access" role="switch" @if(old('movie_access' ,(empty($model->movie_access)?0:1))) checked="" @endif />
                     </div>
                   </div>
-
+                  <div class="form-row">
+                    <label for="excerpt" class="form-label">Available Globally? (Off = India Only)</label>
+                    <div class="mb-3 form-check form-switch">
+                      {{Form::hidden('region_access','')}}
+                      <input class="form-check-input" type="checkbox" name="region_access" value="global" role="switch"
+                        @if(old('region_access', $model->region_access) == 'global') checked @endif />
+                    </div>
+                  </div>
                   <div class="form-row">
                       <label class="form-label" for="name">Movie Published Date</label>
                       <?php

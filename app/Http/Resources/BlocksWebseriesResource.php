@@ -36,6 +36,7 @@ class BlocksWebseriesResource extends JsonResource
                 'thumbnail'   => '',
                 'movie_access'=> 0,
                 'seasons'     => [],
+                'is_webseries' => true,
             ];
         }
 
@@ -80,6 +81,7 @@ class BlocksWebseriesResource extends JsonResource
                     })->values(),
                 ];
             })->values(),
+            'is_webseries' => true,
         ];
     }
 }

@@ -2,12 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TrailerController;
-
-use App\Http\Controllers\GeoTestController;
-
-Route::get('/geo-test', [GeoTestController::class, 'index']);
-
-
+use Stevebauman\Location\Facades\Location;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

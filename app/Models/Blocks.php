@@ -57,7 +57,7 @@ class Blocks extends Database implements RoleHasRelationsContract
         'image_id',
         'created_by',
         'updated_by',
-        'content_type', 
+        //'content_type', 
     ];
 
     /**
@@ -163,6 +163,11 @@ class Blocks extends Database implements RoleHasRelationsContract
         return $this->hasMany('App\Models\BlocksLanguages','blocks_id','id');
     }
 
+    /*public function webseries()
+    {
+        return $this->belongsToMany(WebSeries::class, 'blocks_webseries', 'blocks_id', 'webseries_id');
+    }*/
+
     /*public static function getList()
     {
         $data = Blocks::latest();
@@ -196,9 +201,9 @@ class Blocks extends Database implements RoleHasRelationsContract
         return $data;
     }
     
-    public static function getApiList($user_id)
+    public static function getApiList($user_id, $viewerCountry = null)
     {
-        $baseQuery = Blocks::with([
+        /*$baseQuery = Blocks::with([
             'movies' => function ($query) {
                 $query->whereHas('movies', function ($q) {
                     $q->where('status', 1);
@@ -219,7 +224,33 @@ class Blocks extends Database implements RoleHasRelationsContract
             },
             'genres',
             'languages'
-        ])->where('status', 1)->where('type', 0);
+        ])->where('status', 1)->whereIn('type', [0, 2]);*/
+
+        $baseQuery = Blocks::with([
+            'movies' => function ($query) use ($viewerCountry) {
+                $query->whereHas('movies', function ($q) use ($viewerCountry) {
+                    $q->where('status', 1);
+                    $child = app('request')->input('child');
+                    if (!empty($child)) {
+                        $q->where('age_restriction', '>=', 13);
+                    }
+                    if ($viewerCountry !== 'IN') {
+                        $q->where('region_access', 'global');
+                    }
+                })->orderBy('id', 'desc');
+            },
+            'movies.movies',
+            'movies.movies.image',
+            'movies.movies.thumbnail',
+            'movies.movies.usermovies' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+                $profile_id = app('request')->input('profile_id');
+                if (empty($profile_id)) { $profile_id = 0; }
+                $query->where('profile_id', $profile_id);
+            },
+            'genres',
+            'languages'
+        ])->where('status', 1)->whereIn('type', [0, 2]);
 
         $genre_id = app('request')->input('genre_id');
         if (!empty($genre_id)) {
@@ -255,18 +286,59 @@ class Blocks extends Database implements RoleHasRelationsContract
 
         foreach ($data as $block) {
             $blockTitle = strtolower($block->title ?? '');
-
+            $isWebseriesBlock = str_contains($blockTitle, 'webseries');
             $isUpcomingBlock   = str_contains($blockTitle, 'upcoming');
             $isNewReleaseBlock = str_contains($blockTitle, 'new releases') || str_contains($blockTitle, 'new release');
             $isContinueWatchingBlock = str_contains($blockTitle, 'continue watching');
             $isWatchItAgainBlock     = str_contains($blockTitle, 'watch it again');
 
-
-            if (!$isUpcomingBlock && !$isNewReleaseBlock && !$isContinueWatchingBlock && !$isWatchItAgainBlock) {
+            
+            if (!$isUpcomingBlock && !$isNewReleaseBlock && !$isContinueWatchingBlock && !$isWatchItAgainBlock && !$isWebseriesBlock) {
                 continue;
             }
 
+            if ($isWebseriesBlock) {
+                $webseriesItems = \App\Models\BlocksWebseries::with([
+                    'webseries',
+                    'webseries.seasons' => function ($q) {
+                        $q->orderBy('id', 'desc');
+                    },
+                    'webseries.seasons.episodes' => function ($q) {
+                        $q->orderBy('id', 'desc');
+                    },
+                    'webseries.seasons.episodes.image',
+                    'webseries.seasons.episodes.thumbnail',
+                    'webseries.seasons.episodes.episode_users' => function ($q) use ($user_id, $profile_id) {
+                        $q->where('user_id', $user_id)
+                             ->where('profile_id', $profile_id);
+                    },
+                ])
+                ->where('blocks_id', $block->id)
+                ->get();
+
+                $wrappedWebseries = $webseriesItems->map(function ($item) {
+                    $bm = new \App\Models\BlocksMovies();
+                    $bm->setRelation('webseries', $item->webseries);   // ← changed from 'movies' to 'webseries'
+                    $bm->setAttribute('is_webseries', true);
+                    return $bm;
+                })->filter(function ($bm) {
+                    return !empty($bm->webseries);                      // ← changed from ->movies to ->webseries
+                })->values();
+
+                $block->setRelation('movies', $wrappedWebseries);
+                continue;
+            }
             if ($isUpcomingBlock) {
+                /*$allMovies = \App\Models\Movies::with([
+                    'image',
+                    'thumbnail',
+                    'usermovies' => function ($query) use ($user_id, $profile_id) {
+                        $query->where('user_id', $user_id);
+                        $query->where('profile_id', $profile_id);
+                    }
+                ])->where('status', 1)
+                  ->whereNotNull('release_date')
+                  ->get()*/
                 $allMovies = \App\Models\Movies::with([
                     'image',
                     'thumbnail',
@@ -275,6 +347,9 @@ class Blocks extends Database implements RoleHasRelationsContract
                         $query->where('profile_id', $profile_id);
                     }
                 ])->where('status', 1)
+                  ->when($viewerCountry !== 'IN', function ($q) {
+                      $q->where('region_access', 'global');
+                  })
                   ->whereNotNull('release_date')
                   ->get()
                   ->filter(function ($movie) {
@@ -310,6 +385,16 @@ class Blocks extends Database implements RoleHasRelationsContract
                 $daysAgo   = \Carbon\Carbon::now()->subDays($daysLimit)->startOfDay();
                 $nowTime   = \Carbon\Carbon::now();
 
+                /*$newReleaseMovies = \App\Models\Movies::with([
+                    'image',
+                    'thumbnail',
+                    'usermovies' => function ($query) use ($user_id, $profile_id) {
+                        $query->where('user_id', $user_id);
+                        $query->where('profile_id', $profile_id);
+                    }
+                ])->where('status', 1)
+                  ->whereNotNull('release_date')
+                  ->get()*/
                 $newReleaseMovies = \App\Models\Movies::with([
                     'image',
                     'thumbnail',
@@ -318,6 +403,9 @@ class Blocks extends Database implements RoleHasRelationsContract
                         $query->where('profile_id', $profile_id);
                     }
                 ])->where('status', 1)
+                  ->when($viewerCountry !== 'IN', function ($q) {
+                      $q->where('region_access', 'global');
+                  })
                   ->whereNotNull('release_date')
                   ->get()
                   ->filter(function ($movie) use ($daysAgo, $nowTime) {
@@ -349,7 +437,7 @@ class Blocks extends Database implements RoleHasRelationsContract
             }
             
             if ($isContinueWatchingBlock) {
-                $continueWatching = \App\Models\UsersMovies::with([
+                /*$continueWatching = \App\Models\UsersMovies::with([
                         'movies.image',
                         'movies.thumbnail',
                         'movies.usermovies' => function ($q) use ($user_id, $profile_id) {
@@ -367,8 +455,29 @@ class Blocks extends Database implements RoleHasRelationsContract
                     ->get()
                     ->pluck('movies')
                     ->filter()
+                    ->values();*/
+                $continueWatching = \App\Models\UsersMovies::with([
+                        'movies.image',
+                        'movies.thumbnail',
+                        'movies.usermovies' => function ($q) use ($user_id, $profile_id) {
+                            $q->where('user_id', $user_id)->where('profile_id', $profile_id);
+                        }
+                    ])
+                    ->where('user_id', $user_id)
+                    ->where('profile_id', $profile_id)
+                    ->where('watching', 1)
+                    ->where('watched_percent', '<', 90)
+                    ->whereHas('movies', function ($q) use ($viewerCountry) {
+                        $q->where('status', 1);
+                        if ($viewerCountry !== 'IN') {
+                            $q->where('region_access', 'global');
+                        }
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->get()
+                    ->pluck('movies')
+                    ->filter()
                     ->values();
-
                 $wrappedMovies = $continueWatching->map(function ($movie) {
                     $bm = new \App\Models\BlocksMovies();
                     $bm->setRelation('movies', $movie);
@@ -379,7 +488,7 @@ class Blocks extends Database implements RoleHasRelationsContract
             }
 
             if ($isWatchItAgainBlock) {
-                $watchItAgain = \App\Models\UsersMovies::with([
+                /*$watchItAgain = \App\Models\UsersMovies::with([
                         'movies.image',
                         'movies.thumbnail',
                         'movies.usermovies' => function ($q) use ($user_id, $profile_id) {
@@ -391,6 +500,27 @@ class Blocks extends Database implements RoleHasRelationsContract
                     ->where('watched_percent', '>=', 90)
                     ->whereHas('movies', function ($q) {
                         $q->where('status', 1);
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->get()
+                    ->pluck('movies')
+                    ->filter()
+                    ->values();*/
+                $watchItAgain = \App\Models\UsersMovies::with([
+                        'movies.image',
+                        'movies.thumbnail',
+                        'movies.usermovies' => function ($q) use ($user_id, $profile_id) {
+                            $q->where('user_id', $user_id)->where('profile_id', $profile_id);
+                        }
+                    ])
+                    ->where('user_id', $user_id)
+                    ->where('profile_id', $profile_id)
+                    ->where('watched_percent', '>=', 90)
+                    ->whereHas('movies', function ($q) use ($viewerCountry) {
+                        $q->where('status', 1);
+                        if ($viewerCountry !== 'IN') {
+                            $q->where('region_access', 'global');
+                        }
                     })
                     ->orderBy('updated_at', 'desc')
                     ->get()
@@ -481,3 +611,6 @@ class Blocks extends Database implements RoleHasRelationsContract
         ->first();
     }*/
 }
+
+
+        

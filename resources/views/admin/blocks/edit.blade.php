@@ -13,39 +13,12 @@
               <input type="text" class="form-control" id="title" name="title" value="{{ old('title',$model->title) }}" >
           </div>
 
-          <div class="form-row dnn"><!--Tv Shows Extend-->
+          <div class="form-row"><!--Tv Shows Extend-->
             <label class="form-label"for="excerpt">Type</label>
-            {{ Form::select('type', [0=>"Movies",1=>"Tv Shows"],old('type',$model->type), array('id'=>'type','class' => 'form-select')); }}
-            <script>
-                jQuery(document).ready(function($) {
-                    $('#type').change(function() {
-                        var selectedValue = $(this).val();
-                        console.log(selectedValue);
-                        if (selectedValue==1) {
-                            $('#movies_dropdown').addClass('dnn');
-                            $('#shows_dropdown').removeClass('dnn');
-                        } else {
-                            $('#movies_dropdown').removeClass('dnn');
-                            $('#shows_dropdown').addClass('dnn');
-                        }
-                    });
-                });
-            </script>
+            {{ Form::select('type', [0=>"Movies", 1=>"Tv Shows", 2=>"Web Series"], old('type',$model->type), array('id'=>'type','class' => 'form-select')); }}
           </div>
 
-          <div class="form-row">
-              <label class="form-label">Content Type</label><br>
-
-              <input type="radio" name="content_type" value="movies"
-                  {{ old('content_type', $model->content_type ?? 'movies') == 'movies' ? 'checked' : '' }}>
-              Movies
-
-              <input type="radio" name="content_type" value="webseries"
-                  {{ old('content_type', $model->content_type ?? '') == 'webseries' ? 'checked' : '' }}>
-              Webseries
-          </div>
-
-          <div class="form-row form-select2 {{ empty($model->type)?'':'dnn' }}"  id="movies_dropdown">
+          <div class="form-row form-select2 {{ $model->type == 0 ? '' : 'dnn' }}"  id="movies_dropdown">
             <label class="form-label">Movies</label>
             <select name="movies_id[]" class="form-control" id="movies_id" multiple="multiple">
               @if(!empty($model->movies) && count($model->movies))
@@ -73,11 +46,8 @@
             </script>
           </div>
 
-          <div class="form-row form-select2 {{ empty($model->type)?'':'dnn' }}" id="webseries_dropdown">
+          <div class="form-row form-select2 {{ $model->type == 2 ? '' : 'dnn' }}" id="webseries_dropdown">
               <label class="form-label">Webseries</label>
-
-              
-
 
               <select name="webseries_id[]" class="form-control" id="webseries_id" multiple="multiple">
               @if(!empty($model->webseries) && count($model->webseries))
@@ -112,7 +82,7 @@
               </script>
           </div>
 
-          <div class="form-row form-select2 {{ !empty($model->type)?'':'dnn' }}"  id="shows_dropdown">
+          <div class="form-row form-select2 {{ $model->type == 1 ? '' : 'dnn' }}"  id="shows_dropdown">
             <label class="form-label">Tv Shows</label>
             <select name="shows_id[]" class="form-control" id="shows_id" multiple="multiple">
               @if(!empty($model->shows) && count($model->shows))
@@ -163,7 +133,7 @@
           </div>
 
 
-          <div class="form-row form-select2"  id="movies_dropdown">
+          <div class="form-row form-select2"  id="genres_dropdown">
             <label class="form-label">Genres (optional)</label>
             <select name="genre_id[]" class="form-control" id="genre_id" multiple="multiple">
               @if(!empty($model->genres) && count($model->genres))
@@ -192,7 +162,7 @@
           </div>
 
 
-          <div class="form-row form-select2"  id="movies_dropdown">
+          <div class="form-row form-select2"  id="languages_dropdown">
             <label class="form-label">Languages (optional)</label>
             <select name="language_id[]" class="form-control" id="language_id" multiple="multiple">
               @if(!empty($model->languages) && count($model->languages))
@@ -288,14 +258,23 @@
 jQuery(document).ready(function ($) {
 
     function toggleDropdown() {
-        let selected = $('input[name="content_type"]:checked').val();
+        var selected = $('#type').val();
 
-        if (selected === 'movies') {
-            $('#movies_dropdown').removeClass('dnn');
+        if (selected == '1') {
+            // Tv Shows
+            $('#movies_dropdown').addClass('dnn');
             $('#webseries_dropdown').addClass('dnn');
-        } else if (selected === 'webseries') {
+            $('#shows_dropdown').removeClass('dnn');
+        } else if (selected == '2') {
+            // Web Series
             $('#movies_dropdown').addClass('dnn');
             $('#webseries_dropdown').removeClass('dnn');
+            $('#shows_dropdown').addClass('dnn');
+        } else {
+            // Movies (default / 0)
+            $('#movies_dropdown').removeClass('dnn');
+            $('#webseries_dropdown').addClass('dnn');
+            $('#shows_dropdown').addClass('dnn');
         }
     }
 
@@ -303,7 +282,7 @@ jQuery(document).ready(function ($) {
     toggleDropdown();
 
     // On change
-    $('input[name="content_type"]').change(function () {
+    $('#type').change(function () {
         toggleDropdown();
     });
 
@@ -312,5 +291,3 @@ jQuery(document).ready(function ($) {
 {{ Form::close() }}
 
 @endsection
-
-

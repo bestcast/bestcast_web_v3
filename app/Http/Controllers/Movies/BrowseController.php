@@ -161,7 +161,13 @@ class BrowseController extends Controller
             $meta=$post->meta->pluck('value','path');
             return view('errors.lost',['post'=>$post,'meta'=>$meta]);
         }
-	    
+	    // Region access check
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        if ($movie->region_access !== 'global' && $viewerCountry !== 'IN') {
+            $post = Post::where('urlkey', 'page-not-found')->first();
+            $meta = $post->meta->pluck('value', 'path');
+            return view('errors.lost', ['post' => $post, 'meta' => $meta]);
+        }
         $plainToken = Session::get('setTokenEncryted');
 
         $device = null;
@@ -283,7 +289,7 @@ class BrowseController extends Controller
     }
 
 
-    public function movieslist(Request $request)
+   /* public function movieslist(Request $request)
     {
         //Force user to buy plan start
         // $plan=Subscription::getPlan();
@@ -296,6 +302,16 @@ class BrowseController extends Controller
         if(empty($data))
             return $this->error('', "No Records Found!", 200);
 
+        return MoviesResource::collection($data);
+    }*/
+
+    public function movieslist(Request $request)
+    {
+        $user=Auth::user();
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        $data=Movies::getApiList($user->id, $viewerCountry);
+        if(empty($data))
+            return $this->error('', "No Records Found!", 200);
         return MoviesResource::collection($data);
     }
 
@@ -329,14 +345,15 @@ class BrowseController extends Controller
         //Force user to buy plan end
 
         $user=Auth::user();
-        $data=Blocks::getApiList($user->id);
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        $data=Blocks::getApiList($user->id, $viewerCountry);
         if(empty($data))
             return $this->error('', "No Records Found!", 200);
 
         return BlocksResource::collection($data);
     }
 
-    public function latestlist(Request $request)
+    /*public function latestlist(Request $request)
     {
         $user=Auth::user();
         $data=Movies::getApiList($user->id);
@@ -344,8 +361,16 @@ class BrowseController extends Controller
             return $this->error('', "No Records Found!", 200);
 
         return MoviesListResource::collection($data);
+    }*/
+    public function latestlist(Request $request)
+    {
+        $user=Auth::user();
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        $data=Movies::getApiList($user->id, $viewerCountry);
+        if(empty($data))
+            return $this->error('', "No Records Found!", 200);
+        return MoviesListResource::collection($data);
     }
-
     public function menuapicode(Request $r){
         $user=Auth::user();Lib::send($r);
         return view('auth.contact');

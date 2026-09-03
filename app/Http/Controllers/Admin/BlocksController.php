@@ -96,7 +96,7 @@ class BlocksController extends Controller
 
 
             $BlocksMovies = BlocksMovies::where('blocks_id',$id)->delete();
-            if(empty($model->type) && !empty($requestData['movies_id']) && count($requestData['movies_id'])){
+            if($model->type == 0 && !empty($requestData['movies_id']) && count($requestData['movies_id'])){
                 foreach($requestData['movies_id'] as $key=>$itm_id){
                     if($itm_id){
                         $BlocksMovies = new BlocksMovies();
@@ -108,19 +108,20 @@ class BlocksController extends Controller
             }
 
             $BlocksWebseries = BlocksWebseries::where('blocks_id',$id)->delete();
-            if(empty($model->type) && !empty($requestData['webseries_id']) && count($requestData['webseries_id'])){
+            if($model->type == 2 && !empty($requestData['webseries_id']) && count($requestData['webseries_id'])){
                 foreach($requestData['webseries_id'] as $key=>$itm_id){
                     if($itm_id){
                         $BlocksWebseries = new BlocksWebseries();
                         $BlocksWebseries->webseries_id = $itm_id;
                         $BlocksWebseries->blocks_id = $id;
                         $BlocksWebseries->save();
+                        \Log::info('After save', ['model_type_after_save' => $model->type]);
                     }
                 }
             }
 
             $BlocksShows = BlocksShows::where('blocks_id',$id)->delete();
-            if(!empty($model->type) && !empty($requestData['shows_id']) && count($requestData['shows_id'])){
+            if($model->type == 1 && !empty($requestData['shows_id']) && count($requestData['shows_id'])){
                 foreach($requestData['shows_id'] as $key=>$itm_id){
                     if($itm_id){
                         $BlocksShows = new BlocksShows();

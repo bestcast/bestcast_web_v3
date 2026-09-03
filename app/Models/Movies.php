@@ -68,6 +68,7 @@ class Movies extends Database implements RoleHasRelationsContract
         'is_upcoming',
         'topten',
         'movie_access',
+        'region_access',
         'movie_quiz_status',
         'trailer_url',
         'trailer_url_480p',
@@ -276,7 +277,7 @@ class Movies extends Database implements RoleHasRelationsContract
         return $data;
     }
     
-    public static function getApiList($user_id)
+    /*public static function getApiList($user_id)
     {        
 
         $data = Movies::where('status',1)->latest();//with('genres','languages')->
@@ -330,8 +331,59 @@ class Movies extends Database implements RoleHasRelationsContract
         $paginate=empty($paginate)?60:$paginate;
         $data =$data->paginate($paginate);
         return $data;
-    }
+    }*/
+    public static function getApiList($user_id, $viewerCountry = null)
+    {        
+        $data = Movies::where('status',1)->latest();
+            
+        $child=app('request')->input('child');if(!empty($child)){ 
+            $data=$data->where('age_restriction','>=',13); 
+        }  
 
+        // Region access filter
+        if ($viewerCountry !== 'IN') {
+            $data = $data->where('region_access', 'global');
+        }
+
+        $data = $data->with([
+            'usermovies'=> function ($query) use ($user_id){
+                $query->where('user_id', $user_id);
+                        $profile_id=app('request')->input('profile_id');if(empty($profile_id)){ $profile_id=0; }
+                        $query->where('profile_id',$profile_id);
+                } 
+            ]);
+        $getGenre=app('request')->input('genre');
+        if(!empty($getGenre)){
+            $data->whereHas('genres', function($q) use($getGenre) {
+                $q->where('genre_id', $getGenre);
+            });
+        }
+        $getLanguage=app('request')->input('language');
+        if(!empty($getLanguage)){
+            $data =$data->whereHas('languages', function($q) use($getLanguage) {
+                $q->where('language_id', $getLanguage);
+            });
+        }
+        
+        $getSearch=app('request')->input('search');
+        if(!empty($getSearch) && strlen($getSearch)>=3){
+            $data =$data->where('title','like',"%".urldecode($getSearch)."%");
+        }
+        $sortorder=app('request')->input('sortorder');
+        if($sortorder==1){
+            $data =$data->orderBy('title','asc');
+        }elseif($sortorder==2){
+            $data =$data->orderBy('title','desc');
+        }elseif($sortorder==3){
+            $data =$data->orderBy('release_date','asc');
+        }elseif($sortorder==4){
+            $data =$data->orderBy('release_date','desc');
+        }
+        $paginate=app('request')->input('paginate');
+        $paginate=empty($paginate)?60:$paginate;
+        $data =$data->paginate($paginate);
+        return $data;
+    }
 
 
     public static function getProducerList($user_id)
@@ -360,6 +412,13 @@ class Movies extends Database implements RoleHasRelationsContract
     public function mediaFolder()
     {
         return $this->hasOne(\App\Models\MediaFolder::class, 'reference_id')->where('type', 'movie');
+    }
+    public function isAccessibleFrom($countryCode)
+    {
+        if ($this->region_access === 'global') {
+            return true;
+        }
+        return $countryCode === 'IN';
     }
     /*public function isUpcoming(): bool
     {
