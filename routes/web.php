@@ -230,6 +230,7 @@ Route::group([
     Route::get('/admin/webseries/edit/{id}', 'WebSeriesController@edit')->name('admin.webseries.edit');
     Route::post('/admin/webseries/editsave/{id}', 'WebSeriesController@editsave')->name('admin.webseries.editsave');
     Route::get('/admin/webseries/delete/{id}', 'WebSeriesController@delete')->name('admin.webseries.delete');
+    Route::get('/admin/webseries/createfolder/{id}', 'WebSeriesController@createfolder')->name('admin.webseries.createfolder');
     //Route::get('admin/webseries/{webseries}/season/auto-create',[SeasonController::class, 'autoCreate'])->name('admin.seasons.autoCreate');
     Route::get('admin/webseries/{webseries}/seasons', 'SeasonController@index')->name('admin.seasons.index');
     Route::get('admin/webseries/{webseries}/season/auto-create', 'SeasonController@autoCreate')->name('admin.seasons.autoCreate');

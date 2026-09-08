@@ -283,5 +283,9 @@ class Webseries extends Model
             }
         });
     }
+    public function mediaFolder()
+    {
+        return $this->hasOne(\App\Models\MediaFolder::class, 'reference_id')->where('type', 'webseries');
+    }
 
 }

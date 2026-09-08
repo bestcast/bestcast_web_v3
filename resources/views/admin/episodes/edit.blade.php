@@ -9,6 +9,17 @@
       <div class="container-fluid">
         @include('admin.common.message')
         <h5 class="fw-bold">Webseries Info: {{ $webseries->title }}</h5>
+          <p class="mt-1">
+              <strong>Season:</strong> {{ $season->title }}
+          </p>
+
+          @if(empty($webseries->mediaFolder))
+              <div class="alert alert-warning py-2 px-3 mb-3">
+                  No media folder exists for this webseries yet. Go to the <strong>Webseries edit page</strong> and click "+ Add Folder" first, so episode images can be organized correctly.
+              </div>
+          @else
+              <p class="text-muted">Episode images will be organized under: <strong>{{ $webseries->mediaFolder->name }}</strong></p>
+          @endif
         <p class="mt-1">
             <strong>Season:</strong> {{ $season->title }}
         </p>
@@ -26,21 +37,21 @@
 
           <div class="row mt-1 form-img-upload">
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('image_id','Image',$model) !!}
+                {!! Field::mediaUpload('image_id','Image',$model, optional($webseries->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('medium_id','Medium',$model) !!}
+                {!! Field::mediaUpload('medium_id','Medium',$model, optional($webseries->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('thumbnail_id','Thumbnail',$model) !!}
+                {!! Field::mediaUpload('thumbnail_id','Thumbnail',$model, optional($webseries->mediaFolder)->id) !!}
             </div>
           </div>
           <div class="row pt-2 form-img-upload">
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('portraitsmall_id','Portrait Small',$model) !!}
+                {!! Field::mediaUpload('portraitsmall_id','Portrait Small',$model, optional($webseries->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
-                {!! Field::mediaUpload('portrait_id','Portrait',$model) !!}
+                {!! Field::mediaUpload('portrait_id','Portrait',$model, optional($webseries->mediaFolder)->id) !!}
             </div>
             <div class="col-3 themed-grid-col">
                 <p><b>Image</b> (1920X1080)<br><b>Medium</b> (720X405)<br><b>Thumbnail</b> (360X203)<br><b>Portrait Small</b> (400X600)<br><b>Portrait</b> (1000X1500)</p>
@@ -455,5 +466,26 @@
 </div>
 
 {{ Form::close() }}
-
+<script>
+var mediaPickerChannel = new BroadcastChannel('media_picker_channel');
+mediaPickerChannel.onmessage = function(e){
+    var data = e.data;
+    if (!data || data.type !== 'mediaSelected') return;
+    var field = data.field, id = data.id, fullurl = data.fullurl;
+    var hidden = document.getElementById(field);
+    if (hidden) hidden.value = id;
+    var btn = document.querySelector('.um-' + field);
+    if (btn) {
+        var container = btn.parentNode.querySelector('.imgContainer');
+        if (container) {
+            var hLTIn = container.querySelector('.hLTIn');
+            if (hLTIn) hLTIn.innerHTML = '<div class="hLTImg"><img src="' + fullurl + '" /></div>';
+            var removeBtn = container.querySelector('.btnremove');
+            if (removeBtn) removeBtn.classList.add('active');
+        }
+        var span = btn.querySelector('span');
+        if (span) span.innerHTML = 'Change';
+    }
+};
+</script>
 @endsection

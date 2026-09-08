@@ -20,6 +20,7 @@ use App\Models\Meta;
 use App\Models\WebseriesGenres;
 use App\Models\WebseriesLanguages;
 use Illuminate\Support\Str;
+use App\Models\MediaFolder;
 //use App\Models\Movies;
 
 class WebSeriesController extends Controller
@@ -39,6 +40,32 @@ class WebSeriesController extends Controller
         $data = Webseries::select("id","title as text")->where('title','like',"%".urldecode($key)."%")->latest()->take(20)->get();
         if(!count($data)){ return Webseries::select("id","title as text")->latest()->take(20)->get();}
         return $data;
+    }
+
+    public function createfolder($id)
+    {
+        $webseries = WebSeries::find($id); // confirm exact model class name below
+        if (empty($webseries)) {
+            return redirect()->back()->with('error', 'Webseries not found');
+        }
+
+        $existing = MediaFolder::where('type', 'webseries')
+                        ->where('reference_id', $webseries->id)
+                        ->first();
+
+        if (!empty($existing)) {
+            return redirect()->route('admin.media.index', ['folder_id' => $existing->id]);
+        }
+
+        $folder = MediaFolder::create([
+            'name'         => $webseries->id . ' - ' . $webseries->title,
+            'type'         => 'webseries',
+            'reference_id' => $webseries->id,
+            'created_by'   => Auth::user()->id,
+        ]);
+
+        return redirect()->route('admin.media.index', ['folder_id' => $folder->id])
+                          ->with('success', 'Folder Created: '.$folder->name);
     }
     public function index()
     {
