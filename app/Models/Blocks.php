@@ -299,7 +299,11 @@ class Blocks extends Database implements RoleHasRelationsContract
 
             if ($isWebseriesBlock) {
                 $webseriesItems = \App\Models\BlocksWebseries::with([
-                    'webseries',
+                    'webseries' => function ($q) use ($viewerCountry) {
+                        if ($viewerCountry !== 'IN') {
+                            $q->where('region_access', 'global');
+                        }
+                    },
                     'webseries.seasons' => function ($q) {
                         $q->orderBy('id', 'desc');
                     },
@@ -318,11 +322,11 @@ class Blocks extends Database implements RoleHasRelationsContract
 
                 $wrappedWebseries = $webseriesItems->map(function ($item) {
                     $bm = new \App\Models\BlocksMovies();
-                    $bm->setRelation('webseries', $item->webseries);   // ← changed from 'movies' to 'webseries'
+                    $bm->setRelation('webseries', $item->webseries);
                     $bm->setAttribute('is_webseries', true);
                     return $bm;
                 })->filter(function ($bm) {
-                    return !empty($bm->webseries);                      // ← changed from ->movies to ->webseries
+                    return !empty($bm->webseries);
                 })->values();
 
                 $block->setRelation('movies', $wrappedWebseries);
@@ -548,17 +552,19 @@ class Blocks extends Database implements RoleHasRelationsContract
 
         return $data;
     }
-    public static function getwebseriesApiList($user_id)
+    public static function getwebseriesApiList($user_id, $viewerCountry = null)
     {
         $data = Blocks::with([
-            'webseries.webseries' => function ($q) {
+            'webseries.webseries' => function ($q) use ($viewerCountry) {
                 $q->where('status', 1);
                 $child = app('request')->input('child');
                 if (!empty($child)) {
                     $q->where('age_restriction', '>=', 13);
                 }
+                if ($viewerCountry !== 'IN') {
+                    $q->where('region_access', 'global');
+                }
             },
-            // All seasons + episodes ordered latest first
             'webseries.webseries.seasons' => function ($q) {
                 $q->orderBy('id', 'desc');
             },
@@ -574,9 +580,7 @@ class Blocks extends Database implements RoleHasRelationsContract
             'genres',
             'languages'
         ]);
-
         $data = $data->where('status', 1)->latest();
-
         if ($genre_id = request('genre_id')) {
             $data->whereHas('genres', fn($q) => $q->where('genre_id', $genre_id));
         }
@@ -587,9 +591,27 @@ class Blocks extends Database implements RoleHasRelationsContract
             $data->where('page_id', $page_id);
         }
 
-        return $data->orderBy('sortorder', 'asc')
+        $result = $data->orderBy('sortorder', 'asc')
                     ->orderBy('title', 'asc')
                     ->paginate(request('paginate', 5));
+
+        // Remove pivot entries whose nested webseries got filtered out (region_access),
+        // then remove blocks that end up with zero valid entries
+        $filtered = $result->getCollection()->map(function ($block) {
+            if ($block->relationLoaded('webseries')) {
+                $validEntries = $block->webseries->filter(function ($pivotItem) {
+                    return !empty($pivotItem->webseries); // nested webseries.webseries must exist
+                })->values();
+                $block->setRelation('webseries', $validEntries);
+            }
+            return $block;
+        })->reject(function ($block) {
+            return !$block->relationLoaded('webseries') || $block->webseries->isEmpty();
+        });
+
+        $result->setCollection($filtered->values());
+
+        return $result;
     }
     /*public static function getWebseriesWatchApiList($user_id, $webseries_id)
     {

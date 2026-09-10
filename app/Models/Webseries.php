@@ -66,6 +66,7 @@ class Webseries extends Model
         'trailer_url_480p',
         'video_url',
         'movie_access',
+        'region_access',
         'moviesource',
         'subtitle_status',
     ];

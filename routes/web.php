@@ -13,7 +13,12 @@ use Stevebauman\Location\Facades\Location;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*Route::get('/test-country', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        'ip' => $request->ip(),
+        'country' => \App\Services\GeoService::getCountry($request),
+    ]);
+});*/
 
 Auth::routes();
 

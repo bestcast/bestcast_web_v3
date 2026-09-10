@@ -130,6 +130,7 @@ class WebSeriesController extends Controller
         $requestData['subtitle_status']=empty($requestData['subtitle_status'])?0:1;
         $requestData['is_upcoming']=empty($requestData['is_upcoming'])?0:1;
         $requestData['topten']=empty($requestData['topten'])?0:1;
+        $requestData['region_access']=empty($requestData['region_access'])?'india_only':'global';
         $model->fill($requestData);
         $model->updated_by = Auth::user()->id;
         $model->save();

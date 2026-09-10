@@ -100,6 +100,12 @@ class WebseriesController extends Controller
             abort(404);
         }
 
+        // Region access check — via parent webseries
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        $webseries = $episode->season->webseries;
+        if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
+            abort(404);
+        }
         // Get webseries_id from episode's season
         $webseries_id = $episode->season->webseries_id;
         $nextEpisode = Episode::where('season_id', $episode->season_id)
@@ -155,10 +161,8 @@ class WebseriesController extends Controller
     
     public function webserieswatch(Request $request, $id)
     {
-
         header('Access-Control-Allow-Origin: *');
         $user = Auth::user();
-        // $id is webseries_id
         $webseries = Webseries::with([
             'seasons' => function ($q) { $q->orderBy('id', 'asc'); },
             'seasons.episodes' => function ($q) { $q->orderBy('id', 'asc'); },
@@ -166,22 +170,31 @@ class WebseriesController extends Controller
                 $q->where('user_id', $user->id);
             },
         ])->findOrFail($id);
-        $latestSeason  = $webseries->seasons->last();
-        $latestEpisode = optional($latestSeason)->episodes->last();
 
         if (!$webseries) {
             abort(404);
         }
+
+        // Region access check
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
+            abort(404);
+        }
+
+        $latestSeason  = $webseries->seasons->last();
+        $latestEpisode = optional($latestSeason)->episodes->last();
+
         return view('webseries.webserieswatch', [
             'webseries'  => $webseries,
-            'episode'    => $latestEpisode,       // current episode
-            'season'     => $latestSeason, // current season
+            'episode'    => $latestEpisode,
+            'season'     => $latestSeason,
         ]);
     }
     public function webseriesblockslist(Request $request)
     {
         $user=Auth::user();
-        $data=Blocks::getwebseriesApiList($user->id);
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        $data=Blocks::getwebseriesApiList($user->id, $viewerCountry);
         if(empty($data))
             return $this->error('', "No Records Found!", 200);
 
@@ -209,7 +222,11 @@ class WebseriesController extends Controller
                 $q->where('user_id', $user->id);
             },
         ])->findOrFail($webseries_id);
-
+        // Region access check
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
+            abort(404);
+        }
         return new WebseriesWatchDetailResource($webseries);
     }
     public function getwebseriesdetail($webseriesId, Request $request)
