@@ -281,6 +281,7 @@
             if (el.dataset.wsInfoBound) return;
             el.dataset.wsInfoBound = '1';
             el.addEventListener('click', function(e) {
+                if (this.getAttribute('data-webseries') !== '1') return;
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 var wsId = this.getAttribute('data-id');
@@ -293,6 +294,7 @@
             if (btn.dataset.resumeBound) return;
             btn.dataset.resumeBound = '1';
             btn.addEventListener('click', function(e) {
+                if (this.getAttribute('data-webseries') !== '1') return;
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 var wsId = this.getAttribute('data-id');
