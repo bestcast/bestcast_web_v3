@@ -25,4 +25,21 @@ class MediaFolder extends Model
     {
         return self::withCount('media')->orderByRaw('reference_id IS NULL, reference_id DESC')->get();
     }
+
+    public function getEditUrlAttribute()
+    {
+        if (empty($this->reference_id)) {
+            return route('admin.media.folders');
+        }
+
+        if ($this->type === 'movie') {
+            return route('admin.movies.edit', $this->reference_id);
+        }
+
+        if ($this->type === 'webseries') {
+            return route('admin.webseries.edit', $this->reference_id);
+        }
+
+        return route('admin.media.folders');
+    }
 }

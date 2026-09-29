@@ -1,14 +1,22 @@
 @extends('admin.layouts.master')
 
-
 @section('content')
     @include('admin.common.message')
 
-    <h2 class="pb-3 border-bottom">Add New Media</h2> <br>
+    @php
+        $folder = request('folder_id') ? \App\Models\MediaFolder::find(request('folder_id')) : null;
+        $backUrl = $folder ? $folder->edit_url : route('admin.media.index');
+    @endphp
 
+    <h2 class="pb-3 border-bottom">
+        Add New Media
+        @if(request('folder_id'))
+            <a href="{{ route('admin.media.folders') }}" class="btn btn-outline-secondary btn-sm">← All Folders</a>
+        @endif
+        <a href="{{ $backUrl }}" class="btn btn-secondary float-right backbtn">Back</a>
+    </h2>
 
     {{ Form::model('', ['route' => ['admin.media.createsave'], 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
-      <input type="hidden" name="folder_id" value="{{ request('folder_id') }}">
       <div class="form-row">
           <label for="icon">Upload Image</label>
           {!! Field::file('urlkey','') !!}
@@ -34,12 +42,10 @@
         <label for="excerpt">Short Description</label>
         <textarea class="form-control editor" name="excerpt" rows="5">{{ old('excerpt') }}</textarea>
       </div>
+
       <div class="form-row  mt-3">
           <button type="submit" class="btn btn-primary">Save</button>
-          <a href="{{ route('admin.media.index') }}" class="btn btn-primary backbtn">Back</a>
+          <a href="{{ $backUrl }}" class="btn btn-primary backbtn">Back</a>
       </div>
     {{ Form::close() }}
 @endsection
-
-
-

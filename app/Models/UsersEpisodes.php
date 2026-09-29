@@ -39,15 +39,12 @@ class UsersEpisodes extends Model
         'updated_at',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'user_id',
         'profile_id',
         'episode_id',
+        'season_id',
+        'webseries_id',
         'mylist',
         'likes',
         'watch_time',
@@ -57,16 +54,13 @@ class UsersEpisodes extends Model
         'viewed'
     ];
 
-    /**
-     * Typecast for protection.
-     *
-     * @var array
-     */
     protected $casts = [
         'id'                => 'integer',
         'user_id'           => 'integer',
         'profile_id'        => 'integer',
-        'episode_id'          => 'integer',
+        'episode_id'        => 'integer',
+        'season_id'         => 'integer',
+        'webseries_id'      => 'integer',
         'mylist'            => 'integer',
         'likes'             => 'integer',
         'watch_time'        => 'string',
@@ -100,6 +94,11 @@ class UsersEpisodes extends Model
         return $this->belongsTo('App\Models\UsersProfile','profile_id','id');
     }
 
+    public function webseries()
+    {
+        return $this->belongsTo('App\Models\Webseries', 'webseries_id', 'id');
+    }
+    
     public function episode()
     {
         return $this->belongsTo('App\Models\Episode','episode_id','id');
@@ -177,6 +176,28 @@ class UsersEpisodes extends Model
         return $data;  
     }
 
+    public static function getContinueWatchingWebseriesList($user_id, $profile_id)
+    {
+        $latestPerSeries = self::where('user_id', $user_id)
+            ->where('profile_id', $profile_id)
+            ->where('watching', 1)
+            ->whereNotNull('webseries_id')
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->unique('webseries_id')
+            ->values();
+
+        $episodeIds = $latestPerSeries->pluck('episode_id');
+
+        return Episode::whereIn('id', $episodeIds)
+            ->with([
+                'season.webseries.thumbnail',
+                'userepisodes' => function ($q) use ($user_id, $profile_id) {
+                    $q->where('user_id', $user_id)->where('profile_id', $profile_id);
+                }
+            ])
+            ->get();
+    }
 
     /*public static function getProducerMovieCount($movieid)
     {       

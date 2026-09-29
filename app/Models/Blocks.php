@@ -281,6 +281,7 @@ class Blocks extends Database implements RoleHasRelationsContract
 
         $data = $baseQuery->orderBy('sortorder', 'asc')
                            ->orderBy('title', 'asc')
+                           ->orderBy('id', 'asc')
                            ->distinct()
                            ->paginate($paginate);
 

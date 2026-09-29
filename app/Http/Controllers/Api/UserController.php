@@ -37,6 +37,7 @@ use App\Models\UserMovieWatched;
 use App\Models\UsersEpisodes;
 use App\Http\Resources\EpisodeListResource;
 use App\Http\Resources\EpisodeResource;
+use App\Http\Resources\WebseriesContinueWatchingResource;
 
 use Laravel\Sanctum\PersonalAccessToken;
 class UserController extends Controller
@@ -448,10 +449,18 @@ class UserController extends Controller
 
         $usersEpisodes = UsersEpisodes::getUsersEpisodes($user->id, $request->profile_id, $episodeid);
         if (empty($usersEpisodes)) {
+            // Resolve season_id / webseries_id once, at creation time
+            $episode = Episode::with('season')->find($episodeid);
+            if (empty($episode)) {
+                return $this->error('', "Episode not found!", 200);
+            }
+
             $usersEpisodes = new UsersEpisodes();
             $usersEpisodes->user_id          = $user->id;
             $usersEpisodes->profile_id       = $request->profile_id;
             $usersEpisodes->episode_id       = $episodeid;
+            $usersEpisodes->season_id        = $episode->season_id;
+            $usersEpisodes->webseries_id     = optional($episode->season)->webseries_id;
             $usersEpisodes->mylist           = 0;
             $usersEpisodes->likes            = 0;
             $usersEpisodes->watch_time       = 0;
@@ -487,6 +496,19 @@ class UserController extends Controller
                 'movieDuration' => $movieDuration,
             ]
         ]);
+    }
+
+    public function userwebserieslist(Request $request)
+    {
+        $user = Auth::user();
+        if (empty($user->id) || empty($request->profile_id))
+            return $this->error('', "No Records Found!", 200);
+
+        $data = UsersEpisodes::getContinueWatchingWebseriesList($user->id, $request->profile_id);
+        if ($data->isEmpty())
+            return $this->error('', "No Records Found!", 200);
+
+        return WebseriesContinueWatchingResource::collection($data);
     }
     public function trackMovieWatch($userId, $movieId, $platform = 'web', $movieDurationFromRequest = null)
     {

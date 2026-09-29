@@ -74,6 +74,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/webserieswatchdetail/{webseries_id}', [WebseriesController::class, 'webserieswatchdetail'])->name('webserieswatchdetail');
 
     Route::get('getwebseriesdetail/{id}', [WebseriesController::class, 'getwebseriesdetail']);
+    Route::get('/userwebserieslist', [UserController::class, 'userwebserieslist'])->name('userwebserieslist');
+    
     Route::get('/paymentgatewayinfo', [PaymentController::class, 'paymentgatewayinfo'])->name('paymentgatewayinfo');
     Route::get('/subscriptionlist', [PaymentController::class, 'subscriptionlist'])->name('subscriptionlist');
     Route::post('/createsubscription/{id}', [PaymentController::class, 'createsubscription'])->name('createsubscription');

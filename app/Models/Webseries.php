@@ -134,7 +134,7 @@ class Webseries extends Model
 
     public static $messages = [
         'title.required' => 'Title is required.',
-        'trailer_url.required' => 'Video URL is required.',
+        'trailer_url.required' => 'Trailer URL is required.',
         'release_date.required' => 'Release Date is required.',
         'urlkey.required' => 'URL Key is required.',
         'urlkey.unique' => 'URL Key already exists.',

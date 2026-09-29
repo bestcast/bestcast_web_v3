@@ -159,7 +159,9 @@ class GuestController extends Controller
 
     public function blockslist(Request $request)
     {
-        $data=Blocks::getApiList(0);
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        $data = Blocks::getApiList(0, $viewerCountry);
+        //$data=Blocks::getApiList(0);
         if(empty($data))
             return $this->error('', "No Records Found!", 200);
 

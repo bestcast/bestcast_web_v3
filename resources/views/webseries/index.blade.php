@@ -11,6 +11,7 @@
     var base_url     = "{{ url('/') }}/";
 </script>
 <script src="{{ asset('js/webseries-new.js?1') }}?v=1" defer></script>
+<script src="{{ asset('js/continue-watching-webseries.js?1') }}?v=1" defer></script>
 {{-- Hide More Info button --}}
 <style>
     /*.moreInfo { display: none !important; }
@@ -36,6 +37,7 @@
    <div class="container-fluid blkCtr">
       <div class="row">
          <div class="col-lg-12">
+                <div class="continueWatchingWebseries"></div>
                 <div class="ajxBlocks"></div>
                 <div class="loadingMore"></div>
          </div>

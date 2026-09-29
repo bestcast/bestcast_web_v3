@@ -2,12 +2,19 @@
 @section('content')
     @include('admin.common.message')
     <h2 class="pb-3 border-bottom">
+        @php
+            $currentFolder = request('folder_id') ? \App\Models\MediaFolder::find(request('folder_id')) : null;
+        @endphp
+
         Media
+        @if($currentFolder)
+            <a href="{{ $currentFolder->edit_url }}" class="btn btn-outline-secondary btn-sm">← Back to {{ $currentFolder->name }}</a>
+        @endif
         @if(request('folder_id'))
             <a href="{{ route('admin.media.folders') }}" class="btn btn-outline-secondary btn-sm">← All Folders</a>
         @endif
+        <a href="{{ route('admin.media.create') }}?folder_id={{ request('folder_id') }}" class="btn btn-secondary float-right addnewbtn">+ Add New</a> &nbsp;
         @if(!request('picker'))
-            <a href="{{ route('admin.media.create') }}?folder_id={{ request('folder_id') }}" class="btn btn-secondary float-right addnewbtn">+ Add New</a> &nbsp;
             <a href="{{ route('admin.media.folders') }}" class="btn btn-secondary float-right backbtn">Back</a>
         @endif
     </h2>
