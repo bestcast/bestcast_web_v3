@@ -53,6 +53,8 @@ class Episode extends Model
         'portrait_id',
         'portraitsmall_id',
         'duration',//must be in seconds
+        'intro_start',
+        'intro_end',
         'age_restriction',
         'certificate',
         'certificate_text',
@@ -93,6 +95,8 @@ class Episode extends Model
         'portrait_id'       => 'integer',
         'portraitsmall_id'  => 'integer',
         'duration'          => 'string',
+        'intro_start'       => 'integer',
+        'intro_end'         => 'integer',
         'age_restriction'   => 'integer',
         'certificate'       => 'string',
         'certificate_text'  => 'string',

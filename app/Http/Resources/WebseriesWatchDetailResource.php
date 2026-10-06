@@ -44,6 +44,8 @@ class WebseriesWatchDetailResource extends JsonResource
                             'medium'          => empty($ep->medium) ? '' : $ep->medium->urlkey,
                             'thumbnail'       => empty($ep->thumbnail) ? '' : $ep->thumbnail->urlkey,
                             'duration'        => Lib::formatSecondsToHoursMinutes($ep->duration),
+                            'intro_start' => (int) ($ep->intro_start ?? 0),
+                            'intro_end'   => (int) ($ep->intro_end   ?? 0),
                             'duration_secs'   => $ep->duration,
                             'release_date'    => $ep->release_date,
                             'published_date'  => $ep->published_date,

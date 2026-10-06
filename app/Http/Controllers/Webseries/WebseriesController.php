@@ -264,7 +264,7 @@ class WebseriesController extends Controller
         // Get cast from episode_users where group is 3-7
         $castMembers = \App\Models\EpisodeUsers::whereIn('episode_id', $wsEpisodeIds)
             ->whereIn('group', array_keys($castGroups))
-            ->with('user') // load the user relation
+            ->with('users') // load the user relation
             ->get()
             ->unique('user_id') // deduplicate by person
             ->map(function($eu) use ($castGroups) {

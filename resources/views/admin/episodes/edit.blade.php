@@ -301,6 +301,27 @@
               </div>
             </div>
           </div>
+          <div class="row mt-3">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Intro Start (seconds)</label>
+                      <input type="number" name="intro_start" min="0"
+                             value="{{ old('intro_start', $model->intro_start ?? 0) }}"
+                             class="form-control"
+                             placeholder="e.g. 30 (means intro starts at 0:30)">
+                      <small class="text-muted">Leave 0 if no intro skip needed</small>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Intro End (seconds)</label>
+                      <input type="number" name="intro_end" min="0"
+                             value="{{ old('intro_end', $model->intro_end ?? 0) }}"
+                             class="form-control"
+                             placeholder="e.g. 90 (means intro ends at 1:30)">
+                  </div>
+              </div>
+          </div>
 
 
 

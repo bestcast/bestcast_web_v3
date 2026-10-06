@@ -33,6 +33,8 @@ class EpisodeResource extends JsonResource
             'portraitsmall' => empty($this->portraitsmall)?'':$this->portraitsmall->urlkey,
             'portrait' => empty($this->portrait)?'':$this->portrait->urlkey,
             'duration' => $this->duration,
+            'intro_start' => (int) ($this->intro_start ?? 0),
+            'intro_end'   => (int) ($this->intro_end   ?? 0),
             'duration_text' => Lib::formatSecondsToHoursMinutes($this->duration),
             'certificate' => $this->certificate,
             'certificate_text' => $this->certificate_text,

@@ -16,7 +16,9 @@
 @section('content')
 <div class="ajxProfile"></div>
 <div id="wrapper" class="vpl-skin-aviva vpl-customized"></div>
-
+<button type="button" id="skip-intro-btn">
+    Skip Intro
+</button>
 <style type="text/css">
     .vpl-settings-menu .vpl-quality-menu .vpl-menu-item.vpl-btn-reset{display: none;}
     .vpl-settings-menu .vpl-quality-menu .vpl-menu-item.vpl-btn-reset.vpl-menu-active{display: block;}
@@ -193,6 +195,29 @@
         #ep-panel { width: 100vw; }
         .ep-thumb { width: 100px; min-width: 100px; height: 56px; }
     }
+    /* ── Skip Intro ───────────────────────────────────── */
+    #skip-intro-btn {
+        display: none;
+        position: fixed !important;
+        right: 30px !important;
+        bottom: 90px !important;
+        z-index: 2147483647 !important;
+
+        background: rgba(20, 20, 20, 0.9) !important;
+        color: #fff !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-radius: 5px !important;
+
+        padding: 10px 18px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+    }
+
+    #skip-intro-btn:hover {
+        background: #fff !important;
+        color: #000 !important;
+    }
 </style>
 
 <?php
@@ -300,6 +325,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var baseUrl          = "{{ url('/') }}";
     var webseriesId      = {{ $webseries_id }};
 
+    var introStart = {{ (int) ($episode->intro_start ?? 0) }};
+    var introEnd   = {{ (int) ($episode->intro_end ?? 0) }};
     var settings = {
         useShare: false, instanceName: "player1", playerRatio: "1.777777",
         activeItem: 0, volume: 0.7, autoPlay: true, preload: 'auto',
@@ -322,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             '<div class="vpl-back-refer ICineLeft">{{ $episode->title }}</div><div class="vpl-player-controls-bottom">'
         );
 
-        // ✅ Inject "Episodes" button into the right-side controls bar
+        // Inject "Episodes" button into the right-side controls bar
         content = content.replace(
             '<div class="vpl-player-controls-bottom-right">',
             '<div class="vpl-player-controls-bottom-right">'
@@ -333,7 +360,62 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         wrapper.innerHTML = content;
         player = new vpl(wrapper, settings);
+        // ─── Skip Intro Logic ─────────────────────────────
 
+        var skipIntroBtn = document.getElementById('skip-intro-btn');
+
+        // Move button directly under body
+        if (skipIntroBtn) {
+            document.body.appendChild(skipIntroBtn);
+        }
+
+        function isIntroConfigured() {
+            return introEnd > introStart;
+        }
+
+        function updateSkipIntroButton() {
+            if (!skipIntroBtn || !isIntroConfigured() || !player) {
+                return;
+            }
+
+            try {
+                var currentTime = parseFloat(player.getCurrentTime());
+
+                if (isNaN(currentTime)) {
+                    skipIntroBtn.style.display = 'none';
+                    return;
+                }
+
+                if (currentTime >= introStart && currentTime < introEnd) {
+                    skipIntroBtn.style.display = 'block';
+                } else {
+                    skipIntroBtn.style.display = 'none';
+                }
+
+            } catch (error) {
+                skipIntroBtn.style.display = 'none';
+            }
+        }
+
+
+        // Skip Intro button click
+        if (skipIntroBtn && isIntroConfigured()) {
+
+            skipIntroBtn.addEventListener('click', function () {
+
+                // Seek to intro end
+                player.seek(introEnd);
+
+                // Hide button immediately
+                skipIntroBtn.style.display = 'none';
+            });
+
+
+            // Check every 500ms
+            setInterval(function () {
+                updateSkipIntroButton();
+            }, 500);
+        }
         if (player) {
             var isPaused = 0;
             player.addEventListener("mediaPause", function() { isPaused = 1; });
@@ -350,6 +432,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var nextEpCountdownTimer = null;
             var nextEpShown          = false;
             var timeCheckInterval    = null;
+
+            function resetNextEpisodeState() {
+                // Cancel automatic next episode navigation
+                if (nextEpCountdownTimer) {
+                    clearTimeout(nextEpCountdownTimer);
+                    nextEpCountdownTimer = null;
+                }
+
+                // Allow the overlay to be shown again later
+                nextEpShown = false;
+
+                // Hide overlay
+                var overlay = document.getElementById('next-episode-overlay');
+                if (overlay) {
+                    overlay.classList.remove('visible');
+                }
+            }
 
             function showNextEpisodeOverlay() {
                 if (!nextEpisodeId || !nextEpisodeUrl || nextEpShown) return;
@@ -379,12 +478,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             if (nextEpisodeId) {
                 timeCheckInterval = setInterval(function() {
+
                     if (isPaused) return;
+
                     var current  = parseInt(player.getCurrentTime(), 10);
                     var duration = parseInt(player.getDuration(), 10);
-                    if (duration > 0 && current > 0 && (duration - current) <= 10) {
-                        showNextEpisodeOverlay();
+
+                    if (duration <= 0 || current < 0) {
+                        return;
                     }
+
+                    // Last 10 seconds → show next episode
+                    if ((duration - current) <= 10) {
+                        showNextEpisodeOverlay();
+                    } 
+                    else {
+                        // User moved back from the last 10 seconds.
+                        // Cancel the pending auto-next timer.
+                        if (nextEpShown || nextEpCountdownTimer) {
+                            resetNextEpisodeState();
+                        }
+                    }
+
                 }, 1000);
             }
 

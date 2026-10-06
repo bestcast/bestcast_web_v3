@@ -170,7 +170,8 @@ class EpisodeController extends Controller
             $requestData['subtitle_status'] = empty($requestData['subtitle_status']) ? 0 : 1;
             $requestData['is_upcoming']     = empty($requestData['is_upcoming']) ? 0 : 1;
             $requestData['topten']          = empty($requestData['topten']) ? 0 : 1;
-
+            $requestData['intro_start'] = (int) ($requestData['intro_start'] ?? 0);
+            $requestData['intro_end']   = (int) ($requestData['intro_end']   ?? 0);
             $model->fill($requestData);
             $model->updated_by = Auth::user()->id;
             $model->save();

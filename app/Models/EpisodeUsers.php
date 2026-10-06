@@ -32,7 +32,7 @@ class EpisodeUsers extends Model
         return $this->belongsTo('App\Models\Episode', 'episode_id', 'id');
     }
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
