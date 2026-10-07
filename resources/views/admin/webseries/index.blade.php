@@ -34,7 +34,7 @@
                                     <a href="{{ route('admin.webseries.edit',$item->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                     <a href="{{ route('admin.seasons.index', $item->id) }}" 
                                        class="btn btn-info btn-sm">
-                                       Add Seasons
+                                       Seasons
                                     </a>
                                     <a href="{{ route('admin.webseries.delete',$item->id) }}" class="btn btn-outline-danger btn-sm btn-delete-copy-{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete{{ $item->id }}">Delete</a>   
                                     @php
