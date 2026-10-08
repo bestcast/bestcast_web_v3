@@ -8,7 +8,6 @@
 <script src="{{ asset('js/video-new.js') }}?v=1" defer></script>
 <script src="{{ asset('js/movies-new.js?1') }}?v=1" defer></script>
 <script src="{{ asset('js/webseries-click-patch.js') }}?v=1" defer></script>
-@include('webseries.info-modal')
 <!-- <script src="{{ asset('js/banner-custom.js') }}"></script> -->
 @endsection
 
@@ -109,5 +108,5 @@ document.querySelector('.bannerPrev')?.addEventListener('click', () => {
     document.querySelector('.bannerWrapper').scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
 });*/
 </script>
-
+@include('webseries.info-modal')
 @endsection

@@ -281,7 +281,6 @@
             if (el.dataset.wsInfoBound) return;
             el.dataset.wsInfoBound = '1';
             el.addEventListener('click', function(e) {
-                if (this.getAttribute('data-webseries') !== '1') return;
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 var wsId = this.getAttribute('data-id');
@@ -294,7 +293,6 @@
             if (btn.dataset.resumeBound) return;
             btn.dataset.resumeBound = '1';
             btn.addEventListener('click', function(e) {
-                if (this.getAttribute('data-webseries') !== '1') return;
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 var wsId = this.getAttribute('data-id');
@@ -329,11 +327,15 @@
     }
 
     // Poll + MutationObserver for async-loaded content
-    var observer = new MutationObserver(attachMoreInfoHandlers);
-    observer.observe(document.body, { childList: true, subtree: true });
-    attachMoreInfoHandlers();
-    setTimeout(attachMoreInfoHandlers, 800);
-    setTimeout(attachMoreInfoHandlers, 2000);
+        // Auto-bind only on the webseries page (it defines webseries_id).
+    // On the home page the click patch decides movie vs webseries.
+    if (typeof webseries_id !== 'undefined') {
+        var observer = new MutationObserver(attachMoreInfoHandlers);
+        observer.observe(document.body, { childList: true, subtree: true });
+        attachMoreInfoHandlers();
+        setTimeout(attachMoreInfoHandlers, 800);
+        setTimeout(attachMoreInfoHandlers, 2000);
+    }
 
 })();
 </script>

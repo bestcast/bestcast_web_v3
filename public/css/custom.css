@@ -4101,31 +4101,34 @@ footer,
 }
 
 .ajxDtPopup .outer {
+  position: fixed;          /* was absolute */
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
+  height: 100vh;            /* was 100px */
+  min-height: 0;            /* was 100% */
   display: flex;
   justify-content: center;
   background: rgb(0 0 0 / 72%);
-  min-height: 100%;
   z-index: 200;
-  overflow: auto;
+  overflow-y: auto;         /* the overlay scrolls */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ajxDtPopup .inner {
   width: 100%;
   max-width: 900px;
-  top: 30px;
-  position: absolute;
+  position: relative;
+  top: auto;
+  margin: 30px auto;
   z-index: 10;
-  left: auto;
-  right: auto;
   background: #212121;
   border-radius: var(--radius);
   min-height: 90%;
   height: auto;
+  align-self: flex-start;
+  flex: 0 1 900px;          /* stops the flex container from stretching it */
 }
 
 .ajxDtPopup .inner .ppImg {
@@ -4277,6 +4280,7 @@ footer,
   height: 28px;
   margin-left: -20px;
   margin-top: -14px;
+  display: none !important;
 }
 
 .lostPage {
