@@ -269,7 +269,7 @@ class WebseriesController extends Controller
             ->unique('user_id') // deduplicate by person
             ->map(function($eu) use ($castGroups) {
                 return [
-                    'name'       => optional($eu->user)->name ?? '',
+                    'name'       => optional($eu->users)->name ?? '',
                     //'photo'      => optional($eu->user)->profile_photo ?? '',
                     'group'      => $eu->group,
                     'group_name' => $castGroups[$eu->group] ?? '',

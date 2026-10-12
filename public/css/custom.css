@@ -81,36 +81,37 @@ body.poster-bg-page {
 }
 #poster-grid{
     position: absolute;
-    inset: -20% -10%;   /* more overflow to fully cover corners after rotation */
+    inset: -20% -10%;
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
+    /*grid-template-columns: repeat(7, 1fr);*/
     gap: 6px;
-    transform: rotate(-6deg) scale(1.3);  /* slightly larger scale */
+    /*transform: rotate(-6deg) scale(1.15);*/
+    grid-template-columns: repeat(5, 1fr);
+    transform: rotate(-6deg) scale(1.15);
     z-index: 0;
 }
-#poster-grid img{
-    width: 100%;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    object-position: center 20%; /* nudge the visible crop upward to protect title text */
-    border-radius: 3px;
-    display: block;
+@media (max-width: 991px){
+    #poster-grid{
+        /*grid-template-columns: repeat(6, 1fr);*/    /* 42 / 6 = 7 வரிசை */
+        grid-template-columns: repeat(5, 1fr); 
+        inset: -30% -15%;
+        transform: rotate(-6deg) scale(1.3);
+    }
 }
 /* Tablet */
 @media (max-width: 991px){
     #poster-grid{
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         inset: -30% -15%;
-        transform: rotate(-6deg) scale(1.5);
+        transform: rotate(-6deg) scale(1.3);
     }
 }
-
 /* Mobile */
 @media (max-width: 575px){
     #poster-grid{
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);   /* 42 / 3 = 14 வரிசை */
         inset: -60% -20%;
-        transform: rotate(-6deg) scale(2);
+        transform: rotate(-6deg) scale(1.6);
     }
 }
 #overlay{

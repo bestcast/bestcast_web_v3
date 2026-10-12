@@ -163,7 +163,7 @@ class EpisodeController extends Controller
                 $rules,
                 Episode::$messages
             );
-            //dd($requestData);exit;
+            
             // Boolean flags
             $requestData['status']          = empty($requestData['status']) ? 0 : 1;
             $requestData['movie_access']    = empty($requestData['movie_access']) ? 0 : 1;

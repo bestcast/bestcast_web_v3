@@ -22,7 +22,7 @@ $bgimg='';
 $posterBg=[];
 $getRouteName=Route::currentRouteName();
 
-$buildPosterGrid = function($cacheKey, $tileCount = 63) use ($core) {
+$buildPosterGrid = function($cacheKey, $tileCount = null) use ($core) {
     $dateFrom = !empty($core['poster_date_from'])
        ? \Carbon\Carbon::createFromFormat('Y-m', $core['poster_date_from'])->startOfMonth()->toDateString()
        : null;
@@ -36,40 +36,39 @@ $buildPosterGrid = function($cacheKey, $tileCount = 63) use ($core) {
             ->where('status', 1)
             ->whereNotNull('portrait_id');
 
-        if (!empty($dateFrom)) {
-            $query->whereDate('published_date', '>=', $dateFrom);
-        }
-        if (!empty($dateTo)) {
-            $query->whereDate('published_date', '<=', $dateTo);
-        }
+        if (!empty($dateFrom)) $query->whereDate('published_date', '>=', $dateFrom);
+        if (!empty($dateTo))   $query->whereDate('published_date', '<=', $dateTo);
 
-        return $query->inRandomOrder()
-            ->limit(20)
-            ->get()
+        return $query->get()                       // no limit(25), no random in SQL
             ->pluck('portrait.urlkey')
             ->filter()
+            ->unique()                             // never the same poster twice
             ->values()
             ->toArray();
     });
 
-    if (empty($posters)) return [];
+        if (empty($posters)) return [];
 
-    $grid = [];
-    for ($i = 0; $i < $tileCount; $i++) {
-        $grid[] = $posters[$i % count($posters)];
-    }
-
-    shuffle($grid);
-
-    return $grid;
-    if(in_array($getRouteName,array('login','send.otp','login.otp','password.request','password.reset'))){
-      $bgimg=empty($core['pages_login_bg'])?'':$core['pages_login_bg'];
-      $posterBg = $buildPosterGrid('login_poster_bg');
-      // TEMP DEBUG — remove after checking
-      \Log::info('posterBg count: '.count($posterBg));
-      \Log::info('dateFrom/dateTo: '.($core['poster_date_from'] ?? 'null').' / '.($core['poster_date_to'] ?? 'null'));
-   }
+          $count = $tileCount ?: 25;          // 7 columns x 6 rows
+          $grid  = [];
+          $last  = null;
+          while (count($grid) < $count) {
+              $cycle = $posters;
+              shuffle($cycle);
+              if ($cycle[0] === $last && count($cycle) > 1) {
+                  $cycle[] = array_shift($cycle);   // அருகருகே ஒரே போஸ்டர் வராது
+              }
+              foreach ($cycle as $p) { $grid[] = $p; }
+              $last = end($grid);
+          }
+          return array_slice($grid, 0, $count);
 };
+
+// This block must be OUTSIDE the closure
+if (in_array($getRouteName, ['login','send.otp','login.otp','password.request','password.reset'])) {
+    $bgimg = empty($core['pages_login_bg']) ? '' : $core['pages_login_bg'];
+    $posterBg = $buildPosterGrid('login_poster_bg');
+}
 
 if(in_array($getRouteName,array('login','send.otp','login.otp','password.request','password.reset'))){
    $bgimg=empty($core['pages_login_bg'])?'':$core['pages_login_bg'];
