@@ -99,7 +99,9 @@ class WebseriesWatchResource extends JsonResource
                                     'watched_percent' => 0,
                                     'viewed' => 0
                                 ];
-        if(!empty($user) && !empty($this->movie_access)){
+        $isFree = !empty(optional($episode)->movie_access);
+
+        if(!empty($user) && $isFree) {
 
         }else{
             if(empty($user) || $user->plan==0 ){

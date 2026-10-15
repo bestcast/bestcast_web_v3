@@ -301,6 +301,7 @@ class Blocks extends Database implements RoleHasRelationsContract
             if ($isWebseriesBlock) {
                 $webseriesItems = \App\Models\BlocksWebseries::with([
                     'webseries' => function ($q) use ($viewerCountry) {
+                        $q->where('status', 1);
                         if ($viewerCountry !== 'IN') {
                             $q->where('region_access', 'global');
                         }

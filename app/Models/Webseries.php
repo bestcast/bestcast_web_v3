@@ -96,7 +96,6 @@ class Webseries extends Model
         'tag_text'          => 'string',
         'is_upcoming'       => 'integer',
         'topten'            => 'integer',
-        'movie_access'      => 'integer',
         'trailer_url'       => 'string',
         'trailer_url_480p'  => 'string',
         'video_url'         => 'string',

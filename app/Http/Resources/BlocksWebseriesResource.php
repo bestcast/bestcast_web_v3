@@ -54,7 +54,7 @@ class BlocksWebseriesResource extends JsonResource
             'thumbnail'    => empty($latestEpisode->thumbnail) ? '' : $latestEpisode->thumbnail->urlkey,
             'portraitsmall'=> empty($latestEpisode->portraitsmall) ? '' : $latestEpisode->portraitsmall->urlkey,
             'portrait'     => empty($latestEpisode->portrait) ? '' : $latestEpisode->portrait->urlkey,
-            'movie_access' => $latestEpisode->movie_access,
+            'movie_access' => 0,
             'certificate'  => $latestEpisode->certificate ?? '',
             'duration'     => Lib::formatSecondsToHoursMinutes($latestEpisode->duration),
             'tag_text'     => empty($latestEpisode->tag_text) ? '' : str_replace(", ", '<i></i>', $latestEpisode->tag_text),

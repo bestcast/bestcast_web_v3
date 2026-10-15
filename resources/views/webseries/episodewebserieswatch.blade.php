@@ -218,6 +218,13 @@
         background: #fff !important;
         color: #000 !important;
     }
+    .ws-ep-thumb { position: relative; }
+    .ws-free-tag {
+        position: absolute; top: 6px; left: 6px; z-index: 2;
+        background: #e50914; color: #fff;
+        font-size: 10px; font-weight: 700; font-family: sans-serif;
+        padding: 2px 6px; border-radius: 3px;
+    }
 </style>
 
 <?php
@@ -627,6 +634,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                           // thumbnail
                           + '<div class="ep-thumb">'
                           + (imgSrc ? '<img src="' + imgSrc + '" alt="" loading="lazy">' : '')
+                          + (ep.movie_access == 1 ? '<div class="ws-free-tag">Free to Watch</div>' : '')
                           + '<div class="ep-thumb-play">'
                           + '<svg viewBox="0 0 373 373"><path d="M62 3C65 1 68 0 71 0c4 0 7 1 10 3l230 167c6 3 10 10 10 17s-4 13-10 17L81 370c-6 3-13 3-19 0-6-3-10-10-10-17V19C52 12 56 6 62 3z"/></svg>'
                           + '</div>'

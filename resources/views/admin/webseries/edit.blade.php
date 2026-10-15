@@ -371,15 +371,6 @@
                     </div>
                   </div>
 
-
-                  <div class="form-row">
-                    <label for="excerpt" class="form-label">Free Access?</label>
-                    <div class="mb-3 form-check form-switch">
-                      {{Form::hidden('movie_access',0)}}
-                      <input class="form-check-input" type="checkbox" name="movie_access" role="switch" @if(old('movie_access' ,(empty($model->movie_access)?0:1))) checked="" @endif />
-                    </div>
-                  </div>
-
                   <div class="form-row">
                     <label for="excerpt" class="form-label">Available Globally? (Off = India Only)</label>
                     <div class="mb-3 form-check form-switch">

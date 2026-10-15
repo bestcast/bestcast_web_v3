@@ -85,7 +85,7 @@ class WebseriesController extends Controller
         return view('webseries.index', ['post'=>$post,'meta'=>$meta]);
     }
     
-    public function episodewebserieswatch(Request $request, $episode_id)
+   /* public function episodewebserieswatch(Request $request, $episode_id)
     {
         $user = Auth::user();
 
@@ -157,6 +157,97 @@ class WebseriesController extends Controller
             'profileToken' => $profileToken ?? '',
             'nextEpisode'  => $nextEpisode,
         ]);
+    }*/
+
+    public function episodewebserieswatch(Request $request, $episode_id)
+    {
+        header('Access-Control-Allow-Origin: *');
+
+        $episode = Episode::with(['season.webseries', 'image', 'thumbnail', 'subtitle'])
+            ->find($episode_id);
+
+        if (!$episode) {
+            abort(404);
+        }
+
+        $webseries = $episode->season->webseries;
+
+        // Force user to buy plan start (skipped for free episodes/webseries)
+        $plan = null;
+        $isFree = !empty($episode->movie_access);
+        if (!$isFree) {
+            $plan = Subscription::getPlan();
+            if (empty($plan)) {
+                return redirect(url('/pricing'));
+            }
+        }
+        // Force user to buy plan end
+
+        $user = Auth::user();
+
+        if (empty($user->phone_verified_at)) {
+            return redirect()->route('otp.verification', ['send' => 1, 'phone' => 1]);
+        }
+
+        // Device limit check (only when a plan exists)
+        $device = UsersDevice::getApiList($user);
+        if (!empty($device) && !empty($plan->device_limit)) {
+            if (count($device) > $plan->device_limit) {
+                return redirect(url('/account/devices'));
+            }
+        }
+
+        // Region access check — via parent webseries
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
+            abort(404);
+        }
+
+        $profileToken = Session::get('profileToken');
+
+        // Next episode (same season, else first episode of next season)
+        $webseries_id = $episode->season->webseries_id;
+
+        $nextEpisode = Episode::where('season_id', $episode->season_id)
+            ->where('id', '>', $episode_id)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        if (!$nextEpisode) {
+            $nextSeason = Season::where('webseries_id', $webseries_id)
+                ->where('id', '>', $episode->season_id)
+                ->orderBy('id', 'asc')
+                ->first();
+
+            if ($nextSeason) {
+                $nextEpisode = Episode::where('season_id', $nextSeason->id)
+                    ->orderBy('id', 'asc')
+                    ->first();
+            }
+        }
+
+        // Track viewed episode per profile
+        $userEpisode = UsersEpisodes::where('user_id', $user->id)
+            ->where('profile_id', $profileToken ?? 0)
+            ->where('episode_id', $episode_id)
+            ->first();
+
+        if (!$userEpisode) {
+            $userEpisode = new UsersEpisodes();
+            $userEpisode->user_id    = $user->id;
+            $userEpisode->profile_id = $profileToken ?? 0;
+            $userEpisode->episode_id = $episode_id;
+            $userEpisode->viewed     = 1;
+            $userEpisode->save();
+        }
+
+        return view('webseries.episodewebserieswatch', [
+            'episode'      => $episode,
+            'userEpisode'  => $userEpisode,
+            'webseries_id' => $webseries_id,
+            'profileToken' => $profileToken ?? '',
+            'nextEpisode'  => $nextEpisode,
+        ]);
     }
     
     public function webserieswatch(Request $request, $id)
@@ -169,7 +260,8 @@ class WebseriesController extends Controller
             'seasons.episodes.episode_users' => function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             },
-        ])->findOrFail($id);
+        ])->where('status', 1)  
+          ->findOrFail($id);
 
         if (!$webseries) {
             abort(404);
@@ -241,7 +333,8 @@ class WebseriesController extends Controller
             'medium',
             'genres',
             'languages',
-        ])->find($webseriesId);
+        ])->where('status', 1)  
+          ->find($webseriesId);
      
         if (!$webseries) {
             return response()->json(['data' => null, 'message' => 'Not found'], 404);
@@ -353,6 +446,7 @@ class WebseriesController extends Controller
                             'thumbnail'       => optional($ep->thumbnail)->urlkey
                                              ?? optional($ep->image)->urlkey
                                              ?? '',
+                            'movie_access'    => $ep->movie_access,
                             'watched_percent' => $watchedPct,
                         ];
                     })->values(),

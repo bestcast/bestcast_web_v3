@@ -246,6 +246,7 @@
                   + '<div class="ws-ep-num">' + (idx + 1) + '</div>'
                   + '<div class="ws-ep-thumb">'
                   + (imgSrc ? '<img src="' + imgSrc + '" alt="" loading="lazy">' : '')
+                  + (ep.movie_access == 1 ? '<div class="ws-free-tag">Free to Watch</div>' : '')
                   + '<div class="ws-ep-thumb-play"><svg viewBox="0 0 448 512"><path d="M424 214.7L72 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"/></svg></div>'
                   + (pct > 0 ? '<div class="ws-ep-thumb-bar"><div class="ws-ep-thumb-fill" style="width:' + pct + '%"></div></div>' : '')
                   + '</div>'

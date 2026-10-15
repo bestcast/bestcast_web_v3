@@ -81,7 +81,7 @@ class WebSeriesController extends Controller
     {
         $requestData = $request->all();
         $requestData['status']=empty($requestData['status'])?0:1;
-        $requestData['movie_access']=empty($requestData['movie_access'])?0:1;
+        //$requestData['movie_access']=empty($requestData['movie_access'])?0:1;
         $model = new Webseries();
         //$requestData['movie_id'] = $movie->id;
         $model->fill($requestData);
@@ -126,7 +126,7 @@ class WebSeriesController extends Controller
         );
         // Webseries level fields
         $requestData['status']       = empty($requestData['status']) ? 0 : 1;
-        $requestData['movie_access'] = empty($requestData['movie_access']) ? 0 : 1;
+        //$requestData['movie_access'] = empty($requestData['movie_access']) ? 0 : 1;
         $requestData['subtitle_status']=empty($requestData['subtitle_status'])?0:1;
         $requestData['is_upcoming']=empty($requestData['is_upcoming'])?0:1;
         $requestData['topten']=empty($requestData['topten'])?0:1;
