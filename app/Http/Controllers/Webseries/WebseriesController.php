@@ -256,7 +256,7 @@ class WebseriesController extends Controller
         $user = Auth::user();
         $webseries = Webseries::with([
             'seasons' => function ($q) { $q->orderBy('id', 'asc'); },
-            'seasons.episodes' => function ($q) { $q->orderBy('id', 'asc'); },
+            'seasons.episodes' => function ($q) { $q->where('status', 1)->orderBy('id', 'asc'); },
             'seasons.episodes.episode_users' => function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             },
@@ -306,14 +306,15 @@ class WebseriesController extends Controller
 
         $webseries = Webseries::with([
             'seasons' => function ($q) { $q->orderBy('id', 'asc'); },
-            'seasons.episodes' => function ($q) { $q->orderBy('id', 'asc'); },
+            'seasons.episodes' => function ($q) { $q->where('status', 1)->orderBy('id', 'asc'); },
             'seasons.episodes.image',
             'seasons.episodes.medium',
             'seasons.episodes.thumbnail',
             'seasons.episodes.episode_users' => function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             },
-        ])->findOrFail($webseries_id);
+        ])->where('status', 1) 
+          ->findOrFail($webseries_id);
         // Region access check
         $viewerCountry = \App\Services\GeoService::getCountry($request);
         if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
@@ -376,9 +377,10 @@ class WebseriesController extends Controller
      
         if ($user) {
             // Get all episode IDs that belong to this webseries
-            $episodeIds = \App\Models\Episode::whereHas('season', function ($q) use ($webseriesId) {
-                $q->where('webseries_id', $webseriesId);
-            })->pluck('id');
+            $episodeIds = \App\Models\Episode::where('status', 1)      // ADDED
+                            ->whereHas('season', function ($q) use ($webseriesId) {
+                                $q->where('webseries_id', $webseriesId);
+                            })->pluck('id');
      
             $lastWatched = \App\Models\EpisodeUsers::where('user_id', $user->id)
                 //->where('profile_id', $profileId)
@@ -396,6 +398,7 @@ class WebseriesController extends Controller
                 $resumeEp = \App\Models\Episode::find($resumeEpisodeId);
                 if ($resumeEp) {
                     $episodeNumber = \App\Models\Episode::where('season_id', $resumeEp->season_id)
+                        ->where('status', 1)   
                         ->where('id', '<=', $resumeEpisodeId)
                         ->count();
                 }
@@ -408,6 +411,7 @@ class WebseriesController extends Controller
      
         if ($firstSeason) {
             $firstEpisode   = \App\Models\Episode::where('season_id', $firstSeason->id)
+                ->where('status', 1)  
                 ->orderBy('id', 'asc')->first();
             $firstEpisodeId = optional($firstEpisode)->id;
         }
@@ -416,7 +420,8 @@ class WebseriesController extends Controller
         $seasons = \App\Models\Season::where('webseries_id', $webseriesId)
             ->orderBy('id', 'asc')
             ->with(['episodes' => function ($q) {
-                $q->orderBy('id', 'asc')
+                $q->where('status', 1)  
+                  ->orderBy('id', 'asc')
                   ->with(['thumbnail', 'image']);
             }])
             ->get()
