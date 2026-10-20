@@ -218,15 +218,21 @@ class MediaController extends Controller
         return redirect()->route('admin.media.edit',$id)->with('success', 'Updated Successfully');
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
-        if($id){
+        $folderId = $request->input('folder_id');
+
+        if ($id) {
             $model = Media::find($id);
-            if(!empty($model)){
+            if (!empty($model)) {
+                $folderId = $folderId ?: $model->folder_id; 
                 $model->delete();
             }
         }
-        return redirect()->route('admin.media.folders')->with('success', 'Deleted Successfully');
+
+        return redirect()
+            ->route('admin.media.index', $folderId ? ['folder_id' => $folderId] : [])
+            ->with('success', 'Media deleted successfully');
     }
 
     public function folderDelete($id)

@@ -31,7 +31,7 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function list(Request $request,$type=0)
+    /*public function list(Request $request,$type=0)
     {
         if ($request->ajax()) {
             $data = User::latest()->where('type',$type)->where('phone','!=','')->get();
@@ -55,8 +55,39 @@ class UserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-    }
+    }*/
 
+    public function list(Request $request, $type = 0)
+    {
+        if ($request->ajax()) {
+            $base = User::where('type', $type)->where('phone', '!=', '');
+
+            $data = (clone $base)->latest()->get();
+
+            $activeCount = (clone $base)->where('status', 1)->count();   // change 'status' to your column
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('roles', function ($data) {
+                    $html = 'NA';
+                    if (!empty($data->roles)) {
+                        $html = '';
+                        foreach ($data->roles as $role) {
+                            $html .= '<span class="badge bg-secondary text-light">' . $role->name . '</span> ';
+                        }
+                    }
+                    return $html;
+                })
+                ->editColumn('created_at', function ($data) {
+                    return date("d/m/y h:i a", strtotime($data->created_at));
+                })
+                ->addColumn('action', 'admin.user.action')
+                ->escapeColumns([])
+                ->rawColumns(['action'])
+                ->with('active_count', $activeCount)
+                ->make(true);
+        }
+    }
     public function searchcastbyname($key='ZXP')
     {
         if(empty($key)){ return null;}

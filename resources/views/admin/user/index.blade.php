@@ -10,7 +10,15 @@
         {{ $title }}
         <a href="{{ route('admin.user.create') }}" class="btn btn-secondary float-right addnewbtn">+ Add New</a>
     </h2>
-
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body py-2">
+                    <strong>Active {{ $title }}: <span id="active-users-count">0</span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table table-bordered yajra-datatable">
         <thead>
             <tr>
@@ -50,7 +58,12 @@
                 },
             ]
         });
-
+        table.on('xhr.dt', function () {
+            var json = table.ajax.json();
+            if (json && json.active_count !== undefined) {
+                $('#active-users-count').text(json.active_count);
+            }
+        });
 
         $('#search-form').on('submit', function(e) {
             table.draw();

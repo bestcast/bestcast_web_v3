@@ -114,14 +114,23 @@ class Media extends Database implements RoleHasRelationsContract
 
     public static function getList()
     {
-        $data = Media::latest();
+        $data = Media::with('folder')->latest();
+        //$data = Media::latest();
 
         $getSearch=app('request')->input('search');
         $folderId = app('request')->input('folder_id');
-        if(!empty($getSearch)){
+        /*if(!empty($getSearch)){
             $data =$data->where('title','like',"%".urldecode($getSearch)."%")
                         ->orWhere('urlkey','like',"%".urldecode($getSearch)."%")
                         ->orWhere('filename','like',"%".urldecode($getSearch)."%");
+        }*/
+        if (!empty($getSearch)) {
+            $term = "%" . urldecode($getSearch) . "%";
+            $data = $data->where(function ($q) use ($term) {
+                $q->where('title', 'like', $term)
+                  ->orWhere('urlkey', 'like', $term)
+                  ->orWhere('filename', 'like', $term);
+            });
         }
         if (!empty($folderId) && is_numeric($folderId)) {
             $data = $data->where('folder_id', $folderId);

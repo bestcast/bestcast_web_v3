@@ -14,6 +14,9 @@
             <a href="{{ route('admin.media.folders') }}" class="btn btn-outline-secondary btn-sm">← All Folders</a>
         @endif
         <a href="{{ route('admin.media.create') }}?folder_id={{ request('folder_id') }}" class="btn btn-secondary float-right addnewbtn">+ Add New</a> &nbsp;
+        @if(!request('folder_id') == '')
+        <a href="{{ route('admin.media.index') }}" class="btn btn-secondary float-right addnewbtn">+ All Media</a> &nbsp;
+        @endif
         @if(!request('picker'))
             <a href="{{ route('admin.media.folders') }}" class="btn btn-secondary float-right backbtn">Back</a>
         @endif
@@ -37,7 +40,7 @@
                         <div class="d-flex overlay justify-content-center "><div class="d-flex align-self-center">
                             <div class="card-act">
                                 <a href="{{ route('admin.media.view',$item->id) }}" class="btn btn-success btn-sm">View</a>
-                                <a href="{{ route('admin.media.delete',$item->id) }}" class="btn btn-danger btn-sm btn-delete-copy-{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete{{ $item->id }}">Delete</a>
+                                <a href="{{ route('admin.media.delete', [$item->id, 'folder_id' => request('folder_id')]) }}" class="btn btn-danger btn-sm btn-delete-copy-{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete{{ $item->id }}">Delete</a>
                                 <a href="{{ route('admin.media.edit',$item->id) }}" class="btn btn-primary btn-sm">Edit</a>
                             </div>
                         </div></div>
@@ -51,6 +54,11 @@
                         @endif
                         @if(!empty($dims))
                             <div class="meta-dimensions text-muted">({{ str_replace(' ', '', $dims) }})</div>
+                        @endif
+                        @if(!request('folder_id'))
+                            <div class="meta-folder fw-bold fs-6">
+                                📁 {{ optional($item->folder)->name ?? 'No Folder' }}
+                            </div>
                         @endif
                     </div>
                   </div>
