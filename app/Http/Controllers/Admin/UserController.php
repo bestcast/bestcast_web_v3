@@ -228,7 +228,7 @@ class UserController extends Controller
         }
         $rule['firstname']=['required'];
         $rule['email']=['required', 'email', 'max:255', 'unique:users,email,'.$id];
-        $rule['phone']='digits_between:10,10|unique:users,phone,'.$id;
+        //$rule['phone']='digits_between:10,10|unique:users,phone,'.$id;
         if(!empty($requestData['password']) || !empty($requestData['password_confirmation'])){
             $rule['password']=['required', 'min:8', 'confirmed'];
         }
@@ -241,7 +241,7 @@ class UserController extends Controller
             'phone' => 'Please enter a valid :attribute.',
             'phone.unique' => 'Mobile number is already linked to another account.',
             'max' => 'Maximum limit for :attribute reached.',
-            'phone.digits_between' => 'Please enter the 10 digit mobile number.',
+            //'phone.digits_between' => 'Please enter the 10 digit mobile number.',
             'password.min' => 'Password required atleast 8 character.',
             'password.different' => 'Incorrect Old Password.',
             'confirmed' => 'Your confirmation password not same.'
