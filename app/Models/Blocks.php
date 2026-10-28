@@ -312,8 +312,11 @@ class Blocks extends Database implements RoleHasRelationsContract
                     'webseries.seasons.episodes' => function ($q) {
                         $q->orderBy('id', 'desc');
                     },
-                    'webseries.seasons.episodes.image',
-                    'webseries.seasons.episodes.thumbnail',
+                    'webseries.image',
+                    'webseries.medium',
+                    'webseries.thumbnail',
+                    'webseries.portrait',
+                    'webseries.portraitsmall',
                     'webseries.seasons.episodes.episode_users' => function ($q) use ($user_id, $profile_id) {
                         $q->where('user_id', $user_id)
                              ->where('profile_id', $profile_id);
@@ -322,14 +325,41 @@ class Blocks extends Database implements RoleHasRelationsContract
                 ->where('blocks_id', $block->id)
                 ->get();
 
-                $wrappedWebseries = $webseriesItems->map(function ($item) {
+                /*$wrappedWebseries = $webseriesItems->map(function ($item) {
                     $bm = new \App\Models\BlocksMovies();
                     $bm->setRelation('webseries', $item->webseries);
                     $bm->setAttribute('is_webseries', true);
                     return $bm;
                 })->filter(function ($bm) {
                     return !empty($bm->webseries);
-                })->values();
+                })->values();*/
+                $wrappedWebseries = $webseriesItems->map(function ($item) {
+                    $ws = $item->webseries;
+                    if (empty($ws)) {
+                        return null;
+                    }
+
+                    // seasons/episodes are ordered desc, so first() is the latest
+                    $latestSeason  = $ws->seasons->first();
+                    $latestEpisode = $latestSeason?->episodes->first();
+
+                    $bm = new \App\Models\BlocksMovies();
+                    $bm->setRelation('webseries', $ws);
+                    $bm->setAttribute('is_webseries', true);
+
+                    // episode value first, then the series' own value
+                    $bm->setAttribute('card_image',
+                        $latestEpisode?->thumbnail?->path
+                        ?? $latestEpisode?->image?->path
+                        ?? $ws->thumbnail
+                        ?? $ws->poster);
+                    $bm->setAttribute('card_title',       $ws->title);
+                    $bm->setAttribute('card_certificate', $ws->certificate ?? 'U/A 13+');
+                    $bm->setAttribute('card_duration',    $latestEpisode?->duration ?? $ws->duration ?? '');
+                    $bm->setAttribute('card_trailer',     $ws->trailer_url);
+
+                    return $bm;
+                })->filter()->values();
 
                 $block->setRelation('movies', $wrappedWebseries);
                 continue;

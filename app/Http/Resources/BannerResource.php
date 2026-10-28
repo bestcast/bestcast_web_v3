@@ -22,6 +22,8 @@ class BannerResource extends JsonResource
             'image'        => empty($this->image) ? '' : $this->image->urlkey,
             'thumbnail'    => empty($this->thumbnail) ? '' : $this->thumbnail->urlkey,
             'logo'         => empty($this->logo) ? '' : $this->logo->urlkey,
+            'portraitsmall' => empty($this->portraitsmall)?'':$this->portraitsmall->urlkey,
+            'portrait' => empty($this->portrait)?'':$this->portrait->urlkey,
             'is_webseries' => $isWebseries ? 1 : 0,
             'movies'       => $isWebseries
                 ? $this->webseriesPayload()

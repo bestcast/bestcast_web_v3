@@ -15,7 +15,7 @@ class BlocksWebseriesResource extends JsonResource
      * @return array<string, mixed>
      */
     
-    public function toArray($request)
+    /*public function toArray($request)
     {
         $webseries = $this->webseries;
 
@@ -87,6 +87,64 @@ class BlocksWebseriesResource extends JsonResource
                 ];
             })->values(),
             'is_webseries' => true,
+        ];
+    }*/
+    public function toArray($request)
+    {
+        $webseries = $this->webseries;
+
+        if (!$webseries) {
+            return [];
+        }
+
+        $latestSeason  = optional($webseries->seasons)->first();
+        $latestEpisode = $latestSeason ? optional($latestSeason->episodes)->first() : null;
+
+        // Episode if it exists, otherwise the series itself
+        $src = $latestEpisode ?: $webseries;
+
+        $trailer = empty($src->trailer_url_480p)
+            ? ($src->trailer_url ?? '')
+            : $src->trailer_url_480p;
+
+        return [
+            'id'            => (string) $webseries->id,
+            'title'         => $webseries->title,
+            'trailer'       => $trailer,
+            'image'         => empty($src->image) ? '' : $src->image->urlkey,
+            'medium'        => empty($src->medium) ? '' : $src->medium->urlkey,
+            'thumbnail'     => empty($src->thumbnail) ? '' : $src->thumbnail->urlkey,
+            'portraitsmall' => empty($src->portraitsmall) ? '' : $src->portraitsmall->urlkey,
+            'portrait'      => empty($src->portrait) ? '' : $src->portrait->urlkey,
+            'movie_access'  => 0,
+            'certificate'   => $src->certificate ?? '',
+            'duration'      => Lib::formatSecondsToHoursMinutes($src->duration ?? 0),
+            'tag_text'      => empty($src->tag_text) ? '' : str_replace(", ", '<i></i>', $src->tag_text),
+            'topten'        => $src->topten ?? 0,
+
+            'seasons'       => $webseries->seasons->map(function ($season) {
+                return [
+                    'id'       => (string) $season->id,
+                    'title'    => $season->title,
+                    'episodes' => $season->episodes->map(function ($ep) {
+                        return [
+                            'id'           => (string) $ep->id,
+                            'title'        => $ep->title,
+                            'urlkey'       => $ep->urlkey,
+                            'trailer'      => empty($ep->trailer_url_480p) ? ($ep->trailer_url ?? '') : $ep->trailer_url_480p,
+                            'image'        => empty($ep->image) ? '' : $ep->image->urlkey,
+                            'thumbnail'    => empty($ep->thumbnail) ? '' : $ep->thumbnail->urlkey,
+                            'duration'     => Lib::formatSecondsToHoursMinutes($ep->duration),
+                            'movie_access' => $ep->movie_access,
+                            'episode_user' => [
+                                'watch_time'      => optional($ep->episode_users->first())->watch_time ?? "0",
+                                'watched_percent' => optional($ep->episode_users->first())->watched_percent ?? 0,
+                            ],
+                        ];
+                    })->values(),
+                ];
+            })->values(),
+            'is_webseries'  => true,
         ];
     }
 }

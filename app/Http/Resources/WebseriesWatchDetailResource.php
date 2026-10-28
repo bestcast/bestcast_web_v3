@@ -9,9 +9,11 @@ class WebseriesWatchDetailResource extends JsonResource
     public function toArray($request)
     {
         // Find latest season + episode for Resume button
-        $latestSeason  = $this->seasons->last();
-        $latestEpisode = optional($latestSeason)->episodes->last();
+        /*$latestSeason  = $this->seasons->last();
+        $latestEpisode = optional($latestSeason)->episodes->last();*/
 
+        $latestSeason  = $this->seasons ? $this->seasons->last() : null;
+        $latestEpisode = $latestSeason && $latestSeason->episodes ? $latestSeason->episodes->last() : null;
         return [
             'id'    => (string) $this->id,
             'title' => $this->title,
