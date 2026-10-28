@@ -273,8 +273,19 @@ class WebseriesController extends Controller
             abort(404);
         }
 
-        $latestSeason  = $webseries->seasons->last();
-        $latestEpisode = optional($latestSeason)->episodes->last();
+        /*$latestSeason  = $webseries->seasons->last();
+        $latestEpisode = optional($latestSeason)->episodes->last();*/
+        // Get the latest season that contains episodes
+        $latestSeason = $webseries->seasons
+            ->filter(function ($season) {
+                return $season->episodes->isNotEmpty();
+            })
+            ->last();
+
+        // Get the latest episode, if available
+        $latestEpisode = $latestSeason
+            ? $latestSeason->episodes->last()
+            : null;
 
         return view('webseries.webserieswatch', [
             'webseries'  => $webseries,

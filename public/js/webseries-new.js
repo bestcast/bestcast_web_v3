@@ -726,7 +726,7 @@ function _0x3858() {
                             _0x21f236[_0x428acd(0x37c)](), _0x1e82c8[_0x428acd(0x335)]();
                         }), _0x1e82c8[_0x5a3d4e(0x335)]();
                     }
-                } else console['error']('Fetched\x20data\x20is\x20not\x20an\x20array:', _0x4128dc);
+                } else {};
             })[_0x402938(0x257)](_0x27440d => {
                 const _0x138803 = _0x402938;
                 console['log'](_0x138803(0x24b) + _0x27440d);

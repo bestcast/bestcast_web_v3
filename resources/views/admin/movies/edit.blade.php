@@ -247,11 +247,34 @@
           </div>
 
           <div class="form-group row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <div class="form-row">
-                  <label class="form-label" for="name">Duration</label>
+                  <label class="form-label">Duration</label>
+
+                  <?php
+                      $totalSec = (int) old('duration', $model->duration ?? 0);
+                      $dH = intdiv($totalSec, 3600);
+                      $dM = intdiv($totalSec % 3600, 60);
+                      $dS = $totalSec % 60;
+                  ?>
+
+                  <div class="row g-2 mb-2">
+                      <div class="col-4">
+                          <small class="text-muted">Hours</small>
+                          <input type="number" min="0" class="form-control duration-part" id="duration_hours" placeholder="0" value="{{ $totalSec ? $dH : '' }}">
+                      </div>
+                      <div class="col-4">
+                          <small class="text-muted">Minutes</small>
+                          <input type="number" min="0" max="59" class="form-control duration-part" id="duration_minutes" placeholder="0" value="{{ $totalSec ? $dM : '' }}">
+                      </div>
+                      <div class="col-4">
+                          <small class="text-muted">Seconds</small>
+                          <input type="number" min="0" max="59" class="form-control duration-part" id="duration_seconds" placeholder="0" value="{{ $totalSec ? $dS : '' }}">
+                      </div>
+                  </div>
+
                   <input type="text" class="form-control" id="duration" name="duration" value="{{ old('duration',$model->duration) }}" >
-                  <p class="comment">Duration should be in seconds. eg: 8520 for 2hr 22min</p>
+                  <p class="comment">Auto-calculated in seconds from hours, minutes and seconds above. eg: 8520 for 2hr 22min</p>
               </div>
             </div>
             <div class="col-sm-3">
@@ -472,6 +495,25 @@ mediaPickerChannel.onmessage = function(e){
         if (span) span.innerHTML = 'Change';
     }
 };
+jQuery(document).ready(function ($) {
+    function calcDuration() {
+        var h = parseInt($('#duration_hours').val())   || 0;
+        var m = parseInt($('#duration_minutes').val()) || 0;
+        var s = parseInt($('#duration_seconds').val()) || 0;
+        var hasValue = $('#duration_hours').val() !== '' || $('#duration_minutes').val() !== '' || $('#duration_seconds').val() !== '';
+        $('#duration').val(hasValue ? (h * 3600 + m * 60 + s) : '');
+    }
+
+    $('.duration-part').on('input change', calcDuration);
+
+    // If someone edits the seconds field directly, sync the three boxes back
+    $('#duration').on('input', function () {
+        var total = parseInt($(this).val()) || 0;
+        $('#duration_hours').val(total ? Math.floor(total / 3600) : '');
+        $('#duration_minutes').val(total ? Math.floor((total % 3600) / 60) : '');
+        $('#duration_seconds').val(total ? total % 60 : '');
+    });
+});
 </script>
 @endsection
 

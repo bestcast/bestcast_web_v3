@@ -24,8 +24,11 @@ class BlocksWebseriesResource extends JsonResource
         }
 
         // Latest season → latest episode
-        $latestSeason  = $webseries->seasons->first();  // already desc ordered
-        $latestEpisode = optional($latestSeason)->episodes->first(); // already desc ordered
+        //$latestSeason  = $webseries->seasons->first();  // already desc ordered
+        //$latestEpisode = optional($latestSeason)->episodes->first(); // already desc ordered
+
+        $latestSeason  = optional($webseries->seasons)->first();
+        $latestEpisode = $latestSeason ? optional($latestSeason->episodes)->first() : null;
 
         if (!$latestEpisode) {
             return [

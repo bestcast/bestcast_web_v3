@@ -327,6 +327,86 @@ class AuthController extends Controller
     public function loginWithOtp(LoginOtpUserRequest $request)
     {
         try {
+
+            $request->validated($request->only(['email', 'otp']));
+            //Verify user 
+            $isReviewLogin = ((string) $request->email === '9345299927' && (string) $request->otp === '7277');
+            if ($isReviewLogin) {
+                // Hardcoded login for Google Play Console review
+                $user = User::firstOrCreate(
+                    ['phone' => '9345299927'],
+                    [
+                        'name'              => 'Demo User',
+                        'email'             => 'demo@example.com',
+                        'password'          => bcrypt('secret'),
+                        'phone_verified_at' => now(),
+                        'status'            => 1,
+                    ]
+                );
+            } else{
+                if(is_numeric($request->email)){
+                    $user = User::where('phone', $request->email)->where('otp', $request->otp)->first();//->whereNotNull('phone_verified_at')
+                }else{
+                    $user = User::where('email', $request->email)->where('otp', $request->otp)->first();
+                }
+            }
+    
+            if(empty($user->id))
+                return $this->error('', 'Incorrect code. Please try again.', 200);
+
+            if(empty($user->status))
+                return $this->error('', 'Account Blocked! Please contact our admin.', 200);
+
+            if(!$isReviewLogin && (empty($user->updated_at) || ($user->updated_at->addMinutes(15) < now())))
+                return $this->error('', 'OTP expired! Please try Resend again.', 200);
+
+            /*if(empty($user->updated_at) || ($user->updated_at->addMinutes(15) < now()))
+                return $this->error('', 'OTP expired! Please try Resend again.', 200);*/
+
+            //Authendicate
+            Auth::login($user);
+            
+            // --- BMP: first-touch referral attribution ---
+            //$refCode = session('referral_code');
+            $refCode = $request->filled('ref') ? trim($request->ref) : session('referral_code');
+            if (!empty($refCode)) {
+                $hasEverSubscribed = \App\Models\Transaction::where('user_id', $user->id)
+                    ->where('bmp_paid_event_sent', true)
+                    ->exists();
+
+                if (!$hasEverSubscribed) {
+                    $user->bmp_referral_code = $refCode;
+                    $user->save();
+                }
+                // If already subscribed once, do nothing — code stays locked permanently
+            }
+
+            //Reset OTP to null
+            $user->otp=null;
+            if(is_numeric($request->email)){
+                if(empty($user->phone_verified_at)){
+                    $user->phone_verified_at=date("Y-m-d H:i:s");
+                }
+            }else{
+                if(empty($user->email_verified_at)){
+                    $user->email_verified_at=date("Y-m-d H:i:s");
+                }
+            }
+            $user->save();
+
+            //Request Token
+            $response=User::userRequestLoginToken($user,$request);
+            return $this->success($response);
+
+            
+        } catch (Exception $error) {
+            return $this->error('Error occured while loggin in.',$error,500);
+        }
+    }
+
+    public function loginWithOtpBackup(LoginOtpUserRequest $request)
+    {
+        try {
             // if(!empty($request->email))
             //     Session::put('formEmail', $request->email);
 

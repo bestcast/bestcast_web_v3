@@ -1185,6 +1185,7 @@ function _0x3858() {
                                         _0x47913b = _0x50be2a(0x209) + _0x3065d3 + _0x50be2a(0x2cf);
                                         if (_0x30393a(_0x50be2a(0x25d))[_0x50be2a(0x1ed)](_0x50be2a(0x27f))) {
                                             _0x30393a(_0x50be2a(0x25d))[_0x50be2a(0x314)](_0x47913b);
+                                            _0x30393a('.ajxBanner .playBtn, .ajxBanner .moreInfo').attr('data-webseries', _0x3dc2cd['data']['is_webseries'] == 1 ? '1' : '0');
                                             if (_0x298350) {
                                                 let _0xd550aa = checkVideoFormat(_0x298350),
                                                     _0x3dd362 = _0x298350;

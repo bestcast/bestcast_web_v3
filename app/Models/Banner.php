@@ -240,8 +240,21 @@ class Banner extends Database implements RoleHasRelationsContract
             $data =$data->where('page_id',$getpageid);
         }
 
-        $data = $data->where('status',1)->where('movies_id','!=',0)->latest();
-
+        //$data = $data->where('status',1)->where('movies_id','!=',0)->latest();
+        $data = $data->where('status', 1)
+                ->where(function ($q) {
+                    // movie banners
+                    $q->where(function ($m) {
+                        $m->where('type', '!=', 2)->where('movies_id', '!=', 0);
+                    })
+                    // webseries banners
+                    ->orWhere(function ($w) {
+                        $w->where('type', 2)
+                          ->where('webseries_id', '!=', 0)
+                          ->whereHas('webseries', fn($s) => $s->where('status', 1));
+                    });
+                })
+                ->latest();
 
         //$sql = $data->toSql();dd($sql);
         //dd($data->get());
