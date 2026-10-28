@@ -6232,3 +6232,5 @@ p.payment-error {
     padding: 6px 14px;
   }
 }
+
+.ajxBanner .bannerAction { display: none !important; }
