@@ -55,6 +55,7 @@ class Episode extends Model
         'duration',//must be in seconds
         'intro_start',
         'intro_end',
+        'next_episode_start',
         'age_restriction',
         'certificate',
         'certificate_text',
@@ -97,6 +98,7 @@ class Episode extends Model
         'duration'          => 'string',
         'intro_start'       => 'integer',
         'intro_end'         => 'integer',
+        'next_episode_start'=> 'integer',
         'age_restriction'   => 'integer',
         'certificate'       => 'string',
         'certificate_text'  => 'string',

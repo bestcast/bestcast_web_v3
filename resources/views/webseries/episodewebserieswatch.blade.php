@@ -334,6 +334,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var introStart = {{ (int) ($episode->intro_start ?? 0) }};
     var introEnd   = {{ (int) ($episode->intro_end ?? 0) }};
+    var nextEpisodeStart = {{ (int) ($episode->next_episode_start ?? 0) }};
     var settings = {
         useShare: false, instanceName: "player1", playerRatio: "1.777777",
         activeItem: 0, volume: 0.7, autoPlay: true, preload: 'auto',
@@ -457,22 +458,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
             }
 
-            function showNextEpisodeOverlay() {
+            function showNextEpisodeOverlay(autoAdvance) {
+                if (autoAdvance === undefined) autoAdvance = true;
                 if (!nextEpisodeId || !nextEpisodeUrl || nextEpShown) return;
                 nextEpShown = true;
+
                 var overlay = document.getElementById('next-episode-overlay');
                 if (!overlay) return;
                 if (overlay.parentNode !== document.body) document.body.appendChild(overlay);
                 overlay.classList.add('visible');
-                var progressCircle = overlay.querySelector('.nep-progress');
-                if (progressCircle) {
-                    progressCircle.getBoundingClientRect();
-                    progressCircle.style.strokeDashoffset = '0';
+
+                if (autoAdvance) {
+                    var progressCircle = overlay.querySelector('.nep-progress');
+                    if (progressCircle) {
+                        progressCircle.getBoundingClientRect();
+                        progressCircle.style.strokeDashoffset = '0';
+                    }
+                    nextEpCountdownTimer = setTimeout(function() {
+                        var ov = document.getElementById('next-episode-overlay');
+                        if (ov && ov.classList.contains('visible')) goToNextEpisode();
+                    }, 10000);
                 }
-                nextEpCountdownTimer = setTimeout(function() {
-                    var ov = document.getElementById('next-episode-overlay');
-                    if (ov && ov.classList.contains('visible')) goToNextEpisode();
-                }, 10000);
             }
 
             function goToNextEpisode() {
@@ -491,20 +497,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     var current  = parseInt(player.getCurrentTime(), 10);
                     var duration = parseInt(player.getDuration(), 10);
 
-                    if (duration <= 0 || current < 0) {
-                        return;
-                    }
+                    if (duration <= 0 || current < 0) return;
 
-                    // Last 10 seconds → show next episode
-                    if ((duration - current) <= 10) {
-                        showNextEpisodeOverlay();
-                    } 
-                    else {
-                        // User moved back from the last 10 seconds.
-                        // Cancel the pending auto-next timer.
-                        if (nextEpShown || nextEpCountdownTimer) {
-                            resetNextEpisodeState();
-                        }
+                    // Custom time set in admin (and valid for this video)?
+                    var hasCustomStart = nextEpisodeStart > 0 && nextEpisodeStart < duration;
+
+                    var inWindow = hasCustomStart
+                        ? current >= nextEpisodeStart        // admin-defined time
+                        : (duration - current) <= 10;        // default: last 10 seconds
+
+                    if (inWindow) {
+                        // Custom time: show the button only (no auto-redirect until the video ends)
+                        // Default: show button + 10s auto-advance countdown
+                        showNextEpisodeOverlay(!hasCustomStart);
+                    } else if (nextEpShown || nextEpCountdownTimer) {
+                        // User seeked back before the window
+                        resetNextEpisodeState();
                     }
 
                 }, 1000);

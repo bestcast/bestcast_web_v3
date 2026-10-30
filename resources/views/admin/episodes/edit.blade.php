@@ -346,8 +346,28 @@
               </div>
           </div>
 
-
-
+          <div class="row mt-3">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Next Episode Start (minutes)</label>
+                      <input type="number" id="next_episode_minutes" min="0" step="0.01"
+                             value="{{ round(old('next_episode_start', $model->next_episode_start ?? 0) / 60, 2) }}"
+                             class="form-control"
+                             placeholder="e.g. 40">
+                      <small class="text-muted">Type minutes here (40.5 = 40 min 30 sec). Seconds are filled in automatically.</small>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Next Episode Start (seconds)</label>
+                      <input type="number" name="next_episode_start" id="next_episode_seconds" min="0" step="1"
+                             value="{{ old('next_episode_start', $model->next_episode_start ?? 0) }}"
+                             class="form-control"
+                             placeholder="e.g. 2400">
+                      <small class="text-muted">This value is saved. Leave 0 to use the default (last 10 seconds).</small>
+                  </div>
+              </div>
+          </div>
 
           <h3 class="sectitle">Subtitle Details</h3>
 
@@ -548,6 +568,23 @@ jQuery(document).ready(function ($) {
         $('#duration_hours').val(total ? Math.floor(total / 3600) : '');
         $('#duration_minutes').val(total ? Math.floor((total % 3600) / 60) : '');
         $('#duration_seconds').val(total ? total % 60 : '');
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    var minutesInput = document.getElementById('next_episode_minutes');
+    var secondsInput = document.getElementById('next_episode_seconds');
+    if (!minutesInput || !secondsInput) return;
+
+    // Minutes -> Seconds
+    minutesInput.addEventListener('input', function () {
+        var mins = parseFloat(minutesInput.value);
+        secondsInput.value = isNaN(mins) ? 0 : Math.round(mins * 60);
+    });
+
+    // Seconds -> Minutes
+    secondsInput.addEventListener('input', function () {
+        var secs = parseFloat(secondsInput.value);
+        minutesInput.value = isNaN(secs) ? 0 : Math.round((secs / 60) * 100) / 100;
     });
 });
 </script>
