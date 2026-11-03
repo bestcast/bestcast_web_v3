@@ -31,37 +31,52 @@ $buildPosterGrid = function($cacheKey, $tileCount = null) use ($core) {
        ? \Carbon\Carbon::createFromFormat('Y-m', $core['poster_date_to'])->endOfMonth()->toDateString()
        : null;
 
-    $posters = \Cache::remember($cacheKey.'_raw_'.$dateFrom.'_'.$dateTo, now()->addHours(6), function () use ($dateFrom, $dateTo) {
-        $query = \App\Models\Movies::with('portrait')
-            ->where('status', 1)
-            ->whereNotNull('portrait_id');
+    // Every content type that should appear in the background.
+    // Adjust the model / relation / column names to match your schema.
+    $sources = [
+        ['model' => \App\Models\Movies::class,    'relation' => 'portrait', 'fk' => 'portrait_id', 'date' => 'published_date'],
+        ['model' => \App\Models\Webseries::class, 'relation' => 'portrait', 'fk' => 'portrait_id', 'date' => 'published_date'],
+    ];
 
-        if (!empty($dateFrom)) $query->whereDate('published_date', '>=', $dateFrom);
-        if (!empty($dateTo))   $query->whereDate('published_date', '<=', $dateTo);
+    // 'v2' in the key so the old movies-only cache is not reused
+    $posters = \Cache::remember($cacheKey.'_v2_'.$dateFrom.'_'.$dateTo, now()->addHours(6), function () use ($dateFrom, $dateTo, $sources) {
+        $all = [];
 
-        return $query->get()                       // no limit(25), no random in SQL
-            ->pluck('portrait.urlkey')
-            ->filter()
-            ->unique()                             // never the same poster twice
-            ->values()
-            ->toArray();
+        foreach ($sources as $src) {
+            $query = $src['model']::with($src['relation'])
+                ->where('status', 1)
+                ->whereNotNull($src['fk']);
+
+            if (!empty($dateFrom)) $query->whereDate($src['date'], '>=', $dateFrom);
+            if (!empty($dateTo))   $query->whereDate($src['date'], '<=', $dateTo);
+
+            $urls = $query->get()
+                ->pluck($src['relation'].'.urlkey')
+                ->filter()
+                ->values()
+                ->toArray();
+
+            $all = array_merge($all, $urls);
+        }
+
+        return array_values(array_unique($all));   // never the same poster twice
     });
 
-        if (empty($posters)) return [];
+    if (empty($posters)) return [];
 
-          $count = $tileCount ?: 25;          // 7 columns x 6 rows
-          $grid  = [];
-          $last  = null;
-          while (count($grid) < $count) {
-              $cycle = $posters;
-              shuffle($cycle);
-              if ($cycle[0] === $last && count($cycle) > 1) {
-                  $cycle[] = array_shift($cycle);   // அருகருகே ஒரே போஸ்டர் வராது
-              }
-              foreach ($cycle as $p) { $grid[] = $p; }
-              $last = end($grid);
-          }
-          return array_slice($grid, 0, $count);
+    $count = $tileCount ?: 25;          // 7 columns x 6 rows
+    $grid  = [];
+    $last  = null;
+    while (count($grid) < $count) {
+        $cycle = $posters;
+        shuffle($cycle);                // movies and series get mixed together
+        if ($cycle[0] === $last && count($cycle) > 1) {
+            $cycle[] = array_shift($cycle);   // no identical poster side by side
+        }
+        foreach ($cycle as $p) { $grid[] = $p; }
+        $last = end($grid);
+    }
+    return array_slice($grid, 0, $count);
 };
 
 // This block must be OUTSIDE the closure

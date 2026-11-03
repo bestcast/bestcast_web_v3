@@ -50,6 +50,7 @@ class Webseries extends Model
         'content', 
         'published_date',
         'release_date',
+        'release_time',
         'thumbnail_id',
         'medium_id',
         'image_id',
@@ -84,6 +85,7 @@ class Webseries extends Model
         'content'           => 'string',
         'published_date'    => 'datetime',
         'release_date'      => 'date',
+        'release_time'      => 'string',
         'thumbnail_id'      => 'integer',
         'medium_id'         => 'integer',
         'image_id'          => 'integer',
@@ -286,6 +288,23 @@ class Webseries extends Model
     public function mediaFolder()
     {
         return $this->hasOne(\App\Models\MediaFolder::class, 'reference_id')->where('type', 'webseries');
+    }
+    public function releaseAt()
+    {
+        if (empty($this->release_date)) return null;
+
+        $date = \Carbon\Carbon::parse($this->release_date)->toDateString();
+        $time = $this->release_time;
+
+        return (empty($time) || $time === '00:00:00')
+            ? \Carbon\Carbon::parse($date)->startOfDay()
+            : \Carbon\Carbon::parse($date . ' ' . $time);
+    }
+
+    public function isUpcoming(): bool
+    {
+        $at = $this->releaseAt();
+        return $at && $at->isFuture();
     }
 
 }

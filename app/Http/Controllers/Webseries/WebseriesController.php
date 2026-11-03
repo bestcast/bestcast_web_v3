@@ -84,80 +84,6 @@ class WebseriesController extends Controller
         }
         return view('webseries.index', ['post'=>$post,'meta'=>$meta]);
     }
-    
-   /* public function episodewebserieswatch(Request $request, $episode_id)
-    {
-        $user = Auth::user();
-
-        if (empty($user->phone_verified_at)) {
-            return redirect()->route('otp.verification', ['send' => 1, 'phone' => 1]);
-        }
-
-        $episode = Episode::with(['season.webseries', 'image', 'thumbnail', 'subtitle'])
-            ->find($episode_id);
-
-        if (!$episode) {
-            abort(404);
-        }
-
-        // Region access check — via parent webseries
-        $viewerCountry = \App\Services\GeoService::getCountry($request);
-        $webseries = $episode->season->webseries;
-        if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
-            abort(404);
-        }
-        // Get webseries_id from episode's season
-        $webseries_id = $episode->season->webseries_id;
-        $nextEpisode = Episode::where('season_id', $episode->season_id)
-            ->where('id', '>', $episode_id)
-            ->orderBy('id', 'asc')
-            ->first();
-
-        // If no next episode in same season, check next season
-        if (!$nextEpisode) {
-            $nextSeason = Season::where('webseries_id', $webseries_id)
-                ->where('id', '>', $episode->season_id)
-                ->orderBy('id', 'asc')
-                ->first();
-
-            if ($nextSeason) {
-                $nextEpisode = Episode::where('season_id', $nextSeason->id)
-                    ->orderBy('id', 'asc')
-                    ->first();
-            }
-        }
-        if (empty($episode->movie_access)) {
-            $plan = Subscription::getPlan();
-            if (empty($plan)) {
-                return redirect(url('/pricing'));
-            }
-        }
-
-        $profileToken = Session::get('profileToken');
-
-        $userEpisode = UsersEpisodes::where('user_id', $user->id)
-            ->where('episode_id', $episode_id)
-            ->first();
-
-        if (!$userEpisode) {
-            $userEpisode = new UsersEpisodes();
-            $userEpisode->user_id    = $user->id;
-            $userEpisode->profile_id = $profileToken ?? 0;
-            $userEpisode->episode_id = $episode_id;
-            $userEpisode->viewed     = 1;
-            $userEpisode->save();
-        }
-
-        $webseries_id = $episode->season->webseries_id;
-
-        return view('webseries.episodewebserieswatch', [
-            'episode'      => $episode,
-            'userEpisode'  => $userEpisode,
-            'webseries_id' => $webseries_id,
-            'profileToken' => $profileToken ?? '',
-            'nextEpisode'  => $nextEpisode,
-        ]);
-    }*/
 
     public function episodewebserieswatch(Request $request, $episode_id)
     {
@@ -169,8 +95,17 @@ class WebseriesController extends Controller
         if (!$episode) {
             abort(404);
         }
+        // Unreleased episode: not viewable, even by typing the URL
+        if (!Episode::released()->where('id', $episode_id)->exists()) {
+            abort(404);
+        }
 
         $webseries = $episode->season->webseries;
+        // Series upcoming ஆக இருந்தால் episode இல்லை, trailer மட்டும்
+        if ($webseries->isUpcoming()) {
+            return redirect('/webseriestrailer/' . $webseries->id
+                . '?refer=' . urlencode(request('refer', url('/browse'))));
+        }
 
         // Force user to buy plan start (skipped for free episodes/webseries)
         $plan = null;
@@ -208,7 +143,7 @@ class WebseriesController extends Controller
         // Next episode (same season, else first episode of next season)
         $webseries_id = $episode->season->webseries_id;
 
-        $nextEpisode = Episode::where('season_id', $episode->season_id)
+        /*$nextEpisode = Episode::where('season_id', $episode->season_id)
             ->where('id', '>', $episode_id)
             ->orderBy('id', 'asc')
             ->first();
@@ -224,8 +159,26 @@ class WebseriesController extends Controller
                     ->orderBy('id', 'asc')
                     ->first();
             }
-        }
+        }*/
+        $nextEpisode = Episode::released()
+            ->where('season_id', $episode->season_id)
+            ->where('id', '>', $episode_id)
+            ->orderBy('id', 'asc')
+            ->first();
 
+        if (!$nextEpisode) {
+            $nextSeason = Season::where('webseries_id', $webseries_id)
+                ->where('id', '>', $episode->season_id)
+                ->orderBy('id', 'asc')
+                ->first();
+
+            if ($nextSeason) {
+                $nextEpisode = Episode::released()
+                    ->where('season_id', $nextSeason->id)
+                    ->orderBy('id', 'asc')
+                    ->first();
+            }
+        }
         // Track viewed episode per profile
         $userEpisode = UsersEpisodes::where('user_id', $user->id)
             ->where('profile_id', $profileToken ?? 0)
@@ -273,6 +226,12 @@ class WebseriesController extends Controller
             abort(404);
         }
 
+        // Upcoming series: trailer only
+        if ($webseries->isUpcoming()) {
+            return redirect('/webseriestrailer/' . $webseries->id
+                . '?refer=' . urlencode(request('refer', url('/browse'))));
+        }
+
         /*$latestSeason  = $webseries->seasons->last();
         $latestEpisode = optional($latestSeason)->episodes->last();*/
         // Get the latest season that contains episodes
@@ -317,7 +276,10 @@ class WebseriesController extends Controller
 
         $webseries = Webseries::with([
             'seasons' => function ($q) { $q->orderBy('id', 'asc'); },
-            'seasons.episodes' => function ($q) { $q->where('status', 1)->orderBy('id', 'asc'); },
+            'seasons.episodes' => function ($q) { 
+                //$q->where('status', 1)->orderBy('id', 'asc'); 
+                $q->released()->where('status', 1)->orderBy('id', 'asc');
+            },
             'seasons.episodes.image',
             'seasons.episodes.medium',
             'seasons.episodes.thumbnail',
@@ -388,7 +350,7 @@ class WebseriesController extends Controller
      
         if ($user) {
             // Get all episode IDs that belong to this webseries
-            $episodeIds = \App\Models\Episode::where('status', 1)      // ADDED
+            $episodeIds = \App\Models\Episode::released()->where('status', 1)      
                             ->whereHas('season', function ($q) use ($webseriesId) {
                                 $q->where('webseries_id', $webseriesId);
                             })->pluck('id');
@@ -408,7 +370,8 @@ class WebseriesController extends Controller
             if ($resumeEpisodeId) {
                 $resumeEp = \App\Models\Episode::find($resumeEpisodeId);
                 if ($resumeEp) {
-                    $episodeNumber = \App\Models\Episode::where('season_id', $resumeEp->season_id)
+                    $episodeNumber = \App\Models\Episode::released()
+                        ->where('season_id', $resumeEp->season_id)
                         ->where('status', 1)   
                         ->where('id', '<=', $resumeEpisodeId)
                         ->count();
@@ -421,7 +384,8 @@ class WebseriesController extends Controller
             ->orderBy('id', 'asc')->first();
      
         if ($firstSeason) {
-            $firstEpisode   = \App\Models\Episode::where('season_id', $firstSeason->id)
+            $firstEpisode   = \App\Models\Episode::released()
+                ->where('season_id', $firstSeason->id)
                 ->where('status', 1)  
                 ->orderBy('id', 'asc')->first();
             $firstEpisodeId = optional($firstEpisode)->id;
@@ -431,7 +395,7 @@ class WebseriesController extends Controller
         $seasons = \App\Models\Season::where('webseries_id', $webseriesId)
             ->orderBy('id', 'asc')
             ->with(['episodes' => function ($q) {
-                $q->where('status', 1)  
+                $q->released()->where('status', 1)  
                   ->orderBy('id', 'asc')
                   ->with(['thumbnail', 'image']);
             }])
@@ -498,7 +462,37 @@ class WebseriesController extends Controller
                 'seasons'              => $seasons,
                 'episode_number' => $episodeNumber,
                 'casts' => $castMembers,
+                'is_upcoming' => $webseries->isUpcoming() ? 1 : 0,
             ]
+        ]);
+    }
+    public function webseriestrailer(Request $request, $webseries_id)
+    {
+        $webseries = Webseries::where('status', 1)->findOrFail($webseries_id);
+
+        $viewerCountry = \App\Services\GeoService::getCountry($request);
+        if ($webseries->region_access !== 'global' && $viewerCountry !== 'IN') {
+            abort(404);
+        }
+
+        // Already released: send to the normal page
+        if (!$webseries->isUpcoming()) {
+            return redirect('/webserieswatch/' . $webseries->id);
+        }
+
+        $trailer = empty($webseries->trailer_url_480p)
+            ? ($webseries->trailer_url ?? '')
+            : $webseries->trailer_url_480p;
+
+        if (empty($trailer)) {
+            abort(404);
+        }
+
+        return view('webseries.trailerwatch', [
+            'webseries'    => $webseries,
+            'trailer'      => $trailer,
+            'releaseText'  => $webseries->releaseAt()->format('M d, Y \a\t h:i A'),
+            'profileToken' => \Session::get('profileToken') ?? '',
         ]);
     }
 

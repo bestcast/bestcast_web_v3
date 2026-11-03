@@ -145,6 +145,22 @@ class BlocksWebseriesResource extends JsonResource
                 ];
             })->values(),
             'is_webseries'  => true,
+            'is_upcoming_release' => $this->isUpcomingRelease($webseries) ? 1 : 0,
+            'release_date'        => $webseries->release_date,
+            'release_time'        => $webseries->release_time,
         ];
+    }
+    private function isUpcomingRelease($ws): bool
+    {
+        if (empty($ws->release_date)) return false;
+
+        $date = \Carbon\Carbon::parse($ws->release_date)->toDateString();
+        $time = $ws->release_time;
+
+        $at = (empty($time) || $time === '00:00:00')
+            ? \Carbon\Carbon::parse($date)->startOfDay()
+            : \Carbon\Carbon::parse($date . ' ' . $time);
+
+        return $at->isFuture();
     }
 }

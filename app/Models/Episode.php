@@ -47,6 +47,7 @@ class Episode extends Model
         'content',
         'published_date',
         'release_date',
+        'release_time',
         'thumbnail_id',
         'medium_id',
         'image_id',
@@ -90,6 +91,7 @@ class Episode extends Model
         'content'           => 'string',
         'published_date'    => 'datetime',
         'release_date'      => 'date',
+        'release_time'      => 'integer',
         'thumbnail_id'      => 'integer',
         'medium_id'         => 'integer',
         'image_id'          => 'integer',
@@ -240,6 +242,22 @@ class Episode extends Model
     public function season()
     {
         return $this->belongsTo(Season::class);
+    }
+    public function scopeReleased($query)
+    {
+        $now = now(); // set 'timezone' => 'Asia/Kolkata' in config/app.php if admins enter IST
+
+        return $query->where(function ($q) use ($now) {
+            $q->whereNull('release_date')                                    // no date = released
+              ->orWhereDate('release_date', '<', $now->toDateString())       // earlier day
+              ->orWhere(function ($q) use ($now) {                           // today: check the time
+                  $q->whereDate('release_date', $now->toDateString())
+                    ->where(function ($q) use ($now) {
+                        $q->whereNull('release_time')
+                          ->orWhere('release_time', '<=', $now->format('H:i:s'));
+                    });
+              });
+        });
     }
 
 }

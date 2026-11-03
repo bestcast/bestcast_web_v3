@@ -21,6 +21,10 @@ class MoviesListResource extends JsonResource
             'movie_access' => $this->movie_access,
             'title' => $this->title,
             'topten' => $this->topten,
+            'is_webseries'        => ($this->resource instanceof \App\Models\Webseries) ? 1 : 0,
+            'is_upcoming_release' => method_exists($this->resource, 'isUpcoming')
+                            ? ($this->isUpcoming() ? 1 : 0)
+                            : (int) $this->is_upcoming,
             'is_upcoming_release' => $this->isUpcoming() ? 1 : 0,
             'trailer' => empty($this->trailer_url_480p)?$this->trailer_url:$this->trailer_url_480p,
             'certificate' => $this->certificate,

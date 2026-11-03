@@ -467,6 +467,9 @@ Route::get('/webserieswatchepisode/{episode_id}', 'App\Http\Controllers\Webserie
 Route::get('/webserieswatch/{id}', 'App\Http\Controllers\Webseries\WebseriesController@webserieswatch')
     ->middleware(['role:admin,subadmin,user,producer'])
     ->name('webserieswatch');
-
+Route::get('/webseriestrailer/{webseries_id}', 'App\Http\Controllers\Webseries\WebseriesController@webseriestrailer')
+    ->middleware(['role:admin,subadmin,user,producer'])
+    ->name('webseriestrailer');
+    
 Route::get('/refer/{id}', 'App\Http\Controllers\HomeController@refer')->name('refer');
 Route::get('/{urlkey}', 'App\Http\Controllers\HomeController@urlkey')->name('urlkey');

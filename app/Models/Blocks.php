@@ -285,6 +285,39 @@ class Blocks extends Database implements RoleHasRelationsContract
                            ->distinct()
                            ->paginate($paginate);
 
+        $now = \Carbon\Carbon::now();
+
+        // Release datetime for a movie or webseries (null = no date = already released)
+        $releaseAt = function ($model) {
+            if (empty($model->release_date)) return null;
+
+            $datePart = \Carbon\Carbon::parse($model->release_date)->toDateString();
+            $time     = $model->release_time;
+
+            return (empty($time) || $time === '00:00:00')
+                ? \Carbon\Carbon::parse($datePart)->startOfDay()
+                : \Carbon\Carbon::parse($datePart . ' ' . $time);
+        };
+        // Wrap a webseries the same way your webseries block does
+        $wrapWebseries = function ($ws) use ($releaseAt) {
+            $latestSeason  = $ws->seasons->first();
+            $latestEpisode = $latestSeason?->episodes->first();
+
+            $bm = new \App\Models\BlocksMovies();
+            $bm->setRelation('webseries', $ws);
+            $bm->setAttribute('is_webseries', true);
+            $bm->setAttribute('card_image',
+                $latestEpisode?->thumbnail?->path
+                ?? $latestEpisode?->image?->path
+                ?? $ws->thumbnail
+                ?? $ws->poster);
+            $bm->setAttribute('card_title',       $ws->title);
+            $bm->setAttribute('card_certificate', $ws->certificate ?? 'U/A 13+');
+            $bm->setAttribute('card_duration',    $latestEpisode?->duration ?? $ws->duration ?? '');
+            $bm->setAttribute('card_trailer',     $ws->trailer_url);
+            $bm->setAttribute('card_release_at',  $releaseAt($ws)?->toDateTimeString());
+            return $bm;
+        };
         foreach ($data as $block) {
             $blockTitle = strtolower($block->title ?? '');
             $isWebseriesBlock = str_contains($blockTitle, 'webseries');
@@ -333,7 +366,7 @@ class Blocks extends Database implements RoleHasRelationsContract
                 })->filter(function ($bm) {
                     return !empty($bm->webseries);
                 })->values();*/
-                $wrappedWebseries = $webseriesItems->map(function ($item) {
+                /*$wrappedWebseries = $webseriesItems->map(function ($item) {
                     $ws = $item->webseries;
                     if (empty($ws)) {
                         return null;
@@ -359,7 +392,20 @@ class Blocks extends Database implements RoleHasRelationsContract
                     $bm->setAttribute('card_trailer',     $ws->trailer_url);
 
                     return $bm;
+                })->filter()->values();*/
+                $wrappedWebseries = $webseriesItems->map(function ($item) use ($releaseAt, $now, $wrapWebseries) {
+                    $ws = $item->webseries;
+                    if (empty($ws)) return null;
+
+                    // Not released yet: it belongs in Upcoming for now
+                    $rel = $releaseAt($ws);
+                    if ($rel && $rel->isFuture()) return null;
+
+                    return $wrapWebseries($ws);
                 })->filter()->values();
+
+                $block->setRelation('movies', $wrappedWebseries);
+                continue;
 
                 $block->setRelation('movies', $wrappedWebseries);
                 continue;
@@ -407,13 +453,45 @@ class Blocks extends Database implements RoleHasRelationsContract
                       return \Carbon\Carbon::parse($movie->release_date)->toDateString();
                   });
 
-                $wrappedMovies = $allMovies->map(function ($movie) {
+                /*$wrappedMovies = $allMovies->map(function ($movie) {
                     $blockMovie = new \App\Models\BlocksMovies();
                     $blockMovie->setRelation('movies', $movie);
                     return $blockMovie;
+                });*/
+                $wrappedMovies = $allMovies->map(function ($movie) use ($releaseAt) {
+                    $blockMovie = new \App\Models\BlocksMovies();
+                    $blockMovie->setRelation('movies', $movie);
+                    $blockMovie->setAttribute('sort_at', $releaseAt($movie));
+                    return $blockMovie;
                 });
+                $upcomingWebseries = \App\Models\Webseries::with([       // use your real model name
+                        'seasons' => fn($q) => $q->orderBy('id', 'desc'),
+                        'seasons.episodes' => fn($q) => $q->orderBy('id', 'desc'),
+                        'seasons.episodes.thumbnail',
+                        'seasons.episodes.image',
+                        'image', 'medium', 'thumbnail', 'portrait', 'portraitsmall',
+                    ])
+                    ->where('status', 1)
+                    ->when($viewerCountry !== 'IN', fn($q) => $q->where('region_access', 'global'))
+                    ->whereNotNull('release_date')
+                    ->get()
+                    ->filter(function ($ws) use ($releaseAt) {
+                        $rel = $releaseAt($ws);
+                        return $rel && $rel->isFuture();
+                    })
+                    ->map(function ($ws) use ($wrapWebseries, $releaseAt) {
+                        $bm = $wrapWebseries($ws);
+                        $bm->setAttribute('sort_at', $releaseAt($ws));
+                        return $bm;
+                    });
 
-                $block->setRelation('movies', $wrappedMovies->values());
+                // Merge movies and webseries, soonest release first
+                $merged = $wrappedMovies->concat($upcomingWebseries)
+                    ->sortBy(fn($bm) => $bm->sort_at)
+                    ->values();
+
+                $block->setRelation('movies', $merged);
+                //$block->setRelation('movies', $wrappedMovies->values());
             }
 
             if ($isNewReleaseBlock) {
@@ -421,57 +499,60 @@ class Blocks extends Database implements RoleHasRelationsContract
                 $daysAgo   = \Carbon\Carbon::now()->subDays($daysLimit)->startOfDay();
                 $nowTime   = \Carbon\Carbon::now();
 
-                /*$newReleaseMovies = \App\Models\Movies::with([
-                    'image',
-                    'thumbnail',
-                    'usermovies' => function ($query) use ($user_id, $profile_id) {
-                        $query->where('user_id', $user_id);
-                        $query->where('profile_id', $profile_id);
-                    }
-                ])->where('status', 1)
-                  ->whereNotNull('release_date')
-                  ->get()*/
-                $newReleaseMovies = \App\Models\Movies::with([
-                    'image',
-                    'thumbnail',
-                    'usermovies' => function ($query) use ($user_id, $profile_id) {
-                        $query->where('user_id', $user_id);
-                        $query->where('profile_id', $profile_id);
-                    }
-                ])->where('status', 1)
-                  ->when($viewerCountry !== 'IN', function ($q) {
-                      $q->where('region_access', 'global');
-                  })
-                  ->whereNotNull('release_date')
-                  ->get()
-                  ->filter(function ($movie) use ($daysAgo, $nowTime) {
-                      $releaseDate = $movie->release_date;
-                      if (empty($releaseDate)) return false;
+                // Shared helper: builds the release datetime the same way for movies and series
+                $releaseAt = function ($item) {
+                    if (empty($item->release_date)) return null;
+                    $datePart    = \Carbon\Carbon::parse($item->release_date)->toDateString();
+                    $releaseTime = $item->release_time;
+                    return (empty($releaseTime) || $releaseTime === '00:00:00')
+                        ? \Carbon\Carbon::parse($datePart)->startOfDay()
+                        : \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
+                };
 
-                      $datePart = \Carbon\Carbon::parse($releaseDate)->toDateString();
-                      $releaseTime = $movie->release_time;
+                $usermoviesScope = function ($query) use ($user_id, $profile_id) {
+                    $query->where('user_id', $user_id);
+                    $query->where('profile_id', $profile_id);
+                };
 
-                      if (empty($releaseTime) || $releaseTime === '00:00:00') {
-                          $releaseDateTime = \Carbon\Carbon::parse($datePart)->startOfDay();
-                      } else {
-                          $releaseDateTime = \Carbon\Carbon::parse($datePart . ' ' . $releaseTime);
-                      }
+                $newReleaseMovies = \App\Models\Movies::with(['image', 'thumbnail', 'usermovies' => $usermoviesScope])
+                    ->where('status', 1)
+                    ->when($viewerCountry !== 'IN', function ($q) {
+                        $q->where('region_access', 'global');
+                    })
+                    ->whereNotNull('release_date')
+                    ->get()
+                    ->filter(function ($movie) use ($releaseAt, $daysAgo, $nowTime) {
+                        $dt = $releaseAt($movie);
+                        return $dt && $dt->between($daysAgo, $nowTime);
+                    });
 
-                      return $releaseDateTime->between($daysAgo, $nowTime);
-                  })
-                  ->sortByDesc(function ($movie) {
-                      return \Carbon\Carbon::parse($movie->release_date)->toDateString();
-                  });
+                // NEW: webseries released within the same window
+                $newReleaseSeries = \App\Models\Webseries::with(['image', 'thumbnail'])
+                    ->where('status', 1)
+                    ->when($viewerCountry !== 'IN', function ($q) {
+                        $q->where('region_access', 'global');
+                    })
+                    ->whereNotNull('release_date')
+                    ->get()
+                    ->filter(function ($series) use ($releaseAt, $daysAgo, $nowTime) {
+                        $dt = $releaseAt($series);
+                        return $dt && $dt->between($daysAgo, $nowTime);
+                    });
 
-                $wrappedMovies = $newReleaseMovies->map(function ($movie) {
+                // Merge and sort newest first
+                $combined = $newReleaseMovies->concat($newReleaseSeries)
+                    ->sortByDesc(function ($item) use ($releaseAt) {
+                        return optional($releaseAt($item))->timestamp ?? 0;
+                    });
+
+                $wrapped = $combined->map(function ($item) {
                     $blockMovie = new \App\Models\BlocksMovies();
-                    $blockMovie->setRelation('movies', $movie);
+                    $blockMovie->setRelation('movies', $item);
                     return $blockMovie;
                 });
 
-                $block->setRelation('movies', $wrappedMovies->values());
+                $block->setRelation('movies', $wrapped->values());
             }
-            
             if ($isContinueWatchingBlock) {
                 /*$continueWatching = \App\Models\UsersMovies::with([
                         'movies.image',
@@ -581,7 +662,6 @@ class Blocks extends Database implements RoleHasRelationsContract
         });
 
         $data->setCollection($filtered->values());
-
         return $data;
     }
     public static function getwebseriesApiList($user_id, $viewerCountry = null)
@@ -601,7 +681,7 @@ class Blocks extends Database implements RoleHasRelationsContract
                 $q->orderBy('id', 'desc');
             },
             'webseries.webseries.seasons.episodes' => function ($q) {
-                $q->orderBy('id', 'desc');
+                $q->released()->orderBy('id', 'desc');
             },
             'webseries.webseries.seasons.episodes.image',
             'webseries.webseries.seasons.episodes.medium',
@@ -612,7 +692,9 @@ class Blocks extends Database implements RoleHasRelationsContract
             'genres',
             'languages'
         ]);
+
         $data = $data->where('status', 1)->latest();
+
         if ($genre_id = request('genre_id')) {
             $data->whereHas('genres', fn($q) => $q->where('genre_id', $genre_id));
         }
@@ -627,13 +709,20 @@ class Blocks extends Database implements RoleHasRelationsContract
                     ->orderBy('title', 'asc')
                     ->paginate(request('paginate', 5));
 
-        // Remove pivot entries whose nested webseries got filtered out (region_access),
-        // then remove blocks that end up with zero valid entries
         $filtered = $result->getCollection()->map(function ($block) {
             if ($block->relationLoaded('webseries')) {
                 $validEntries = $block->webseries->filter(function ($pivotItem) {
-                    return !empty($pivotItem->webseries); // nested webseries.webseries must exist
+                    $ws = $pivotItem->webseries;
+                    if (empty($ws)) return false;
+
+                    $ws->setRelation(
+                        'seasons',
+                        $ws->seasons->filter(fn($s) => $s->episodes->isNotEmpty())->values()
+                    );
+
+                    return $ws->seasons->isNotEmpty();
                 })->values();
+
                 $block->setRelation('webseries', $validEntries);
             }
             return $block;

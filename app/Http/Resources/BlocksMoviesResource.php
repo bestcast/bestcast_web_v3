@@ -20,6 +20,10 @@ class BlocksMoviesResource extends JsonResource
         //     'movies_id' => $this->movies_id,
         //     'movies' => new MoviesResource($this->movies)
         // ];
+        if ($this->is_webseries) {
+            return (new BlocksWebseriesResource($this->resource))->toArray($request);
+        }
+
         return new MoviesListResource($this->movies);
     }
 }

@@ -369,12 +369,14 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!input || !hiddenInput) return;
 
     const existingCode = "{{ $model->country_code }}";
-
+    
     const iti = window.intlTelInput(input, {
         initialCountry: existingCode ? "" : "in",
         separateDialCode: true,
         allowDropdown: true,
         dropdownContainer: document.body,
+        nationalMode: true,
+        formatOnDisplay: false,   // don't reformat the existing value on load
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
     });
 
@@ -397,8 +399,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Strip spaces before the form is actually submitted
     const form = input.closest('form');
     if (form) {
-        form.addEventListener('submit', function() {
-            input.value = input.value.replace(/\s+/g, '');
+        form.addEventListener('submit', function () {
+            input.value = input.value.replace(/\D/g, '');   // digits only, no spaces/dashes
         });
     }
 });
