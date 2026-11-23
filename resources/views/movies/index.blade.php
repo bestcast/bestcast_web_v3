@@ -8,6 +8,7 @@
 <script src="{{ asset('js/video-new.js') }}?v=1" defer></script>
 <script src="{{ asset('js/movies-new.js?1') }}?v=1" defer></script>
 <script src="{{ asset('js/webseries-click-patch.js') }}?v=1" defer></script>
+<script src="{{ asset('js/banner-multi.js') }}?v=1" defer></script>
 <!-- <script src="{{ asset('js/banner-custom.js') }}"></script> -->
 @endsection
 
@@ -21,7 +22,7 @@
 
   @include('movies.genre')
   <div class="bannerWrapper">
-    <div class="ajxBanner"></div>
+    <div class="ajxMultiBanner"></div>
   </div>
 
    <div class="container-fluid blkCtr">

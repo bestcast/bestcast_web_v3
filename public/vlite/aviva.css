@@ -794,3 +794,42 @@
     font-size: 13px;
     color: #333;
 }
+.ajxMultiBanner { position: relative; width: 100%; }
+.mbSlide { position: relative; height: 56vw; max-height: 80vh; min-height: 320px;
+           background-size: cover; background-position: center top; }
+.mbShade { position: absolute; inset: 0;
+           background: linear-gradient(to top, #000 5%, transparent 60%), linear-gradient(to right, rgba(0,0,0,.7), transparent 60%); }
+.mbContent { position: absolute; left: 4%; bottom: 14%; max-width: 480px; color: #fff; z-index: 2; }
+.mbLogo { max-width: 280px; margin-bottom: 12px; }
+.ajxMultiBanner .slick-dots { bottom: 12px; }
+.ajxMultiBanner .slick-dots li button:before { color: #fff; }
+
+/* certificate on the right */
+.ajxMultiBanner .mbCert {
+  position: absolute;
+  right: 4%;
+  bottom: 14%;
+  z-index: 3;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,.7);
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: 14px;
+}
+
+/* play + more info side by side */
+.ajxMultiBanner .bannerAction {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ajxMultiBanner .bannerAction .playBtn,
+.ajxMultiBanner .bannerAction .moreInfo {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  float: none;
+  cursor: pointer;
+}

@@ -31,10 +31,20 @@ class BannerController extends Controller
         return $data;
     }
 
-    public function index()
+    /*public function index()
     {
         $data = Banner::getList();
         return view('admin.banner.index', ['model'=>$data]);
+    }*/
+    public function index()
+    {
+        $model = Banner::getList();
+        $pageList = \App\Models\Post::where('status', 1)
+            ->whereIn('type', ['page', 'blog'])
+            ->orderBy('title', 'asc')
+            ->get(['id', 'title']);
+
+        return view('admin.banner.index', compact('model', 'pageList'));
     }
 
     public function create()

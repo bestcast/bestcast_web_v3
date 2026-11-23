@@ -1238,6 +1238,7 @@ function _0x3858() {
             }
         }
     };
+    window.__bc = _0x1e82c8; 
     _0x1e82c8['i']();
 }(window, document, jQuery));
 function copyShareLink(url) {

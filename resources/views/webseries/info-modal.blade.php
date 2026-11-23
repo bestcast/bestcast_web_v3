@@ -5,7 +5,7 @@
         {{-- Hero banner --}}
         <div id="ws-info-hero">
             <div id="ws-info-hero-img"></div>
-            <div id="ws-info-hero-fade"></div>
+            <div id="ws-info-hero-fade1"></div>
             <div id="ws-info-hero-content">
                 <div id="ws-info-title"></div>
                 <div id="ws-info-meta"></div>

@@ -193,6 +193,25 @@ class Banner extends Database implements RoleHasRelationsContract
 
     public static function getList()
     {
+        $data = Banner::with('page');
+
+        $getSearch=app('request')->input('search');
+        if(!empty($getSearch)){
+            $data =$data->where('title','like',"%".urldecode($getSearch)."%");
+        }
+
+        $getPageId=app('request')->input('page_id');
+        if(!empty($getPageId)){
+            $data =$data->where('page_id',$getPageId);
+        }
+        
+        $data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
+        $data =$data->paginate(20);
+        return $data;
+    }
+    
+    /*public static function getList()
+    {
         $data = Banner::latest();
 
         $getSearch=app('request')->input('search');
@@ -204,7 +223,7 @@ class Banner extends Database implements RoleHasRelationsContract
         $data =$data->paginate(20);
         return $data;
     }
-
+*/
 
     public static function getApiList($user_id)
     {        
@@ -253,21 +272,23 @@ class Banner extends Database implements RoleHasRelationsContract
                           ->where('webseries_id', '!=', 0)
                           ->whereHas('webseries', fn($s) => $s->where('status', 1));
                     });
-                })
-                ->latest();
+                });
+                //->latest();
 
         //$sql = $data->toSql();dd($sql);
         //dd($data->get());
 
         $list=app('request')->input('list');
         if($list){
-            $data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
+            return $data->orderBy('sortorder', 'asc')->latest()->paginate(10);
+            /*$data =$data->orderBy('sortorder','asc')->orderBy('title','asc');
             $data =$data->paginate(20);
-            return $data;
-        }else{  
+            return $data;*/
+        }return $data->inRandomOrder()->first();
+        /*else{  
             $data =$data->inRandomOrder()->first();
             return $data;   
-        }
+        }*/
 
     }
 

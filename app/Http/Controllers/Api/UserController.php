@@ -425,10 +425,17 @@ class UserController extends Controller
 
         $data=UsersEpisodes::getEpisode($user->id,$request->profile_id,$episodeid);
         if(empty($data)){
+            $episode = Episode::with('season')->find($episodeid);
+            if (empty($episode)) {
+                return $this->error('', "Episode not found!", 200);
+            }
+
             $usersEpisodes=new UsersEpisodes();
             $usersEpisodes->user_id=$user->id;
             $usersEpisodes->profile_id=$request->profile_id;
             $usersEpisodes->episode_id=$episodeid;
+            $usersEpisodes->season_id    = $episode->season_id;
+            $usersEpisodes->webseries_id = optional($episode->season)->webseries_id;
             $usersEpisodes->viewed=1;
             $usersEpisodes->save();
             $data=UsersEpisodes::getEpisode($user->id,$request->profile_id,$episodeid);
@@ -448,11 +455,16 @@ class UserController extends Controller
         $movieDuration = $request->input('movieDuration');
 
         $usersEpisodes = UsersEpisodes::getUsersEpisodes($user->id, $request->profile_id, $episodeid);
-        if (empty($usersEpisodes)) {
+        //if (empty($usersEpisodes)) {
+        if (empty($usersEpisodes->season_id) || empty($usersEpisodes->webseries_id)) {
             // Resolve season_id / webseries_id once, at creation time
             $episode = Episode::with('season')->find($episodeid);
-            if (empty($episode)) {
+            /*if (empty($episode)) {
                 return $this->error('', "Episode not found!", 200);
+            }*/
+            if ($episode) {
+                $usersEpisodes->season_id    = $episode->season_id;
+                $usersEpisodes->webseries_id = optional($episode->season)->webseries_id;
             }
 
             $usersEpisodes = new UsersEpisodes();

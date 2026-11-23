@@ -4091,7 +4091,7 @@ footer,
   animation: ajxDtPopup .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
 }
 
-@keyframes ajxDtPopup {
+/*@keyframes ajxDtPopup {
   0% {
     transform: scale(0.5);
   }
@@ -4099,20 +4099,20 @@ footer,
   100% {
     transform: scale(1);
   }
-}
+}*/
 
-.ajxDtPopup .outer {
-  position: fixed;          /* was absolute */
+/*.ajxDtPopup .outer {
+  position: fixed;          
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;            /* was 100px */
-  min-height: 0;            /* was 100% */
+  height: 100vh;            
+  min-height: 0;            
   display: flex;
   justify-content: center;
   background: rgb(0 0 0 / 72%);
   z-index: 200;
-  overflow-y: auto;         /* the overlay scrolls */
+  overflow-y: auto;         
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
 }
@@ -4129,7 +4129,7 @@ footer,
   min-height: 90%;
   height: auto;
   align-self: flex-start;
-  flex: 0 1 900px;          /* stops the flex container from stretching it */
+  flex: 0 1 900px;          
 }
 
 .ajxDtPopup .inner .ppImg {
@@ -4140,6 +4140,63 @@ footer,
   overflow: hidden;
   background-size: cover;
   border-radius: var(--radius);
+}*/
+/* full-screen More Info */
+.ajxDtPopup.show {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #141414;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ajxDtPopup .outer,
+.ajxDtPopup .inner {
+  width: 100%;
+  position: relative;   /* keeps .ppAct and #popupplayer anchored */
+}
+
+.ajxDtPopup .ppImg {
+  position: relative;
+  width: 100%;
+  height: 56vw;
+  max-height: 75vh;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center top;
+}
+
+.ajxDtPopup .ppCont {
+  padding: 24px 4% 60px;
+}
+
+/* close button */
+.ajxDtPopup .close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.75);
+  border: 1px solid rgba(255,255,255,.6);
+  cursor: pointer;
+  z-index: 100000;
+}
+.ajxDtPopup .close::before,
+.ajxDtPopup .close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.ajxDtPopup .close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .ajxDtPopup .ppPlay {
@@ -4225,7 +4282,7 @@ footer,
   color: #8b8686;
 }
 
-.ajxDtPopup .close {
+/*.ajxDtPopup .close {
   background: #212121 url(../img/icon/style/close-white.png) center no-repeat;
   background-size: 18px;
   position: absolute;
@@ -4237,7 +4294,7 @@ footer,
   border-radius: 100px;
   cursor: pointer;
 }
-
+*/
 .ajxDtPopup .list .comma:last-child {
   display: none;
 }
@@ -5955,7 +6012,34 @@ p.payment-error {
     padding-right: 0px;
   }
 }
+/* make the preview video fill the full-screen header */
+.ajxDtPopup .ppImg #popupplayer,
+.ajxDtPopup .ppImg .vpl-player,
+.ajxDtPopup .ppImg .vpl-media-holder,
+.ajxDtPopup .ppImg .vpl-wrapper {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+}
 
+.ajxDtPopup .ppImg video {
+  object-fit: contain;
+  background: #141414;
+}
+/* hide the poster image when a video is playing */
+.ajxDtPopup .ppImg:has(video) {
+  background-image: none !important;
+  background-color: #141414 !important;
+}
+.ajxDtPopup .ppImg {
+  height: 56.25vw;      /* true 16:9 */
+  max-height: 75vh;
+}
 @media (min-width: 768px) and (max-width: 1368px) {
   header>.container {
     max-width: 100%;
@@ -6233,4 +6317,5 @@ p.payment-error {
   }
 }
 
-.ajxBanner .bannerAction { display: none !important; }
+
+/*.ajxBanner .bannerAction { display: none !important; }*/
